@@ -14,4 +14,5 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '2.13.2'
+  gem 'capybara', '2.0.3' # 2.1.0 doesn't work on ruby 1.9.2
 end
