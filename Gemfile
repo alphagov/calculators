@@ -2,6 +2,17 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 
+gem 'unicorn', '4.6.2'
+
+gem 'exception_notification', '3.0.1'
+gem 'aws-ses', '0.5.0', :require => 'aws/ses'
+
+if ENV['SLIMMER_DEV']
+  gem 'slimmer', :path => '../slimmer'
+else
+  gem 'slimmer', '3.16.0'
+end
+gem 'plek', '1.3.1'
 
 # Gems used only for assets and not required
 # in production environments by default.
