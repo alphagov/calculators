@@ -26,10 +26,6 @@
   }
 }
 
-.thirds {
-   @include grid((2,1));
-}
-
 .form {
   label {
     display: block;

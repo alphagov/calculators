@@ -1,0 +1,7 @@
+<h2>Child <span class="child-number"><%= number %></span></h2>
+<fieldset>
+  <legend><span>When will you stop getting Child Benefit for this child?</span></legend>
+  <p class="group">
+    <%= select_date (defined?(child) ? DateTime.new(child["year"].to_i, child["month"].to_i, child["day"].to_i) : Date.today), :prefix => "stopping_children[]" %>
+  </p>
+</fieldset>

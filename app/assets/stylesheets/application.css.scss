@@ -1,6 +1,24 @@
 @import "_colours";
 @import "_typography";
 
-@import "_grids";
 
 @import "child_benefit";
+
+.calculator-container {
+  width: 100%;
+  background: #fff;
+}
+
+.calculator-questions, .calculator-results {
+  float: left;
+  display: block;
+  margin: 0;
+}
+
+.calculator-questions {
+  width: 60%;
+}
+
+.calculator-results {
+  width: 35%;
+}
