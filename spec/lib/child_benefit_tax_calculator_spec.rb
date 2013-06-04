@@ -14,7 +14,7 @@ describe ChildBenefitTaxCalculator do
       :gross_pension_contributions => 10,
       :net_pension_contributions => 10,
       :trading_losses_self_employed => 10,
-      :gift_aid_donations => 10
+      :gift_aid_donations => 10,
       :children_count => 1
     })
     calc.total_annual_income.should == 40
