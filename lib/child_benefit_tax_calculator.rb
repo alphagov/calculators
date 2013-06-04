@@ -1,5 +1,5 @@
 class ChildBenefitTaxCalculator
-  attr_accessor :total_annual_income, :children_count, :starting_children, :stopping_children
+  attr_accessor :total_annual_income, :children_count, :starting_children, :stopping_children, :tax_year
 
   def initialize(params)
     @total_annual_income = params[:total_annual_income].to_i
@@ -9,7 +9,7 @@ class ChildBenefitTaxCalculator
     gift_aid_donations = params[:gift_aid_donations].to_i
     @starting_children = params[:starting_children] || []
     @stopping_children = params[:stopping_children] || []
-    @tax_year = params[:year]
+    @tax_year = params[:year].to_i
 
     if @total_annual_income == 0
       @total_annual_income = gross_pension_contributions + net_pension_contributions + trading_losses_self_employed + gift_aid_donations
