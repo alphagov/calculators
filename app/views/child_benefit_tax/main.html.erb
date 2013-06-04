@@ -15,71 +15,36 @@
         <!-- hidden field to store the tax year so it can persist -->
         <input type="hidden" name="year" value="<%= params[:year] %>" />
         <fieldset>
-          <h2><span class="steps" id="step-1"><span class="visuallyhidden">Step </span>1 </span>Adjusted net income</h2>
-          <p class="group" id="adjusted-income">
-            <label for="total-annual-income-before-tax">Total annual income before tax</label>
-            <input id="total-annual-income-before-tax" type="text" class="income" value="<%= params[:total_annual_income] %>" name="total_annual_income" >
-          </p>
+          <%= step(1, "Adjusted net income") %>
+          <%= money_input("Total annual income before tax", "total_annual_income") %>
           <p>If you don't know your adjusted net income, you can fill out the four fields below:</p>
-          <p id="uknown-income" class="group">
-            <label for="gross-pension-contributions">Gross pension contributions</label>
-            <input id="gross-pension-contributions" type="text" class="income" value="<%= params[:gross_pension_contributons] %>" name="gross_pension_contributons" placeholder="&pound;">
-          </p>
-          <p class="group">
-            <label for="net-pension-contributions">Net pension contributions</label>
-            <input id="net-pension-contributions" type="text" class="income" value="<%= params[:net_pension_contributions] %>" name="net_pension_contributions" placeholder="&pound;">
-          </p>
-          <p class="group">
-            <label for="trading-losses-if-youre-self-employed">Trading losses if you're self-employed</label>
-            <input  id="trading-losses-if-youre-self-employed" type="text" class="income" value="<%= params[:trading_losses_self_employed] %>" name="trading_losses_self_employed" placeholder="&pound;">
-          </p>
-          <p class="group">
-            <label for="gift-aid-donations">Gift Aid donations</label>
-            <input type="text" id="gift-aid-donations" class="income" value="<%= params[:gift_aid_donations] %>" name="gift_aid_donations" placeholder="&pound;">
-          </p>
+          <%= money_input("Gross pension contributions", "gross_pension_contributons") %>
+          <%= money_input("Net pension contributions", "net_pension_contributions") %>
+          <%= money_input("Trading losses if you're self-employed", "trading_losses_self_employed") %>
+          <%= money_input("Gift Aid donations", "gift_aid_donations") %>
         </fieldset>
         <fieldset>
-          <h2><span class="steps" id="step-2" ><span class="visuallyhidden">Step </span>2 </span>Number of children you're claiming for</h2>
-          <p class="group" id="children-claim">
-          <label for="children">How many children will you or your partner be getting paid Child Benefit for from <%= @calculator.tax_year %>?</label>
-            <input type="text" id="children" class="children" name="children_count" value="<%= params[:children_count] %>">
-          </p>
+          <%= step(2, "Number of children you're claiming for") %>
+          <%= money_input("How many children will you or your partner be getting paid Child Benefit for from #{@calculator.tax_year}?", "children_count") %>
         </fieldset>
 
         <fieldset>
-          <h2><span class="steps" id="step-3"><span class="visuallyhidden">Step </span>3 </span>Are you planning on claiming for any new children this year?</h2>
-
-          <% if @calculator %>
-            <% @calculator.starting_children.each_with_index do |child, index| %>
-              <%= render "partials/add_new_child", :child => child, :number => index + 1 %>
-            <% end %>
-          <% end %>
-          <% if @show_new_child_form %>
-            <%= render "partials/add_new_child", :number => @calculator.starting_children.size + 1 %>
-          <% end %>
-          <%= submit_tag("Add a new starting child", { :class => "button" }) %>
+          <%= step(3, "Are you planning on claiming for any new children this year?") %>
+          <%= render "partials/child_benefit_tax/starting_children" %>
         </fieldset>
 
         <fieldset>
-          <h2><span class="steps" id="step-4"><span class="visuallyhidden">Step </span>4 </span>Are you claiming for any children who will become ineligible this year?</h2>
-
-          <% if @calculator %>
-            <% @calculator.stopping_children.each_with_index do |child, index| %>
-              <%= render "partials/add_new_stopping_child", :child => child, :number => index + 1 %>
-            <% end %>
-          <% end %>
-          <% if @show_old_child_form %>
-            <%= render "partials/add_new_stopping_child", :number => @calculator.stopping_children.size + 1 %>
-          <% end %>
-          <%= submit_tag("Add a new stopping child", { :class => "button" }) %>
+          <%= step(4, "Are you claiming for any children who will become ineligible this year?") %>
+          <%= render "partials/child_benefit_tax/stopping_children" %>
         </fieldset>
+
         <%= submit_tag("Go", { :class => "button" }) %>
       <% end %>
     </div>
     <div class="outcome">
       <div class="results-box">
         <h2>Results</h2>
-        <p>&pound;<span class="total-owed"><%= @calculator ? @calculator.owed : "..." %></span></p>
+        <p><span class="total-owed"><%= number_to_currency @calculator.owed, unit: "£", precision: 2 %></span></p>
         <ul>
           <li>the person with the highest income will have to pay back</li>
           <li>this is an estimate based on the figures you have provided</li>
@@ -88,7 +53,7 @@
       <div class="results-text">
         <h3>Paying back Child Benefit as tax</h3>
         <ul>
-          <li>carry on getting benefit and pay &pound;<span class="total-owed"></span> back at the end of the year through Self Assessment</li>
+          <li>carry on getting benefit and pay <span class="total-owed"><%= number_to_currency @calculator.owed, unit: "£", precision: 2 %></span> back at the end of the year through Self Assessment</li>
           <li>stop getting Child Benefit from now, and pay back any tax you owe from 2013-14 in next year's Self Assessment tax return</li>
         </ul>
       </div>
