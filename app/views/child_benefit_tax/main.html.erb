@@ -12,6 +12,8 @@
   <div class="calculator-container full-width group" id="calculator">
     <div class="calculator-questions">
       <%= form_tag("main") do %>
+        <!-- hidden field to store the tax year so it can persist -->
+        <input type="hidden" name="year" value="<%= params[:year] %>" />
         <fieldset>
           <h2><span class="steps" id="step-1"><span class="visuallyhidden">Step </span>1 </span>Adjusted net income</h2>
           <p class="group" id="adjusted-income">
