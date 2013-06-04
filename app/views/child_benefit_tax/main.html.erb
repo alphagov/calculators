@@ -1,15 +1,15 @@
 <% content_for :title, "Estimate your High Income Child Benefit Tax Charge" %>
-<% content_for :wrapper_classes, "answer" %>
+<% content_for :wrapper_classes, "answer full-width" %>
 
-<section id="content" role="main" class="group">
-
-  <header class="page-header group">
+<section id="content" role="main" class="group calculator-page">
+  <header class="page-header group full-width">
     <hgroup class="full-width">
-    <h1><span>Quick answer</span> Estimate your High Income Child Benefit Tax Charge for <%= params[:year].to_s %> to <%= params[:year].to_i + 1 %></h1>
+    <h1><span>Quick answer</span> Estimate your High Income Child Benefit Tax Charge for <%= @calculator.tax_year %> to <%= @calculator.tax_year + 1 %></h1>
     </hgroup>
     <a class="skip-to-related" href="#related">Not what you're looking for? ↓</a>
   </header>
-  <div class="calculator-container full-width group" id="calculator">
+
+  <section class="thirds" id="calculator">
     <div class="calculator-questions">
       <%= form_tag("main") do %>
         <!-- hidden field to store the tax year so it can persist -->
@@ -41,7 +41,7 @@
         <fieldset>
           <h2><span class="steps" id="step-2" ><span class="visuallyhidden">Step </span>2 </span>Number of children you're claiming for</h2>
           <p class="group" id="children-claim">
-            <label for="children">How many children will you or your partner be getting paid Child Benefit for from %{tax_year_start}?</label>
+          <label for="children">How many children will you or your partner be getting paid Child Benefit for from <%= @calculator.tax_year %>?</label>
             <input type="text" id="children" class="children" name="children_count" value="<%= params[:children_count] %>">
           </p>
         </fieldset>
@@ -57,7 +57,7 @@
           <% if @show_new_child_form %>
             <%= render "partials/add_new_child", :number => @calculator.starting_children.size + 1 %>
           <% end %>
-          <%= submit_tag("Add a new starting child") %>
+          <%= submit_tag("Add a new starting child", { :class => "button" }) %>
         </fieldset>
 
         <fieldset>
@@ -71,17 +71,27 @@
           <% if @show_old_child_form %>
             <%= render "partials/add_new_stopping_child", :number => @calculator.stopping_children.size + 1 %>
           <% end %>
-          <%= submit_tag("Add a new stopping child") %>
+          <%= submit_tag("Add a new stopping child", { :class => "button" }) %>
         </fieldset>
-        <%= submit_tag("Go") %>
+        <%= submit_tag("Go", { :class => "button" }) %>
       <% end %>
     </div>
-    <div class="calculator-results">
-      <h3>Results</h3>
-      <% if @calculator %>
-        <p>You owe <%= number_to_currency @calculator.owed, unit: "£", precision: 0 %></p>
-      <% end %>
-      <%= @calculator.inspect if @calculator %>
+    <div class="outcome">
+      <div class="results-box">
+        <h2>Results</h2>
+        <p>&pound;<span class="total-owed"><%= @calculator ? @calculator.owed : "..." %></span></p>
+        <ul>
+          <li>the person with the highest income will have to pay back</li>
+          <li>this is an estimate based on the figures you have provided</li>
+        </ul>
+      </div>
+      <div class="results-text">
+        <h3>Paying back Child Benefit as tax</h3>
+        <ul>
+          <li>carry on getting benefit and pay &pound;<span class="total-owed"></span> back at the end of the year through Self Assessment</li>
+          <li>stop getting Child Benefit from now, and pay back any tax you owe from 2013-14 in next year's Self Assessment tax return</li>
+        </ul>
+      </div>
     </div>
-  </div>
+  </section><!-- end .thirds -->
 </section>

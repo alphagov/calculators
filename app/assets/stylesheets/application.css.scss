@@ -1,24 +1,21 @@
+// from the toolkit gem
 @import "_colours";
 @import "_typography";
+@import "_conditionals";
+@import "_shims";
+@import "_css3";
+
+@import "_grid";
+@import "_buttons";
+@import "_panels";
+@import "_utils";
+@import "_form";
 
 
 @import "child_benefit";
 
-.calculator-container {
-  width: 100%;
+.calculator-page {
   background: #fff;
+  @include clearfix;
 }
 
-.calculator-questions, .calculator-results {
-  float: left;
-  display: block;
-  margin: 0;
-}
-
-.calculator-questions {
-  width: 60%;
-}
-
-.calculator-results {
-  width: 35%;
-}

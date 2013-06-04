@@ -1,4 +1,4 @@
-.category-page header.page-header hgroup h1 {
+.calculator-page header.page-header hgroup h1 {
   font-family: "nta",Arial,sans-serif;
   font-size: 48px;
   font-size: 4.8rem;
@@ -21,9 +21,15 @@
  */
 
 .form{
+  @include form(top);
+
   input[type='text'], input[type='email'] {
     background: $white;
   }
+}
+
+.thirds {
+   @include grid((2,1));
 }
 
 .form {
@@ -101,5 +107,5 @@
 }
 
 .button{
- // @include button;
+ @include button;
 }
