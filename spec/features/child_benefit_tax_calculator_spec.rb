@@ -37,4 +37,31 @@ feature "Child Benefit Tax Calculator" do
       end
     end
   end
+
+  describe "adding children" do
+    before(:each) do
+      visit "/child-benefit-tax-calculator"
+      click_link "Click if you pay tax on Child Benefit for the tax year 2012 to 2013"
+    end
+
+    describe "adding new stopping children" do
+      it "should show the new child form when you click add new child" do
+        click_button "Add a new starting child"
+        within "#add_new_starting_child" do
+          page.should have_content("When did you start getting Child Benefit for a new child?")
+        end
+      end
+    end
+
+    describe "adding new stopping children" do
+      it "should show the stopping child form when you click" do
+        click_button "Add a new stopping child"
+        within "#add_new_stopping_child" do
+          page.should have_content("When will you stop getting Child Benefit for this child?")
+        end
+      end
+
+    end
+
+  end
 end
