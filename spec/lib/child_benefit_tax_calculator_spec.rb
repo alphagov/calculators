@@ -14,10 +14,11 @@ describe ChildBenefitTaxCalculator do
       :gross_pension_contributions => 10,
       :net_pension_contributions => 10,
       :trading_losses_self_employed => 10,
+      :gift_aid_donations => 10
       :children_count => 1
     })
-    calc.total_annual_income.should == 30
-    calc.owed.should == 3
+    calc.total_annual_income.should == 40
+    calc.owed.should == 4
   end
 
   it "uses the total annual income if both are supplied" do
