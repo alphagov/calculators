@@ -5,7 +5,7 @@
 
   <header class="page-header group">
     <hgroup class="full-width">
-      <h1><span>Quick answer</span> Estimate your High Income Child Benefit Tax Charge</h1>
+    <h1><span>Quick answer</span> Estimate your High Income Child Benefit Tax Charge for <%= params[:year].to_s %> to <%= params[:year].to_i + 1 %></h1>
     </hgroup>
     <a class="skip-to-related" href="#related">Not what you're looking for? ↓</a>
   </header>
@@ -78,6 +78,9 @@
     </div>
     <div class="calculator-results">
       <h3>Results</h3>
+      <% if @calculator %>
+        <p>You owe <%= number_to_currency @calculator.owed, unit: "£", precision: 0 %></p>
+      <% end %>
       <%= @calculator.inspect if @calculator %>
     </div>
   </div>
