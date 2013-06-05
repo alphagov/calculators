@@ -36,25 +36,30 @@ describe ChildBenefitTaxCalculator do
     it "calculates the correct amount owed for % charge of 100" do
       calc = ChildBenefitTaxCalculator.new({
         :adjusted_net_income => "60001",
-        :children_count => "1"
+        :children_count => "1",
+        :year => "2012"
       })
-      calc.amount_owed.round(2).should == 312.31
+      calc.owed[:benefit_claimed_amount].round(1).should == 1055.6
+      calc.owed[:benefit_owed_amount].round(2).should == 243.6
     end
 
     it "calculates the corect amount for % charge of 99" do
       calc = ChildBenefitTaxCalculator.new({
         :adjusted_net_income => "59900",
-        :children_count => "1"
+        :children_count => "1",
+        :year => "2012"
       })
-      calc.amount_owed.round(2).should == 309.18
+      calc.owed[:benefit_claimed_amount].round(1).should == 1055.6
+      calc.owed[:benefit_owed_amount].round(2).should == 241.16
     end
 
     it "calculates the correct amount for income < 59900" do
       calc = ChildBenefitTaxCalculator.new({
         :adjusted_net_income => "54000",
-        :children_count => "1"
+        :children_count => "1",
+        :year => "2012"
       })
-      calc.amount_owed.round(2).should == 124.92
+      calc.owed[:benefit_owed_amount].round(2).should == 97.44
     end
   end
 end
