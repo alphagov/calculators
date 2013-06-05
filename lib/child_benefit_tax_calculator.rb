@@ -24,19 +24,30 @@ class ChildBenefitTaxCalculator
     end
 
     benefit_values[:benefit_tax] = percent_tax_charge * benefit_values[:benefit_taxable_amount]
+    benefit_values
   end
 
-
+  def amount_owed
+    owed[:benefit_tax]
+  end
 
   private
 
 
   def percent_tax_charge
-    20
+    if @adjusted_net_income >= 60001
+      100
+    elsif @adjusted_net_income >= 59900 && @adjusted_net_income <= 60000
+      99
+    else
+      ((@adjusted_net_income - 50000)/100).floor
+    end
   end
 
   def benefits_no_starting_stopping_children
 
+    # TODO: these date values are wrong
+    # need to clarify how the tax year affects them
     child_benefit_start_date = @tax_year == "2012" ? Date.parse("2012-04-06") : Date.parse("2013-04-06")
     child_benefit_end_date = @tax_year == "2012" ? Date.parse("2013-04-05") : Date.parse("2014-04-05")
 
