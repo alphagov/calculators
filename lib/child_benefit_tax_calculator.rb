@@ -26,19 +26,6 @@ class ChildBenefitTaxCalculator
 
   private
 
-  def percent_tax_charge
-    if @adjusted_net_income >= 60001
-      100
-    elsif @adjusted_net_income >= 59900 && @adjusted_net_income <= 60000
-      99
-    else
-      ((@adjusted_net_income - 50000)/100).floor
-    end
-  end
-
-  def benefit_taxable_weeks(start_date, end_date)
-    (( end_date - start_date ) / 7).floor
-  end
 
   def benefits_no_starting_stopping_children
     # benefit rates fixed until April 2014: gov.uk/child-benefit-rates
@@ -66,6 +53,20 @@ class ChildBenefitTaxCalculator
     }
   end
 
+
+  def percent_tax_charge
+    if @adjusted_net_income >= 60001
+      100
+    elsif @adjusted_net_income >= 59900 && @adjusted_net_income <= 60000
+      99
+    else
+      ((@adjusted_net_income - 50000)/100).floor
+    end
+  end
+
+  def benefit_taxable_weeks(start_date, end_date)
+    (( end_date - start_date ) / 7).floor
+  end
 
   def child_benefit_start_date
     @tax_year == 2012 ? Date.parse("2012-04-06") : Date.parse("2013-04-06")
