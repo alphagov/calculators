@@ -88,6 +88,19 @@ describe ChildBenefitTaxCalculator do
         })
         calc.owed[:benefit_owed_amount].round(1).should == 422.2
       end
+    end # tax year 2013-14
+  end # no starting / stopping children
+
+  describe "starting and stopping children" do
+    describe "tax year 2012" do
+      it "calculates correctly with starting children" do
+        calc = ChildBenefitTaxCalculator.new({
+          :adjusted_net_income => "61000",
+          :starting_children => [{ :year => "2013", :month => "03", :day => "01" }],
+          :year => "2012"
+        })
+        calc.owed[:benefit_owed_amount].round(1).should == 121.8
+      end
     end
   end
 end

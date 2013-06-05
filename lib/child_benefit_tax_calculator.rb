@@ -35,14 +35,9 @@ class ChildBenefitTaxCalculator
     # benefit rates fixed until April 2014: gov.uk/child-benefit-rates
     # 20.30 for 1st child, 13.40 for each next child
     benefit_weekly_amount = 0
+
     @children_count.times do |child_number|
       benefit_weekly_amount += ( child_number == 0 ? 20.3 : 13.4 )
-    end
-
-    taxable_weeks = if @tax_year == 2012
-        benefit_taxable_weeks(Date.parse("2013-01-07"), child_benefit_end_date)
-      else
-        benefit_taxable_weeks(child_benefit_start_date, child_benefit_end_date)
     end
 
     benefit_claimed_amount = benefit_weekly_amount * 52
@@ -57,6 +52,69 @@ class ChildBenefitTaxCalculator
     }
   end
 
+  def benefits_with_changing_children
+    all_weeks_children = {}
+    (child_benefit_start_date..child_benefit_end_date).each_slice(7) do |week|
+      all_weeks_children[week.first] = 0
+      @starting_children.each do |date|
+        child_start = parse_child_date(date)
+        if child_start <= week.first
+          all_weeks_children[week.first] += 1
+        end
+      end
+
+      @stopping_children.each do |date|
+        child_end = parse_child_date(date)
+        if child_end >= week.first
+          all_weeks_children[week.first] += 1
+        end
+      end
+    end
+
+    # calculate taxable total for all weeks
+    all_weeks_sum = all_weeks_children.values.inject(0) do |sum, n|
+      sum + weekly_sum_for_children(n)
+    end
+
+
+    if @tax_year == 2012
+      # only taxable from 7/01/2013
+      taxed_weeks_children = all_weeks_children.select do |key, val|
+        (Date.parse("2013-01-07")..child_benefit_end_date).include?(key)
+      end
+      taxed_weeks_sum = taxed_weeks_children.values.inject(0) do |sum, n|
+        sum + weekly_sum_for_children(n)
+      end
+    else
+      # taxing the entire year
+      taxed_weeks_children = all_weeks
+      taxed_weeks_sum = all_weeks_sum
+    end
+
+    {
+      :benefit_taxable_amount => taxed_weeks_sum,
+      :benefit_taxable_weeks => taxed_weeks_children.length,
+      :benefit_claimed_amount => all_weeks_sum,
+      :benefit_claimed_weeks => 52,
+      :benefit_owed_amount =>taxed_weeks_sum * (percent_tax_charge / 100.0)
+    }
+  end
+
+  def weekly_sum_for_children(num_children)
+    if num_children > 0
+      ( 1 * 20.3 + (num_children - 1 ) * 13.4 )
+    else
+      0
+    end
+  end
+
+  def taxable_weeks
+    if @tax_year == 2012
+      benefit_taxable_weeks(Date.parse("2013-01-07"), child_benefit_end_date)
+    else
+      benefit_taxable_weeks(child_benefit_start_date, child_benefit_end_date)
+    end
+  end
 
   def percent_tax_charge
     if @adjusted_net_income >= 60001
@@ -70,6 +128,10 @@ class ChildBenefitTaxCalculator
 
   def benefit_taxable_weeks(start_date, end_date)
     (( end_date - start_date ) / 7).floor
+  end
+
+  def parse_child_date(date)
+    Date.parse("#{date[:year]}-#{date[:month]}-#{date[:day]}")
   end
 
   def child_benefit_start_date
