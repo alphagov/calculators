@@ -33,7 +33,7 @@ feature "Child Benefit Tax Calculator" do
       fill_in "children", :with => "1"
       click_button "Go"
       within ".outcome" do
-        page.should have_content("£312.31")
+        page.should have_content("£243.60")
       end
     end
   end

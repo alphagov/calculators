@@ -24,6 +24,10 @@ class ChildBenefitTaxCalculator
     end
   end
 
+  def amount_owed
+    owed[:benefit_owed_amount]
+  end
+
   private
 
 
