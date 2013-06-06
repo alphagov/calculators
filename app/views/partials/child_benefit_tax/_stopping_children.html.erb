@@ -1,0 +1,8 @@
+<% @calculator.stopping_children.each_with_index do |child, index| %>
+  <%= render "partials/child_benefit_tax/add_new_stopping_child", :child => child, :number => index + 1 %>
+<% end %>
+
+<% if @show_old_child_form %>
+  <%= render "partials/child_benefit_tax/add_new_stopping_child", :number => @calculator.stopping_children.size + 1 %>
+<% end %>
+<%= submit_tag("Add a new stopping child", { :class => "button" }) %>
