@@ -106,7 +106,7 @@ class ChildBenefitTaxCalculator
 
   def weekly_sum_for_children(num_children)
     if num_children > 0
-      1 * FIRST_CHILD_RATE + (num_children - 1 ) * FURTHER_CHILD_RATE
+      FIRST_CHILD_RATE + (num_children - 1 ) * FURTHER_CHILD_RATE
     else
       0
     end
@@ -136,7 +136,7 @@ class ChildBenefitTaxCalculator
   end
 
   def parse_child_date(date)
-    Date.new(date[:year], date[:month], date[:day])
+    Date.new(date[:year].to_i, date[:month].to_i, date[:day].to_i)
   end
 
   def child_benefit_start_date
