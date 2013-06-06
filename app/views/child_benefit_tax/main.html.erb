@@ -30,7 +30,7 @@
 
         <fieldset>
           <%= step(2, "Number of children you're claiming for") %>
-          <%= number_input("How many children will you or your partner be getting paid Child Benefit for from #{@calculator.tax_year}?", "children_count") %>
+          <%= number_input("How many children will you or your partner be getting paid Child Benefit for from #{@calculator.child_benefit_start_date.strftime("%d-%m-%Y")}?", "children_count") %>
         </fieldset>
 
         <fieldset id="add_new_starting_child">
