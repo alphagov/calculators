@@ -34,6 +34,16 @@ class ChildBenefitTaxCalculator
     owed[:benefit_owed_amount].abs
   end
 
+  def percent_tax_charge
+    if @adjusted_net_income >= 60001
+      100
+    elsif (59900..60000).cover?(@adjusted_net_income)
+      99
+    else
+      ((@adjusted_net_income - 50000)/100.0).floor
+    end
+  end
+
   private
 
   def benefits_no_starting_stopping_children
@@ -121,15 +131,6 @@ class ChildBenefitTaxCalculator
     end
   end
 
-  def percent_tax_charge
-    if @adjusted_net_income >= 60001
-      100
-    elsif (59900..60000).cover?(@adjusted_net_income)
-      99
-    else
-      ((@adjusted_net_income - 50000)/100.0).floor
-    end
-  end
 
   def benefit_taxable_weeks(start_date, end_date)
     (( end_date - start_date ) / 7).floor
