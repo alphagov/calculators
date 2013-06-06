@@ -18,14 +18,19 @@
 
         <fieldset>
           <%= step(1, "Adjusted net income") %>
-          <%= number_input("Adjusted Net Income", "adjusted_net_income", "£") %>
+          <% unless @show_extra_income %>
+            <%= number_input("Adjusted Net Income", "adjusted_net_income", "£") %>
+            <%= submit_tag("I don't know my net income", { :class => "button" }) %>
+          <% end %>
 
-          <p>If you don't know your adjusted net income, you can fill out the five fields below:</p>
-          <%= number_input("Total annual income before tax", "total_annual_income", "£") %>
-          <%= number_input("Gross pension contributions", "gross_pension_contributons", "£") %>
-          <%= number_input("Net pension contributions", "net_pension_contributions", "£") %>
-          <%= number_input("Trading losses if you're self-employed", "trading_losses_self_employed", "£") %>
-          <%= number_input("Gift Aid donations", "gift_aid_donations", "£") %>
+          <% if @show_extra_income %>
+            <p>If you don't know your adjusted net income, you can fill out the five fields below:</p>
+            <%= number_input("Total annual income before tax", "total_annual_income", "£") %>
+            <%= number_input("Gross pension contributions", "gross_pension_contributons", "£") %>
+            <%= number_input("Net pension contributions", "net_pension_contributions", "£") %>
+            <%= number_input("Trading losses if you're self-employed", "trading_losses_self_employed", "£") %>
+            <%= number_input("Gift Aid donations", "gift_aid_donations", "£") %>
+          <% end %>
         </fieldset>
 
         <fieldset>
