@@ -1,0 +1,15 @@
+<div class="results-box">
+  <h2>Results</h2>
+  <p><span class="total-owed"><%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %></span></p>
+  <ul>
+    <li>the person with the highest income will have to pay back</li>
+    <li>this is an estimate based on the figures you have provided</li>
+  </ul>
+</div>
+<div class="results-text">
+  <h3>Paying back Child Benefit as tax</h3>
+  <ul>
+    <li>carry on getting benefit and pay <span class="total-owed"><%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %></span> back at the end of the year through Self Assessment</li>
+    <li>stop getting Child Benefit from now, and pay back any tax you owe from 2013-14 in next year's Self Assessment tax return</li>
+  </ul>
+</div>

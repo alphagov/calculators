@@ -13,7 +13,6 @@ feature "Child Benefit Tax Calculator" do
   it "should redirect to the landing page if no tax year exists" do
     visit "/child-benefit-tax-calculator/main"
     current_path.should == "/child-benefit-tax-calculator"
-
   end
 
   it "should store the tax year when the user clicks it" do
