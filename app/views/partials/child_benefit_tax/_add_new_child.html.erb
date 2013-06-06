@@ -3,6 +3,6 @@
   <legend><span>When did you start getting Child Benefit for a new child?</span></legend>
   <p class="group">
     <% date_to_use = defined?(child) ? DateTime.new(child["year"].to_i, child["month"].to_i, child["day"].to_i) : @calculator.child_benefit_start_date %>
-    <%= select_date date_to_use, :prefix => "starting_children[]", :order => [:day, :month, :year] %>
+    <%= select_date date_to_use, :prefix => "starting_children[]", :order => [:day, :month, :year], :end_year => @calculator.child_benefit_end_date.year, :start_year => @calculator.child_benefit_start_date.year %>
   </p>
 </fieldset>
