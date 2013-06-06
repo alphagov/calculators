@@ -35,9 +35,18 @@ feature "Child Benefit Tax Calculator" do
         page.should have_content("£243.60")
       end
     end
+
+    it "calculates correctly for >1 children" do
+      fill_in "adjusted_net_income", :with => "60001"
+      fill_in "children", :with => "2"
+      click_button "Go"
+      within ".outcome" do
+        page.should have_content("£404.40")
+      end
+    end
   end
 
-  describe "adding children" do
+  describe "adding children for 2012-13" do
     before(:each) do
       visit "/child-benefit-tax-calculator"
       click_link "Click if you pay tax on Child Benefit for the tax year 2012 to 2013"
@@ -61,9 +70,24 @@ feature "Child Benefit Tax Calculator" do
         end
       end
     end
-  end
 
-  describe "filling out the form from top to bottom" do
-    it "should calculate the correct values"
-  end
+    describe "calculations involving starting children" do
+      it "should calculate the correct result" do
+        fill_in "adjusted_net_income", :with => "600001"
+        click_button "Add a new starting child"
+        within "#add_new_starting_child" do
+          select "1", :from => "starting_children[][day]"
+          select "May", :from => "starting_children[][month]"
+          select "2012", :from => "starting_children[][year]"
+        end
+
+        click_button "Go"
+
+        within ".outcome" do
+          page.should have_content "£263.90"
+        end
+      end
+    end
+  end # adding-children 2012-13
+
 end
