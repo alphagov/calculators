@@ -44,6 +44,14 @@ class ChildBenefitTaxCalculator
     end
   end
 
+  def child_benefit_start_date
+    TAX_YEARS[@tax_year.to_s].first
+  end
+
+  def child_benefit_end_date
+    TAX_YEARS[@tax_year.to_s].last
+  end
+
   private
 
   def benefits_no_starting_stopping_children
@@ -140,13 +148,6 @@ class ChildBenefitTaxCalculator
     Date.new(date[:year].to_i, date[:month].to_i, date[:day].to_i)
   end
 
-  def child_benefit_start_date
-    TAX_YEARS[@tax_year.to_s].first
-  end
-
-  def child_benefit_end_date
-    TAX_YEARS[@tax_year.to_s].last
-  end
 
   def calculate_adjusted_income(adjusted_income)
     if adjusted_income == 0
