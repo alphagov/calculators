@@ -6,7 +6,7 @@ class ChildBenefitTaxCalculator
 
   TAX_YEARS = {
     "2012" => [Date.parse("2012-04-06"), Date.parse("2013-04-05")],
-    "2013" => [Date.parse("2013-04-06"), Date.parse("2014-04-05")]
+    "2013" => [Date.parse("2013-04-06"), Date.parse("2014-04-05")],
   }
 
   def initialize(params)
@@ -16,11 +16,14 @@ class ChildBenefitTaxCalculator
     @trading_losses_self_employed = params[:trading_losses_self_employed].to_i
     @gift_aid_donations = params[:gift_aid_donations].to_i
     @adjusted_net_income = calculate_adjusted_income(params[:adjusted_net_income].to_i)
-    @starting_children = params[:starting_children] || []
-    @stopping_children = params[:stopping_children] || []
+    @starting_children = process_starting_children(params[:starting_children] || [])
+    @stopping_children = (params[:stopping_children] || []).map do |end_child|
+      StoppingChild.new(end_child)
+    end
     @tax_year = params[:year].to_i
     @children_count = params[:children_count].to_i
   end
+
 
   def owed
     if @starting_children.empty? && @stopping_children.empty?
@@ -54,6 +57,14 @@ class ChildBenefitTaxCalculator
 
   private
 
+  def process_starting_children(children)
+    starting_children = []
+    children.each do |number, info|
+      starting_children << StartingChild.new(number, info)
+    end
+    starting_children
+  end
+
   def benefits_no_starting_stopping_children
     # benefit rates fixed until April 2014: gov.uk/child-benefit-rates
     # 20.30 for 1st child, 13.40 for each next child
@@ -75,20 +86,28 @@ class ChildBenefitTaxCalculator
     }
   end
 
+  def days_include_week?(start_date, end_date, week_start_date)
+    if start_date.nil?
+      end_date >= week_start_date
+    elsif end_date.nil?
+      start_date <= week_start_date
+    else
+      (start_date..end_date).cover?(week_start_date)
+    end
+  end
+
   def benefits_with_changing_children
     all_weeks_children = {}
     (child_benefit_start_date..child_benefit_end_date).each_slice(7) do |week|
       all_weeks_children[week.first] = 0
-      @starting_children.each do |date|
-        child_start = parse_child_date(date)
-        if child_start <= week.first
+      @starting_children.each do |child|
+        if days_include_week?(child.start_date, child.end_date, week.first)
           all_weeks_children[week.first] += 1
         end
       end
 
-      @stopping_children.each do |date|
-        child_end = parse_child_date(date)
-        if child_end >= week.first
+      @stopping_children.each do |child|
+        if child.end_date >= week.first
           all_weeks_children[week.first] += 1
         end
       end
@@ -157,3 +176,22 @@ class ChildBenefitTaxCalculator
     end
   end
 end
+
+class StartingChild
+  attr_reader :start_date, :end_date, :no_tax_end, :number
+  def initialize(number, params)
+    @start_date = Date.new(params[:start][:year].to_i, params[:start][:month].to_i, params[:start][:day].to_i) || nil
+    @end_date = params.has_key?(:no_stop) ? nil : Date.new(params[:stop][:year].to_i, params[:stop][:month].to_i, params[:stop][:day].to_i) || nil
+    @no_tax_end = params.has_key?(:no_stop)
+    @number = number
+  end
+end
+
+class StoppingChild
+  attr_reader :end_date
+  def initialize(params)
+    @end_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+  end
+end
+
+

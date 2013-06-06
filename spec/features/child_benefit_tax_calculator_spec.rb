@@ -21,6 +21,22 @@ feature "Child Benefit Tax Calculator" do
     page.should have_content("for 2012 to 2013")
   end
 
+  it "should show the extra income fields if you dont know your net income" do
+    visit "/child-benefit-tax-calculator"
+    click_link "Click if you pay tax on Child Benefit for the tax year 2012 to 2013"
+    page.should_not have_field("total_annual_income")
+    page.should_not have_field("gross_pension_contributons")
+    page.should_not have_field("net_pension_contributions")
+    page.should_not have_field("trading_losses_self_employed")
+    page.should_not have_field("gift_aid_donations")
+    click_button "I don't know my net income"
+    page.should have_field("total_annual_income")
+    page.should have_field("gross_pension_contributons")
+    page.should have_field("net_pension_contributions")
+    page.should have_field("trading_losses_self_employed")
+    page.should have_field("gift_aid_donations")
+  end
+
   describe "Calculating the results for 2012-13" do
     before(:each) do
       visit "/child-benefit-tax-calculator"
@@ -57,7 +73,7 @@ feature "Child Benefit Tax Calculator" do
         click_button "Add a new starting child"
         within "#add_new_starting_child" do
           page.should have_content("When did you start getting Child Benefit for a new child?")
-          page.should have_field("starting_children[][year]")
+          page.should have_field("starting_children[1][start][year]")
         end
       end
     end
@@ -76,18 +92,17 @@ feature "Child Benefit Tax Calculator" do
         fill_in "adjusted_net_income", :with => "600001"
         click_button "Add a new starting child"
         within "#add_new_starting_child" do
-          select "1", :from => "starting_children[][day]"
-          select "May", :from => "starting_children[][month]"
-          select "2012", :from => "starting_children[][year]"
+          select "1", :from => "starting_children[1][start][day]"
+          select "May", :from => "starting_children[1][start][month]"
+          select "2012", :from => "starting_children[1][start][year]"
+          check "starting_children[1][no_stop]"
         end
 
         click_button "Go"
-
         within ".outcome" do
           page.should have_content "£263.90"
         end
       end
     end
   end # adding-children 2012-13
-
 end
