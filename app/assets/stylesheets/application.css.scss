@@ -5,14 +5,14 @@
 @import "_shims";
 @import "_css3";
 
-@import "_grid";
-@import "_buttons";
-@import "_panels";
-@import "_utils";
-@import "_form";
+@import "design-principles/_grid";
+@import "design-principles/_buttons";
+@import "design-principles/_panels";
+@import "design-principles/_utils";
+@import "design-principles/_form";
 
 
-@import "child_benefit";
+@import "calculators/child_benefit";
 
 .calculator-page {
   background: #fff;
