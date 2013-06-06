@@ -23,6 +23,7 @@ module Calculators
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -62,9 +63,14 @@ module Calculators
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    config.assets.precompile += %w(
+      application.css
+    )
+
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     config.assets.prefix = 'calculators'
+    config.assets.manifest = Rails.root.join 'public/calculators'
 
     # Disable Rack::Cache
     config.action_dispatch.rack_cache = nil
