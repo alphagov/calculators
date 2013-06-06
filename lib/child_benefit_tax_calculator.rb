@@ -87,7 +87,7 @@ class ChildBenefitTaxCalculator
       end
     else
       # taxing the entire year
-      taxed_weeks_children = all_weeks
+      taxed_weeks_children = all_weeks_children
       taxed_weeks_sum = all_weeks_sum
     end
 
