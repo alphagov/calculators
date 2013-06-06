@@ -11,6 +11,7 @@
 
   <section class="thirds" id="calculator">
     <div class="calculator-questions">
+      <p>Fill out your details in the calculator below to see if you need to pay back any of your Child Benefit as tax.</p>
       <%= form_tag("main") do %>
         <!-- hidden field to store the tax year so it can persist -->
         <input type="hidden" name="year" value="<%= params[:year] %>" />

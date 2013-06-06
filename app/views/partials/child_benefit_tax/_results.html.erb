@@ -1,10 +1,27 @@
 <div class="results-box">
   <h2>Results</h2>
   <p><span class="total-owed"><%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %></span></p>
-  <ul>
-    <li>the person with the highest income will have to pay back</li>
-    <li>this is an estimate based on the figures you have provided</li>
-  </ul>
+  <% if @calculator.tax_year == 2012 %>
+    <% if @calculator.amount_owed == 0 %>
+      <p>You don’t need to pay back any of your Child Benefit as tax. This is an estimate based on the figures you provided.</p>
+
+      <p>^Come back to the calculator if your circumstances change.^</p>
+    <% else %>
+      <p>The person with the highest income has to pay back <%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %> (<%= @calculator.percent_tax_charge %>% of the total Child Benefit received). This is an estimate based on the figures you provided.</p>
+
+      <p>^You only have to pay tax back on Child Benefit received between 7 January and 5 April.^</p>
+      <%# owe money %>
+    <% end %>
+  <% else %>
+    <%# tax year 2013-14 %>
+    <% if @calculator.amount_owed == 0 %>
+      <p>You won’t need to pay back any of your Child Benefit as tax. This is an estimate based on the figures you provided. </p>
+      <p>^Come back to the calculator if your circumstances change.^</p>
+    <% else %>
+      <%# owe money %>
+      <p>The person with the highest income has to pay back <%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %> (<%= @calculator.percent_tax_charge %>% of the total Child Benefit received). This is an estimate based on the figures you provided.</p>
+    <% end %>
+  <% end %>
 </div>
 <div class="results-text">
   <h3>Paying back Child Benefit as tax</h3>
