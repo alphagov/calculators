@@ -11,10 +11,29 @@
 
 
 <div class="results-text">
-  <h3>Paying back Child Benefit as tax</h3>
-  <p>Come back to the calculator if your circumstances change.</p>
+  <p>You only have to pay tax back on Child Benefit received between 7 January and 5 April.</p>
+
+  <h4>Self Assessment deadlines</h4>
+
+  <p>You will have to pay back <%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %> from the tax year 2012 to 2013 through Self Assessment. You’ll need to <a href="/register-for-aslf-assessment">register for Self Assessment</a> by 5 October, and complete your tax return in time.
+
+  <p>The deadlines are:</p>
+
   <ul>
-    <li>carry on getting benefit and pay <span class="total-owed"><%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %></span> back at the end of the year through Self Assessment</li>
-    <li>stop getting Child Benefit from now, and pay back any tax you owe from 2013-14 in next year's Self Assessment tax return</li>
+    <li>paper tax returns - by midnight 31 October 2013</li>
+    <li>online tax returns - by midnight 31 January 2014</li>
+    <li>final payment of any tax due - by midnight 31 January 2014</li>
   </ul>
+
+  <p>You’ll have to <a href="/self-assessment-tax-returns/penalties">pay a penalty</a> if you miss the deadline.</p>
+
+  <h4>What to do next</h4>
+
+  <p>For the tax year 2013 to 2014, you’ll need to pay back any tax you already owe through Self Assessment. From now, you can either:</p>
+  <ul>
+    <li>carry on getting Child Benefit for the year, and pay whatever you owe back as tax</li>
+    <li><a href="http://hmrc.gov.uk/childbenefitcharge/stopchbpayments.htm" rel="external">stop getting Child Benefit</a></li>
+  </ul>
+  <p>Only the person getting Child Benefit can ask for it to be stopped.</p>
+  <p>Come back to the calculator if your circumstances change.</p>
 </div>
