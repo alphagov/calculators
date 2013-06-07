@@ -1,17 +1,44 @@
 <div class="results-box">
-  <p><span class="total-owed"><%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %></span></p>
+  <p class="amount"><strong><%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %></strong></p>
   <% if @calculator.amount_owed == 0 %>
     <p>You won’t need to pay back any of your Child Benefit as tax. This is an estimate based on the figures you provided. </p>
     <div class="application-notice info-notice"><p>Come back to the calculator if your circumstances change.</p></div>
   <% else %>
-    <%# owe money %>
     <p>The person with the highest income has to pay back <%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %> (<%= @calculator.percent_tax_charge %>% of the total Child Benefit received). This is an estimate based on the figures you provided.</p>
   <% end %>
 </div>
+
 <div class="results-text">
-  <h3>Paying back Child Benefit as tax</h3>
+  <h4>Paying back Child Benefit as tax</h4>
+  <p>You’ll need to pay back any tax you already owe through Self Assessment. From now, you can either:</p>
   <ul>
-    <li>carry on getting benefit and pay <span class="total-owed"><%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %></span> back at the end of the year through Self Assessment</li>
-    <li>stop getting Child Benefit from now, and pay back any tax you owe from 2013-14 in next year's Self Assessment tax return</li>
+    <li>carry on getting Child Benefit for the year, and pay whatever you owe back as tax</li>
+    <li><a href="http://hmrc.gov.uk/childbenefitcharge/stopchbpayments.htm" rel="external">stop getting Child Benefit</a>, and pay whatever you already owe back as tax</li>
   </ul>
+
+  <p>Only the person getting Child Benefit can ask for it to be stopped.</p>
+
+  <% if @calculator.amount_owed > 0 && @calculator.starting_children.any? %>
+    <h4>Paying back Child Benefit as tax</h4>
+    <p>You’ll need to pay back any tax you already owe through Self Assessment. From now, you can either:</p>
+    <ul>
+      <li>carry on getting Child Benefit for the year, and pay whatever you owe back as tax</li>
+      <li><a href="http://hmrc.gov.uk/childbenefitcharge/stopchbpayments.htm" rel="external">stop getting Child Benefit</a>, and pay whatever you already owe back as tax</li>
+    </ul>
+    <p>Only the person getting Child Benefit can ask for it to be stopped.</p>
+
+    <h4>New children</h4>
+    <p>From now, you can either:</p>
+    <ul>
+      <li>carry on getting Child Benefit for the year, and pay whatever you owe back as tax</li>
+      <li>register the child for Child Benefit and ask for it not to be paid to you</li>
+    </ul>
+
+    %**NOTE: need to find out how to do the latter**%
+  <% end %>
+  <h4>Self Assessment deadlines</h4>
+
+  <p>You will have to pay back the tax you owe through Self Assessment. You’ll need to <a href="/register-for-self-assessment">register for Self Assessment</a> by 5 October 2014, and complete your tax return in time.</p>
+
+  <p>Come back to the calculator if your circumstances change.</p>
 </div>
