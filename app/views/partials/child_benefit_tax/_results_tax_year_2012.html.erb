@@ -29,11 +29,36 @@
 
   <h4>What to do next</h4>
 
-  <p>For the tax year 2013 to 2014, you’ll need to pay back any tax you already owe through Self Assessment. From now, you can either:</p>
-  <ul>
-    <li>carry on getting Child Benefit for the year, and pay whatever you owe back as tax</li>
-    <li><a href="http://hmrc.gov.uk/childbenefitcharge/stopchbpayments.htm" rel="external">stop getting Child Benefit</a></li>
-  </ul>
+  <% if @calculator.amount_owed > 0 && @calculator.starting_children.any? %>
+    <p>You’ll need to pay back any tax you already owe through Self Assessment. From now, you can either:</p>
+    <ul>
+      <li>carry on getting Child Benefit for the year, and pay whatever you owe back as tax</li>
+      <li><a href="http://hmrc.gov.uk/childbenefitcharge/stopchbpayments.htm" rel="external">stop getting Child Benefit</a>, and pay whatever you already owe back as tax</li>
+    </ul>
+  <% else %>
+    <p>For the tax year 2013 to 2014, you’ll need to pay back any tax you already owe through Self Assessment. From now, you can either:</p>
+    <ul>
+      <li>carry on getting Child Benefit for the year, and pay whatever you owe back as tax</li>
+      <li><a href="http://hmrc.gov.uk/childbenefitcharge/stopchbpayments.htm" rel="external">stop getting Child Benefit</a></li>
+    </ul>
+  <% end %>
+
   <p>Only the person getting Child Benefit can ask for it to be stopped.</p>
+
+  <% if @calculator.amount_owed > 0 && @calculator.starting_children.any? %>
+
+    <h4>New children</h4>
+
+    <p>From now, you can either:</p>
+
+    <ul>
+      <li>carry on getting Child Benefit for the year, and pay whatever you owe back as tax</li>
+      <li>register the child for Child Benefit and ask for it not to be paid to you</li>
+    </ul>
+
+    %**NOTE: need to find out how to do the latter**%
+  <% end %>
+
   <p>Come back to the calculator if your circumstances change.</p>
+
 </div>
