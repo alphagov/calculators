@@ -21,7 +21,7 @@
             <%= step(1, "Adjusted net income") %>
             <% unless @show_extra_income %>
               <%= number_input("Adjusted Net Income", "adjusted_net_income", "£") %>
-              <%= submit_tag("I don't know my net income", { :class => "button" }) %>
+              <%= submit_tag("I don't know my net income", { :class => "button button-secondary" }) %>
             <% end %>
 
             <% if @show_extra_income %>

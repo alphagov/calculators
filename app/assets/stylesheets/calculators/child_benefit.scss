@@ -43,6 +43,17 @@ article {
   }
 }
 
+.button-secondary {
+  color: #0b0c0c;
+  background-color: $grey-3;
+}
+
+.button-secondary:focus,
+.button-secondary:hover {
+  color: #0b0c0c;
+  background-color: darken($grey-3, 10%);
+}
+
 .form {
   label {
     display: block;
@@ -75,7 +86,7 @@ article {
   border: 5px solid black;
   padding: 10px;
   margin-bottom: 40px;
-  .total-owed {
+  .amount strong {
     font-size: 40px;
   }
 }

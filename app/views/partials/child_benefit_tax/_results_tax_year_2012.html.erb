@@ -1,5 +1,5 @@
 <div class="results-box">
-  <p><span class="total-owed"><%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %></span></p>
+  <p class="amount"><strong><%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %></strong></p>
   <% if @calculator.amount_owed == 0 %>
     <p>You don’t need to pay back any of your Child Benefit as tax. This is an estimate based on the figures you provided.</p>
 
@@ -8,6 +8,8 @@
 
   <% end %>
 </div>
+
+
 <div class="results-text">
   <h3>Paying back Child Benefit as tax</h3>
   <p>Come back to the calculator if your circumstances change.</p>
