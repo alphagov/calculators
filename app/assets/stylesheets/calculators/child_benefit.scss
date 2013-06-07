@@ -50,6 +50,7 @@ article {
 
 .button {
   @include core-19;
+  font-weight: bold;
 }
 
 fieldset .button {
