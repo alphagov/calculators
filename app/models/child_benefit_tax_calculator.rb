@@ -9,7 +9,7 @@ class ChildBenefitTaxCalculator
     "2013" => [Date.parse("2013-04-06"), Date.parse("2014-04-05")],
   }
 
-  def initialize(params)
+  def initialize(params = {})
     @total_annual_income = params[:total_annual_income].to_i
     @gross_pension_contributions = params[:gross_pension_contributions].to_i
     @net_pension_contributions = params[:net_pension_contributions].to_i
@@ -53,6 +53,10 @@ class ChildBenefitTaxCalculator
 
   def child_benefit_end_date
     TAX_YEARS[@tax_year.to_s].last
+  end
+
+  def can_calculate?
+    @tax_year && @adjusted_net_income > 0 && ( @children_count > 0 || @starting_children.present? || @stopping_children.present? )
   end
 
   private

@@ -1,18 +1,16 @@
+// ===================================================
+// FORMS
+//
+// Native form controls vary in size across browser
+// and OS. This can throw out alignments by a few px.
+// The styles are currently optimised for Chrome OS X.
+
 @mixin form($label-alignment: top, $label-width: 8em, $legend-colour: $text-colour) {
 
   // FORM ELEMENT STYLES
 
-  // Form element groups
-
-  .group{
-    // Same as standard paragraph style
-    @include core-19;
-    margin: 0.75em 0;
-  }
-
   // Text fields and textareas
   input[type="text"],
-  input[type="password"],
   input[type="email"],
   input[type="date"],
   input[type="datetime"],
@@ -61,12 +59,19 @@
       width: auto;
       float: none;
       text-align: left;
+      //margin: 0.25em 0;
     }
     li {
       list-style-type: none;
       list-style-image: none;
       margin: 0;
+      padding: 0.25em 0;
+      // For list-based markup
+      label{
+        display: inline;
+      }
     }
+      
   }
 
   input[type="checkbox"],
@@ -75,7 +80,7 @@
     vertical-align: 2px;
   }
 
-  // Help text  
+  // Hint text  
   .hint {
     clear: left;
     display: block;
@@ -85,8 +90,8 @@
     &:first-child{ padding-bottom: 0.25em; }
   }
 
-  .inline .help {
-    float: left;
+  .inline.hint {
+    display: inline-block;
   }
 
   // Mandatory '*' message
@@ -96,7 +101,8 @@
   }
 
   // Action buttons
-  .action.group .button{
+  .action.group .button,
+  .action.group .btn {
     margin-right: 0.5em;
   }
 
@@ -139,7 +145,7 @@
   // Validation summary
   .validation-summary{
     border: 3px solid $mellow-red;
-    @include panel(lighten($mellow-red, 45%));
+    // @include panel(lighten($mellow-red, 45%));
     h1{
       margin-bottom: 0;
     }
@@ -199,6 +205,7 @@
   input.full-name   {width: $x-large;}
   input.street      {width: $large;}
   input.town        {width: $large;}
+  input.small       {width: $small;}
   input.postcode    {width: $small;}
   textarea.big      {width: $x-large;
                     height: $medium;}
@@ -207,13 +214,115 @@
   // LABEL POSITIONING
 
   // Left or right aligned labels
-
-
-
-
   @if ($label-alignment == left or $label-alignment == right) {
-   
-    @include form-horizontal($label-alignment, $label-width)
+    label{
+      @include inline-block;
+
+      text-align: #{$label-alignment};
+      width: $label-width;
+      // Maintain field alignment if label is hidden
+      &.visuallyhidden {
+        + input,
+        + select,
+        + textarea {
+          margin-left: $label-width + 0.7em; 
+        }
+      }
+    }
+    // Maintain help text and button alignment with form fields with side-aligned labels
+    .hint{ margin-left: $label-width + 2.25em; }
+    .action.group { padding-left: $label-width + 0.5em; }
+
+    input,
+    select,
+    textarea,
+    .uneditable-field{
+      @include inline-block;
+      margin: 0 0.5em;
+    }
+    input[type="checkbox"]{
+      margin-left: 0.25em;
+    }
+    input[type="radio"]{
+      margin-left: 0em;
+    }
+    select{
+      margin: 0.25em 0.5em;
+    }
+
+    fieldset{
+      legend{
+        display: block;
+        padding-left: $label-width - 1em; // Align legend with fields (needs offset)    
+      }
+      // Nested fieldsets
+      fieldset{
+        margin-top: 2em;
+        legend {
+          padding-left: 0;
+          //line-height: 0;
+          margin-bottom: 0;
+          // Left/right aligned nested fieldset legends need a span inside them
+          span{
+            width: $label-width;
+            text-align: #{$label-alignment};
+            position: relative;
+            float: left;
+            margin: 0.25em 0;
+          }
+        }
+        // Shift controls up
+        // To do: Make this work properly for non-inline option groups
+          .inline {       
+            .group{
+              margin-bottom: 0.5em;
+            }
+          }
+
+      }
+    }
+
+    // Option groups
+    .option.group {
+      label{
+        display: block;
+        padding-left: $label-width + 0.5em;
+      }
+      .validation-message{
+        width: $label-width;
+        display: block;
+        float: left;
+      }
+    }
+
+    // Inline form controls
+    .inline{
+      padding-left: $label-width + 1.75em;
+      label{
+        width: auto;
+        float: none;
+        margin-left: 0.5em;
+        text-align: left;
+        // Reset left margins assigned above
+        &.visuallyhidden {
+          + input,
+          + select,
+          + textarea {
+            margin-left: 0.5em;
+            margin-right: 0;
+          }
+        }
+      }
+      // Inline option groups
+      &.option.group {
+        padding-left: $label-width + 1.5em;
+        //padding-top: 0.25em;
+        label{
+          padding-left: 0;
+        }
+      }
+    }
+
 
   // Top-aligned labels
   } @else { 
@@ -314,127 +423,13 @@ input:-moz-placeholder {  padding-top: 0.15em; color: $grey-1; }
 
 }
 
-// Extra styles for left or right label alignments
-// This is used by the general 'form' mixin, but can be called independantly
-
-@mixin form-horizontal($label-alignment: left, $label-width: 8em){
-  label{
-    @include inline-block;
-
-    text-align: #{$label-alignment};
-    width: $label-width;
-    // Maintain field alignment if label is hidden
-    &.visuallyhidden {
-      + input,
-      + select,
-      + textarea {
-        margin-left: $label-width + 0.7em; 
-      }
-    }
-  }
-  // Maintain help text and button alignment with form fields with side-aligned labels
-  .hint{ margin-left: $label-width + 2.25em; }
-  .action.group { padding-left: $label-width; }
-
-  input,
-  select,
-  textarea,
-  .uneditable-field{
-    @include inline-block;
-    margin: 0 0.5em;
-  }
-  input[type="checkbox"]{
-    margin-left: 0.25em;
-  }
-  input[type="radio"]{
-    margin-left: 0em;
-  }
-  select{
-    margin: 0.25em 0.5em;
-  }
-
-  fieldset{
-    legend{
-      display: block;
-      padding-left: $label-width - 1em; // Align legend with fields (needs offset)    
-    }
-    // Nested fieldsets
-    fieldset{
-      margin-top: 2em;
-      legend {
-        padding-left: 0;
-        //line-height: 0;
-        margin-bottom: 0;
-        // Left/right aligned nested fieldset legends need a span inside them
-        span{
-          width: $label-width;
-          text-align: #{$label-alignment};
-          position: relative;
-          float: left;
-          margin: 0.25em 0;
-        }
-      }
-      // Shift controls up
-      // To do: Make this work properly for non-inline option groups
-        .inline {       
-          .group{
-            margin-bottom: 0.5em;
-          }
-        }
-
-    }
-  }
-
-  // Option groups
-  .option.group {
-    label{
-      display: block;
-      padding-left: $label-width + 0.5em;
-      //padding-top: 0;
-    }
-    .validation-message{
-      width: $label-width;
-      display: block;
-      float: left;
-    }
-  }
-
-  // Inline form controls
-  .inline{
-    padding-left: $label-width + 0.25em;
-    label{
-      width: auto;
-      float: none;
-      margin-left: 0.5em;
-      text-align: left;
-      // Reset left margins assigned above
-      &.visuallyhidden {
-        + input,
-        + select,
-        + textarea {
-          margin-left: 0.5em;
-          margin-right: 0;
-        }
-      }
-    }
-    // Inline option groups
-    &.option.group {
-      padding-left: $label-width + 1.5em;
-      //padding-top: 0.25em;
-      label{
-        padding-left: 0;
-      }
-    }
-  }
-}
-
 // BUTTONS
-.button{
-  @include button($green);
-}
-.button-secondary{
-  @include button($panel-colour);
-}
-.button-warning{
-  @include button($red);
-}
+//.btn{
+//  @include button($green);
+//}
+//.btn-secondary{
+//  @include button($panel-colour);
+//}
+//.btn-warning{
+//  @include button($red);
+//}
