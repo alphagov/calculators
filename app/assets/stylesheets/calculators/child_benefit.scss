@@ -32,17 +32,29 @@ article {
   @extend %contain-floats;
   .questions {
     width: 65%;
-    float: left;
   }
   .results {
     width: 35%;
-    float: left;
     .inner {
       padding-right: 2em;
     }
   }
+  .questions, .results {
+    float: left;
+    @include media-down(tablet) {
+      width: 100%;
+      float: none;
+    }
+  }
 }
 
+.button {
+  @include core-19;
+}
+
+fieldset .button {
+  @include core-16;
+}
 .button-secondary {
   color: #0b0c0c;
   background-color: $grey-3;
@@ -57,12 +69,7 @@ article {
 .form {
   label {
     display: block;
-    color: #0b0c0c;
-    font-family: "nta", Arial, sans-serif;
-    font-size: 19px;
-    font-size: 1.9rem;
-    line-height: 1.31579;
-    font-weight: 400;
+    @include core-19;
     text-transform: none;
     vertical-align: top;
     padding: 0.25em 0;
