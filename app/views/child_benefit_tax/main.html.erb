@@ -16,6 +16,8 @@
         <%= form_tag("main") do %>
           <!-- hidden field to store the tax year so it can persist -->
           <input type="hidden" name="year" value="<%= params[:year] %>" />
+          <!-- hidden field to store if we're showing extra income or not -->
+          <input type="hidden" name="show_extra_income" value="<%= @show_extra_income %>" />
 
           <fieldset>
             <%= step(1, "Adjusted net income") %>
