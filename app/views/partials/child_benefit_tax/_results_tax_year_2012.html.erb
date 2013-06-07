@@ -1,15 +1,4 @@
-<div class="results-box">
-  <p class="amount"><strong><%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %></strong></p>
-  <% if @calculator.amount_owed == 0 %>
-    <p>You don’t need to pay back any of your Child Benefit as tax. This is an estimate based on the figures you provided.</p>
-
-  <% else %>
-    <p>The person with the highest income has to pay back <%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %> (<%= @calculator.percent_tax_charge %>% of the total Child Benefit received). This is an estimate based on the figures you provided.</p>
-
-  <% end %>
-</div>
-
-
+<%= render "partials/child_benefit_tax/results_box" %>
 <div class="results-text">
   <p>You only have to pay tax back on Child Benefit received between 7 January and 5 April.</p>
 
