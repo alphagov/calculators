@@ -10,6 +10,6 @@ class ChildBenefitTaxController < ApplicationController
     @calculator = ChildBenefitTaxCalculator.new(params)
     @show_new_child_form = params[:commit] == "Add a new starting child"
     @show_old_child_form = params[:commit] == "Add a new stopping child"
-    @show_extra_income = params[:commit] == "I don't know my net income"
+    @show_extra_income = (params[:commit] == "I don't know my net income" || params[:show_extra_income] == "true")
   end
 end

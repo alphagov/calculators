@@ -28,19 +28,52 @@
   }
 }
 
-.thirds {
-   @include grid((2,1));
+article {
+  @extend %contain-floats;
+  .questions {
+    width: 65%;
+  }
+  .results {
+    width: 35%;
+    .inner {
+      padding-right: 2em;
+    }
+    h4 {
+      font-weight: bold;
+    }
+  }
+  .questions, .results {
+    float: left;
+    @include media-down(tablet) {
+      width: 100%;
+      float: none;
+    }
+  }
+}
+
+.button {
+  @include core-19;
+  font-weight: bold;
+}
+
+fieldset .button {
+  @include core-16;
+}
+.button-secondary {
+  color: #0b0c0c;
+  background-color: $grey-3;
+}
+
+.button-secondary:focus,
+.button-secondary:hover {
+  color: #0b0c0c;
+  background-color: darken($grey-3, 10%);
 }
 
 .form {
   label {
     display: block;
-    color: #0b0c0c;
-    font-family: "nta", Arial, sans-serif;
-    font-size: 19px;
-    font-size: 1.9rem;
-    line-height: 1.31579;
-    font-weight: 400;
+    @include core-19;
     text-transform: none;
     vertical-align: top;
     padding: 0.25em 0;
@@ -64,7 +97,7 @@
   border: 5px solid black;
   padding: 10px;
   margin-bottom: 40px;
-  .total-owed {
+  .amount strong {
     font-size: 40px;
   }
 }
@@ -104,8 +137,4 @@
   #step-4 {
     background-image: url(https://assets.digital.cabinet-office.gov.uk/static/icon-step-4-60af308c82427fdd1d7d6d25276081b9.png);
   }
-}
-
-.button{
- @include button;
 }

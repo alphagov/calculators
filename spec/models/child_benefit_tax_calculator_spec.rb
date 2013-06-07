@@ -8,6 +8,28 @@ describe ChildBenefitTaxCalculator do
     calc.adjusted_net_income.should == 20
   end
 
+  it "isnt valid if enough detail is not supplied" do
+    # nothing given
+    ChildBenefitTaxCalculator.new.can_calculate?.should == false
+    # no tax_year
+    ChildBenefitTaxCalculator.new({
+      :adjusted_net_income => "500000"
+    }).can_calculate?.should == false
+    # no children
+    ChildBenefitTaxCalculator.new({
+      :adjusted_net_income => "500000",
+      :year => "2012"
+    }).can_calculate?.should == false
+  end
+
+  it "is valid if given enough detail" do
+    ChildBenefitTaxCalculator.new({
+      :adjusted_net_income => "500000",
+      :year => "2012",
+      :children_count => 2
+    }).can_calculate?.should == true
+  end
+
   it "calculates net income from other values" do
     calc = ChildBenefitTaxCalculator.new({
       :gross_pension_contributions => 10,
