@@ -1,62 +1,67 @@
 <% content_for :title, "Estimate your High Income Child Benefit Tax Charge" %>
-<% content_for :wrapper_classes, "answer full-width" %>
 
 <section id="content" role="main" class="group calculator-page">
   <header class="page-header group full-width">
     <hgroup class="full-width">
-    <h1><span>Quick answer</span> Estimate your High Income Child Benefit Tax Charge for <%= @calculator.tax_year %> to <%= @calculator.tax_year + 1 %></h1>
+    <h1><span>Calculator</span> Estimate your High Income Child Benefit Tax Charge for <%= @calculator.tax_year %> to <%= @calculator.tax_year + 1 %></h1>
     </hgroup>
     <a class="skip-to-related" href="#related">Not what you're looking for? ↓</a>
   </header>
 
-  <section class="thirds" id="calculator">
-    <div class="calculator-questions">
-      <p>Fill out your details in the calculator below to see if you need to pay back any of your Child Benefit as tax.</p>
-      <%= form_tag("main") do %>
-        <!-- hidden field to store the tax year so it can persist -->
-        <input type="hidden" name="year" value="<%= params[:year] %>" />
+  <article id="calculator" role="article">
+    <div class="questions">
+      <div class="inner">
+        <h1>Questions</h1>
+        <p>Fill out your details in the calculator below to see if you need to pay back any of your Child Benefit as tax.</p>
+        <%= form_tag("main") do %>
+          <!-- hidden field to store the tax year so it can persist -->
+          <input type="hidden" name="year" value="<%= params[:year] %>" />
 
-        <fieldset>
-          <%= step(1, "Adjusted net income") %>
-          <% unless @show_extra_income %>
-            <%= number_input("Adjusted Net Income", "adjusted_net_income", "£") %>
-            <%= submit_tag("I don't know my net income", { :class => "button" }) %>
-          <% end %>
+          <fieldset>
+            <%= step(1, "Adjusted net income") %>
+            <% unless @show_extra_income %>
+              <%= number_input("Adjusted Net Income", "adjusted_net_income", "£") %>
+              <%= submit_tag("I don't know my net income", { :class => "button" }) %>
+            <% end %>
 
-          <% if @show_extra_income %>
-            <p>If you don't know your adjusted net income, you can fill out the five fields below:</p>
-            <%= number_input("Total annual income before tax", "total_annual_income", "£") %>
-            <%= number_input("Gross pension contributions", "gross_pension_contributons", "£") %>
-            <%= number_input("Net pension contributions", "net_pension_contributions", "£") %>
-            <%= number_input("Trading losses if you're self-employed", "trading_losses_self_employed", "£") %>
-            <%= number_input("Gift Aid donations", "gift_aid_donations", "£") %>
-          <% end %>
-        </fieldset>
+            <% if @show_extra_income %>
+              <p>If you don't know your adjusted net income, you can fill out the five fields below:</p>
+              <%= number_input("Total annual income before tax", "total_annual_income", "£") %>
+              <%= number_input("Gross pension contributions", "gross_pension_contributons", "£") %>
+              <%= number_input("Net pension contributions", "net_pension_contributions", "£") %>
+              <%= number_input("Trading losses if you're self-employed", "trading_losses_self_employed", "£") %>
+              <%= number_input("Gift Aid donations", "gift_aid_donations", "£") %>
+            <% end %>
+          </fieldset>
 
-        <fieldset>
-          <%= step(2, "Number of children you're claiming for") %>
-          <%= number_input("How many children will you or your partner be getting paid Child Benefit for from #{@calculator.child_benefit_start_date.strftime("%d-%m-%Y")}?", "children_count") %>
-        </fieldset>
+          <fieldset>
+            <%= step(2, "Number of children you're claiming for") %>
+            <%= number_input("How many children will you or your partner be getting paid Child Benefit for from #{@calculator.child_benefit_start_date.strftime("%d-%m-%Y")}?", "children_count") %>
+          </fieldset>
 
-        <fieldset id="add_new_starting_child">
-          <%= step(3, "Are you planning on claiming for any new children this year?") %>
-          <%= render "partials/child_benefit_tax/starting_children" %>
-        </fieldset>
+          <fieldset id="add_new_starting_child">
+            <%= step(3, "Are you planning on claiming for any new children this year?") %>
+            <%= render "partials/child_benefit_tax/starting_children" %>
+          </fieldset>
 
-        <fieldset id="add_new_stopping_child">
-          <%= step(4, "Are you claiming for any children who will become ineligible this year?") %>
-          <%= render "partials/child_benefit_tax/stopping_children" %>
-        </fieldset>
+          <fieldset id="add_new_stopping_child">
+            <%= step(4, "Are you claiming for any children who will become ineligible this year?") %>
+            <%= render "partials/child_benefit_tax/stopping_children" %>
+          </fieldset>
 
-        <%= submit_tag("Go", { :class => "button" }) %>
-      <% end %>
-    </div>
-    <div class="outcome">
-      <% if @calculator.can_calculate? %>
-        <%= render "partials/child_benefit_tax/results" %>
-      <% else %>
-        <%= render "partials/child_benefit_tax/no_results" %>
-      <% end %>
-    </div>
-  </section><!-- end .thirds -->
+          <%= submit_tag("Go", { :class => "button" }) %>
+        <% end %>
+      </div><!-- end .inner -->
+    </div><!-- end .questions -->
+    <aside class="results">
+      <div class="inner">
+        <h1>Results</h1>
+        <% if @calculator.can_calculate? %>
+          <%= render "partials/child_benefit_tax/results" %>
+        <% else %>
+          <%= render "partials/child_benefit_tax/no_results" %>
+        <% end %>
+      </div><!-- end .inner -->
+    </aside>
+  </article><!-- end .thirds -->
 </section>

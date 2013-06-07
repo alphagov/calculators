@@ -28,8 +28,19 @@
   }
 }
 
-.thirds {
-   @include grid((2,1));
+article {
+  @extend %contain-floats;
+  .questions {
+    width: 65%;
+    float: left;
+  }
+  .results {
+    width: 35%;
+    float: left;
+    .inner {
+      padding-right: 2em;
+    }
+  }
 }
 
 .form {
@@ -104,8 +115,4 @@
   #step-4 {
     background-image: url(https://assets.digital.cabinet-office.gov.uk/static/icon-step-4-60af308c82427fdd1d7d6d25276081b9.png);
   }
-}
-
-.button{
- @include button;
 }

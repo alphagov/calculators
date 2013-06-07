@@ -5,17 +5,11 @@
 @import "_shims";
 @import "_css3";
 
-@import "design-principles/_grid";
-@import "design-principles/_buttons";
-@import "design-principles/_panels";
-@import "design-principles/_utils";
-@import "design-principles/_form";
-
+@import "_forms";
 
 @import "calculators/child_benefit";
 
 .calculator-page {
   background: #fff;
-  @include clearfix;
 }
 

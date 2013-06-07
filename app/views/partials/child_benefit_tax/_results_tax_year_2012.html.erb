@@ -1,0 +1,18 @@
+<div class="results-box">
+  <p><span class="total-owed"><%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %></span></p>
+  <% if @calculator.amount_owed == 0 %>
+    <p>You don’t need to pay back any of your Child Benefit as tax. This is an estimate based on the figures you provided.</p>
+
+  <% else %>
+    <p>The person with the highest income has to pay back <%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %> (<%= @calculator.percent_tax_charge %>% of the total Child Benefit received). This is an estimate based on the figures you provided.</p>
+
+  <% end %>
+</div>
+<div class="results-text">
+  <h3>Paying back Child Benefit as tax</h3>
+  <p>Come back to the calculator if your circumstances change.</p>
+  <ul>
+    <li>carry on getting benefit and pay <span class="total-owed"><%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %></span> back at the end of the year through Self Assessment</li>
+    <li>stop getting Child Benefit from now, and pay back any tax you owe from 2013-14 in next year's Self Assessment tax return</li>
+  </ul>
+</div>
