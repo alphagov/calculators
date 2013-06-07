@@ -52,7 +52,11 @@
       <% end %>
     </div>
     <div class="outcome">
-      <%= render "partials/child_benefit_tax/results" %>
+      <% if @calculator.can_calculate? %>
+        <%= render "partials/child_benefit_tax/results" %>
+      <% else %>
+        <%= render "partials/child_benefit_tax/no_results" %>
+      <% end %>
     </div>
   </section><!-- end .thirds -->
 </section>
