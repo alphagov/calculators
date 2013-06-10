@@ -70,6 +70,10 @@ fieldset .button {
   background-color: darken($grey-3, 10%);
 }
 
+.button-inline {
+  margin-right: 10px;
+}
+
 .form {
   label {
     display: block;

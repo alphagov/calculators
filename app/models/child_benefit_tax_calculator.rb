@@ -64,7 +64,9 @@ class ChildBenefitTaxCalculator
   def process_starting_children(children)
     starting_children = []
     children.each do |number, info|
-      starting_children << StartingChild.new(number, info)
+      if info.present?
+        starting_children << StartingChild.new(number, info)
+      end
     end
     starting_children
   end
@@ -185,7 +187,12 @@ class StartingChild
   attr_reader :start_date, :end_date, :no_tax_end, :number
   def initialize(number, params)
     @start_date = Date.new(params[:start][:year].to_i, params[:start][:month].to_i, params[:start][:day].to_i) || nil
-    @end_date = params.has_key?(:no_stop) ? nil : Date.new(params[:stop][:year].to_i, params[:stop][:month].to_i, params[:stop][:day].to_i) || nil
+    if params.has_key?(:no_stop) || !params.has_key?(:stop)
+      @end_date = nil
+    else
+      @end_date = Date.new(params[:stop][:year].to_i, params[:stop][:month].to_i, params[:stop][:day].to_i)
+    end
+
     @no_tax_end = params.has_key?(:no_stop)
     @number = number
   end

@@ -1,9 +1,17 @@
-<% @calculator.starting_children.each_with_index do |child, index| %>
-  <%= render "partials/child_benefit_tax/add_new_child", :child => child, :number => index + 1 %>
+<% if params[:does_have_starting_children] && params[:does_have_starting_children] == "No" %>
+  <p>You do not need to fill out this section</p>
+<% else %>
+  <% if @calculator.starting_children.length == 0  || @show_new_child_form || @start_child_show_starting_date %>
+    <%= render "partials/child_benefit_tax/new_single_starting_child", :number => @calculator.starting_children.size %>
+  <% end %>
+
+  <!-- show existing children here -->
+  <% @calculator.starting_children.each_with_index do |child, index| %>
+    <h5>Child <%= index + 1 %></h5>
+    <%= render "partials/child_benefit_tax/single_starting_child", :number => index, :child => child %>
+  <% end %>
+  <% if @calculator.starting_children.length > 0 %>
+    <%= submit_tag("Add another child", { :class => "button button-secondary" }) %>
+  <% end %>
 <% end %>
 
-<% if @show_new_child_form %>
-  <%= render "partials/child_benefit_tax/add_new_child", :number => @calculator.starting_children.size + 1, :child => nil %>
-<% end %>
-
-<%= submit_tag("Add a new starting child", { :class => "button button-secondary" }) %>

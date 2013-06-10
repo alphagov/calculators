@@ -78,12 +78,9 @@ feature "Child Benefit Tax Calculator" do
     end
 
     describe "adding new starting children" do
-      it "should show the new child form when you click add new child" do
-        click_button "Add a new starting child"
-        within "#add_new_starting_child" do
-          page.should have_content("When did you start getting Child Benefit for a new child?")
-          page.should have_field("starting_children[1][start][year]")
-        end
+      it "should ask if you have any new children" do
+        click_button "does_have_starting_children_yes"
+        page.should have_field("starting_children[0][start][year]")
       end
     end
 
@@ -99,13 +96,11 @@ feature "Child Benefit Tax Calculator" do
     describe "calculations involving starting children" do
       it "should calculate the correct result" do
         fill_in "adjusted_net_income", :with => "600001"
-        click_button "Add a new starting child"
-        within "#add_new_starting_child" do
-          select "1", :from => "starting_children[1][start][day]"
-          select "May", :from => "starting_children[1][start][month]"
-          select "2012", :from => "starting_children[1][start][year]"
-          check "starting_children[1][no_stop]"
-        end
+        click_button "does_have_starting_children_yes"
+        select "1", :from => "starting_children[0][start][day]"
+        select "May", :from => "starting_children[0][start][month]"
+        select "2012", :from => "starting_children[0][start][year]"
+        click_button "No"
 
         click_button "Go"
         within ".results" do
