@@ -17,5 +17,7 @@ class ChildBenefitTaxController < ApplicationController
     @start_child_show_stopping_date = params[:starting_child_does_stop] && params[:starting_child_does_stop] == "Yes"
 
     @start_child_no_stopping_date = params[:starting_child_does_stop] && params[:starting_child_does_stop] == "No"
+
+    @stop_child_show_date = params[:does_have_stopping_children] && params[:does_have_stopping_children] == "Yes"
   end
 end
