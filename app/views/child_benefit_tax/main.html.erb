@@ -11,8 +11,7 @@
   <article id="calculator" role="article">
     <div class="questions">
       <div class="inner">
-        <h1>Questions</h1>
-        <p>Fill out your details in the calculator below to see if you need to pay back any of your Child Benefit as tax.</p>
+        <p class="intro">Fill out your details in the calculator below to see if you need to pay back any of your Child Benefit as tax.</p>
         <%= form_tag("main") do %>
           <!-- hidden field to store the tax year so it can persist -->
           <input type="hidden" name="year" value="<%= params[:year] %>" />
@@ -26,12 +25,46 @@
               <p>If you don't know your adjusted net income, you can fill out the five fields below:</p>
               <%= number_input("Total annual income before tax", "total_annual_income", "£") %>
               <%= number_input("Gross pension contributions", "gross_pension_contributons", "£") %>
+                <details>
+                  <summary>What are gross pension contributions?</summary>
+                  <p>This is how much you expect to pay into:</p>
+                    <ul>
+                      <li>pension schemes where your contributions are paid before your income was taxed (called ‘net pay arrangements’)</li>
+                      <li>retirement annuity contracts (called ‘gross contributions’)"</li>
+                    </ul>
+                </details>
               <%= number_input("Net pension contributions", "net_pension_contributions", "£") %>
+               <details>
+                  <summary>What are net pension contributions?</summary>
+                  <p>This is how much you expect to pay into a pension for the whole tax year where your pension provider claimed tax relief for you (called ‘relief at source’ arrangements).</p>
+                </details>
               <%= number_input("Trading losses if you're self-employed", "trading_losses_self_employed", "£") %>
+               <details>
+                  <summary>What are trading loses?</summary>
+                  <p>If you’re expecting your first child enter 0. Don’t count any children that you start getting Child Benefit for after %{tax_year_start}</p>
+                </details>
               <%= number_input("Gift Aid donations", "gift_aid_donations", "£") %>
+              <details>
+                  <summary>What are gift aid donations?</summary>
+                  <p>This is how much you expect to pay into a pension for the whole tax year where your pension provider claimed tax relief for you (called ‘relief at source’ arrangements).</p>
+                </details>
             <% else %>
-              <%= number_input("Adjusted Net Income", "adjusted_net_income", "£") %>
-              <%= submit_tag("I don't know my net income", { :class => "button button-secondary" }) %>
+              <div class="application-notice info-notice">
+                  <p>Enter the highest individual income if you're looking after children with a partner.</p>
+
+                  <p>Include:</p>
+                  <ul>
+                    <li>salary (before any pension contributions are taken away)</li>
+                    <li>company benefits you get (eg car, fuel and medical benefits)</li>
+                    <li>profits if you’re self-employed</li>
+                    <li>interest you get from savings (including any tax that’s already been paid on it)</li>
+                    <li>State Pension payments and other State benefits that are taxed</li>
+                    <li>payments from personal and occupational pensions or annuities</li>
+                    <li>income from dividends (including the dividend tax credit) or trusts</li>
+                    <li>rental income</li>
+                  </div>
+                <%= number_input("Adjusted Net Income", "adjusted_net_income", "£") %>
+                <%= submit_tag("I don't know my net income", { :class => "link" }) %>
             <% end %>
           </fieldset>
 
@@ -50,7 +83,7 @@
             <%= render "partials/child_benefit_tax/stopping_children" %>
           </fieldset>
 
-          <%= submit_tag("Go", { :class => "button" }) %>
+          <%= submit_tag("Estimate your tax charge", { :class => "button" }) %>
         <% end %>
       </div><!-- end .inner -->
     </div><!-- end .questions -->
