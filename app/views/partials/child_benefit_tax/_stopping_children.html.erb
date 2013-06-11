@@ -1,8 +1,19 @@
-<% @calculator.stopping_children.each_with_index do |child, index| %>
-  <%= render "partials/child_benefit_tax/add_new_stopping_child", :child => child, :number => index + 1 %>
+<% if @calculator.stopping_children.size == 0 && !@stop_child_show_date %>
+  <p class="group">
+    <label>Did you stop getting Child Benefit for a child before <%= @calculator.child_benefit_end_date %>?</label>
+    <input type="submit" class="button button-secondary button-inline" name="does_have_stopping_children" id="does_have_stopping_children_yes" value="Yes" />
+    <input type="submit" class="button button-secondary button-inline" name="does_have_stopping_children" value="No" />
+  </p>
 <% end %>
 
-<% if @show_old_child_form %>
-  <%= render "partials/child_benefit_tax/add_new_stopping_child", :number => @calculator.stopping_children.size + 1, :child => nil %>
+<% @calculator.stopping_children.each_with_index do |child, index| %>
+  <%= render "partials/child_benefit_tax/add_new_stopping_child", :child => child, :number => index %>
 <% end %>
-<%= submit_tag("Add a new stopping child", { :class => "button button-secondary" }) %>
+
+<% if @stop_child_show_date || @show_old_child_form %>
+  <%= render "partials/child_benefit_tax/add_new_stopping_child", :number => @calculator.stopping_children.size, :child => nil %>
+<% end %>
+
+<% if @calculator.stopping_children.size > 0 %>
+  <%= submit_tag("Add a new stopping child", { :class => "button button-secondary" }) %>
+<% end %>

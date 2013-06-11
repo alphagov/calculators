@@ -31,13 +31,8 @@
 article {
   @extend %contain-floats;
   .questions {
-    width: 65%;
+    width: 80%;
   }
-  .results {
-    width: 35%;
-    .inner {
-      padding-right: 2em;
-    }
     h4 {
       font-weight: bold;
     }
@@ -49,11 +44,11 @@ article {
       float: none;
     }
   }
-}
 
 .button {
   @include core-19;
   font-weight: bold;
+  -webkit-font-smoothing: antialiased;
 }
 
 fieldset .button {
@@ -62,12 +57,17 @@ fieldset .button {
 .button-secondary {
   color: #0b0c0c;
   background-color: $grey-3;
+  -webkit-font-smoothing: antialiased;
 }
 
 .button-secondary:focus,
 .button-secondary:hover {
   color: #0b0c0c;
   background-color: darken($grey-3, 10%);
+}
+
+.button-inline {
+  margin-right: 10px;
 }
 
 .form {
@@ -77,6 +77,7 @@ fieldset .button {
     text-transform: none;
     vertical-align: top;
     padding: 0.25em 0;
+    margin-top: 5em;
   }
 }
 
@@ -122,6 +123,7 @@ fieldset .button {
     margin-right: 0.75em;
   }
 
+
   #step-1 {
     background-image: url(https://assets.digital.cabinet-office.gov.uk/static/icon-step-1-6afb52055d0f49ccc1ffa7c33ef10fb2.png);
   }
@@ -136,5 +138,30 @@ fieldset .button {
 
   #step-4 {
     background-image: url(https://assets.digital.cabinet-office.gov.uk/static/icon-step-4-60af308c82427fdd1d7d6d25276081b9.png);
+  }
+
+  .intro {
+    padding-top: 0;
+    margin-bottom: 3em;
+  }
+
+  .link{
+  @include core-19;
+  background: none;
+  padding: 0;
+  color: #2e3191;
+  text-decoration: underline;
+  @include box-shadow(none);
+  border: none;  
+  &:hover, &:focus{
+    color: #2e8aca;
+    }
+  }
+}
+
+#add_new_starting_child,
+#add_new_stopping_child {
+  label {
+    display: block;
   }
 }
