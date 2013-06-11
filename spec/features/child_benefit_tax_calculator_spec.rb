@@ -17,13 +17,13 @@ feature "Child Benefit Tax Calculator" do
 
   it "should store the tax year when the user clicks it" do
     visit "/child-benefit-tax-calculator"
-    click_link "Click if you pay tax on Child Benefit for the tax year 2012 to 2013"
+    click_link "Tax Year 2012-13"
     page.should have_content("for 2012 to 2013")
   end
 
   it "should show the extra income fields if you dont know your net income" do
     visit "/child-benefit-tax-calculator"
-    click_link "Click if you pay tax on Child Benefit for the tax year 2012 to 2013"
+    click_link "Tax Year 2012-13"
     page.should_not have_field("total_annual_income")
     page.should_not have_field("gross_pension_contributons")
     page.should_not have_field("net_pension_contributions")
@@ -40,7 +40,7 @@ feature "Child Benefit Tax Calculator" do
 
   it "should show no results if not enough info is entered" do
     visit "/child-benefit-tax-calculator"
-    click_link "Click if you pay tax on Child Benefit for the tax year 2012 to 2013"
+    click_link "Tax Year 2012-13"
     within ".results" do
       page.should have_content("Please fill out the fields on the left and submit the form. Once you've entered enough information, your results will be shown here.")
     end
@@ -49,13 +49,13 @@ feature "Child Benefit Tax Calculator" do
   describe "Calculating the results for 2012-13" do
     before(:each) do
       visit "/child-benefit-tax-calculator"
-      click_link "Click if you pay tax on Child Benefit for the tax year 2012 to 2013"
+      click_link "Tax Year 2012-13"
     end
 
     it "calculates the overall cost when no children are included" do
       fill_in "adjusted_net_income", :with => "60001"
       fill_in "children", :with => "1"
-      click_button "Go"
+      click_button "Estimate your tax charge"
       within ".results" do
         page.should have_content("£243.60")
       end
@@ -64,7 +64,7 @@ feature "Child Benefit Tax Calculator" do
     it "calculates correctly for >1 children" do
       fill_in "adjusted_net_income", :with => "60001"
       fill_in "children", :with => "2"
-      click_button "Go"
+      click_button "Estimate your tax charge"
       within ".results" do
         page.should have_content("£404.40")
       end
@@ -74,7 +74,7 @@ feature "Child Benefit Tax Calculator" do
   describe "adding children for 2012-13" do
     before(:each) do
       visit "/child-benefit-tax-calculator"
-      click_link "Click if you pay tax on Child Benefit for the tax year 2012 to 2013"
+      click_link "Tax Year 2012-13"
     end
 
     describe "adding new starting children" do
@@ -86,7 +86,7 @@ feature "Child Benefit Tax Calculator" do
 
     describe "adding new stopping children" do
       it "should show the stopping child form when you click" do
-        click_button "Add a new stopping child"
+        click_button "does_have_stopping_children_yes"
         within "#add_new_stopping_child" do
           page.should have_content("When will you stop getting Child Benefit for this child?")
         end
@@ -100,9 +100,9 @@ feature "Child Benefit Tax Calculator" do
         select "1", :from => "starting_children[0][start][day]"
         select "May", :from => "starting_children[0][start][month]"
         select "2012", :from => "starting_children[0][start][year]"
-        click_button "No"
+        click_button "starting_child_does_stop_no"
 
-        click_button "Go"
+        click_button "Estimate your tax charge"
         within ".results" do
           page.should have_content "£263.90"
         end

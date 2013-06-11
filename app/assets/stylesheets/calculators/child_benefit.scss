@@ -157,6 +157,11 @@ fieldset .button {
     color: #2e8aca;
     }
   }
+}
 
-
+#add_new_starting_child,
+#add_new_stopping_child {
+  label {
+    display: block;
+  }
 }
