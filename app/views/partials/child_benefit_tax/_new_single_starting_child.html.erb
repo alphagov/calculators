@@ -1,0 +1,22 @@
+<% if @start_child_show_starting_date || @calculator.starting_children.size > 0 %>
+  <h5>Child <%= @calculator.starting_children.size + 1 %></h5>
+  <p class="group">
+    <label>When did you start getting Child Benefit for a new child?</label>
+    <%= select_date @calculator.child_benefit_start_date, :prefix => "starting_children[#{number}][start]", :order => [:day, :month, :year], :end_year => @calculator.child_benefit_end_date.year, :start_year => @calculator.child_benefit_start_date.year %>
+  </p>
+  <% unless @start_child_no_stopping_date %>
+    <p class="group">
+      <label>Do you expect to stop getting Child Benefit for that child before <%= @calculator.child_benefit_end_date %>?</label>
+      <input type="submit" class="button button-secondary button-inline" name="starting_child_does_stop" id="starting_child_does_stop_yes" value="Yes" />
+      <input type="submit" class="button button-secondary button-inline" name="starting_child_does_stop" id="starting_child_does_stop_no" value="No" />
+    </p>
+  <% end %>
+<% else %>
+  <% unless @calculator.starting_children.size > 0 %>
+    <p class="group">
+      <label>Did you start getting Child Benefit for a child before <%= @calculator.child_benefit_end_date %>?</label>
+      <input type="submit" class="button button-secondary button-inline" name="does_have_starting_children" id="does_have_starting_children_yes" value="Yes" />
+      <input type="submit" class="button button-secondary button-inline" name="does_have_starting_children" value="No" />
+    </p>
+  <% end %>
+<% end %>
