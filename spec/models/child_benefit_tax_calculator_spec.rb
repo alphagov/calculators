@@ -121,7 +121,7 @@ describe ChildBenefitTaxCalculator do
           :starting_children => {
             "1" => {
               :start => { :year => "2013", :month => "03", :day => "01" },
-              :stop => {},
+              :stop => { :year => "", :month => "", :day => ""},
               :no_stop => true
             }
           },
@@ -136,7 +136,7 @@ describe ChildBenefitTaxCalculator do
           :starting_children => {
             "1" => {
               :start => { :year => "2012", :month => "05", :day => "01" },
-              :stop => {},
+              :stop => { :year => "", :month => "", :day => ""},
               :no_stop => true
             }
           },
@@ -172,7 +172,7 @@ describe ChildBenefitTaxCalculator do
           :starting_children => {
             "1" => {
             :start => { :year => "2014", :month => "03", :day => "01" },
-            :end => {},
+            :stop => { :year => "", :month => "", :day => ""},
             :no_stop => true
             }
           },
@@ -188,7 +188,7 @@ describe ChildBenefitTaxCalculator do
           :starting_children => {
            "1" => {
             :start => { :year => "2014", :month => "03", :day => "01" },
-            :end => {},
+            :stop => { :year => "", :month => "", :day => ""},
             :no_stop => true
            }
           },
