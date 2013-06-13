@@ -57,15 +57,31 @@
                   <p>This is how much you expect to pay into a pension for the whole tax year where your pension provider claimed tax relief for you (called ‘relief at source’ arrangements).</p>
                 </details>
               <%= number_input("Trading losses if you're self-employed", "trading_losses_self_employed", "£") %>
-               <details>
-                  <summary>What are trading loses?</summary>
-                  <p>If you’re expecting your first child enter 0. Don’t count any children that you start getting Child Benefit for after %{tax_year_start}</p>
-                </details>
               <%= number_input("Gift Aid donations", "gift_aid_donations", "£") %>
+<<<<<<< css-changes
               <details>
                   <summary>What are gift aid donations?</summary>
                   <p>This is how much you expect to pay into a pension for the whole tax year where your pension provider claimed tax relief for you (called ‘relief at source’ arrangements).</p>
                 </details>
+=======
+            <% else %>
+              <div class="application-notice info-notice">
+                  <p>Enter the highest individual income if you're looking after children with a partner.</p>
+
+                  <p>Include:</p>
+                  <ul>
+                    <li>salary (before any pension contributions are taken away)</li>
+                    <li>company benefits you get (eg car, fuel and medical benefits)</li>
+                    <li>profits if you’re self-employed</li>
+                    <li>interest you get from savings (including any tax that’s already been paid on it)</li>
+                    <li>State Pension payments and other State benefits that are taxed</li>
+                    <li>payments from personal and occupational pensions or annuities</li>
+                    <li>income from dividends (including the dividend tax credit) or trusts</li>
+                    <li>rental income</li>
+                  </div>
+                <%= number_input("Adjusted Net Income", "adjusted_net_income", "£") %>
+                <%= submit_tag("I don't know my net income", { :class => "link" }) %>
+>>>>>>> local
             <% end %>
           </fieldset>
 
