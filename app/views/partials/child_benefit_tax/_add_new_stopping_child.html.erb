@@ -1,7 +1,11 @@
-<h2>Child <span class="child-number"><%= number + 1 %></span></h2>
-<fieldset>
+<p class="group">
   <legend><span>When will you stop getting Child Benefit for this child?</span></legend>
-  <p class="group">
-    <%= select_date (child.nil? ? @calculator.child_benefit_end_date : child.end_date), :prefix => "stopping_children[]" %>
-  </p>
-</fieldset>
+    <%
+      if child && child.end_date
+        date_picker = child.end_date
+      else
+        date_picker = nil
+      end
+    %>
+    <%= select_date date_picker, :prefix => "stopping_children[]", :order => [:day, :month, :year], :end_year => @calculator.child_benefit_end_date.year, :start_year => @calculator.child_benefit_start_date.year, :include_blank => true %>
+</p>

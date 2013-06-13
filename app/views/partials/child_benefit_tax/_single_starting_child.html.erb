@@ -1,35 +1,23 @@
 <p class="group">
   <label>When did you start getting Child Benefit for a new child?</label>
   <%
-    if @start_child_show_stopping_date
-      date_picker = @calculator.starting_children.last.start_date
+    if child && child.start_date
+      date_picker = child.start_date
     else
-      date_picker = @calculator.child_benefit_start_date
+      date_picker = nil
     end
   %>
-  <%= select_date date_picker, :prefix => "starting_children[#{number}][start]", :order => [:day, :month, :year], :end_year => @calculator.child_benefit_end_date.year, :start_year => @calculator.child_benefit_start_date.year %>
+  <%= select_date date_picker, :prefix => "starting_children[#{number}][start]", :order => [:day, :month, :year], :end_year => @calculator.child_benefit_end_date.year, :start_year => @calculator.child_benefit_start_date.year, :include_blank => true %>
 </p>
 
-<% if child.end_date || @start_child_show_stopping_date  %>
-  <p class="group">
-    <label>When do you expect to stop receiving Child Benefit for that child?</label>
-    <%
-      if @calculator.starting_children.last.end_date
-        date_picker = @calculator.starting_children.last.end_date
-      else
-        date_picker = @calculator.child_benefit_end_date
-      end
-    %>
-    <%= select_date date_picker, :prefix => "starting_children[#{number}][stop]", :order => [:day, :month, :year], :end_year => @calculator.child_benefit_end_date.year, :start_year => @calculator.child_benefit_end_date.year %>
-  </p>
-<% elsif @start_child_show_stopping_date == false %>
-  <% unless @start_child_no_stopping_date %>
-
-    <p class="group">
-      <label>Do you expect to stop getting Child Benefit for that child before <%= @calculator.child_benefit_end_date %>?</label>
-      <input type="submit" class="button button-secondary button-inline" name="starting_child_does_stop" value="Yes" />
-      <input type="submit" class="button button-secondary button-inline" name="starting_child_does_stop" value="No" />
-    </p>
-  <% end %>
-<% end %>
-
+<p class="group">
+  <label>When do you expect to stop receiving Child Benefit for that child?</label>
+  <%
+    if child && child.end_date
+      date_picker = child.end_date
+    else
+      date_picker = nil
+    end
+  %>
+  <%= select_date date_picker, :prefix => "starting_children[#{number}][stop]", :order => [:day, :month, :year], :end_year => @calculator.child_benefit_end_date.year, :start_year => @calculator.child_benefit_end_date.year, :include_blank => true %>
+</p>

@@ -1,16 +1,13 @@
-<% if params[:does_have_starting_children] && params[:does_have_starting_children] == "No" %>
-  <p>You do not need to fill out this section</p>
-<% else %>
-  <% if @calculator.starting_children.length == 0  || @show_new_child_form || @start_child_show_starting_date %>
-    <%= render "partials/child_benefit_tax/new_single_starting_child", :number => @calculator.starting_children.size %>
-  <% end %>
-
-  <!-- show existing children here -->
-  <% @calculator.starting_children.each_with_index do |child, index| %>
-    <h5>Child <%= index + 1 %></h5>
-    <%= render "partials/child_benefit_tax/single_starting_child", :number => index, :child => child %>
-  <% end %>
-  <% if @calculator.starting_children.length > 0 %>
-    <%= submit_tag("Add another child", { :class => "button button-secondary" }) %>
-  <% end %>
+<!-- show existing children here -->
+<% @calculator.starting_children.each_with_index do |child, index| %>
+  <h5>Child <%= index + 1 %></h5>
+  <%= render "partials/child_benefit_tax/single_starting_child", :number => index, :child => child %>
 <% end %>
+
+<% if @calculator.starting_children.empty? || @show_new_child_form %>
+  <h5>Child <%= @calculator.starting_children.size + 1 %></h5>
+  <%= render "partials/child_benefit_tax/single_starting_child", :number => @calculator.starting_children.size, :child => nil%>
+<% end %>
+
+<%= submit_tag("Add another child", { :class => "button button-secondary" }) %>
+

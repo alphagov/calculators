@@ -17,9 +17,7 @@ class ChildBenefitTaxCalculator
     @gift_aid_donations = params[:gift_aid_donations].to_i
     @adjusted_net_income = calculate_adjusted_income(params[:adjusted_net_income].to_i)
     @starting_children = process_starting_children(params[:starting_children] || [])
-    @stopping_children = (params[:stopping_children] || []).map do |end_child|
-      StoppingChild.new(end_child)
-    end
+    @stopping_children = process_stopping_children(params[:stopping_children] || [])
     @tax_year = params[:year].to_i
     @children_count = params[:children_count].to_i
   end
@@ -65,10 +63,23 @@ class ChildBenefitTaxCalculator
     starting_children = []
     children.each do |number, info|
       if info.present?
-        starting_children << StartingChild.new(number, info)
+        unless info[:start][:year].empty? || info[:start][:month].empty? || info[:start][:day].empty?
+          # if a child has no start date, ditch them
+          starting_children << StartingChild.new(number, info)
+        end
       end
     end
     starting_children
+  end
+
+  def process_stopping_children(children)
+    stopping_children = []
+    children.each do |child|
+      unless child[:year].empty? || child[:month].empty? || child[:day].empty?
+        stopping_children << StoppingChild.new(child)
+      end
+    end
+    stopping_children
   end
 
   def benefits_no_starting_stopping_children
@@ -187,13 +198,13 @@ class StartingChild
   attr_reader :start_date, :end_date, :no_tax_end, :number
   def initialize(number, params)
     @start_date = Date.new(params[:start][:year].to_i, params[:start][:month].to_i, params[:start][:day].to_i) || nil
-    if params.has_key?(:no_stop) || !params.has_key?(:stop)
-      @end_date = nil
+    if params[:stop][:year].empty? || params[:stop][:month].empty? || params[:stop][:day].empty?
+      @no_tax_end = true
     else
       @end_date = Date.new(params[:stop][:year].to_i, params[:stop][:month].to_i, params[:stop][:day].to_i)
+      @no_tax_end = false
     end
 
-    @no_tax_end = params.has_key?(:no_stop)
     @number = number
   end
 end
