@@ -1,9 +1,9 @@
-<% content_for :title, "Estimate your High Income Child Benefit Tax Charge" %>
+<% content_for :title, "Child Benefit tax calculator" %>
 
 <section id="content" role="main" class="group calculator-page">
   <header class="page-header group full-width">
     <hgroup class="full-width">
-    <h1><span>Quick answer</span> Estimate your High Income Child Benefit Tax Charge for <%= @calculator.tax_year %> to <%= @calculator.tax_year + 1 %></h1>
+    <h1><span>Quick answer</span> Child Benefit tax calculator for <%= @calculator.tax_year %> to <%= @calculator.tax_year + 1 %></h1>
     </hgroup>
     <a class="skip-to-related" href="#related">Not what you're looking for? ↓</a>
   </header>
@@ -24,6 +24,10 @@
             <% if @show_extra_income %>
               <p>If you don't know your adjusted net income, you can fill out the five fields below:</p>
               <%= number_input("Total annual income before tax", "total_annual_income", "£") %>
+               <details>
+                  <summary>What is the total annual income before tax?</summary>
+                  <p>This is when your expenses and capital allowances are more than your income or turnover for your accounting date.This is when your expenses and capital allowances are more than your income or turnover for your accounting date.</p>
+                </details>
               <%= number_input("Gross pension contributions", "gross_pension_contributons", "£") %>
                 <details>
                   <summary>What are gross pension contributions?</summary>
@@ -39,19 +43,23 @@
                   <p>This is how much you expect to pay into a pension for the whole tax year where your pension provider claimed tax relief for you (called ‘relief at source’ arrangements).</p>
                 </details>
               <%= number_input("Trading losses if you're self-employed", "trading_losses_self_employed", "£") %>
+              <details>
+                  <summary>What are trading losses?</summary>
+                  <p>This is when your expenses and capital allowances are more than your income or turnover for your accounting date.</p>
+                </details>
               <%= number_input("Gift Aid donations", "gift_aid_donations", "£") %>
               <details>
                   <summary>What are gift aid donations?</summary>
-                  <p>This is how much you expect to pay into a pension for the whole tax year where your pension provider claimed tax relief for you (called ‘relief at source’ arrangements).</p>
+                  <p>This is the amount you've donated to charity with a Gift Aid declaration.</p>
                 </details>
             <% else %>
               <div class="application-notice info-notice">
-                  <p>Enter the highest individual income if you're looking after children with a partner.</p>
+                  <p>This is the highest individual income in your household.</p>
 
-                  <p>Include:</p>
+                  <p>You must include:</p>
                   <ul>
-                    <li>salary (before any pension contributions are taken away)</li>
-                    <li>company benefits you get (eg car, fuel and medical benefits)</li>
+                    <li>salary and taxable company benefits</li>
+                    <li>profits if you’re self-employed</li>
                     <li>profits if you’re self-employed</li>
                     <li>interest you get from savings (including any tax that’s already been paid on it)</li>
                     <li>State Pension payments and other State benefits that are taxed</li>
@@ -70,12 +78,12 @@
           </fieldset>
 
           <fieldset id="add_new_starting_child">
-            <%= step(3, "New children and new Child Benefit claims") %>
+            <%= step(3, "Children you started claiming Child Benefit for") %>
             <%= render "partials/child_benefit_tax/starting_children" %>
           </fieldset>
 
           <fieldset id="add_new_stopping_child">
-            <%= step(4, "Child Benefit that’s stopped") %>
+            <%= step(4, "Children you stopped claiming Child Benefit for") %>
             <%= render "partials/child_benefit_tax/stopping_children" %>
           </fieldset>
 

@@ -7,5 +7,5 @@
         date_picker = nil
       end
     %>
-    <%= select_date date_picker, :prefix => "stopping_children[]", :order => [:day, :month, :year], :end_year => @calculator.child_benefit_end_date.year, :start_year => @calculator.child_benefit_start_date.year, :include_blank => true %>
-</p>
+    <%= select_date date_picker, :prefix => "stopping_children[]", :order => [:day, :month, :year], :end_year => @calculator.child_benefit_end_date.year, :start_year => @calculator.child_benefit_start_date.year, :prompt => {:day => "Day", :month => "Month", :year => "Year" } %>
+

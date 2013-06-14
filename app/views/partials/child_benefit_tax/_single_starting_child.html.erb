@@ -1,5 +1,5 @@
 <p class="group">
-  <label>When did you start getting Child Benefit for a new child?</label>
+  <label>If you started claiming Child Benefit for a new child this tax year, when did it start?</label>
   <%
     if child && child.start_date
       date_picker = child.start_date
@@ -7,7 +7,7 @@
       date_picker = nil
     end
   %>
-  <%= select_date date_picker, :prefix => "starting_children[#{number}][start]", :order => [:day, :month, :year], :end_year => @calculator.child_benefit_end_date.year, :start_year => @calculator.child_benefit_start_date.year, :include_blank => true %>
+  <%= select_date date_picker, :prefix => "starting_children[#{number}][start]", :prompt => {:day => "Day", :month => "Month", :year => "Year" }, :order => [:day, :month, :year], :end_year => @calculator.child_benefit_end_date.year, :start_year => @calculator.child_benefit_start_date.year %>
 </p>
 
 <p class="group">
@@ -19,5 +19,5 @@
       date_picker = nil
     end
   %>
-  <%= select_date date_picker, :prefix => "starting_children[#{number}][stop]", :order => [:day, :month, :year], :end_year => @calculator.child_benefit_end_date.year, :start_year => @calculator.child_benefit_end_date.year, :include_blank => true %>
+  <%= select_date date_picker, :prefix => "starting_children[#{number}][stop]", :prompt => {:day => "Day", :month => "Month", :year => "Year" }, :order => [:day, :month, :year], :end_year => @calculator.child_benefit_end_date.year, :start_year => @calculator.child_benefit_end_date.year %>
 </p>
