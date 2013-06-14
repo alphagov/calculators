@@ -31,7 +31,7 @@
 article {
   @extend %contain-floats;
   .questions {
-    width: 80%;
+    width: 90%;
   }
     h4 {
       font-weight: bold;
@@ -53,6 +53,7 @@ article {
 
 fieldset .button {
   @include core-16;
+  margin-top: 5em;
 }
 .button-secondary {
   color: #0b0c0c;
@@ -142,13 +143,13 @@ fieldset .button {
 
   .intro {
     padding-top: 0;
-    margin-bottom: 3em;
+    margin-bottom: 0em;
   }
 
   .link{
   @include core-19;
   background: none;
-  padding: 0;
+  padding-top: 0.5em;
   color: #2e3191;
   text-decoration: underline;
   @include box-shadow(none);
@@ -172,4 +173,49 @@ fieldset .button {
 
 .results-text h4{
   font-size: 2.4rem;
+}
+
+details summary {
+font-family: "nta", "GDS-Regular", sans-serif;
+font-size: 19px;
+font-size: 1.9rem;
+line-height: 1.31579;
+font-weight: 400;
+letter-spacing: 0;
+text-transform: none;
+color: #2E3191;
+cursor: pointer;
+display: block;
+text-decoration: underline;
+margin-bottom: 0.5em;
+}
+
+article .application-notice{
+margin: 1em -1em 1em -1em;
+}
+
+select {
+margin: 0.2em 0.5em 0.4em 0;
+vertical-align: baseline;
+}
+
+#calculator h5 {
+  font-weight: bold;
+  font-size: 1.9rem;
+}
+
+article  h2 {
+  margin: 1.2em 0 0.8em 0;
+}
+
+#calculator p.group {
+  margin-top: 0.5em;
+  padding: 0;
+}
+
+.child-info {
+border: 1px solid #dee0e2;
+background: #dee0e2;
+padding: 9px;
+margin-bottom: 15px;
 }
