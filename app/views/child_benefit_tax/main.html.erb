@@ -8,17 +8,18 @@
     <a class="skip-to-related" href="#related">Not what you're looking for? ↓</a>
   </header>
 
+  <%= params %>
   <article id="calculator" role="article">
     <div class="questions">
       <div class="inner">
         <p class="intro">Fill out your details in the calculator below to see if you need to pay back any of your Child Benefit as tax.</p>
-        <%= form_tag("main", :method => :get) do %>
+        <%= form_tag("process_form", :method => :get) do %>
           <!-- hidden field to store the tax year so it can persist -->
           <input type="hidden" name="year" value="<%= params[:year] %>" />
           <!-- hidden field to store if we're showing extra income or not -->
           <input type="hidden" name="show_extra_income" value="<%= @show_extra_income %>" />
 
-          <fieldset>
+          <fieldset id="adjusted_income">
             <%= step(1, "Adjusted net income") %>
 
             <% if @show_extra_income %>
@@ -91,7 +92,7 @@
         <% end %>
       </div><!-- end .inner -->
     </div><!-- end .questions -->
-    <aside class="results">
+    <aside class="results" id="results_box">
       <div class="inner">
         <h1>Results</h1>
         <% if @calculator.can_calculate? %>
