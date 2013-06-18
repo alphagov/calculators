@@ -134,9 +134,9 @@ fieldset .button {
 }
 
 #add_new_starting_child,
-#add_new_stopping_child {
-  label {
-    display: block;
+  #add_new_stopping_child {
+    label {
+      display: block;
   }
 }
 
@@ -154,33 +154,33 @@ details p {
 }
 
 details summary {
-font-family: "nta", "GDS-Regular", sans-serif;
-font-size: 1.6rem;
-line-height: 1.31579;
-font-weight: 400;
-letter-spacing: 0;
-text-transform: none;
-color: #2E3191;
-cursor: pointer;
-display: block;
+  font-family: "nta", "GDS-Regular", sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.31579;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #2E3191;
+  cursor: pointer;
+  display: block;
 }
 
 details summary:hover {
-color: #1D97FF;
+  color: #1D97FF;
 }
 
 .validation-error,
-article .application-notice {
-  zoom: 1;
+  article .application-notice {
+    zoom: 1;
 }
 
 article .application-notice{
-margin: 1em -1em 1em -1em;
+  margin: 1em -1em 1em -1em;
 }
 
 select {
-margin: 0.2em 0.5em 0.4em 0;
-vertical-align: baseline;
+  margin: 0.2em 0.5em 0.4em 0;
+  vertical-align: baseline;
 }
 
 #calculator h5 {
@@ -203,25 +203,25 @@ article  h2 {
 }
 
 .child-info {
-border: 1px solid #dee0e2;
-background: #dee0e2;
-padding: 9px;
-margin-bottom: 15px;
+  border: 1px solid #dee0e2;
+  background: #dee0e2;
+  padding: 9px;
+  margin-bottom: 15px;
 }
 
 .validation-error {
-font-family: "nta",Arial,sans-serif;
-font-size: 16px;
-font-size: 1.6rem;
-line-height: 1.25;
-font-weight: 300;
-text-transform: none;
-color: #df3034;
-border: 3px solid #df3034;
-box-sizing: border-box;
-padding: 1em 1em 0.25em 1em;
-margin: 1em -1em 1em -1em;
-background-color: #fef7f7;
+  font-family: "nta",Arial,sans-serif;
+  font-size: 16px;
+  font-size: 1.6rem;
+  line-height: 1.25;
+  font-weight: 300;
+  text-transform: none;
+  color: #df3034;
+  border: 3px solid #df3034;
+  box-sizing: border-box;
+  padding: 1em 1em 0.25em 1em;
+  margin: 1em -1em 1em -1em;
+  background-color: #fef7f7;
 }
 
 .get-started a {
@@ -229,11 +229,11 @@ background-color: #fef7f7;
 }
 
 article p + .help-notice, article p + .info-notice {
-margin-top: 1em;
+  margin-top: 1em;
 }
 
 .skip-question {
-color: #6f777b;
-margin-top: 0;
-padding-top: -2em;
+  color: #6f777b;
+  margin-top: -2em;
+  padding-top: -2em;
 }
