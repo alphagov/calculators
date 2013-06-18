@@ -16,12 +16,12 @@
           <!-- hidden field to store the tax year so it can persist -->
           <input type="hidden" name="year" value="<%= params[:year] %>" />
           <!-- hidden field to store if we're showing extra income or not -->
-          <input type="hidden" name="show_extra_income" value="<%= @show_extra_income %>" />
+          <input type="hidden" name="show_extra_income" value="<%= show_extra_income? %>" />
 
           <fieldset id="adjusted_income">
             <%= step(1, "Adjusted net income") %>
 
-            <% if @show_extra_income %>
+            <% if show_extra_income? %>
               <p>If you don't know your adjusted net income, you can fill out the five fields below:</p>
               <%= number_input("Total annual income before tax", "total_annual_income", "£") %>
                <details>
