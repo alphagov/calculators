@@ -1,5 +1,5 @@
 <p class="group">
-  <legend><span>When will you stop getting Child Benefit for this child?</span></legend>
+  <legend><span><%= t_for_year params[:year], "stop_child_benefit_for_a_child?" %></span></legend>
     <%
       if child && child.end_date
         date_picker = child.end_date

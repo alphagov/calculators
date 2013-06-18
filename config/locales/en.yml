@@ -1,5 +1,14 @@
 # Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+# See https://github.com/svenfuchs/rails_i18n/tree/master/rails%2Flocale for starting points.
 
 en:
   hello: "Hello world"
+  child_benefit_tax_calculator:
+    year_2012:
+      start_child_benefit_for_this_child?: "If you started getting Child Benefit for a new child, when did it start?"
+      stop_child_benefit_for_this_child?: "If you stopped getting Child Benefit for this child, when did it stop?"
+      stop_child_benefit_for_a_child?: "If you stopped getting Child Benefit for a child, when did it stop?"
+    year_2013:
+      start_child_benefit_for_this_child?: "If you’re going to start getting Child Benefit for a new child, when will it start?"
+      stop_child_benefit_for_this_child?: "If you’re going to stop getting Child Benefit for this child, when will it stop?"
+      stop_child_benefit_for_a_child?: "If you’re going to stop getting Child Benefit for a child, when will it stop?"
