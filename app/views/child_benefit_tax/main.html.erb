@@ -12,7 +12,7 @@
   <article id="calculator" role="article">
     <div class="questions">
       <div class="inner">
-        <p class="intro">Fill out your details in the calculator below to see if you need to pay back any of your Child Benefit as tax.</p>
+        <p class="intro">Use the calculator to find out if you need to pay back any of your Child Benefit.</p>
         <%= form_tag("process_form", :method => :get) do %>
           <!-- hidden field to store the tax year so it can persist -->
           <input type="hidden" name="year" value="<%= params[:year] %>" />
@@ -20,14 +20,24 @@
           <input type="hidden" name="show_extra_income" value="<%= @show_extra_income %>" />
 
           <fieldset id="adjusted_income">
-            <%= step(1, "Adjusted net income") %>
+            <%= step(1, "What is your adjusted net income?") %>
 
             <% if @show_extra_income %>
-              <p>If you don't know your adjusted net income, you can fill out the five fields below:</p>
+              <p>If you don't know your adjusted net income, the calculator will work it out for you. Fill out the 5 fields below:</p>
               <%= number_input("Total annual income before tax", "total_annual_income", "£") %>
                <details>
-                  <summary>What is the total annual income before tax?</summary>
-                  <p>This is when your expenses and capital allowances are more than your income or turnover for your accounting date.This is when your expenses and capital allowances are more than your income or turnover for your accounting date.</p>
+                  <summary>What is total annual income before tax?</summary>
+                  <p>This includes:</p>
+                  <ul>
+                    <li>salary (before any pension contributions are taken away)</li>
+                    <li>company benefits you get (eg car, fuel and medical benefits)</li>
+                    <li>profits if you’re self-employed</li>
+                    <li>interest you get from savings (including any tax that’s already been paid on it)</li>
+                    <li>State Pension payments and other State benefits that are taxed</li>
+                    <li>payments from personal and occupational pensions or annuities</li>
+                    <li>income from dividends (including the dividend tax credit) or trusts</li>
+                    <li>income from renting out properties</li>
+                   </ul>
                 </details>
               <%= number_input("Gross pension contributions", "gross_pension_contributons", "£") %>
                 <details>
@@ -35,7 +45,7 @@
                   <p>This is how much you expect to pay into:</p>
                     <ul>
                       <li>pension schemes where your contributions are paid before your income was taxed (called ‘net pay arrangements’)</li>
-                      <li>retirement annuity contracts (called ‘gross contributions’)"</li>
+                      <li>retirement annuity contracts (called ‘gross contributions’)</li>
                     </ul>
                 </details>
               <%= number_input("Net pension contributions", "net_pension_contributions", "£") %>
@@ -55,40 +65,49 @@
                 </details>
             <% else %>
               <div class="application-notice info-notice">
-                  <p>This is the highest individual income in your household.</p>
+                  <p>Include:</p>
 
-                  <p>You must include:</p>
                   <ul>
                     <li>salary and taxable company benefits</li>
-                    <li>profits if you’re self-employed</li>
                     <li>profits if you’re self-employed</li>
                     <li>interest you get from savings (including any tax that’s already been paid on it)</li>
                     <li>State Pension payments and other State benefits that are taxed</li>
                     <li>payments from personal and occupational pensions or annuities</li>
                     <li>income from dividends (including the dividend tax credit) or trusts</li>
-                    <li>rental income</li>
+                    <li>income from renting out properties</li>
+                  </ul>
+                  
+                  <p>Don't include:</p>
+
+                    <ul>
+                      <li>interest you get from tax-free savings (including your ISA)</li>
+                      <li>up to £55 per week of childcare paid for directly by your employer and/or childcare vouchers you get as part of a salary sacrifice scheme</li>
+                      <li>the value of any workplace nursery places your employer provides for you</li>
+                    </ul>
                   </div>
-                <%= number_input("Adjusted Net Income", "adjusted_net_income", "£") %>
-                <%= submit_tag("I don't know my net income", { :class => "link" }) %>
+                <%= number_input("Adjusted net income", "adjusted_net_income", "£") %>
+                <%= submit_tag("I don't know my adjusted net income", { :class => "link" }) %>
             <% end %>
           </fieldset>
 
           <fieldset>
-            <%= step(2, "Number of children you're claiming for") %>
-            <%= number_input("How many children did you or your partner get Child Benefit for during the 2012 to 2013 tax year (6 April 2012 to 5 April 2013)?", "children_count") %>
+            <%= step(2, "How many children are you claiming for?") %>
+            <%= number_input("How many children did you or your partner get Child Benefit for during the tax year?", "children_count") %>
           </fieldset>
 
           <fieldset id="add_new_starting_child">
-            <%= step(3, "Children you started claiming Child Benefit for") %>
+            <%= step(3, "Have you started claiming Child Benefit for a new child?") %>
+            <p class="skip-question">You can skip this question if it doesn’t apply to you.</p>
             <%= render "partials/child_benefit_tax/starting_children" %>
           </fieldset>
 
           <fieldset id="add_new_stopping_child">
-            <%= step(4, "Children you stopped claiming Child Benefit for") %>
+            <%= step(4, "Have you stopped claiming Child Benefit for a child?") %>
+            <p class="skip-question">You can skip this question if it doesn’t apply to you.</p>
             <%= render "partials/child_benefit_tax/stopping_children" %>
           </fieldset>
 
-          <%= submit_tag("Estimate your tax charge", { :class => "button" }) %>
+          <%= submit_tag("Get your estimate", { :class => "button" }) %>
         <% end %>
       </div><!-- end .inner -->
     </div><!-- end .questions -->
