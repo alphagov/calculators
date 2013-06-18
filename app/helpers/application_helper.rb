@@ -2,7 +2,7 @@
 module ApplicationHelper
 
   def step(num, text)
-    "<h2><span class='steps' id='step-#{num}'><span class='visuallyhidden'>Step </span>#{num} </span>#{text}</h2>".html_safe
+    "<h2><span class='steps' id='step-#{num}'><span class='visuallyhidden'>Step #{num}</span></span>#{text}</h2>".html_safe
   end
 
   def number_input(label, name, placeholder="")
@@ -12,7 +12,7 @@ module ApplicationHelper
   end
 
   def para_group(inner)
-    "<p class='group'>#{inner}</p>".html_safe
+    "<p class='group number-input'>#{inner}</p>".html_safe
   end
 
 end

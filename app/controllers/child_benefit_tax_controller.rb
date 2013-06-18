@@ -8,7 +8,7 @@ class ChildBenefitTaxController < ApplicationController
     anchor = ""
     if params[:add_another_starting_child_submit].present?
       anchor = "add_new_starting_child"
-    elsif params[:commit] == "I don't know my net income"
+    elsif params[:commit] == "I don't know my adjusted net income"
       anchor = "adjusted_income"
     elsif params[:add_another_stopping_child_submit].present?
       anchor = "add_new_stopping_child"
@@ -35,7 +35,7 @@ class ChildBenefitTaxController < ApplicationController
     @show_new_child_form = params[:add_another_starting_child_submit] == "Add another child"
     @show_old_child_form = params[:add_another_stopping_child_submit] == "Add another child"
 
-    @show_extra_income = (params[:commit] == "I don't know my net income" || params[:show_extra_income] == "true")
+    @show_extra_income = (params[:commit] == "I don't know my adjusted net income" || params[:show_extra_income] == "true")
 
     # TODO: do these vars get used?
     # for adding a new starting child
