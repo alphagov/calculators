@@ -1,6 +1,6 @@
 <div>
 <p class="group">
-  <label>If you started claiming Child Benefit for a new child this tax year, when did it start?</label>
+<label><%= t_for_year params[:year], "start_child_benefit_for_this_child?" %></label>
   <%
     if child && child.start_date
       date_picker = child.start_date
@@ -12,7 +12,7 @@
 </p>
 
 <p class="group">
-  <label>When do you expect to stop receiving Child Benefit for that child?</label>
+<label><%= t_for_year params[:year], "stop_child_benefit_for_this_child?" %></label>
   <%
     if child && child.end_date
       date_picker = child.end_date
