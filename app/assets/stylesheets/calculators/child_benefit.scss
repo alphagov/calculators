@@ -23,7 +23,7 @@
 article {
   @extend %contain-floats;
   .questions {
-    width: 90%;
+    width: 80%;
   }
     h4 {
       font-weight: bold;
@@ -234,6 +234,5 @@ article p + .help-notice, article p + .info-notice {
 
 .skip-question {
   color: #6f777b;
-  margin-top: -2em;
-  padding-top: -2em;
+  margin-top: -0.5em;
 }
