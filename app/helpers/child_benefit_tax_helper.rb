@@ -1,6 +1,10 @@
 # encoding: utf-8
 module ChildBenefitTaxHelper
-  
+ 
+  def t_for_year(year, key)
+    t "child_benefit_tax_calculator.year_#{year}.#{key}"
+  end
+
   def show_extra_income?
     params[:commit] == "I don't know my adjusted net income" or params[:show_extra_income] == "true"
   end

@@ -1,5 +1,4 @@
-<% if @calculator.tax_year == 2012 %>
-  <%= render "partials/child_benefit_tax/results_tax_year_2012" %>
-<% else %>
-  <%= render "partials/child_benefit_tax/results_tax_year_2013" %>
+<%= render "partials/child_benefit_tax/results_box" %>
+<% unless @calculator.nothing_owed? %>
+  <%= render "partials/child_benefit_tax/results_tax_year_#{@calculator.tax_year}" %>
 <% end %>
