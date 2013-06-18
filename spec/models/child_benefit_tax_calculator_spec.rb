@@ -115,7 +115,7 @@ describe ChildBenefitTaxCalculator do
           :year => "2012"
         }).nothing_owed?.should == true
       end
-      it "should be true for incomes under the threshold" do
+      it "should be true for incomes over the threshold" do
         ChildBenefitTaxCalculator.new({
           :adjusted_net_income => "50100",
           :children_count => "1",
