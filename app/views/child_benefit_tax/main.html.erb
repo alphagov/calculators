@@ -8,7 +8,6 @@
     <a class="skip-to-related" href="#related">Not what you're looking for? ↓</a>
   </header>
 
-  <%= params %>
   <article id="calculator" role="article">
     <div class="questions">
       <div class="inner">
@@ -92,15 +91,13 @@
         <% end %>
       </div><!-- end .inner -->
     </div><!-- end .questions -->
+    <% if @calculator.can_calculate? -%>
     <aside class="results" id="results_box">
       <div class="inner">
         <h1>Results</h1>
-        <% if @calculator.can_calculate? %>
-          <%= render "partials/child_benefit_tax/results" %>
-        <% else %>
-          <%= render "partials/child_benefit_tax/no_results" %>
-        <% end %>
+        <%= render "partials/child_benefit_tax/results" %>
       </div><!-- end .inner -->
     </aside>
+    <% end -%>
   </article><!-- end .thirds -->
 </section>
