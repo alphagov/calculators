@@ -8,11 +8,11 @@ class ChildBenefitTaxController < ApplicationController
   def process_form
     anchor = if params[:add_another_starting_child_submit].present?
       "add_new_starting_child"
-    elsif params[:commit] == "I don't know my net income"
+    elsif params[:commit] == "I don't know my adjusted net income"
       "adjusted_income"
     elsif params[:add_another_stopping_child_submit].present?
       "add_new_stopping_child"
-    elsif params[:commit] == "Estimate your tax charge"
+    elsif params[:commit] == "Get your estimate"
       "results_box"
     else
       ""

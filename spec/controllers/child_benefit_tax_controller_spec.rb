@@ -37,12 +37,12 @@ describe ChildBenefitTaxController do
       response.should redirect_to(:action => :main, :params => route_params, :anchor => "add_new_stopping_child")
     end
     it "should place an 'adjusted_income' anchor onto the redirected response" do
-      route_params = { :year => "2013", :commit => "I don't know my net income" }
+      route_params = { :year => "2013", :commit => "I don't know my adjusted net income" }
       get 'process_form', route_params
       response.should redirect_to(:action => :main, :params => route_params, :anchor => "adjusted_income")
     end
     it "should place an 'results_box' anchor onto the redirected response" do
-      route_params = { :year => "2013", :commit => "Estimate your tax charge" }
+      route_params = { :year => "2013", :commit => "Get your estimate" }
       get 'process_form', route_params
       response.should redirect_to(:action => :main, :params => route_params, :anchor => "results_box")
     end

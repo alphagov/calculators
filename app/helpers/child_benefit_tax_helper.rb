@@ -2,7 +2,7 @@
 module ChildBenefitTaxHelper
   
   def show_extra_income?
-    params[:commit] == "I don't know my net income" or params[:show_extra_income] == "true"
+    params[:commit] == "I don't know my adjusted net income" or params[:show_extra_income] == "true"
   end
 
   def show_new_child_form?
