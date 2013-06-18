@@ -20,14 +20,6 @@
  * ================================================================
  */
 
-.form{
-  @include form(top);
-
-  input[type='text'], input[type='email'] {
-    background: $white;
-  }
-}
-
 article {
   @extend %contain-floats;
   .questions {
@@ -51,35 +43,17 @@ article {
   -webkit-font-smoothing: antialiased;
 }
 
+label {
+  display: block;
+}
+
 fieldset .button {
   @include core-16;
   margin-top: 5em;
 }
-.button-secondary {
-  color: #0b0c0c;
-  background-color: $grey-3;
-  -webkit-font-smoothing: antialiased;
-}
-
-.button-secondary:focus,
-.button-secondary:hover {
-  color: #0b0c0c;
-  background-color: darken($grey-3, 10%);
-}
 
 .button-inline {
   margin-right: 10px;
-}
-
-.form {
-  label {
-    display: block;
-    @include core-19;
-    text-transform: none;
-    vertical-align: top;
-    padding: 0.25em 0;
-    margin-top: 5em;
-  }
 }
 
 #new-child-template, #stopped-child-template {
@@ -119,8 +93,6 @@ fieldset .button {
     float: left;
     width: 23px;
     height: 23px;
-    overflow: hidden;
-    text-indent: -5000%;
     margin-right: 0.75em;
   }
 
@@ -142,8 +114,8 @@ fieldset .button {
   }
 
   .intro {
-    padding-top: 0;
-    margin-bottom: 0em;
+    padding: 0;
+    margin-bottom: 3em;
   }
 
   .link{
@@ -153,7 +125,8 @@ fieldset .button {
   color: #2e3191;
   text-decoration: underline;
   @include box-shadow(none);
-  border: none;  
+  border: none;
+  overflow: visible; 
   &:hover, &:focus{
     color: #2e8aca;
     }
@@ -175,10 +148,14 @@ fieldset .button {
   font-size: 2.4rem;
 }
 
+details p {
+  padding-top: -2em;
+  font-size: 1.6rem;
+}
+
 details summary {
 font-family: "nta", "GDS-Regular", sans-serif;
-font-size: 19px;
-font-size: 1.9rem;
+font-size: 1.6rem;
 line-height: 1.31579;
 font-weight: 400;
 letter-spacing: 0;
@@ -186,8 +163,15 @@ text-transform: none;
 color: #2E3191;
 cursor: pointer;
 display: block;
-text-decoration: underline;
-margin-bottom: 0.5em;
+}
+
+details summary:hover {
+color: #1D97FF;
+}
+
+.validation-error,
+article .application-notice {
+  zoom: 1;
 }
 
 article .application-notice{
@@ -205,7 +189,8 @@ vertical-align: baseline;
 }
 
 article  h2 {
-  margin: 1.2em 0 0.8em 0;
+  margin: 0 0 0.8em 0;
+  padding: 0;
 }
 
 #calculator p.group {
@@ -213,9 +198,42 @@ article  h2 {
   padding: 0;
 }
 
+#calculator p.number-input {
+  margin-top: 1.5em;
+}
+
 .child-info {
 border: 1px solid #dee0e2;
 background: #dee0e2;
 padding: 9px;
 margin-bottom: 15px;
+}
+
+.validation-error {
+font-family: "nta",Arial,sans-serif;
+font-size: 16px;
+font-size: 1.6rem;
+line-height: 1.25;
+font-weight: 300;
+text-transform: none;
+color: #df3034;
+border: 3px solid #df3034;
+box-sizing: border-box;
+padding: 1em 1em 0.25em 1em;
+margin: 1em -1em 1em -1em;
+background-color: #fef7f7;
+}
+
+.get-started a {
+  margin-right: 0.5em;
+}
+
+article p + .help-notice, article p + .info-notice {
+margin-top: 1em;
+}
+
+.skip-question {
+color: #6f777b;
+margin-top: 0;
+padding-top: -2em;
 }
