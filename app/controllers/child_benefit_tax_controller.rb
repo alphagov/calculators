@@ -1,19 +1,21 @@
 class ChildBenefitTaxController < ApplicationController
+  
+  before_filter :redirect_if_no_year, :except => :landing
+
   def landing
   end
 
   def process_form
-    redirect_if_no_year
-
-    anchor = ""
-    if params[:add_another_starting_child_submit].present?
-      anchor = "add_new_starting_child"
+    anchor = if params[:add_another_starting_child_submit].present?
+      "add_new_starting_child"
     elsif params[:commit] == "I don't know my net income"
-      anchor = "adjusted_income"
+      "adjusted_income"
     elsif params[:add_another_stopping_child_submit].present?
-      anchor = "add_new_stopping_child"
+      "add_new_stopping_child"
     elsif params[:commit] == "Estimate your tax charge"
-      anchor = "results_box"
+      "results_box"
+    else
+      ""
     end
 
     redirect_obj = { :action => :main, :anchor => anchor }
@@ -29,8 +31,6 @@ class ChildBenefitTaxController < ApplicationController
 
 
   def main
-    redirect_if_no_year
-
     @calculator = ChildBenefitTaxCalculator.new(params)
     @show_new_child_form = params[:add_another_starting_child_submit] == "Add another child"
     @show_old_child_form = params[:add_another_stopping_child_submit] == "Add another child"
@@ -52,6 +52,7 @@ class ChildBenefitTaxController < ApplicationController
   end
 
   private
+
   def redirect_if_no_year
     unless params[:year]
       redirect_to :action => :landing
