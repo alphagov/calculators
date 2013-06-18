@@ -53,7 +53,76 @@ describe ChildBenefitTaxCalculator do
     calc.adjusted_net_income.should == 20
   end
 
+  describe "calculating percentage tax charge" do
+    it "should be 0.0 for an income of 50099" do
+      ChildBenefitTaxCalculator.new({
+        :adjusted_net_income => "50099",
+        :year => "2012",
+        :children_count => 2
+      }).percent_tax_charge.should == 0.0
+    end
+    it "should be 1.0 for an income of 50199" do
+      ChildBenefitTaxCalculator.new({
+        :adjusted_net_income => "50199",
+        :year => "2012",
+        :children_count => 2
+      }).percent_tax_charge.should == 1.0
+    end
+    it "should be 2.0 for an income of 50200" do
+      ChildBenefitTaxCalculator.new({
+        :adjusted_net_income => "50200",
+        :year => "2012",
+        :children_count => 2
+      }).percent_tax_charge.should == 2.0
+    end
+    it "should be 40.0 for an income of 54013" do
+      ChildBenefitTaxCalculator.new({
+        :adjusted_net_income => "54013",
+        :year => "2012",
+        :children_count => 2
+      }).percent_tax_charge.should == 40.0
+    end
+    it "should be 40.0 for an income of 54089" do
+      ChildBenefitTaxCalculator.new({
+        :adjusted_net_income => "54089",
+        :year => "2012",
+        :children_count => 2
+      }).percent_tax_charge.should == 40.0
+    end
+    it "should be 99.0 for an income of 60000" do
+      ChildBenefitTaxCalculator.new({
+        :adjusted_net_income => "60000",
+        :year => "2012",
+        :children_count => 2
+      }).percent_tax_charge.should == 99.0
+    end
+    it "should be 100.0 for an income of 60000" do
+      ChildBenefitTaxCalculator.new({
+        :adjusted_net_income => "60001",
+        :year => "2012",
+        :children_count => 2
+      }).percent_tax_charge.should == 100.0
+    end
+  end
+
   describe "calculating the correct amount owed" do
+
+    describe "below the income threshold" do
+      it "should be true for incomes under the threshold" do
+        ChildBenefitTaxCalculator.new({
+          :adjusted_net_income => "49999",
+          :children_count => "1",
+          :year => "2012"
+        }).nothing_owed?.should == true
+      end
+      it "should be true for incomes over the threshold" do
+        ChildBenefitTaxCalculator.new({
+          :adjusted_net_income => "50100",
+          :children_count => "1",
+          :year => "2012"
+        }).nothing_owed?.should == false
+      end
+    end
 
     describe "for the tax year 2012-13" do
       it "calculates the correct amount owed for % charge of 100" do

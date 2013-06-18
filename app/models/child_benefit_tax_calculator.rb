@@ -1,6 +1,8 @@
 class ChildBenefitTaxCalculator
   attr_reader :adjusted_net_income, :children_count, :starting_children, :stopping_children, :tax_year
 
+  NET_INCOME_THRESHOLD = 50000
+
   FIRST_CHILD_RATE = 20.3
   FURTHER_CHILD_RATE = 13.4
 
@@ -29,6 +31,10 @@ class ChildBenefitTaxCalculator
     else
       benefits_with_changing_children
     end
+  end
+
+  def nothing_owed?
+    @adjusted_net_income < NET_INCOME_THRESHOLD or amount_owed == 0
   end
 
   def amount_owed

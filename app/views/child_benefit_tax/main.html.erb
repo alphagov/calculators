@@ -8,7 +8,6 @@
     <a class="skip-to-related" href="#related">Not what you're looking for? ↓</a>
   </header>
 
-  <%= params %>
   <article id="calculator" role="article">
     <div class="questions">
       <div class="inner">
@@ -17,12 +16,12 @@
           <!-- hidden field to store the tax year so it can persist -->
           <input type="hidden" name="year" value="<%= params[:year] %>" />
           <!-- hidden field to store if we're showing extra income or not -->
-          <input type="hidden" name="show_extra_income" value="<%= @show_extra_income %>" />
+          <input type="hidden" name="show_extra_income" value="<%= show_extra_income? %>" />
 
           <fieldset id="adjusted_income">
             <%= step(1, "What is your adjusted net income?") %>
 
-            <% if @show_extra_income %>
+            <% if show_extra_income? %>
               <p>If you don't know your adjusted net income, the calculator will work it out for you. Fill out the 5 fields below:</p>
               <%= number_input("Total annual income before tax", "total_annual_income", "£") %>
                <details>
@@ -111,15 +110,13 @@
         <% end %>
       </div><!-- end .inner -->
     </div><!-- end .questions -->
+    <% if @calculator.can_calculate? -%>
     <aside class="results" id="results_box">
       <div class="inner">
         <h1>Results</h1>
-        <% if @calculator.can_calculate? %>
-          <%= render "partials/child_benefit_tax/results" %>
-        <% else %>
-          <%= render "partials/child_benefit_tax/no_results" %>
-        <% end %>
+        <%= render "partials/child_benefit_tax/results" %>
       </div><!-- end .inner -->
     </aside>
+    <% end -%>
   </article><!-- end .thirds -->
 </section>
