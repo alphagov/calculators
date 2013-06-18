@@ -8,7 +8,7 @@
   <%= render "partials/child_benefit_tax/single_starting_child", :number => index, :child => child %>
 <% end %>
 
-<% if @calculator.starting_children.empty? || @show_new_child_form %>
+<% if @calculator.starting_children.empty? or show_new_child_form? %>
 	<% unless @calculator.starting_children.size == 0 %>
   		<h5>New child <%= @calculator.starting_children.size + 1 %></h5>
   	<% end %>
