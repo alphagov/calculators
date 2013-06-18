@@ -1,39 +1,33 @@
 <%= render "partials/child_benefit_tax/results_box" %>
+
 <div class="results-text">
-  <p>You only have to pay tax back on Child Benefit received between 7 January and 5 April.</p>
 
-  <h4>Self Assessment deadlines</h4>
+  <h4>How and when to pay</h4>
 
-  <p>You will have to pay back <%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %> from the tax year 2012 to 2013 through Self Assessment. You’ll need to <a href="/register-for-aslf-assessment">register for Self Assessment</a> by 5 October, and complete your tax return in time.
+  <p>You will have to pay back <%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %> from the tax year 2012 to 2013 through <a href="https://www.gov.uk/self-assessment-tax-returns">Self Assessment</a>. You’ll need to <a href="https://www.gov.uk/register-for-self-assessment">register for Self Assessment</a> by 5 October, and complete your Self Assessment tax return in time.</p>
 
-  <p>The deadlines are:</p>
+  <p>
+    The deadlines are:
+  </p>
 
   <ul>
-    <li>paper tax returns - by midnight 31 October 2013</li>
-    <li>online tax returns - by midnight 31 January 2014</li>
+    <li>paper - by midnight 31 October 2013</li>
+    <li>online - by midnight 31 January 2014</li>
     <li>final payment of any tax due - by midnight 31 January 2014</li>
   </ul>
 
-  <p>You’ll have to <a href="/self-assessment-tax-returns/penalties">pay a penalty</a> if you miss the deadline.</p>
+  <p>You’ll have to <a href="https://www.gov.uk/self-assessment-tax-returns/penalties">pay a penalty</a> if you miss the deadline.</p>
 
-  <h4>What to do next</h4>
 
-  <% if @calculator.amount_owed > 0 && @calculator.starting_children.any? %>
-    <p>You’ll need to pay back any tax you already owe through Self Assessment. From now, you can either:</p>
-    <ul>
-      <li>carry on getting Child Benefit for the year, and pay whatever you owe back as tax</li>
-      <li><a href="http://hmrc.gov.uk/childbenefitcharge/stopchbpayments.htm" rel="external">stop getting Child Benefit</a>, and pay whatever you already owe back as tax</li>
-    </ul>
-  <% else %>
-    <p>For the tax year 2013 to 2014, you’ll need to pay back any tax you already owe through Self Assessment. From now, you can either:</p>
-    <ul>
-      <li>carry on getting Child Benefit for the year, and pay whatever you owe back as tax</li>
-      <li><a href="http://hmrc.gov.uk/childbenefitcharge/stopchbpayments.htm" rel="external">stop getting Child Benefit</a></li>
-    </ul>
-  <% end %>
-
-  <p>Only the person getting Child Benefit can ask for it to be stopped.</p>
-
+  <h4>What happens next</h4>
+  
+  <p>For the tax year 2013 to 2014, you’ll need to pay back any tax you owe through Self Assessment. You can either:</p>
+  
+  <ul>
+    <li>carry on getting Child Benefit for the year</li>
+    <li><a href="http://hmrc.gov.uk/childbenefitcharge/stopchbpayments.htm" rel="external">stop getting Child Benefit</a></li>
+  </ul>  
+  
   <% if @calculator.amount_owed > 0 && @calculator.starting_children.any? %>
 
     <h4>New children</h4>
@@ -45,9 +39,6 @@
       <li>register the child for Child Benefit and ask for it not to be paid to you</li>
     </ul>
 
-    %**NOTE: need to find out how to do the latter**%
   <% end %>
-
-  <p>Come back to the calculator if your circumstances change.</p>
 
 </div>

@@ -1,4 +1,35 @@
-<%= render "partials/child_benefit_tax/results_box" %>
+<div class="results-text">
+  <p>This tax charge was introduced on 7 January 2013.</p>
+
+  <h4>How and when to pay</h4>
+
+  <p>You will have to pay back the tax you owe through Self Assessment. You’ll need to <a href="https://www.gov.uk/self-assessment-tax-returns">Self Assessment</a> by 5 October 2014, and complete your Self Assessment tax return in time.</p>
+
+  <h4>What happens next</h4>
+  
+  <p>You’ll need to pay back any tax you owe through <a href="https://www.gov.uk/self-assessment-tax-returns">self assessment</a>. You can either:</p>
+  
+  <ul>
+    <li>carry on getting Child Benefit for the year</li>
+    <li><a href="http://hmrc.gov.uk/childbenefitcharge/stopchbpayments.htm" rel="external">stop getting Child Benefit</a></li>
+  </ul>  
+  
+  <% if @calculator.amount_owed > 0 && @calculator.starting_children.any? %>
+
+    <h4>New children</h4>
+
+    <p>From now, you can either:</p>
+
+    <ul>
+      <li>carry on getting Child Benefit for the year, and pay whatever you owe back as tax</li>
+      <li>register the child for Child Benefit and ask for it not to be paid to you</li>
+    </ul>
+
+  <% end %>
+
+</div>
+
+
 <div class="results-text">
   <h4>Paying back Child Benefit as tax</h4>
   <p>You’ll need to pay back any tax you already owe through Self Assessment. From now, you can either:</p>
