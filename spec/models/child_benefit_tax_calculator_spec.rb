@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'spec_helper'
 
 describe ChildBenefitTaxCalculator do
@@ -53,6 +54,13 @@ describe ChildBenefitTaxCalculator do
     calc.adjusted_net_income.should == 20
   end
 
+  it "parses integers from various formats of numerical input" do
+    calc = ChildBenefitTaxCalculator.new({
+      :adjusted_net_income => "£100,900"
+    })
+    calc.adjusted_net_income.should == 100900
+  end
+  
   describe "calculating percentage tax charge" do
     it "should be 0.0 for an income of 50099" do
       ChildBenefitTaxCalculator.new({
