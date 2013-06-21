@@ -12,12 +12,12 @@ class ChildBenefitTaxCalculator
   }
 
   def initialize(params = {})
-    @total_annual_income = params[:total_annual_income].to_i
-    @gross_pension_contributions = params[:gross_pension_contributions].to_i
-    @net_pension_contributions = params[:net_pension_contributions].to_i
-    @trading_losses_self_employed = params[:trading_losses_self_employed].to_i
-    @gift_aid_donations = params[:gift_aid_donations].to_i
-    @adjusted_net_income = calculate_adjusted_income(params[:adjusted_net_income].to_i)
+    @total_annual_income = to_integer(params[:total_annual_income])
+    @gross_pension_contributions = to_integer(params[:gross_pension_contributions])
+    @net_pension_contributions = to_integer(params[:net_pension_contributions])
+    @trading_losses_self_employed = to_integer(params[:trading_losses_self_employed])
+    @gift_aid_donations = to_integer(params[:gift_aid_donations])
+    @adjusted_net_income = calculate_adjusted_income(to_integer(params[:adjusted_net_income]))
     @starting_children = process_starting_children(params[:starting_children] || [])
     @stopping_children = process_stopping_children(params[:stopping_children] || [])
     @tax_year = params[:year].to_i
@@ -197,6 +197,11 @@ class ChildBenefitTaxCalculator
     else
       adjusted_income
     end
+  end
+
+  def to_integer(val)
+    val.gsub!(/\D/,'') if val.is_a?(String)
+    val.to_i
   end
 end
 
