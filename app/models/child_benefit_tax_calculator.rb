@@ -52,7 +52,7 @@ class ChildBenefitTaxCalculator
   end
 
   def child_benefit_start_date
-    TAX_YEARS[@tax_year.to_s].first
+    @tax_year == 2012 ? Date.parse('7 Jan 2013') : TAX_YEARS[@tax_year.to_s].first
   end
 
   def child_benefit_end_date
@@ -60,7 +60,34 @@ class ChildBenefitTaxCalculator
   end
 
   def can_calculate?
-    @tax_year && @adjusted_net_income > 0 && ( @children_count > 0 || @starting_children.present? || @stopping_children.present? )
+    @tax_year && ( @children_count > 0 || @starting_children.present? || @stopping_children.present? )
+  end
+
+  def can_estimate?
+    @total_annual_income > 0 and can_calculate?
+  end
+
+  def benefits_claimed_amount
+    all_weeks_children = {}
+    (child_benefit_start_date...child_benefit_end_date).each_slice(7) do |week|
+      all_weeks_children[week.first] = 0
+      @starting_children.each do |child|
+        if days_include_week?(child.start_date, child.end_date, week.first)
+          all_weeks_children[week.first] += 1
+        end
+      end
+
+      @stopping_children.each do |child|
+        if child.end_date >= week.first
+          all_weeks_children[week.first] += 1
+        end
+      end
+    end
+    
+    # calculate total for all weeks
+    all_weeks_children.values.inject(0) do |sum, n|
+      sum + weekly_sum_for_children(n)
+    end
   end
 
   private
@@ -88,6 +115,10 @@ class ChildBenefitTaxCalculator
     stopping_children
   end
 
+  # TODO: Review these monolithic calculation methods with a view to providing
+  # more atomic outputs for various user needs, e.g. total benefit claimed
+  # should not be dependant upon ANI.
+  #
   def benefits_no_starting_stopping_children
     # benefit rates fixed until April 2014: gov.uk/child-benefit-rates
     # 20.30 for 1st child, 13.40 for each next child
@@ -226,5 +257,3 @@ class StoppingChild
     @end_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
   end
 end
-
-

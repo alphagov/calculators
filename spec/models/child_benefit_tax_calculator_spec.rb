@@ -25,7 +25,6 @@ describe ChildBenefitTaxCalculator do
 
   it "is valid if given enough detail" do
     ChildBenefitTaxCalculator.new({
-      :adjusted_net_income => "500000",
       :year => "2012",
       :children_count => 2
     }).can_calculate?.should == true
@@ -60,7 +59,34 @@ describe ChildBenefitTaxCalculator do
     })
     calc.adjusted_net_income.should == 100900
   end
-  
+
+  describe "calculating benefits received" do
+    it "should give the total amount of benefits received for a full tax year" do
+      calc = ChildBenefitTaxCalculator.new({
+        :year => "2012",
+        :starting_children => {
+          "1" => {
+            :start => { :year => "2011", :month => "02", :day => "01" },
+            :stop => { :year => "2013", :month => "05", :day => "01" }
+          }
+        }
+      }).benefits_claimed_amount.round(2).should == 263.9 
+    end
+    it "should give the total amount of benefits received for a full tax year" do
+      calc = ChildBenefitTaxCalculator.new({
+        :year => "2013",
+        :starting_children => {
+          "1" => {
+            :start => { :year => "2012", :month => "02", :day => "01" },
+            :stop => { :year => "2014", :month => "05", :day => "01" }
+          }
+        }
+      }).benefits_claimed_amount.round(2).should == 1055.6 
+    end
+    it "should give the total amount of benefits received for a partial tax year" do
+    end
+  end
+
   describe "calculating percentage tax charge" do
     it "should be 0.0 for an income of 50099" do
       ChildBenefitTaxCalculator.new({
@@ -204,7 +230,7 @@ describe ChildBenefitTaxCalculator do
           },
           :year => "2012"
         })
-        calc.owed[:benefit_owed_amount].round(1).should == 121.8
+        calc.owed[:benefit_owed_amount].round(1).should == 101.5
       end
 
       it "doesn't tax before Jan 7th 2013" do
@@ -221,7 +247,7 @@ describe ChildBenefitTaxCalculator do
         })
         # child from 01/05/12 -> 05/04/13
         # 11 months = 44 weeks
-        calc.owed[:benefit_claimed_amount].round(1).should == 994.7
+        calc.owed[:benefit_claimed_amount].round(1).should == 263.9
         # should only pay from Jan 7th (13 weeks * 20.3)
         calc.owed[:benefit_owed_amount].round(1).should == 263.9
       end
@@ -238,7 +264,7 @@ describe ChildBenefitTaxCalculator do
           :year => "2012"
         })
         #child from 01/02 to 01/03 => 5 weeks * 20.3
-        calc.owed[:benefit_owed_amount].round(1).should == 101.5
+        calc.owed[:benefit_owed_amount].round(1).should == 81.2
       end
     end # tax year 2012
 
