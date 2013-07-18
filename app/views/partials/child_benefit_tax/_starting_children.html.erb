@@ -5,14 +5,14 @@
 <!-- show existing children here -->
 <% @calculator.starting_children.each_with_index do |child, index| %>
 	<h5>New child <%= index + 1 %></h5>
-  <%= render "partials/child_benefit_tax/single_starting_child", :number => index, :child => child %>
+  <%= render "partials/child_benefit_tax/starting_child", :number => index, :child => child %>
 <% end %>
 
 <% if @calculator.starting_children.empty? or show_new_child_form? %>
 	<% unless @calculator.starting_children.size == 0 %>
   		<h5>New child <%= @calculator.starting_children.size + 1 %></h5>
   	<% end %>
-  <%= render "partials/child_benefit_tax/single_starting_child", :number => @calculator.starting_children.size, :child => nil%>
+  <%= render "partials/child_benefit_tax/starting_child", :number => @calculator.starting_children.size, :child => nil%>
 <% end %>
 
 <input type="submit" name="add_another_starting_child_submit" value="Add another child" class="link" />
