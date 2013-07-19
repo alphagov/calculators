@@ -97,13 +97,13 @@
           <fieldset id="add_new_starting_child">
             <%= step(3, "Have you started claiming Child Benefit for a new child?") %>
             <p class="skip-question">You can skip this question if it doesn’t apply to you.</p>
-            <%= render "partials/child_benefit_tax/starting_children" %>
+            <%= render "starting_children" %>
           </fieldset>
 
           <fieldset id="add_new_stopping_child">
             <%= step(4, "Have you stopped claiming Child Benefit for a child?") %>
             <p class="skip-question">You can skip this question if it doesn’t apply to you.</p>
-            <%= render "partials/child_benefit_tax/stopping_children" %>
+            <%= render "stopping_children" %>
           </fieldset>
 
           <%= submit_tag("Get your estimate", { :class => "button" }) %>
@@ -114,7 +114,7 @@
     <aside class="results" id="results_box">
       <div class="inner">
         <h1>Results</h1>
-        <%= render "partials/child_benefit_tax/results" %>
+        <%= render "results" %>
       </div><!-- end .inner -->
     </aside>
     <% end -%>
