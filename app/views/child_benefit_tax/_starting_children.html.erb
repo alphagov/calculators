@@ -1,0 +1,4 @@
+<% @calculator.starting_children.each_with_index do |child, index| %>
+  <h5>Child <%= index + 1 %></h5>
+  <%= render "starting_child", :number => index, :child => child %>
+<% end %>

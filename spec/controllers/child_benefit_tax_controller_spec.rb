@@ -10,10 +10,6 @@ describe ChildBenefitTaxController do
   end
 
   describe "GET main" do
-    it "should redirect if no year is passed via params" do
-      get 'main'
-      response.should redirect_to(:action => :landing)
-    end
     it "should create a calculator using params" do
       get 'main', { :year => '2013' }
       response.should be_success
@@ -22,10 +18,6 @@ describe ChildBenefitTaxController do
   end
 
   describe "GET process_form" do
-    it "should redirect if no year is passed via params" do
-      get 'process_form'
-      response.should redirect_to(:action => :landing)
-    end
     it "should place an 'add_new_starting_child' anchor onto the redirected response" do
       route_params = { :year => "2013", :add_another_starting_child_submit => 'yay' }
       get 'process_form', route_params
