@@ -1,9 +1,4 @@
 <div class="results-box">
-  <% if @calculator.nothing_owed? %>
-    <h2>You don’t need to pay back any of your Child Benefit as tax.</h2>
-    <p>This is an estimate based on the figures you provided. Come back to the calculator if your circumstances change.</p>
-  <% else %>
-    <p class="amount"><strong><%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %></strong></p>
-    <p>You will have to pay back <%= number_to_currency @calculator.amount_owed, unit: "£", precision: 2 %> (<%= @calculator.percent_tax_charge %>% of the total Child Benefit received between 7 January and 5 April 2013). This is an estimate based on the information you provided. Come back to the calculator if your circumstances change.</p>
-  <% end %>
+  <p>You have received</p>
+  <h2><%= number_to_currency @calculator.benefits_claimed_amount, unit: "£", precision: 2 %></h2>   <p>in Child Benefits.</p>
 </div>

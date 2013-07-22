@@ -1,25 +1,13 @@
 <div>
-<p class="group">
-<label><%= t_for_year params[:year], "start_child_benefit_for_this_child?" %></label>
-  <%
-    if child && child.start_date
-      date_picker = child.start_date
-    else
-      date_picker = nil
-    end
-  %>
-  <%= select_date date_picker, :prefix => "starting_children[#{number}][start]", :prompt => {:day => "Day", :month => "Month", :year => "Year" }, :order => [:day, :month, :year], :end_year => Date.today.year, :start_year => 20.years.ago(Date.today).year %>
-</p>
-
-<p class="group">
-<label><%= t_for_year params[:year], "stop_child_benefit_for_this_child?" %></label>
-  <%
-    if child && child.end_date
-      date_picker = child.end_date
-    else
-      date_picker = nil
-    end
-  %>
-  <%= select_date date_picker, :prefix => "starting_children[#{number}][stop]", :prompt => {:day => "Day", :month => "Month", :year => "Year" }, :order => [:day, :month, :year], :end_year => 10.years.since(Date.today).year, :start_year => 2.years.ago(Date.today).year %>
-</p>
+  <p class="group">
+    <label>Start date</label>
+    <%= select_date (child ? child.start_date : nil), :prefix => "starting_children[][start]", 
+      :prompt => {:day => "Day", :month => "Month", :year => "Year" }, :order => [:day, :month, :year], 
+        :start_year => 20.years.ago(Date.today).year, :end_year => Date.today.year  %>
+        &nbsp;&nbsp;
+    <label>Stop date</label>
+    <%= select_date (child ? child.end_date : nil), :prefix => "starting_children[][stop]",
+      :prompt => {:day => "Day", :month => "Month", :year => "Year" }, :order => [:day, :month, :year],
+        :start_year => 2.years.ago(Date.today).year, :end_year => 10.years.since(Date.today).year %>
+  </p>
 </div>

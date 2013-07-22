@@ -18,92 +18,30 @@
           <!-- hidden field to store if we're showing extra income or not -->
           <input type="hidden" name="show_extra_income" value="<%= show_extra_income? %>" />
 
-          <fieldset id="adjusted_income">
-            <%= step(1, "What is your adjusted net income?") %>
-
-            <% if show_extra_income? %>
-              <p>If you don't know your adjusted net income, the calculator will work it out for you. Fill out the 5 fields below:</p>
-              <%= number_input("Total annual income before tax", "total_annual_income", "£") %>
-               <details>
-                  <summary>What is total annual income before tax?</summary>
-                  <p>This includes:</p>
-                  <ul>
-                    <li>salary (before any pension contributions are taken away)</li>
-                    <li>company benefits you get (eg car, fuel and medical benefits)</li>
-                    <li>profits if you’re self-employed</li>
-                    <li>interest you get from savings (including any tax that’s already been paid on it)</li>
-                    <li>State Pension payments and other State benefits that are taxed</li>
-                    <li>payments from personal and occupational pensions or annuities</li>
-                    <li>income from dividends (including the dividend tax credit) or trusts</li>
-                    <li>income from renting out properties</li>
-                   </ul>
-                </details>
-              <%= number_input("Gross pension contributions", "gross_pension_contributons", "£") %>
-                <details>
-                  <summary>What are gross pension contributions?</summary>
-                  <p>This is how much you expect to pay into:</p>
-                    <ul>
-                      <li>pension schemes where your contributions are paid before your income was taxed (called ‘net pay arrangements’)</li>
-                      <li>retirement annuity contracts (called ‘gross contributions’)</li>
-                    </ul>
-                </details>
-              <%= number_input("Net pension contributions", "net_pension_contributions", "£") %>
-               <details>
-                  <summary>What are net pension contributions?</summary>
-                  <p>This is how much you expect to pay into a pension for the whole tax year where your pension provider claimed tax relief for you (called ‘relief at source’ arrangements).</p>
-                </details>
-              <%= number_input("Trading losses if you're self-employed", "trading_losses_self_employed", "£") %>
-              <details>
-                  <summary>What are trading losses?</summary>
-                  <p>This is when your expenses and capital allowances are more than your income or turnover for your accounting date.</p>
-                </details>
-              <%= number_input("Gift Aid donations", "gift_aid_donations", "£") %>
-              <details>
-                  <summary>What are gift aid donations?</summary>
-                  <p>This is the amount you've donated to charity with a Gift Aid declaration.</p>
-                </details>
-            <% else %>
-              <div class="application-notice info-notice">
-                  <p>Include:</p>
-
-                  <ul>
-                    <li>salary and taxable company benefits</li>
-                    <li>profits if you’re self-employed</li>
-                    <li>interest you get from savings (including any tax that’s already been paid on it)</li>
-                    <li>State Pension payments and other State benefits that are taxed</li>
-                    <li>payments from personal and occupational pensions or annuities</li>
-                    <li>income from dividends (including the dividend tax credit) or trusts</li>
-                    <li>income from renting out properties</li>
-                  </ul>
-                  
-                  <p>Don't include:</p>
-
-                    <ul>
-                      <li>interest you get from tax-free savings (including your ISA)</li>
-                      <li>up to £55 per week of childcare paid for directly by your employer and/or childcare vouchers you get as part of a salary sacrifice scheme</li>
-                      <li>the value of any workplace nursery places your employer provides for you</li>
-                    </ul>
-                  </div>
-                <%= number_input("Adjusted net income", "adjusted_net_income", "£") %>
-                <%= submit_tag("I don't know my adjusted net income", { :class => "link" }) %>
-            <% end %>
+          <fieldset>
+            <%= step(1, "Enter the number of children you:") %>
+            <ul>
+              <li>are currently claiming for</li>
+              <li>have claimed for in the past</li>
+              <li>expect to claim for in the future</li>
+            </ul>
+            <%= select_tag "children_count", options_for_select((1..10).collect{|n| [n,n]}) %>
           </fieldset>
 
           <fieldset>
-            <%= step(2, "How many children are you claiming for?") %>
-            <%= number_input("How many children did you or your partner get Child Benefit for during the tax year?", "children_count") %>
-          </fieldset>
-
-          <fieldset id="add_new_starting_child">
-            <%= step(3, "Have you started claiming Child Benefit for a new child?") %>
-            <p class="skip-question">You can skip this question if it doesn’t apply to you.</p>
+            <%= step(2, "Enter the dates Child Benefit started and, if applicable, stopped.") %>
             <%= render "starting_children" %>
           </fieldset>
 
-          <fieldset id="add_new_stopping_child">
-            <%= step(4, "Have you stopped claiming Child Benefit for a child?") %>
-            <p class="skip-question">You can skip this question if it doesn’t apply to you.</p>
-            <%= render "stopping_children" %>
+          <fieldset>
+            <%= step(3, "To work out the Child benefit received during a tax year, choose a tax year.") %>
+            <% ChildBenefitTaxCalculator::TAX_YEARS.each do |year, years| -%>
+              <%= radio_button_tag "year", year %>&nbsp;<%= tax_year_label(years) %> 
+            <% end -%>
+          </fieldset>
+
+          <fieldset id="adjusted_income">
+            <%= step(4, "ANI") %>
           </fieldset>
 
           <%= submit_tag("Get your estimate", { :class => "button" }) %>
