@@ -1,4 +1,9 @@
 <%= render "results_box" %>
 <% unless @calculator.nothing_owed? %>
   <%= render "results_tax_year_#{@calculator.tax_year}" %>
+
+  <h4>Your options</h4>
+  
+  <p>Once you’ve paid any tax you owe, you must consider your options. You can either stop getting Child Benefit, or carry on getting it and fill in a tax return each year to pay back what you owe. Find out more about <a href="/child-benefit-tax-charge/what-is-the-child-benefit-tax-charge">your options</a>.</p>
+
 <% end %>
