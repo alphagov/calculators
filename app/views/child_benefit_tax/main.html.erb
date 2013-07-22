@@ -42,7 +42,7 @@
             <p>Tax years run from 6 April until 5 April the following year.</p>
             </div>
             <% ChildBenefitTaxCalculator::TAX_YEARS.each do |year, years| -%>
-              <%= radio_button_tag "year", year %>&nbsp;<%= tax_year_label(years) %> 
+              <%= radio_button_tag "year", year, (@calculator.tax_year == year.to_i) %>&nbsp;<%= tax_year_label(years) %> 
             <% end -%>
           </fieldset>
 
@@ -51,7 +51,7 @@
             <div class="application-notice info-notice">
               <p>Enter yours or your partner’s income, whoever’s is higher</p>
             </div>
-            <%= text_field_tag "adjusted_net_income" %>
+            <%= text_field_tag "adjusted_net_income", @calculator.adjusted_net_income %>
           </fieldset>
 
           <%= submit_tag("Get your estimate", :name => "results", :class => "button") %>
