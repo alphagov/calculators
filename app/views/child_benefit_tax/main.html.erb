@@ -48,8 +48,9 @@
           <fieldset id="adjusted_income">
             <%= step(4, "To work out how much Child Benefit to pay back as tax, enter your adjusted net income for the tax year. Otherwise, leave it blank.") %>
             <div class="application-notice info-notice">
-            <p>Enter yours or your partner’s income, whoever’s is higher</p>
+              <p>Enter yours or your partner’s income, whoever’s is higher</p>
             </div>
+            <%= text_field_tag "annual_net_income" %>
           </fieldset>
 
           <%= submit_tag("Get your estimate", { :class => "button" }) %>
