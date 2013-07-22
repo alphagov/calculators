@@ -42,6 +42,7 @@
 
           <fieldset id="adjusted_income">
             <%= step(4, "ANI") %>
+            <%= text_field_tag "annual_net_income" %>
           </fieldset>
 
           <%= submit_tag("Get your estimate", { :class => "button" }) %>
