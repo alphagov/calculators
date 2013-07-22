@@ -154,19 +154,22 @@ describe ChildBenefitTaxCalculator do
   end
 
   describe "calculating the correct amount owed" do
-
     describe "below the income threshold" do
       it "should be true for incomes under the threshold" do
         ChildBenefitTaxCalculator.new({
           :adjusted_net_income => "49999",
-          :children_count => "1",
+          :starting_children => [
+            { :start => { :year => "2011", :month => "01", :day => "01" } }  
+          ],
           :year => "2012"
         }).nothing_owed?.should == true
       end
       it "should be true for incomes over the threshold" do
         ChildBenefitTaxCalculator.new({
           :adjusted_net_income => "50100",
-          :children_count => "1",
+          :starting_children => [
+            { :start => { :year => "2011", :month => "01", :day => "01" } }  
+          ], 
           :year => "2012"
         }).nothing_owed?.should == false
       end
@@ -175,66 +178,72 @@ describe ChildBenefitTaxCalculator do
     # TODO: Not sure of the shape of the calculator when ANI is included yet.
     # These tests will need alteration.
     #
-    #describe "for the tax year 2012-13" do
-      #it "calculates the correct amount owed for % charge of 100" do
-        #calc = ChildBenefitTaxCalculator.new({
-          #:adjusted_net_income => "60001",
-          #:children_count => "1",
-          #:year => "2012"
-        #})
-        #calc.owed[:benefit_claimed_amount].round(1).should == 1055.6
-        #calc.owed[:benefit_owed_amount].round(2).should == 243.6
-      #end
+    describe "for the tax year 2012-13" do
+      it "calculates the correct amount owed for % charge of 100" do
+        ChildBenefitTaxCalculator.new({
+          :adjusted_net_income => "60001",
+          :starting_children => [
+            { :start => { :year => "2011", :month => "01", :day => "01" } }  
+          ],
+          :year => "2012"
+        }).tax_estimate.round(2).should == 263.9
+      end
 
-      #it "calculates the corect amount for % charge of 99" do
-        #calc = ChildBenefitTaxCalculator.new({
-          #:adjusted_net_income => "59900",
-          #:children_count => "1",
-          #:year => "2012"
-        #})
-        #calc.owed[:benefit_owed_amount].round(2).should == 241.16
-      #end
+      it "calculates the corect amount for % charge of 99" do
+        ChildBenefitTaxCalculator.new({
+          :adjusted_net_income => "59900",
+          :starting_children => [
+            { :start => { :year => "2011", :month => "01", :day => "01" } }  
+          ],
+          :year => "2012"
+        }).tax_estimate.round(2).should == 261.26
+      end
 
-      #it "calculates the correct amount for income < 59900" do
-        #calc = ChildBenefitTaxCalculator.new({
-          #:adjusted_net_income => "54000",
-          #:children_count => "1",
-          #:year => "2012"
-        #})
-        #calc.owed[:benefit_owed_amount].round(2).should == 97.44
-      #end
-    #end # tax year 2012-13
+      it "calculates the correct amount for income < 59900" do
+        ChildBenefitTaxCalculator.new({
+          :adjusted_net_income => "54000",
+          :starting_children => [
+            { :start => { :year => "2011", :month => "01", :day => "01" } }  
+          ],
+          :year => "2012"
+        }).tax_estimate.round(2).should == 105.56
+      end
+    end # tax year 2012-13
 
-    #describe "for the tax year 2013-14" do
-      #it "calculates correctly for >60k earning" do
-        #calc = ChildBenefitTaxCalculator.new({
-          #:adjusted_net_income => "60001",
-          #:children_count => "1",
-          #:year => "2013"
-        #})
-        #calc.owed[:benefit_owed_amount].round(1).should == 1055.6
-      #end
-      #it "calculates correctly for >55.9k earning" do
-        #calc = ChildBenefitTaxCalculator.new({
-          #:adjusted_net_income => "59900",
-          #:children_count => "1",
-          #:year => "2013"
-        #})
-        #calc.owed[:benefit_owed_amount].round(1).should == 1045.0
-      #end
-      #it "calculates correctly for >50k earning" do
-        #calc = ChildBenefitTaxCalculator.new({
-          #:adjusted_net_income => "54000",
-          #:children_count => "1",
-          #:starting_children => [
-            #{ :start => { :year => "2011", :month => "01", :day => "01" },
-              #:stop => { :year => "", :month => "", :day => ""} }
-          #],
-          #:year => "2013"
-        #})
-        #calc.owed[:benefit_owed_amount].round(1).should == 422.2
-      #end
-    #end # tax year 2013-14
+    describe "for the tax year 2013-14" do
+      it "calculates correctly for >60k earning" do
+        calc = ChildBenefitTaxCalculator.new({
+          :adjusted_net_income => "60001",
+          :starting_children => [
+            { :start => { :year => "2013", :month => "01", :day => "01" } }  
+          ],
+          :year => "2013"
+        })
+        calc.tax_estimate.round(1).should == 1055.6
+      end
+      it "calculates correctly for >55.9k earning" do
+        calc = ChildBenefitTaxCalculator.new({
+          :adjusted_net_income => "59900",
+          :starting_children => [
+            { :start => { :year => "2013", :month => "01", :day => "01" } }  
+          ],
+          :year => "2013"
+        })
+        calc.tax_estimate.round(1).should == 1045.0
+      end
+      it "calculates correctly for >50k earning" do
+        calc = ChildBenefitTaxCalculator.new({
+          :adjusted_net_income => "54000",
+          :children_count => "1",
+          :starting_children => [
+            { :start => { :year => "2011", :month => "01", :day => "01" },
+              :stop => { :year => "", :month => "", :day => ""} }
+          ],
+          :year => "2013"
+        })
+        calc.tax_estimate.round(1).should == 422.2
+      end
+    end # tax year 2013-14
   end # no starting / stopping children
 
   describe "starting and stopping children" do
@@ -250,7 +259,7 @@ describe ChildBenefitTaxCalculator do
           ],
           :year => "2012"
         })
-        calc.owed[:benefit_owed_amount].round(1).should == 101.5
+        calc.tax_estimate.round(1).should == 101.5
       end
 
       it "doesn't tax before Jan 7th 2013" do
@@ -265,11 +274,7 @@ describe ChildBenefitTaxCalculator do
           ],
           :year => "2012"
         })
-        # child from 01/05/12 -> 05/04/13
-        # 11 months = 44 weeks
-        calc.owed[:benefit_claimed_amount].round(1).should == 263.9
-        # should only pay from Jan 7th (13 weeks * 20.3)
-        calc.owed[:benefit_owed_amount].round(1).should == 263.9
+        calc.tax_estimate.round(1).should == 263.9
       end
 
       it "correctly calculates weeks for a child who started & stopped in tax year" do
@@ -284,7 +289,7 @@ describe ChildBenefitTaxCalculator do
           :year => "2012"
         })
         #child from 01/02 to 01/03 => 5 weeks * 20.3
-        calc.owed[:benefit_owed_amount].round(1).should == 81.2
+        calc.tax_estimate.round(1).should == 81.2
       end
     end # tax year 2012
 
@@ -300,25 +305,9 @@ describe ChildBenefitTaxCalculator do
           ],
           :year => "2013"
         })
-        # starting child for 6 weeks
-        calc.owed[:benefit_owed_amount].round(1).should == 121.8
+        # starting child for 5 weeks
+        calc.tax_estimate.round(1).should == 101.5
       end
-
-      #it "calculates correctly for 60k income with starting" do
-        #calc = ChildBenefitTaxCalculator.new({
-          #:adjusted_net_income => "61000",
-          #:starting_children => [
-            #{
-              #:start => { :year => "2014", :month => "03", :day => "01" },
-              #:stop => { :year => "", :month => "", :day => ""},
-            #}
-          #],
-          #:year => "2013"
-        #})
-        ## starting child for 6 weeks
-        ## only 1 child at a time == 20.3*10
-        #calc.owed[:benefit_owed_amount].round(1).should == 203
-      #end
     end # tax year 2013-14
 
   end # starting & stopping children
