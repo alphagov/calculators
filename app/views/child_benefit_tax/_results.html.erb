@@ -1,0 +1,4 @@
+<%= render "results_box" %>
+<% unless @calculator.nothing_owed? %>
+  <%= render "results_tax_year_#{@calculator.tax_year}" %>
+<% end %>

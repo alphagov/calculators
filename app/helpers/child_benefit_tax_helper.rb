@@ -25,4 +25,7 @@ module ChildBenefitTaxHelper
     params[:does_have_stopping_children].present? and params[:does_have_stopping_children] == "Yes"
   end
 
+  def tax_year_label(years)
+    "#{years.first.year}/#{years.last.strftime("%y")}"
+  end
 end

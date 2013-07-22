@@ -25,4 +25,10 @@ describe ChildBenefitTaxHelper do
     end
   end
 
+  describe "tax_year_label" do
+    it "should format the years range" do
+      tax_year_label([Date.parse("1 Jan 2014"), Date.parse("1 Jan 2015")]).should == "2014/15"
+    end
+  end
+
 end
