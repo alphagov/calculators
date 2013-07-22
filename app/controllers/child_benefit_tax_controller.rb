@@ -1,7 +1,5 @@
 class ChildBenefitTaxController < ApplicationController
   
-  before_filter :redirect_if_no_year, :except => :landing
-
   def landing
   end
 
@@ -34,11 +32,4 @@ class ChildBenefitTaxController < ApplicationController
     @calculator = ChildBenefitTaxCalculator.new(params)
   end
 
-  private
-
-  def redirect_if_no_year
-    unless params[:year]
-      redirect_to :action => :landing
-    end
-  end
 end
