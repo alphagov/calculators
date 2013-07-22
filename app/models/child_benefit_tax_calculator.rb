@@ -22,21 +22,8 @@ class ChildBenefitTaxCalculator
     @tax_year = params[:year].to_i
   end
 
-
-  def owed
-    if @starting_children.empty?
-      benefits_no_starting_stopping_children
-    else
-      benefits_with_changing_children
-    end
-  end
-
   def nothing_owed?
-    @adjusted_net_income < NET_INCOME_THRESHOLD or amount_owed == 0
-  end
-
-  def amount_owed
-    owed[:benefit_owed_amount].abs
+    @adjusted_net_income < NET_INCOME_THRESHOLD or tax_estimate.abs == 0
   end
 
   def percent_tax_charge
@@ -82,9 +69,7 @@ class ChildBenefitTaxCalculator
     end
   end
 
-  # TODO: Is this an appropriate name for this method?
-  #
-  def taxable_amount
+  def tax_estimate
     benefits_claimed_amount * (percent_tax_charge / 100.0)
   end
 
@@ -106,47 +91,6 @@ class ChildBenefitTaxCalculator
     else
       (start_date..end_date).cover?(week_start_date)
     end
-  end
-
-  # TODO: This method will be replaced by more atomic calculations.
-  #
-  def benefits_with_changing_children
-    all_weeks_children = {}
-    (child_benefit_start_date..child_benefit_end_date).each_slice(7) do |week|
-      all_weeks_children[week.first] = 0
-      @starting_children.each do |child|
-        if days_include_week?(child.start_date, child.benefits_end, week.first)
-          all_weeks_children[week.first] += 1
-        end
-      end
-    end
-
-    # calculate taxable total for all weeks
-    all_weeks_sum = all_weeks_children.values.inject(0) do |sum, n|
-      sum + weekly_sum_for_children(n)
-    end
-
-    if @tax_year == 2012
-      # only taxable from 7/01/2013
-      taxed_weeks_children = all_weeks_children.select do |key, val|
-        (Date.parse("2013-01-07")..child_benefit_end_date).cover?(key)
-      end
-      taxed_weeks_sum = taxed_weeks_children.values.inject(0) do |sum, n|
-        sum + weekly_sum_for_children(n)
-      end
-    else
-      # taxing the entire year
-      taxed_weeks_children = all_weeks_children
-      taxed_weeks_sum = all_weeks_sum
-    end
-
-    {
-      :benefit_taxable_amount => taxed_weeks_sum,
-      :benefit_taxable_weeks => taxed_weeks_children.length,
-      :benefit_claimed_amount => all_weeks_sum,
-      :benefit_claimed_weeks => 52,
-      :benefit_owed_amount =>taxed_weeks_sum * (percent_tax_charge / 100.0)
-    }
   end
 
   def weekly_sum_for_children(num_children)
