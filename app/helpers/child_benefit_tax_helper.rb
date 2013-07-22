@@ -26,6 +26,6 @@ module ChildBenefitTaxHelper
   end
 
   def tax_year_label(years)
-    "#{years.first.year}/#{years.last.strftime("%y")}"
+    "#{years.first.year} to #{years.last.year}"
   end
 end
