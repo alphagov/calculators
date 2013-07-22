@@ -4,13 +4,14 @@ class ChildBenefitTaxController < ApplicationController
   end
 
   def process_form
-    anchor = if params[:commit] == "I don't know my adjusted net income"
-      "adjusted_income"
-    elsif params[:commit] == "Get your estimate"
-      "results_box"
-    else
-      ""
-    end
+    anchor = case params[:commit]
+      when "I don't know my adjusted net income"
+        "adjusted_income"
+      when "Get your estimate"
+        "results_box"
+      else
+        ""
+      end
 
     redirect_obj = { :action => :main, :anchor => anchor }
 
