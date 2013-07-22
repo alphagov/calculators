@@ -75,6 +75,15 @@ describe ChildBenefitTaxCalculator do
       }).benefits_claimed_amount.round(2).should == 1055.6 
     end
     it "should give the total amount of benefits received for a partial tax year" do
+      calc = ChildBenefitTaxCalculator.new({
+        :year => "2012",
+        :starting_children => [ 
+          {
+            :start => { :year => "2012", :month => "06", :day => "01" },
+            :stop => { :year => "2013", :month => "06", :day => "01" }
+          }
+        ]
+      }).benefits_claimed_amount.round(2).should == 263.9 
     end
   end
 
