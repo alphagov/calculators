@@ -1,5 +1,5 @@
 class ChildBenefitTaxCalculator
-  attr_reader :adjusted_net_income, :children_count, :starting_children, :stopping_children, :tax_year
+  attr_reader :adjusted_net_income, :starting_children, :stopping_children, :tax_year
 
   NET_INCOME_THRESHOLD = 50000
 
@@ -20,7 +20,6 @@ class ChildBenefitTaxCalculator
     @adjusted_net_income = calculate_adjusted_income(to_integer(params[:adjusted_net_income]))
     @starting_children = process_starting_children(params[:starting_children])
     @tax_year = params[:year].to_i
-    @children_count = params[:children_count].to_i
   end
 
 
@@ -71,7 +70,7 @@ class ChildBenefitTaxCalculator
     (child_benefit_start_date...child_benefit_end_date).each_slice(7) do |week|
       all_weeks_children[week.first] = 0
       @starting_children.each do |child|
-        if days_include_week?(child.start_date, child.end_date, week.first)
+        if days_include_week?(child.start_date, child.benefits_end, week.first)
           all_weeks_children[week.first] += 1
         end
       end
@@ -83,39 +82,20 @@ class ChildBenefitTaxCalculator
     end
   end
 
+  # TODO: Is this an appropriate name for this method?
+  #
+  def taxable_amount
+    benefits_claimed_amount * (percent_tax_charge / 100.0)
+  end
+
   private
 
   def process_starting_children(children)
     if children
       children.map{ |c| StartingChild.new(c) }
     else
-      [StartingChild.new({})]
+      [StartingChild.new]
     end
-  end
-
-  # TODO: Review these monolithic calculation methods with a view to providing
-  # more atomic outputs for various user needs, e.g. total benefit claimed
-  # should not be dependant upon ANI.
-  #
-  def benefits_no_starting_stopping_children
-    # benefit rates fixed until April 2014: gov.uk/child-benefit-rates
-    # 20.30 for 1st child, 13.40 for each next child
-    benefit_weekly_amount = 0
-
-    @children_count.times do |child_number|
-      benefit_weekly_amount += ( child_number == 0 ? FIRST_CHILD_RATE : FURTHER_CHILD_RATE )
-    end
-
-    benefit_claimed_amount = benefit_weekly_amount * 52
-    benefit_taxable_amount = benefit_weekly_amount * taxable_weeks
-
-    {
-      :benefit_taxable_amount => benefit_taxable_amount,
-      :benefit_taxable_weeks => taxable_weeks,
-      :benefit_claimed_amount => benefit_claimed_amount,
-      :benefit_claimed_weeks => 52,
-      :benefit_owed_amount => benefit_taxable_amount * (percent_tax_charge / 100.0)
-    }
   end
 
   def days_include_week?(start_date, end_date, week_start_date)
@@ -128,12 +108,14 @@ class ChildBenefitTaxCalculator
     end
   end
 
+  # TODO: This method will be replaced by more atomic calculations.
+  #
   def benefits_with_changing_children
     all_weeks_children = {}
     (child_benefit_start_date..child_benefit_end_date).each_slice(7) do |week|
       all_weeks_children[week.first] = 0
       @starting_children.each do |child|
-        if days_include_week?(child.start_date, child.end_date, week.first)
+        if days_include_week?(child.start_date, child.benefits_end, week.first)
           all_weeks_children[week.first] += 1
         end
       end
@@ -196,7 +178,9 @@ class ChildBenefitTaxCalculator
 
   def calculate_adjusted_income(adjusted_income)
     if adjusted_income == 0
-      @total_annual_income - @gross_pension_contributions - (@net_pension_contributions * 1.25) - @trading_losses_self_employed - (@gift_aid_donations * 1.25)
+      @total_annual_income - @gross_pension_contributions - (
+        @net_pension_contributions * 1.25
+      ) - @trading_losses_self_employed - (@gift_aid_donations * 1.25)
     else
       adjusted_income
     end
@@ -210,16 +194,22 @@ end
 
 class StartingChild
   attr_reader :start_date, :end_date
-  def initialize(params)
+  def initialize(params = {})
     if has_date_params?(params, :start)
-      @start_date = Date.new(params[:start][:year].to_i, params[:start][:month].to_i, params[:start][:day].to_i)
+      @start_date = Date.new(params[:start][:year].to_i,
+                             params[:start][:month].to_i,
+                             params[:start][:day].to_i)
     end
     if has_date_params?(params, :stop) 
-      @end_date = Date.new(params[:stop][:year].to_i, params[:stop][:month].to_i, params[:stop][:day].to_i)
-    else
-      # Assumed to be the end of the current tax year
-      @end_date = ChildBenefitTaxCalculator::TAX_YEARS[Date.today.year.to_s].last
+      @end_date = Date.new(params[:stop][:year].to_i,
+                           params[:stop][:month].to_i,
+                           params[:stop][:day].to_i)
     end
+  end
+
+  def benefits_end
+    tax_years = ChildBenefitTaxCalculator::TAX_YEARS
+    @end_date ? @end_date : tax_years[tax_years.keys.sort.last].last
   end
 
   private
