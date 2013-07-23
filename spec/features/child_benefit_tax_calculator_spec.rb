@@ -15,23 +15,42 @@ feature "Child Benefit Tax Calculator" do
     page.should have_no_css(".results-box")
   end
 
-  describe "Calculating the benefits received for 2012-13" do
+  describe "For more than one child" do
     before(:each) do
-      ChildBenefitTaxCalculator.any_instance.stub(:benefits_claimed_amount).and_return(500000)
       visit "/child-benefit-tax-calculator"
       click_on "Start now"
+      select "2", :from => "children_count"
+      click_button "Update"
+    end
+    it "should show the required number of date inputs" do
+      page.should have_css("#starting_children_start_0_year")
+      page.should have_css("#starting_children_start_0_month")
+      page.should have_css("#starting_children_start_0_day")
+      page.should have_css("#starting_children_start_1_year")
+      page.should have_css("#starting_children_start_1_month")
+      page.should have_css("#starting_children_start_1_day")
     end
 
-    it "calculates the overall benefits received for one child" do
-      select "2011", :from => "starting_children[][start][year]"
-      select "January", :from => "starting_children[][start][month]"
-      select "1", :from => "starting_children[][start][day]"
-      choose "year_2012"
-      
-      click_button "Get your estimate"
-      
-      within ".results-box" do
-        page.should have_content("£500,000.00")
+    describe "Calculating benefits received for 2012-13" do
+      before(:each) do
+        ChildBenefitTaxCalculator.any_instance.stub(:benefits_claimed_amount).and_return(500000)
+      end
+
+      it "calculates the overall benefits received for both children" do
+        select "2011", :from => "starting_children_start_0_year"
+        select "January", :from => "starting_children_start_0_month"
+        select "1", :from => "starting_children_start_0_day"
+
+        select "2012", :from => "starting_children_start_1_year"
+        select "February", :from => "starting_children_start_1_month"
+        select "5", :from => "starting_children_start_1_day"
+        choose "year_2012"
+        
+        click_button "Get your estimate"
+        
+        within ".results-box" do
+          page.should have_content("£500,000.00")
+        end
       end
     end
   end

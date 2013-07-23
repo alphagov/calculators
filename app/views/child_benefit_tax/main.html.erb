@@ -25,9 +25,10 @@
               <li>expect to claim for in the future</li>
             </ul>
             <%= select_tag "children_count", options_for_select((1..10).collect{|n| [n,n]}) %>
+            <%= submit_tag "Update", :name => "children" %>
           </fieldset>
 
-          <fieldset>
+          <fieldset id="children">
             <%= step(2, "Enter the dates Child Benefit started and, if applicable, stopped.") %>
             <div class="application-notice info-notice">
             <p>Child Benefit usually starts when you have a baby, adopt or move in with a new partner and their children.</p>
@@ -53,12 +54,12 @@
             <%= text_field_tag "annual_net_income" %>
           </fieldset>
 
-          <%= submit_tag("Get your estimate", { :class => "button" }) %>
+          <%= submit_tag("Get your estimate", :name => "results", :class => "button") %>
         <% end %>
       </div><!-- end .inner -->
     </div><!-- end .questions -->
     <% if @calculator.can_calculate? -%>
-    <aside class="results" id="results_box">
+    <aside class="results" id="results">
       <div class="inner">
         <h1>Results</h1>
         <%= render "results" %>
