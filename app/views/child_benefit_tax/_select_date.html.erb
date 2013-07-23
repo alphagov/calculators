@@ -1,7 +1,7 @@
 <%= select_day (input_date ? input_date.day : nil), { :prefix => prefix, :prompt => "Day"},
-  { :id => "#{id_prefix}_day_#{index}" } %>
+  { :id => "#{id_prefix}_day" } %>
 <%= select_month (input_date ? input_date.month : nil), { :prefix => prefix, :prompt => "Month"}, 
-  { :id => "#{id_prefix}_month_#{index}" } %>
+  { :id => "#{id_prefix}_month" } %>
 <%= select_year (input_date ? input_date.year : nil), { :prefix => prefix, :prompt => "Year", 
   :start_year => start_year, :end_year => end_year },
-  { :id => "#{id_prefix}_year_#{index}" } %>
+  { :id => "#{id_prefix}_year" } %>

@@ -23,12 +23,12 @@ feature "Child Benefit Tax Calculator" do
       click_button "Update"
     end
     it "should show the required number of date inputs" do
-      page.should have_css("#starting_children_start_year_0")
-      page.should have_css("#starting_children_start_month_0")
-      page.should have_css("#starting_children_start_day_0")
-      page.should have_css("#starting_children_start_year_1")
-      page.should have_css("#starting_children_start_month_1")
-      page.should have_css("#starting_children_start_day_1")
+      page.should have_css("#starting_children_start_0_year")
+      page.should have_css("#starting_children_start_0_month")
+      page.should have_css("#starting_children_start_0_day")
+      page.should have_css("#starting_children_start_1_year")
+      page.should have_css("#starting_children_start_1_month")
+      page.should have_css("#starting_children_start_1_day")
     end
 
     describe "Calculating benefits received for 2012-13" do
@@ -37,13 +37,13 @@ feature "Child Benefit Tax Calculator" do
       end
 
       it "calculates the overall benefits received for both children" do
-        select "2011", :from => "starting_children_start_year_0"
-        select "January", :from => "starting_children_start_month_0"
-        select "1", :from => "starting_children_start_day_0"
+        select "2011", :from => "starting_children_start_0_year"
+        select "January", :from => "starting_children_start_0_month"
+        select "1", :from => "starting_children_start_0_day"
 
-        select "2012", :from => "starting_children_start_year_1"
-        select "February", :from => "starting_children_start_month_1"
-        select "5", :from => "starting_children_start_day_1"
+        select "2012", :from => "starting_children_start_1_year"
+        select "February", :from => "starting_children_start_1_month"
+        select "5", :from => "starting_children_start_1_day"
         choose "year_2012"
         
         click_button "Get your estimate"
