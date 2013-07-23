@@ -9,7 +9,7 @@
   </header>
 
   <article id="calculator" role="article">
-    <div class="questions">
+    <section class="questions">
       <div class="inner">
         <%= form_tag("process_form", :method => :get) do %>
           <!-- hidden field to store the tax year so it can persist -->
@@ -57,13 +57,15 @@
           <%= submit_tag("Get your estimate", :name => "results", :class => "button") %>
         <% end %>
       </div><!-- end .inner -->
-    </div><!-- end .questions -->
+    </section><!-- end .questions -->
+    
     <% if @calculator.can_calculate? -%>
-    <aside class="results" id="results">
+    <section class="results" id="results">
       <div class="inner">
+        <h1>Results</h1>
         <%= render "results" %>
       </div><!-- end .inner -->
-    </aside>
+    </section>
     <% end -%>
   </article><!-- end .thirds -->
 </section>

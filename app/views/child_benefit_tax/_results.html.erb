@@ -1,24 +1,29 @@
 <%# child benefit received %>
-<h1>Child benefit received</h1>
-<h2><%= number_to_currency @calculator.benefits_claimed_amount, unit: "£", precision: 2 %></h2> 
-<p>Use this to complete your tax return if you fill one in.</p>
+<div class="results_estimate">
+  <h2>Child benefit received</h2>
+  <p class="numbers"><%= number_to_currency @calculator.benefits_claimed_amount, unit: "£", precision: 2 %></p> 
+  <p>Use this to complete your tax return if you fill one in.</p>
+</div>
 <%# tax estimate %>
 <% unless @calculator.nothing_owed? -%>
-  <h1>Child benefit to pay back as tax</h1>
+  <div class="results_estimate">
+  <h2>Child benefit to pay back as tax</h2>
   <% if @calculator.adjusted_net_income < 50100 -%>
 	  <h2>You must pay back £0</h2>
     <ul>
   	  <li>You don’t need to pay back any Child Benefit.</li> 
   	  <li>You don’t have to pay any tax if your income is less than £50,000.</li>
-	  </ul>
+	  </ul>a href=""></a>
   	<% if @calculator.tax_tear >= Date.today.year %>
-      <p>This is based on the predicted figures you’ve entered.</p>
+      <p>This is based on the predicted figures you’ve entered.</p>    
   	<% end -%>
+    </div> 
   <% else -%>
-    <h2><%= number_to_currency @calculator.tax_estimate, unit: "£", precision: 2 %></h2> 
+    <p class="numbers"><%= number_to_currency @calculator.tax_estimate, unit: "£", precision: 2 %></p> 
     <% if @calculator.tax_year >= Date.today.year %>
       <p>This is an estimate based on the predicted figures you’ve entered.</p>
     <% end -%>
+    </div>
   <% end -%>
   <%= render "results_tax_year_#{@calculator.tax_year}" %>
 
