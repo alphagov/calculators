@@ -18,13 +18,18 @@ describe ChildBenefitTaxController do
   end
 
   describe "GET process_form" do
+    it "should place a 'starting_children' anchor onto the redirected response" do
+      route_params = { :commit => "Update" }
+      get 'process_form', route_params
+      response.should redirect_to(:action => :main, :params => route_params, :anchor => "starting_children")
+    end
     it "should place an 'adjusted_income' anchor onto the redirected response" do
-      route_params = { :year => "2013", :commit => "I don't know my adjusted net income" }
+      route_params = { :commit => "I don't know my adjusted net income" }
       get 'process_form', route_params
       response.should redirect_to(:action => :main, :params => route_params, :anchor => "adjusted_income")
     end
     it "should place an 'results_box' anchor onto the redirected response" do
-      route_params = { :year => "2013", :commit => "Get your estimate" }
+      route_params = { :commit => "Get your estimate" }
       get 'process_form', route_params
       response.should redirect_to(:action => :main, :params => route_params, :anchor => "results_box")
     end
