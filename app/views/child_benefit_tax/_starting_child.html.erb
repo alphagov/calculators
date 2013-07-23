@@ -3,12 +3,12 @@
   <label>Start date</label>
   <%= render "select_date", {:input_date => (child ? child.start_date : nil),
     :prefix => "starting_children[][start]", :id_prefix => "starting_children_start", 
-    :index => number, :start_year => 20.years.ago(Date.today).year, :end_year => Date.today.year } %>
+    :index => index, :start_year => 20.years.ago(Date.today).year, :end_year => Date.today.year } %>
   &nbsp;&nbsp;
   <label>Stop date</label>
   <%= render "select_date", {:input_date => (child ? child.end_date : nil),
     :prefix => "starting_children[][stop]", :id_prefix => "starting_children_stop",
-    :index => number, :start_year => 2.years.ago(Date.today).year,
+    :index => index, :start_year => 2.years.ago(Date.today).year,
     :end_year => 10.years.since(Date.today).year } %>
   </p>
 </div>
