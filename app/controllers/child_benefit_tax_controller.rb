@@ -1,31 +1,26 @@
 class ChildBenefitTaxController < ApplicationController
-  
+
+  CALC_PARAM_KEYS = [:total_annual_income, :gross_pension_contributions, :net_pension_contributions,
+     :trading_losses_self_employed, :gift_aid_donations, :adjusted_net_income,
+     :children_count, :starting_children, :year]
+
   def landing
   end
 
   def process_form
-    anchor = case params[:commit]
-      when "I don't know my adjusted net income"
-        "adjusted_income"
-      when "Get your estimate"
-        "results_box"
-      else
-        ""
-      end
 
-    redirect_obj = { :action => :main, :anchor => anchor }
-
-    # params from the form
-    # that need to be passed to the main method, through the redirect
-    [:total_annual_income, :gross_pension_contributions, :net_pension_contributions,
-     :trading_losses_self_employed, :gift_aid_donations, :adjusted_net_income,
-     :starting_children, :year, :commit].each do |name|
-      redirect_obj[name] = params[name]
+    redirect_hash = { :action => :main }
+  
+    [:children, :adjusted_income, :results].each do |anchor|
+      redirect_hash.merge!(:anchor => anchor.to_s) if params[anchor]
     end
 
-    redirect_to(redirect_obj)
-  end
+    CALC_PARAM_KEYS.each do |name|
+      redirect_hash[name] = params[name]
+    end
 
+    redirect_to(redirect_hash)
+  end
 
   def main
     @calculator = ChildBenefitTaxCalculator.new(params)
