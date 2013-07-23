@@ -1,4 +1,7 @@
 class ChildBenefitTaxCalculator
+
+  include ActiveModel::Validations
+
   attr_reader :adjusted_net_income, :children_count, :starting_children, :stopping_children, :tax_year
 
   NET_INCOME_THRESHOLD = 50000
@@ -10,6 +13,9 @@ class ChildBenefitTaxCalculator
     "2012" => [Date.parse("2012-04-06"), Date.parse("2013-04-05")],
     "2013" => [Date.parse("2013-04-06"), Date.parse("2014-04-05")],
   }
+
+  validates_inclusion_of :tax_year, :in => [2012...Date.today.year]
+  validate :valid_child_dates
 
   def initialize(params = {})
     @total_annual_income = to_integer(params[:total_annual_income])
@@ -118,7 +124,6 @@ class ChildBenefitTaxCalculator
     end
   end
 
-
   def benefit_taxable_weeks(start_date, end_date)
     (( end_date - start_date ) / 7).floor
   end
@@ -142,9 +147,19 @@ class ChildBenefitTaxCalculator
     val.gsub!(/\D/,'') if val.is_a?(String)
     val.to_i
   end
+
+  def valid_child_dates
+    @starting_children.each { |c| c.valid? }
+  end
 end
 
 class StartingChild
+  
+  include ActiveModel::Validations
+
+  validates_presence_of :start_date, :end_date
+  validate :valid_dates
+
   attr_reader :start_date, :end_date
   def initialize(params = {})
     if ChildBenefitTaxCalculator.valid_date_params?(params[:start])
@@ -162,6 +177,14 @@ class StartingChild
   def benefits_end
     tax_years = ChildBenefitTaxCalculator::TAX_YEARS
     @end_date ? @end_date : tax_years[tax_years.keys.sort.last].last
+  end
+
+  private
+
+  def valid_dates
+    if @start_date and @end_date and @start_date >= @end_date
+      errors.add(:start_date, "must be before stopping date")
+    end
   end
 
 end

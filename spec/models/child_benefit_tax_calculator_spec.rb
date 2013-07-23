@@ -51,6 +51,23 @@ describe ChildBenefitTaxCalculator do
     calc.adjusted_net_income.should == 100900
   end
 
+  describe "input validation" do
+    before(:each) do
+      @calc = ChildBenefitTaxCalculator.new
+      @calc.valid?
+    end
+    it "should contain errors for year if none is given" do
+      @calc.errors[:tax_year].include?("is not included in the list").should == true
+    end
+    it "should validate dates provided for children" do
+      @calc.starting_children.first.errors[:start_date].include?("can't be blank").should == true
+      @calc.starting_children << StartingChild.new(:start => {:year => "2012", :month => "02", :day => "01"},
+                                                   :stop => {:year => "2012", :month => "01", :day => "01"})
+      @calc.valid?
+      @calc.starting_children.second.errors[:start_date].include?("must be before stopping date").should == true
+    end
+  end
+
   describe "calculating benefits received" do
     it "should give the total amount of benefits received for a full tax year" do
       calc = ChildBenefitTaxCalculator.new({
@@ -268,8 +285,7 @@ describe ChildBenefitTaxCalculator do
           :starting_children => [
             {
               :start => { :year => "2012", :month => "05", :day => "01" },
-              :stop => { :year => "", :month => "", :day => ""},
-              :no_stop => true
+              :stop => { :year => "", :month => "", :day => ""}
             }
           ],
           :year => "2012"
@@ -300,7 +316,7 @@ describe ChildBenefitTaxCalculator do
           :starting_children => [
             {
               :start => { :year => "2014", :month => "03", :day => "01" },
-              :stop => { :year => "", :month => "", :day => ""},
+              :stop => { :year => "", :month => "", :day => ""}
             }
           ],
           :year => "2013"
@@ -309,6 +325,5 @@ describe ChildBenefitTaxCalculator do
         calc.tax_estimate.round(1).should == 101.5
       end
     end # tax year 2013-14
-
   end # starting & stopping children
 end
