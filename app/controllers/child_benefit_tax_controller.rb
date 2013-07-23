@@ -5,6 +5,8 @@ class ChildBenefitTaxController < ApplicationController
 
   def process_form
     anchor = case params[:commit]
+      when "Update"
+        "starting_children"
       when "I don't know my adjusted net income"
         "adjusted_income"
       when "Get your estimate"
@@ -19,7 +21,7 @@ class ChildBenefitTaxController < ApplicationController
     # that need to be passed to the main method, through the redirect
     [:total_annual_income, :gross_pension_contributions, :net_pension_contributions,
      :trading_losses_self_employed, :gift_aid_donations, :adjusted_net_income,
-     :starting_children, :year, :commit].each do |name|
+     :children_count, :starting_children, :year, :commit].each do |name|
       redirect_obj[name] = params[name]
     end
 
