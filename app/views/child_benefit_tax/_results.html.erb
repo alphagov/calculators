@@ -5,7 +5,7 @@
   <p>Use this to complete your tax return if you fill one in.</p>
 </div>
 <%# tax estimate %>
-<% unless @calculator.nothing_owed? -%>
+<% if @calculator.adjusted_net_income > 0 -%>
   <div class="results_estimate">
   <h2>Child benefit to pay back as tax</h2>
   <% if @calculator.adjusted_net_income < 50100 -%>
@@ -13,8 +13,8 @@
     <ul>
   	  <li>You don’t need to pay back any Child Benefit.</li> 
   	  <li>You don’t have to pay any tax if your income is less than £50,000.</li>
-	  </ul>a href=""></a>
-  	<% if @calculator.tax_tear >= Date.today.year %>
+	  </ul>
+  	<% if @calculator.tax_year >= Date.today.year %>
       <p>This is based on the predicted figures you’ve entered.</p>    
   	<% end -%>
     </div> 
