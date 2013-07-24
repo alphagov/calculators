@@ -1,4 +1,39 @@
-<%= render "results_box" %>
-<% unless @calculator.nothing_owed? %>
+<%# child benefit received %>
+<div class="results_estimate">
+  <h2>Child benefit received</h2>
+  <p class="numbers"><%= number_to_currency @calculator.benefits_claimed_amount, unit: "£", precision: 2 %></p> 
+  <p>Use this to complete your tax return if you fill one in.</p>
+</div>
+<%# tax estimate %>
+<% unless @calculator.nothing_owed? -%>
+  <div class="results_estimate">
+  <h2>Child benefit to pay back as tax</h2>
+  <% if @calculator.adjusted_net_income < 50100 -%>
+	  <h2>You must pay back £0</h2>
+    <ul>
+  	  <li>You don’t need to pay back any Child Benefit.</li> 
+  	  <li>You don’t have to pay any tax if your income is less than £50,000.</li>
+	  </ul>a href=""></a>
+  	<% if @calculator.tax_tear >= Date.today.year %>
+      <p>This is based on the predicted figures you’ve entered.</p>    
+  	<% end -%>
+    </div> 
+  <% else -%>
+    <p class="numbers"><%= number_to_currency @calculator.tax_estimate, unit: "£", precision: 2 %></p> 
+    <% if @calculator.tax_year >= Date.today.year %>
+      <p>This is an estimate based on the predicted figures you’ve entered.</p>
+    <% end -%>
+    </div>
+  <% end -%>
   <%= render "results_tax_year_#{@calculator.tax_year}" %>
-<% end %>
+
+  <h4>Your options</h4>
+  
+  <p>Once you’ve paid any tax you owe, you must consider your options. You can either stop getting Child Benefit, or carry on getting it and fill in a tax return each year to pay back what you owe.</p> 
+  <p>Find out more about <a href="/child-benefit-tax-charge/what-is-the-child-benefit-tax-charge">your options</a>.</p>
+
+  <% if @calculator.adjusted_net_income > 50099 and @calculator.tax_year == 2012 %>
+    <p>The Child Benefit tax charge only affects Child Benefit received between 7 January and 5 April 2013 - it affects Child Benefit you’ve received for part of the 2012 to 2013 tax year. You may have to pay more back in future tax years if you choose to keep receiving it.</p>
+  <% end -%>
+
+<% end -%>
