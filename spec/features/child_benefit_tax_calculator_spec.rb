@@ -48,7 +48,7 @@ feature "Child Benefit Tax Calculator" do
         
         click_button "Get your estimate"
         
-        within ".results-box" do
+        within ".results" do
           page.should have_content("£500,000.00")
         end
       end
@@ -68,11 +68,11 @@ feature "Child Benefit Tax Calculator" do
       select "January", :from => "starting_children[][start][month]"
       select "1", :from => "starting_children[][start][day]"
       choose "year_2012"
-      fill_in "annual_net_income", :with => "60000"
+      fill_in "adjusted_net_income", :with => "60000"
 
       click_button "Get your estimate"
       
-      within ".results-box" do
+      within ".results" do
         page.should have_content("£500,000.00")
       end
     end
