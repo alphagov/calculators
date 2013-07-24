@@ -12,7 +12,7 @@ feature "Child Benefit Tax Calculator" do
 
   it "should not show results until enough info is entered" do
     visit "/child-benefit-tax-calculator"
-    page.should have_no_css(".results-box")
+    page.should have_no_css(".results")
   end
 
   describe "For more than one child" do
@@ -23,12 +23,33 @@ feature "Child Benefit Tax Calculator" do
       click_button "Update"
     end
     it "should show the required number of date inputs" do
-      page.should have_css("#starting_children_start_0_year")
-      page.should have_css("#starting_children_start_0_month")
-      page.should have_css("#starting_children_start_0_day")
-      page.should have_css("#starting_children_start_1_year")
-      page.should have_css("#starting_children_start_1_month")
-      page.should have_css("#starting_children_start_1_day")
+      page.should have_select("children_count", :selected => '2')
+      
+      page.should have_css("#starting_children_0_start_year")
+      page.should have_css("#starting_children_0_start_month")
+      page.should have_css("#starting_children_0_start_day")
+      page.should have_css("#starting_children_1_start_year")
+      page.should have_css("#starting_children_1_start_month")
+      page.should have_css("#starting_children_1_start_day")
+
+      page.find('#starting_children_0_start_year').select('2011')
+      page.find('#starting_children_0_start_month').select('January')
+      page.find('#starting_children_0_start_day').select('1')
+
+      select "3", :from => "children_count"
+      
+      click_button "Update"
+
+      page.should have_select("children_count", :selected => '3')
+
+      page.should have_select("starting_children_0_start_year", :selected => "2011")
+      page.should have_select("starting_children_0_start_month", :selected => "January")
+      page.should have_select("starting_children_0_start_day", :selected => "1")
+
+      page.should have_css("#starting_children_2_start_year")
+      page.should have_css("#starting_children_2_start_month")
+      page.should have_css("#starting_children_2_start_day")
+
     end
 
     describe "Calculating benefits received for 2012-13" do
@@ -37,13 +58,13 @@ feature "Child Benefit Tax Calculator" do
       end
 
       it "calculates the overall benefits received for both children" do
-        select "2011", :from => "starting_children_start_0_year"
-        select "January", :from => "starting_children_start_0_month"
-        select "1", :from => "starting_children_start_0_day"
+        select "2011", :from => "starting_children_0_start_year"
+        select "January", :from => "starting_children_0_start_month"
+        select "1", :from => "starting_children_0_start_day"
 
-        select "2012", :from => "starting_children_start_1_year"
-        select "February", :from => "starting_children_start_1_month"
-        select "5", :from => "starting_children_start_1_day"
+        select "2012", :from => "starting_children_1_start_year"
+        select "February", :from => "starting_children_1_start_month"
+        select "5", :from => "starting_children_1_start_day"
         choose "year_2012"
         
         click_button "Get your estimate"
@@ -64,9 +85,9 @@ feature "Child Benefit Tax Calculator" do
     end
     
     it "should give an estimated total of tax due related to income" do
-      select "2011", :from => "starting_children[][start][year]"
-      select "January", :from => "starting_children[][start][month]"
-      select "1", :from => "starting_children[][start][day]"
+      select "2011", :from => "starting_children[0][start][year]"
+      select "January", :from => "starting_children[0][start][month]"
+      select "1", :from => "starting_children[0][start][day]"
       choose "year_2012"
       fill_in "adjusted_net_income", :with => "60000"
 

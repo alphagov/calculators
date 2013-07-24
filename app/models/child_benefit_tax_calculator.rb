@@ -86,15 +86,14 @@ class ChildBenefitTaxCalculator
   private
 
   def process_starting_children(children)
-    if children and children.select{|c| self.class.valid_date_params?(c[:start])}.any?
-      children.map{ |c| StartingChild.new(c) }
-    else
-      [].tap do |ary|
-        @children_count.times do
-          ary << StartingChild.new
-        end
-      end
+    starting_children = []
+    children.each do |n, c|
+      starting_children << StartingChild.new(c) if self.class.valid_date_params?(c[:start])
+    end if children 
+    (@children_count - starting_children.size).times do
+      starting_children << StartingChild.new
     end
+    starting_children
   end
 
   def days_include_week?(start_date, end_date, week_start_date)
