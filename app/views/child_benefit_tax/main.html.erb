@@ -25,7 +25,7 @@
               <li>expect to claim for in the future</li>
             </ul>
             <%= select_tag "children_count", options_for_select((1..10).collect{|n| [n,n]}, @calculator.children_count) %>
-            <%= submit_tag "Update", :name => "children" %>
+            <%= submit_tag "Update", :name => "children", :class => "button update-button" %>
           </fieldset>
 
           <fieldset id="children">

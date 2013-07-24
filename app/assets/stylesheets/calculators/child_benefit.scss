@@ -43,11 +43,17 @@ article {
   -webkit-font-smoothing: antialiased;
 }
 
+.update-button {
+  .js-enabled & {
+    display: none;
+  }
+} 
+
 label {
   display: block;
 }
 
-fieldset .button {
+#results .button {
   @include core-16;
   margin-top: 5em;
 }
