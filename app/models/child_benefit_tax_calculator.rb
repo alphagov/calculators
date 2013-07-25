@@ -23,7 +23,7 @@ class ChildBenefitTaxCalculator
     @net_pension_contributions = to_integer(params[:net_pension_contributions])
     @trading_losses_self_employed = to_integer(params[:trading_losses_self_employed])
     @gift_aid_donations = to_integer(params[:gift_aid_donations])
-    @adjusted_net_income = calculate_adjusted_income(to_integer(params[:adjusted_net_income]))
+    @adjusted_net_income = params[:adjusted_net_income] ? to_integer(params[:adjusted_net_income]) : nil
     @children_count = params[:children_count] ? params[:children_count].to_i : 1
     @starting_children = process_starting_children(params[:starting_children])
     @tax_year = params[:year].to_i

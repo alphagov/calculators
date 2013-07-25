@@ -12,7 +12,14 @@ feature "Child Benefit Tax Calculator" do
 
   it "should not show results until enough info is entered" do
     visit "/child-benefit-tax-calculator"
+    click_on "Start now"
     page.should have_no_css(".results")
+  end
+
+  it "should have a blank adjusted net income field" do
+    visit "/child-benefit-tax-calculator"
+    click_on "Start now"
+    page.should have_css("input#adjusted_net_income[placeholder='£']")
   end
 
   describe "For more than one child" do
