@@ -130,7 +130,7 @@ feature "Child Benefit Tax Calculator" do
       click_button "Get your estimate"
       
       within ".results" do
-        page.should have_content("You don’t need to pay back any Child Benefit.")
+        page.should have_content("There is no tax charge")
       end
     end
   end
