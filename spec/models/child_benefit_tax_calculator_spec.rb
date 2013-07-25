@@ -21,17 +21,6 @@ describe ChildBenefitTaxCalculator do
     }).can_calculate?.should == true
   end
 
-  it "calculates net income from other values" do
-    calc = ChildBenefitTaxCalculator.new({
-      :gross_pension_contributions => 10,
-      :net_pension_contributions => 10,
-      :trading_losses_self_employed => 10,
-      :gift_aid_donations => 10,
-      :total_annual_income => 100,
-    })
-    calc.adjusted_net_income.should == 55.0
-  end
-
   it "uses the total annual income if both are supplied" do
     calc = ChildBenefitTaxCalculator.new({
       :gross_pension_contributions => 10,
