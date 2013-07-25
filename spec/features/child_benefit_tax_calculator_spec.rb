@@ -12,7 +12,14 @@ feature "Child Benefit Tax Calculator" do
 
   it "should not show results until enough info is entered" do
     visit "/child-benefit-tax-calculator"
+    click_on "Start now"
     page.should have_no_css(".results")
+  end
+
+  it "should have a blank adjusted net income field" do
+    visit "/child-benefit-tax-calculator"
+    click_on "Start now"
+    page.should have_css("input#adjusted_net_income[placeholder='£']")
   end
 
   describe "For more than one child" do
@@ -79,12 +86,12 @@ feature "Child Benefit Tax Calculator" do
   describe "Estimating the tax due" do
     before(:each) do
       ChildBenefitTaxCalculator.any_instance.stub(:benefits_claimed_amount).and_return(500000)
-      ChildBenefitTaxCalculator.any_instance.stub(:tax_estimate).and_return(500000)
       visit "/child-benefit-tax-calculator"
       click_on "Start now"
     end
     
     it "should give an estimated total of tax due related to income" do
+      ChildBenefitTaxCalculator.any_instance.stub(:tax_estimate).and_return(500000)
       select "2011", :from => "starting_children[0][start][year]"
       select "January", :from => "starting_children[0][start][month]"
       select "1", :from => "starting_children[0][start][day]"
@@ -95,6 +102,21 @@ feature "Child Benefit Tax Calculator" do
       
       within ".results" do
         page.should have_content("£500,000.00")
+      end
+    end
+
+    it "should explain that the adjusted net income is below the threshold" do
+      ChildBenefitTaxCalculator.any_instance.stub(:tax_estimate).and_return(0)
+      select "2011", :from => "starting_children[0][start][year]"
+      select "January", :from => "starting_children[0][start][month]"
+      select "1", :from => "starting_children[0][start][day]"
+      choose "year_2012"
+      fill_in "adjusted_net_income", :with => "45000"
+
+      click_button "Get your estimate"
+      
+      within ".results" do
+        page.should have_content("You don’t need to pay back any Child Benefit.")
       end
     end
   end
