@@ -57,6 +57,18 @@ feature "Child Benefit Tax Calculator" do
       page.should have_css("#starting_children_2_start_month")
       page.should have_css("#starting_children_2_start_day")
 
+      select "2011", :from => "starting_children_1_start_year"
+      select "January", :from => "starting_children_1_start_month"
+      select "7", :from => "starting_children_1_start_day"
+
+      select "1", :from => "children_count"
+
+      click_button "Update"
+
+      page.should have_no_css("#starting_children_1_start_year")
+      page.should have_no_css("#starting_children_1_start_month")
+      page.should have_no_css("#starting_children_1_start_day")
+
     end
 
     describe "Calculating benefits received for 2012-13" do
