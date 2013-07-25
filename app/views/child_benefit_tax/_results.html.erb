@@ -34,7 +34,7 @@
     <li>carry on getting Child Benefit – for each tax year you get it you must fill in a tax return and pay any tax you owe</li>
   </ul>
 
-  <% if @calculator.adjusted_net_income > 50099 and @calculator.tax_year == 2012 %>
+  <% if @calculator.adjusted_net_income_amount > 50099 and @calculator.tax_year == 2012 %>
     <p>Your result for the next tax year may be higher because the charge will apply to the whole tax year (and not just 7 January to 5 April 2013).</p>
   <% end -%>
 
