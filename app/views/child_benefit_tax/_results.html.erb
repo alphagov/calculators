@@ -7,13 +7,12 @@
 <%# tax estimate %>
 <% if @calculator.adjusted_net_income_amount > 0 -%>
   <div class="results_estimate">
-  <h2>Child benefit to pay back as tax</h2>
+  <h2>Tax charge to pay</h2>
   <% if @calculator.adjusted_net_income_amount < 50100 -%>
-	  <h2>You must pay back £0</h2>
-    <ul>
-  	  <li>You don’t need to pay back any Child Benefit.</li> 
-  	  <li>You don’t have to pay any tax if your income is less than £50,000.</li>
-	  </ul>
+    <p class="numbers">£0</p>
+    <p>There is no tax charge if your income is below £50,099.</p>
+    <p>Your partner (if you have one) may have to pay the charge if their income is higher than yours.</p>
+    <p>Find out more about the <a href="#">Child Benefit tax charge</a>.</p>
   	<% if @calculator.tax_year >= Date.today.year %>
       <p>This is based on the predicted figures you’ve entered.</p>    
   	<% end -%>
@@ -24,18 +23,19 @@
       <p>This is an estimate based on the predicted figures you’ve entered.</p>
     <% end -%>
     </div>
-  <% end -%>
-  <%= render "results_tax_year_#{@calculator.tax_year}" %>
+    <%= render "results_tax_year_#{@calculator.tax_year}" %>
 
-  <h4>Your Child Benefit</h4>
-  <p>You can choose to:</p>
-  <ul>
-    <li>[stop getting Child Benefit]– you must pay any tax you owe</li>
-    <li>carry on getting Child Benefit – for each tax year you get it you must fill in a tax return and pay any tax you owe</li>
-  </ul>
+    <h4>Your Child Benefit</h4>
+    <p>You can choose to:</p>
+    <ul>
+      <li>[stop getting Child Benefit]– you must pay any tax you owe</li>
+      <li>carry on getting Child Benefit – for each tax year you get it you must fill in a tax return and pay any tax you owe</li>
+    </ul>
 
-  <% if @calculator.adjusted_net_income_amount > 50099 and @calculator.tax_year == 2012 %>
-    <p>Your result for the next tax year may be higher because the charge will apply to the whole tax year (and not just 7 January to 5 April 2013).</p>
+    <% if @calculator.adjusted_net_income_amount > 50099 and @calculator.tax_year == 2012 %>
+      <p>Your result for the next tax year may be higher because the charge will apply to the whole tax year (and not just 7 January to 5 April 2013).</p>
+    <% end -%>
   <% end -%>
+  
 
 <% end -%>
