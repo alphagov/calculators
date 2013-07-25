@@ -387,5 +387,53 @@ describe ChildBenefitTaxCalculator do
       calc.benefits_claimed_amount.round(2).should == 438.10
       calc.tax_estimate.round(2).should == 17 
     end
+    it "should calculate and estimate scenario 4" do
+      calc = ChildBenefitTaxCalculator.new({
+        :adjusted_net_income => "£60,000", :year => "2012", :starting_children => {
+          "0" => {
+            :start => {:day => '07', :month => '01', :year => '2013'},
+            :stop => {:day => '05', :month => '04', :year => '2013'}
+          },
+          "1" => {
+            :start => {:day => '07', :month => '01', :year => '2013'},
+            :stop => {:day => '05', :month => '04', :year => '2013'} 
+          }
+      }})
+      
+      calc.benefits_claimed_amount.round(2).should == 438.10
+      calc.tax_estimate.round(2).should == 433
+    end
+    it "should calculate and estimate scenario 5" do
+      calc = ChildBenefitTaxCalculator.new({
+        :adjusted_net_income => "£57,175", :year => "2012", :starting_children => {
+          "0" => {
+            :start => {:day => '07', :month => '01', :year => '2013'},
+            :stop => {:day => '05', :month => '04', :year => '2013'}
+          },
+          "1" => {
+            :start => {:day => '07', :month => '01', :year => '2013'},
+            :stop => {:day => '05', :month => '04', :year => '2013'} 
+          }
+      }})
+      
+      calc.benefits_claimed_amount.round(2).should == 438.10
+      calc.tax_estimate.round(2).should == 311
+    end
+    it "should calculate and estimate scenario 5 with an ANI of 55k" do
+      calc = ChildBenefitTaxCalculator.new({
+        :adjusted_net_income => "£55,000", :year => "2012", :starting_children => {
+          "0" => {
+            :start => {:day => '07', :month => '01', :year => '2013'},
+            :stop => {:day => '05', :month => '04', :year => '2013'}
+          },
+          "1" => {
+            :start => {:day => '07', :month => '01', :year => '2013'},
+            :stop => {:day => '05', :month => '04', :year => '2013'} 
+          }
+      }})
+      
+      calc.benefits_claimed_amount.round(2).should == 438.10
+      calc.tax_estimate.round(2).should == 219
+    end
   end
 end
