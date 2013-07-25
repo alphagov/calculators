@@ -80,7 +80,7 @@ class ChildBenefitTaxCalculator
   end
 
   def tax_estimate
-    benefits_claimed_amount * (percent_tax_charge / 100.0)
+    (benefits_claimed_amount * (percent_tax_charge / 100.0)).floor
   end
 
   private
