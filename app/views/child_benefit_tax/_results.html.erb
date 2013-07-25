@@ -9,11 +9,10 @@
   <div class="results_estimate">
   <h2>Child benefit to pay back as tax</h2>
   <% if @calculator.adjusted_net_income_amount < 50100 -%>
-	  <h2>You must pay back £0</h2>
-    <ul>
-  	  <li>You don’t need to pay back any Child Benefit.</li> 
-  	  <li>You don’t have to pay any tax if your income is less than £50,000.</li>
-	  </ul>
+    <p class="numbers">£0</p>
+    <p>There is no tax charge if your income is below £50,099.</p>
+    <p>Your partner (if you have one) may have to pay the charge if their income is higher than yours.</p>
+    <p>Find out more about the <a href="#">Child Benefit tax charge</a>.</p>
   	<% if @calculator.tax_year >= Date.today.year %>
       <p>This is based on the predicted figures you’ve entered.</p>    
   	<% end -%>
