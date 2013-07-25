@@ -59,7 +59,7 @@ describe ChildBenefitTaxCalculator do
 
   describe "calculating benefits received" do
     it "should give the total amount of benefits received for a full tax year" do
-      calc = ChildBenefitTaxCalculator.new({
+      ChildBenefitTaxCalculator.new({
         :year => "2012",
         :starting_children => { 
           "0" => {
@@ -70,7 +70,7 @@ describe ChildBenefitTaxCalculator do
       }).benefits_claimed_amount.round(2).should == 263.9 
     end
     it "should give the total amount of benefits received for a full tax year" do
-      calc = ChildBenefitTaxCalculator.new({
+      ChildBenefitTaxCalculator.new({
         :year => "2013",
         :starting_children => { 
           "0" => {
@@ -81,7 +81,7 @@ describe ChildBenefitTaxCalculator do
       }).benefits_claimed_amount.round(2).should == 1055.6 
     end
     it "should give the total amount of benefits received for a partial tax year" do
-      calc = ChildBenefitTaxCalculator.new({
+      ChildBenefitTaxCalculator.new({
         :year => "2012",
         :starting_children => {
           "0" => {
@@ -92,7 +92,7 @@ describe ChildBenefitTaxCalculator do
       }).benefits_claimed_amount.round(2).should == 263.9 
     end
     it "should give the total amount of benefits received for a partial tax year with more than one child" do
-      calc = ChildBenefitTaxCalculator.new({
+      ChildBenefitTaxCalculator.new({
         :year => "2012",
         :starting_children => { 
           "0" => {
@@ -192,7 +192,7 @@ describe ChildBenefitTaxCalculator do
             "0" => { :start => { :year => "2011", :month => "01", :day => "01" } }  
           },
           :year => "2012"
-        }).tax_estimate.round(2).should == 263.9
+        }).tax_estimate.round(2).should == 263
       end
 
       it "calculates the corect amount for % charge of 99" do
@@ -202,7 +202,7 @@ describe ChildBenefitTaxCalculator do
             "0" => { :start => { :year => "2011", :month => "01", :day => "01" } }  
           },
           :year => "2012"
-        }).tax_estimate.round(2).should == 261.26
+        }).tax_estimate.round(2).should == 261
       end
 
       it "calculates the correct amount for income < 59900" do
@@ -212,7 +212,7 @@ describe ChildBenefitTaxCalculator do
             "0" => { :start => { :year => "2011", :month => "01", :day => "01" } }  
           },
           :year => "2012"
-        }).tax_estimate.round(2).should == 105.56
+        }).tax_estimate.round(2).should == 105
       end
     end # tax year 2012-13
 
@@ -225,7 +225,7 @@ describe ChildBenefitTaxCalculator do
           },
           :year => "2013"
         })
-        calc.tax_estimate.round(1).should == 1055.6
+        calc.tax_estimate.round(1).should == 1055
       end
       it "calculates correctly for >55.9k earning" do
         calc = ChildBenefitTaxCalculator.new({
@@ -235,7 +235,7 @@ describe ChildBenefitTaxCalculator do
           },
           :year => "2013"
         })
-        calc.tax_estimate.round(1).should == 1045.0
+        calc.tax_estimate.round(1).should == 1045
       end
       it "calculates correctly for >50k earning" do
         calc = ChildBenefitTaxCalculator.new({
@@ -247,7 +247,7 @@ describe ChildBenefitTaxCalculator do
           },
           :year => "2013"
         })
-        calc.tax_estimate.round(1).should == 422.2
+        calc.tax_estimate.round(1).should == 422
       end
     end # tax year 2013-14
   end # no starting / stopping children
@@ -265,7 +265,7 @@ describe ChildBenefitTaxCalculator do
           },
           :year => "2012"
         })
-        calc.tax_estimate.round(1).should == 101.5
+        calc.tax_estimate.round(1).should == 101
       end
 
       it "doesn't tax before Jan 7th 2013" do
@@ -279,7 +279,7 @@ describe ChildBenefitTaxCalculator do
           },
           :year => "2012"
         })
-        calc.tax_estimate.round(1).should == 263.9
+        calc.tax_estimate.round(1).should == 263
       end
 
       it "correctly calculates weeks for a child who started & stopped in tax year" do
@@ -294,7 +294,7 @@ describe ChildBenefitTaxCalculator do
           :year => "2012"
         })
         #child from 01/02 to 01/03 => 5 weeks * 20.3
-        calc.tax_estimate.round(1).should == 81.2
+        calc.tax_estimate.round(1).should == 81
       end
     end # tax year 2012
 
@@ -311,8 +311,81 @@ describe ChildBenefitTaxCalculator do
           :year => "2013"
         })
         # starting child for 5 weeks
-        calc.tax_estimate.round(1).should == 101.5
+        calc.tax_estimate.round(1).should == 101
       end
     end # tax year 2013-14
   end # starting & stopping children
+
+  describe "HMRC test scenarios" do
+    it "should calculate and estimate scenario 1" do
+      ChildBenefitTaxCalculator.new({:year => "2012", :starting_children => {
+        "0" => {
+          :start => {:day => '07', :month => '01', :year => '2013'},
+          :stop => {:day => '05', :month => '04', :year => '2013'}
+        }
+      }}).benefits_claimed_amount.round(2).should == 263.90
+
+      ChildBenefitTaxCalculator.new({:year => "2012", :starting_children => {
+        "0" => {
+          :start => {:day => '07', :month => '01', :year => '2013'},
+          :stop => {:day => '05', :month => '04', :year => '2013'}
+        },
+        "1" => {
+          :start => {:day => '07', :month => '01', :year => '2013'},
+          :stop => {:day => '23', :month => '03', :year => '2013'} 
+        }
+      }}).benefits_claimed_amount.round(2).should == 411.30
+
+      calc = ChildBenefitTaxCalculator.new({
+        :adjusted_net_income => "£65,000", :year => "2012", :starting_children => {
+          "0" => {
+            :start => {:day => '07', :month => '01', :year => '2013'},
+            :stop => {:day => '05', :month => '04', :year => '2013'}
+          },
+          "1" => {
+            :start => {:day => '07', :month => '01', :year => '2013'},
+            :stop => {:day => '23', :month => '03', :year => '2013'} 
+          },
+          "2" => {
+            :start => {:day => '14', :month => '02', :year => '2013'},
+            :stop => {:day => '05', :month => '04', :year => '2013'}
+          }
+      }})
+      
+      calc.benefits_claimed_amount.round(2).should == 505.10
+      calc.tax_estimate.round(2).should == 505
+    end
+    it "should calculate and estimate scenario 2" do
+      calc = ChildBenefitTaxCalculator.new({
+        :adjusted_net_income => "£50,150", :year => "2012", :starting_children => {
+          "0" => {
+            :start => {:day => '07', :month => '01', :year => '2013'},
+            :stop => {:day => '05', :month => '04', :year => '2013'}
+          },
+          "1" => {
+            :start => {:day => '07', :month => '01', :year => '2013'},
+            :stop => {:day => '05', :month => '04', :year => '2013'} 
+          }
+      }})
+      
+      calc.benefits_claimed_amount.round(2).should == 438.10
+      calc.tax_estimate.round(2).should == 4
+    end
+    it "should calculate and estimate scenario 3" do
+      calc = ChildBenefitTaxCalculator.new({
+        :adjusted_net_income => "£50,499", :year => "2012", :starting_children => {
+          "0" => {
+            :start => {:day => '07', :month => '01', :year => '2013'},
+            :stop => {:day => '05', :month => '04', :year => '2013'}
+          },
+          "1" => {
+            :start => {:day => '07', :month => '01', :year => '2013'},
+            :stop => {:day => '05', :month => '04', :year => '2013'} 
+          }
+      }})
+      
+      calc.benefits_claimed_amount.round(2).should == 438.10
+      calc.tax_estimate.round(2).should == 17 
+    end
+  end
 end
