@@ -11,7 +11,7 @@
   <article id="calculator" role="article">
     <section class="questions">
       <div class="inner">
-        <%= form_tag("process_form", :method => :get) do %>
+        <%= form_tag("process_form", :method => :get, :id => "child_benefit_tax_calculator") do %>
           <!-- hidden field to store the tax year so it can persist -->
           <input type="hidden" name="year" value="<%= params[:year] %>" />
           <!-- hidden field to store if we're showing extra income or not -->
@@ -25,7 +25,7 @@
               <li>expect to claim for in the future</li>
             </ul>
             <%= select_tag "children_count", options_for_select((1..10).collect{|n| [n,n]}, @calculator.children_count) %>
-            <%= submit_tag "Update", :name => "children" %>
+            <%= submit_tag "Update", :name => "children", :class => "button update-button" %>
           </fieldset>
 
           <fieldset id="children">
@@ -37,9 +37,9 @@
           </fieldset>
 
           <fieldset>
-            <%= step(3, "To work out the Child benefit received during a tax year, choose a tax year.") %>
+            <%= step(3, "To work out the Child Benefit received during a tax year, choose a tax year.") %>
             <div class="application-notice info-notice">
-            <p>Tax years run from 6 April until 5 April the following year.</p>
+            <p>Tax years run from 6 April to 5 April the following year.</p>
             </div>
             <% ChildBenefitTaxCalculator::TAX_YEARS.each do |year, years| -%>
               <%= radio_button_tag "year", year, (@calculator.tax_year == year.to_i) %>&nbsp;<%= tax_year_label(years) %> 
@@ -47,9 +47,9 @@
           </fieldset>
 
           <fieldset id="adjusted_income">
-            <%= step(4, "To work out how much Child Benefit to pay back as tax, enter your adjusted net income for the tax year. Otherwise, leave it blank.") %>
+            <%= step(4, "To work out the Child Benefit tax charge, enter your adjusted net income for the tax year. Otherwise, leave it blank.") %>
             <div class="application-notice info-notice">
-              <p>Enter yours or your partner’s income, whoever’s is higher</p>
+              <p>Enter your income or your partner's – whoever has the highest.</p>
             </div>
             <%= text_field_tag "adjusted_net_income", @calculator.adjusted_net_income, :placeholder => "£" %>
           </fieldset>
