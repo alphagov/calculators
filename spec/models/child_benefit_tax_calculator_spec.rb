@@ -37,7 +37,7 @@ describe ChildBenefitTaxCalculator do
     calc = ChildBenefitTaxCalculator.new({
       :adjusted_net_income => "£100,900"
     })
-    calc.adjusted_net_income.should == 100900
+    calc.adjusted_net_income_amount.should == 100900
   end
 
   describe "input validation" do
