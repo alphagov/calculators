@@ -182,8 +182,10 @@ article .application-notice{
 }
 
 select {
+  @include core-14;
   margin: 0.2em 0.5em 0.4em 0;
   vertical-align: baseline;
+  border: 1px solid;
 }
 
 #calculator h5 {
@@ -243,3 +245,18 @@ article p + .help-notice, article p + .info-notice {
 .before-you-start h2 {
   margin-top: 10em;
 }
+
+#children h5 {
+  clear: left;
+}
+
+.date_selection {
+  float: left;
+  padding-bottom: 1.5em;
+  margin-right: 2em;
+  label {
+    @include core-19;
+    padding-top: 0.2em;
+  }
+}
+
