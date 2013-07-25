@@ -11,7 +11,7 @@
   <article id="calculator" role="article">
     <section class="questions">
       <div class="inner">
-        <%= form_tag("process_form", :method => :get) do %>
+        <%= form_tag("process_form", :method => :get, :id => "child_benefit_tax_calculator") do %>
           <!-- hidden field to store the tax year so it can persist -->
           <input type="hidden" name="year" value="<%= params[:year] %>" />
           <!-- hidden field to store if we're showing extra income or not -->
