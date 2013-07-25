@@ -27,13 +27,15 @@
   <% end -%>
   <%= render "results_tax_year_#{@calculator.tax_year}" %>
 
-  <h4>Your options</h4>
-  
-  <p>Once you’ve paid any tax you owe, you must consider your options. You can either stop getting Child Benefit, or carry on getting it and fill in a tax return each year to pay back what you owe.</p> 
-  <p>Find out more about <a href="/child-benefit-tax-charge/what-is-the-child-benefit-tax-charge">your options</a>.</p>
+  <h4>Your Child Benefit</h4>
+  <p>You can choose to:</p>
+  <ul>
+    <li>[stop getting Child Benefit]– you must pay any tax you owe</li>
+    <li>carry on getting Child Benefit – for each tax year you get it you must fill in a tax return and pay any tax you owe</li>
+  </ul>
 
   <% if @calculator.adjusted_net_income > 50099 and @calculator.tax_year == 2012 %>
-    <p>The Child Benefit tax charge only affects Child Benefit received between 7 January and 5 April 2013 - it affects Child Benefit you’ve received for part of the 2012 to 2013 tax year. You may have to pay more back in future tax years if you choose to keep receiving it.</p>
+    <p>TYour result for the next tax year may be higher because the charge will apply to the whole tax year (and not just 7 January to 5 April 2013).</p>
   <% end -%>
 
 <% end -%>
