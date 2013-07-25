@@ -51,7 +51,7 @@
             <div class="application-notice info-notice">
               <p>Enter yours or your partner’s income, whoever’s is higher</p>
             </div>
-            <%= text_field_tag "adjusted_net_income", @calculator.adjusted_net_income %>
+            <%= text_field_tag "adjusted_net_income", @calculator.adjusted_net_income, :placeholder => "£" %>
           </fieldset>
 
           <%= submit_tag("Get your estimate", :name => "results", :class => "button") %>
