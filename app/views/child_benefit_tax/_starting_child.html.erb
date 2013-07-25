@@ -2,7 +2,7 @@
   <label>Start date</label>
   <%= select_date (child ? child.start_date : nil), :prefix => "starting_children[#{index}][start]", 
     :prompt => {:day => "Day", :month => "Month", :year => "Year" }, :order => [:day, :month, :year],
-    :start_year => 20.years.ago(Date.today).year, :end_year => Date.today.year %>
+    :start_year => 20.years.ago(Date.today).year, :end_year => 3.years.since(Date.today).year %>
   &nbsp;&nbsp;
 </div>
 <div class="date_selection">  

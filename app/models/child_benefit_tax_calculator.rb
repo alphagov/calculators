@@ -23,7 +23,7 @@ class ChildBenefitTaxCalculator
     @net_pension_contributions = to_integer(params[:net_pension_contributions])
     @trading_losses_self_employed = to_integer(params[:trading_losses_self_employed])
     @gift_aid_donations = to_integer(params[:gift_aid_donations])
-    @adjusted_net_income = params[:adjusted_net_income] ? to_integer(params[:adjusted_net_income]) : nil
+    @adjusted_net_income = params[:adjusted_net_income]
     @children_count = params[:children_count] ? params[:children_count].to_i : 1
     @starting_children = process_starting_children(params[:starting_children])
     @tax_year = params[:year].to_i
@@ -33,17 +33,21 @@ class ChildBenefitTaxCalculator
     params and params[:year].present? and params[:month].present? and params[:day].present?
   end
 
+  def valid_date_params?(params)
+    self.class.valid_date_params?(params)
+  end
+
   def nothing_owed?
-    @adjusted_net_income < NET_INCOME_THRESHOLD or tax_estimate.abs == 0
+    adjusted_net_income_amount < NET_INCOME_THRESHOLD or tax_estimate.abs == 0
   end
 
   def percent_tax_charge
-    if @adjusted_net_income >= 60001
+    if adjusted_net_income_amount >= 60001
       100
-    elsif (59900..60000).cover?(@adjusted_net_income)
+    elsif (59900..60000).cover?(adjusted_net_income_amount)
       99
     else
-      ((@adjusted_net_income - 50000)/100.0).floor
+      ((adjusted_net_income_amount - 50000)/100.0).floor
     end
   end
 
@@ -82,18 +86,23 @@ class ChildBenefitTaxCalculator
   def tax_estimate
     (benefits_claimed_amount * (percent_tax_charge / 100.0)).floor
   end
+  
+  def adjusted_net_income_amount
+    to_integer(@adjusted_net_income)
+  end
 
   private
 
   def process_starting_children(children)
-    starting_children = []
-    children.each do |n, c|
-      starting_children << StartingChild.new(c) if self.class.valid_date_params?(c[:start])
-    end if children 
-    (@children_count - starting_children.size).times do
-      starting_children << StartingChild.new
+    [].tap do |ary|
+      @children_count.times do |n|
+        if children and children[n.to_s] and valid_date_params?(children[n.to_s][:start])
+          ary << StartingChild.new(children[n.to_s])
+        else
+          ary << StartingChild.new
+        end
+      end
     end
-    starting_children
   end
 
   def days_include_week?(start_date, end_date, week_start_date)
