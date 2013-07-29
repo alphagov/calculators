@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class AdjustedNetIncomeCalculator
   
   PARAM_KEYS = [:gross_income, :other_income, :pension_contributions_from_pay,
@@ -25,8 +26,8 @@ class AdjustedNetIncomeCalculator
     (amount * 1.25)
   end
 
-  def integer_value(str)
-    str.gsub!(/\D/,'') if str.is_a?(String)
-    str.to_i
+  def integer_value(val)
+    val.gsub!(/[£,-]/,'') if val.is_a?(String)
+    val.to_i
   end
 end

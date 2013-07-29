@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class ChildBenefitTaxCalculator
 
   include ActiveModel::Validations
@@ -134,7 +135,7 @@ class ChildBenefitTaxCalculator
 
   def calculate_adjusted_net_income(params)
     if params[:adjusted_net_income]
-      params[:adjusted_net_income].gsub(/\D/,'').to_i
+      params[:adjusted_net_income].gsub(/[£,-]/,'').to_i
     else
       AdjustedNetIncomeCalculator.new(params).adjusted_net_income
     end
