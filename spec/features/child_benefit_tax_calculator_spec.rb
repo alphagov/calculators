@@ -111,8 +111,8 @@ feature "Child Benefit Tax Calculator" do
       fill_in "adjusted_net_income", :with => "£60,000"
 
       click_button "Get your estimate"
-      
-      page.should have_field("adjusted_net_income", :with => "£60,000")
+     
+      page.should have_field("adjusted_net_income", :with => "£60,000.00")
 
       within ".results" do
         page.should have_content("£500,000.00")

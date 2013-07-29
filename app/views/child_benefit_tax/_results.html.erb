@@ -5,10 +5,10 @@
   <p>Use this to complete your tax return if you fill one in.</p>
 </div>
 <%# tax estimate %>
-<% if @calculator.adjusted_net_income_amount > 0 -%>
+<% if @calculator.adjusted_net_income > 0 -%>
   <div class="results_estimate">
   <h2>Tax charge to pay</h2>
-  <% if @calculator.adjusted_net_income_amount < 50100 -%>
+  <% if @calculator.adjusted_net_income < 50100 -%>
     <p class="numbers">£0</p>
     <p>There is no tax charge if your income is below £50,099.</p>
     <p>Your partner (if you have one) may have to pay the charge if their income is higher than yours.</p>
@@ -32,7 +32,7 @@
       <li>carry on getting Child Benefit – for each tax year you get it you must fill in a tax return and pay any tax you owe</li>
     </ul>
 
-    <% if @calculator.adjusted_net_income_amount > 50099 and @calculator.tax_year == 2012 %>
+    <% if @calculator.adjusted_net_income > 50099 and @calculator.tax_year == 2012 %>
       <p>Your result for the next tax year may be higher because the charge will apply to the whole tax year (and not just 7 January to 5 April 2013).</p>
     <% end -%>
   <% end -%>
