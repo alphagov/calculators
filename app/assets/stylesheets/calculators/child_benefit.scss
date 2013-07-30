@@ -68,6 +68,9 @@ label {
 }
 
 #calculator {
+  input {
+    margin-bottom: 1em;
+  }
   fieldset {
     margin-bottom: 3em;
     &#adjusted_income {
@@ -161,6 +164,10 @@ width: 80%;
   padding-bottom: 1em;
 }
 
+details {
+  margin-bottom: 3em;  
+}
+
 details summary {
   @include core-19;
   font-family: "nta", "GDS-Regular", sans-serif;
@@ -172,7 +179,6 @@ details summary {
   cursor: pointer;
   display: block;
   text-decoration: underline;
-  margin-bottom: 3em;
 }
 
 details summary:hover {
