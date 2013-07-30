@@ -4,7 +4,7 @@ class ChildBenefitTaxCalculator
   include ActiveModel::Validations
 
   attr_reader :adjusted_net_income_calculator, :adjusted_net_income, :children_count,
-    :starting_children, :stopping_children, :tax_year
+    :starting_children, :tax_year
 
   NET_INCOME_THRESHOLD = 50000
 
@@ -132,7 +132,7 @@ class ChildBenefitTaxCalculator
 
   def calculate_adjusted_net_income(adjusted_net_income)
     if adjusted_net_income.present?
-      adjusted_net_income.gsub(/[£,-]/,'').to_i
+      adjusted_net_income.gsub(/[£, -]/,'').to_i
     else
       @adjusted_net_income_calculator.calculate_adjusted_net_income
     end
