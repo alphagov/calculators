@@ -50,6 +50,7 @@ article {
 } 
 
 label {
+  @include core-19;
   display: block;
 }
 
@@ -69,6 +70,9 @@ label {
 #calculator {
   fieldset {
     margin-bottom: 3em;
+    &#adjusted_income {
+      margin-bottom: 1em;
+    }
   }
 
   input[type="text"] {
@@ -168,6 +172,7 @@ details summary {
   cursor: pointer;
   display: block;
   text-decoration: underline;
+  margin-bottom: 3em;
 }
 
 details summary:hover {
