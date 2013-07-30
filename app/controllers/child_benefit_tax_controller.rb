@@ -2,7 +2,7 @@ class ChildBenefitTaxController < ApplicationController
 
   CALC_PARAM_KEYS = [:total_annual_income, :gross_pension_contributions, :net_pension_contributions,
      :trading_losses_self_employed, :gift_aid_donations, :adjusted_net_income,
-     :children_count, :starting_children, :year]
+     :children_count, :starting_children, :year, :results]
 
   def landing
   end
@@ -24,7 +24,7 @@ class ChildBenefitTaxController < ApplicationController
 
   def main
     @calculator = ChildBenefitTaxCalculator.new(params)
-    @calculator.valid?
+    @calculator.valid? if params[:results]
   end
 
 end

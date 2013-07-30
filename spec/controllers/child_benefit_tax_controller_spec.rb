@@ -16,7 +16,7 @@ describe ChildBenefitTaxController do
       assigns(:calculator).tax_year.should == 2013
     end
     it "should run calculator validations" do
-      get 'main'
+      get 'main', { :results => "Get your estimate" }
       response.should be_success
       assigns(:calculator).errors.full_messages.first.should == "Tax year is not included in the list"
     end
@@ -36,7 +36,7 @@ describe ChildBenefitTaxController do
     it "should place an 'results' anchor onto the redirected response" do
       route_params = { :results => "Get your estimate" }
       get 'process_form', route_params
-      response.should redirect_to(:action => :main, :anchor => "results")
+      response.should redirect_to(:action => :main, :params => route_params, :anchor => "results")
     end
   end
 
