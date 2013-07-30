@@ -46,6 +46,11 @@ describe ChildBenefitTaxController do
       assigns(:calculator).tax_year.should == 2013
       assigns(:adjusted_net_income_calculator).calculate_adjusted_net_income.should == 0
     end
+    it "should run calculator validations" do
+      get 'main'
+      response.should be_success
+      assigns(:calculator).errors.full_messages.first.should == "Tax year is not included in the list"
+    end
   end
 
   describe "GET process_form" do

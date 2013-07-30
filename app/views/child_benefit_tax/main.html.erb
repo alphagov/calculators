@@ -15,6 +15,20 @@
           <!-- hidden field to store the tax year so it can persist -->
           <input type="hidden" name="year" value="<%= params[:year] %>" />
 
+          <% if @calculator.has_errors? -%>
+            <div class="validation-summary">
+              <h1>Please check the form</h1>
+              <ul>
+                <% @calculator.errors.each do |k, v| -%>
+                  <li><%= v %></li>
+                <% end -%>
+                <% if @calculator.starting_children.map{|c| c.errors.any? }.any? -%>
+                  <li>Enter the dates child benefit started</li>
+                <% end -%>
+              </ul>
+            </div>
+          <% end -%>
+          
           <fieldset>
             <%= step(1, "Enter the number of children you:") %>
             <ul>
