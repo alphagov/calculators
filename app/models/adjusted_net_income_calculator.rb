@@ -8,6 +8,7 @@ class AdjustedNetIncomeCalculator
   def initialize(params)
     PARAM_KEYS.each do |key|
       instance_variable_set :"@#{key}", integer_value(params[key])
+      self.class.send("attr_reader", :"#{key}")
     end
   end
 
