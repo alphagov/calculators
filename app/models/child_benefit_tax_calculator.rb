@@ -4,7 +4,7 @@ class ChildBenefitTaxCalculator
   include ActiveModel::Validations
 
   attr_reader :adjusted_net_income_calculator, :adjusted_net_income, :children_count,
-    :starting_children, :stopping_children, :tax_year
+    :starting_children, :tax_year
 
   NET_INCOME_THRESHOLD = 50000
 
