@@ -131,7 +131,7 @@ class ChildBenefitTaxCalculator
   end
 
   def calculate_adjusted_net_income(adjusted_net_income)
-    if adjusted_net_income
+    if adjusted_net_income.present?
       adjusted_net_income.gsub(/[£,-]/,'').to_i
     else
       @adjusted_net_income_calculator.calculate_adjusted_net_income
