@@ -24,6 +24,7 @@ class ChildBenefitTaxController < ApplicationController
 
   def main
     @calculator = ChildBenefitTaxCalculator.new(params)
+    @adjusted_net_income_calculator = @calculator.adjusted_net_income_calculator
   end
 
 end

@@ -3,7 +3,8 @@ class ChildBenefitTaxCalculator
 
   include ActiveModel::Validations
 
-  attr_reader :adjusted_net_income, :children_count, :starting_children, :stopping_children, :tax_year
+  attr_reader :adjusted_net_income_calculator, :adjusted_net_income, :children_count,
+    :starting_children, :stopping_children, :tax_year
 
   NET_INCOME_THRESHOLD = 50000
 
@@ -19,7 +20,8 @@ class ChildBenefitTaxCalculator
   validate :valid_child_dates
 
   def initialize(params = {})
-    @adjusted_net_income = calculate_adjusted_net_income(params)
+    @adjusted_net_income_calculator = AdjustedNetIncomeCalculator.new(params)
+    @adjusted_net_income = calculate_adjusted_net_income(params[:adjusted_net_income])
     @children_count = params[:children_count] ? params[:children_count].to_i : 1
     @starting_children = process_starting_children(params[:starting_children])
     @tax_year = params[:year].to_i
@@ -128,17 +130,16 @@ class ChildBenefitTaxCalculator
     (( end_date - start_date ) / 7).floor
   end
 
-  def parse_child_date(date)
-    Date.new(date[:year].to_i, date[:month].to_i, date[:day].to_i)
+  def calculate_adjusted_net_income(adjusted_net_income)
+    if adjusted_net_income
+      adjusted_net_income.gsub(/[£,-]/,'').to_i
+    else
+      @adjusted_net_income_calculator.calculate_adjusted_net_income
+    end
   end
 
-
-  def calculate_adjusted_net_income(params)
-    if params[:adjusted_net_income]
-      params[:adjusted_net_income].gsub(/[£,-]/,'').to_i
-    else
-      AdjustedNetIncomeCalculator.new(params).adjusted_net_income
-    end
+  def parse_child_date(date)
+    Date.new(date[:year].to_i, date[:month].to_i, date[:day].to_i)
   end
 
   def valid_child_dates

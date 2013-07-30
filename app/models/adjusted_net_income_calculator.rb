@@ -11,11 +11,15 @@ class AdjustedNetIncomeCalculator
     end
   end
 
-  def adjusted_net_income
-    (@gross_income + @other_income + @pensions + @property + @non_employment_income) - deductions
+  def calculate_adjusted_net_income
+    additions - deductions
   end
 
   private
+
+  def additions
+    @gross_income + @other_income + @pensions + @property + @non_employment_income
+  end
 
   def deductions
     grossed_up(@pension_contributions_from_pay) + grossed_up(@gift_aid_donations) + 
