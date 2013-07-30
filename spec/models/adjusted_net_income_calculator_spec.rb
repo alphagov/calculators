@@ -15,7 +15,7 @@ describe AdjustedNetIncomeCalculator do
         :gross_income => "£60,000", :other_income => "£5,000", :pensions => "£1000",
         :property => "£2,000", :non_employment_income => "£2000",
         :pension_contributions_from_pay => "£1000", :retirement_annuities => "£1000",
-        :cycle_scheme => "£1,000", :childcare => "£2,000"
+        :cycle_scheme => "£1,000", :childcare => "£2,000", :outgoing_pension_contributions => "£2 000"
       )
       calc.gross_income.should == 60000
       calc.other_income.should == 5000
@@ -26,7 +26,8 @@ describe AdjustedNetIncomeCalculator do
       calc.retirement_annuities.should == 1000
       calc.cycle_scheme.should == 1000
       calc.childcare.should == 2000
-      calc.calculate_adjusted_net_income.should == 64750
+      calc.outgoing_pension_contributions.should == 2000
+      calc.calculate_adjusted_net_income.should == 62750
     end
   end
 
