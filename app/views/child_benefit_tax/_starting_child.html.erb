@@ -1,14 +1,11 @@
-<div class="date_selection<% if child.errors.has_key?(:start_date) %> validation-error<% end -%>">
-<% if child.errors.has_key?(:start_date) %>
-  <p>Enter the date child benefit started</p>
-<% end -%>
+<div class="date_selection">
   <label>Start date</label>
   <%= select_date (child ? child.start_date : nil), :prefix => "starting_children[#{index}][start]", 
     :prompt => {:day => "Day", :month => "Month", :year => "Year" }, :order => [:day, :month, :year],
     :start_year => 20.years.ago(Date.today).year, :end_year => 3.years.since(Date.today).year %>
   &nbsp;&nbsp;
 </div>
-<div class="date_selection">  
+<div class="date_selection">
   <label>Stop date</label>
   <%= select_date (child ? child.end_date : nil), :prefix => "starting_children[#{index}][stop]",
     :prompt => {:day => "Day", :month => "Month", :year => "Year" }, :order => [:day, :month, :year],
