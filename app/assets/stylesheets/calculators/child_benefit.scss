@@ -239,6 +239,28 @@ margin-left: 1em;
   background-color: #fef7f7;
 }
 
+.validation-summary {
+  border: 3px solid #df3034;
+  background-color: #fef7f7;
+  margin: 1em -1em 1.5em -1em;
+  padding: 1em 1em 0.25em 1em;
+  h1 {
+    margin-bottom: 0;
+  }
+  ul {
+    padding-left: 2.2em;
+    li {
+    list-style: none;
+    @include core-16;
+      a {
+        color: #df3034;
+        text-decoration: none;
+      }
+    }
+  }
+
+}
+
 .get-started a {
   margin-right: 0.5em;
 }
