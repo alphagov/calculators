@@ -52,7 +52,7 @@ describe ChildBenefitTaxCalculator do
       it "should be true if any starting children have errors" do
         calc = ChildBenefitTaxCalculator.new(:year => "2012", :children_count => "1")
         calc.valid?
-        puts calc.errors.full_messages
+        calc.errors.should be_empty
         #puts calc.starting_children.first.errors.full_messages
         calc.has_errors?.should == true
       end
