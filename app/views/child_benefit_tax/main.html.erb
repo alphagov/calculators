@@ -54,6 +54,35 @@
             <%= text_field_tag "adjusted_net_income", number_to_currency(@calculator.adjusted_net_income, unit: "£", precision: 2), :placeholder => "£" %>
           </fieldset>
 
+          <details>
+            <summary>Help working out your adjusted net income</summary>
+            <p>You can find some of this information from your P60, P11D, your employer or a tax adviser</p>
+            <fieldset id="adjusted_net_income_calculator">
+            <%= label_tag "gross_income", "Your salary" %> 
+            <%= text_field_tag "gross_income", number_to_currency(@adjusted_net_income_calculator.gross_income, unit: "£", precision: 2), :placeholder => "£" %>
+            <%= label_tag "other_income", "Other employment income" %> 
+            <%= text_field_tag "other_income", number_to_currency(@adjusted_net_income_calculator.other_income, unit: "£", precision: 2), :placeholder => "£" %>
+            <%= label_tag "pension_contributions_from_pay", "Pension contributions deducted from your pay" %> 
+            <%= text_field_tag "pension_contributions_from_pay", number_to_currency(@adjusted_net_income_calculator.pension_contributions_from_pay, unit: "£", precision: 2), :placeholder => "£" %>
+            <%= label_tag "retirement_annuities", "Retirement annuity contracts" %> 
+            <%= text_field_tag "retirement_annuities", number_to_currency(@adjusted_net_income_calculator.retirement_annuities, unit: "£", precision: 2), :placeholder => "£" %>
+            <%= label_tag "cycle_scheme", "Cycle scheme" %> 
+            <%= text_field_tag "cycle_scheme", number_to_currency(@adjusted_net_income_calculator.cycle_scheme, unit: "£", precision: 2), :placeholder => "£" %>
+            <%= label_tag "childcare", "Childcare" %> 
+            <%= text_field_tag "childcare", number_to_currency(@adjusted_net_income_calculator.childcare, unit: "£", precision: 2), :placeholder => "£" %>
+            <%= label_tag "pensions", "Pensions - eg from a state pension" %> 
+            <%= text_field_tag "pensions", number_to_currency(@adjusted_net_income_calculator.pensions, unit: "£", precision: 2), :placeholder => "£" %>
+            <%= label_tag "property", "Property - eg rental income" %> 
+            <%= text_field_tag "property", number_to_currency(@adjusted_net_income_calculator.property, unit: "£", precision: 2), :placeholder => "£" %>
+            <%= label_tag "non_employment_income", "Other income" %> 
+            <%= text_field_tag "non_employment_income", number_to_currency(@adjusted_net_income_calculator.non_employment_income, unit: "£", precision: 2), :placeholder => "£" %>
+            <%= label_tag "gift_aid_donations", "Gift Aid donations" %> 
+            <%= text_field_tag "gift_aid_donations", number_to_currency(@adjusted_net_income_calculator.gift_aid_donations, unit: "£", precision: 2), :placeholder => "£" %>
+            <%= label_tag "outgoing_pension_contributions", "Pension contributions not paid from your salary" %> 
+            <%= text_field_tag "outgoing_pension_contributions", number_to_currency(@adjusted_net_income_calculator.outgoing_pension_contributions, unit: "£", precision: 2), :placeholder => "£" %>
+            </fieldset>
+          </details>
+
           <%= submit_tag("Get your estimate", :name => "results", :class => "button") %>
         <% end %>
       </div><!-- end .inner -->
