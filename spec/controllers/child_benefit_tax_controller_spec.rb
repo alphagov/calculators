@@ -15,6 +15,11 @@ describe ChildBenefitTaxController do
       response.should be_success
       assigns(:calculator).tax_year.should == 2013
     end
+    it "should run calculator validations" do
+      get 'main'
+      response.should be_success
+      assigns(:calculator).errors.full_messages.first.should == "Tax year is not included in the list"
+    end
   end
 
   describe "GET process_form" do

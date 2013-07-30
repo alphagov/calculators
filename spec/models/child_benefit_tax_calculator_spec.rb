@@ -42,7 +42,7 @@ describe ChildBenefitTaxCalculator do
 
   describe "input validation" do
     before(:each) do
-      @calc = ChildBenefitTaxCalculator.new
+      @calc = ChildBenefitTaxCalculator.new(:children_count => "1")
       @calc.valid?
     end
     it "should contain errors for year if none is given" do
@@ -54,6 +54,20 @@ describe ChildBenefitTaxCalculator do
                                                    :stop => {:year => "2012", :month => "01", :day => "01"})
       @calc.valid?
       @calc.starting_children.second.errors[:start_date].include?("must be before stopping date").should == true
+    end
+    describe "has_errors?" do
+      it "should be true if the calculator has errors" do
+        @calc.starting_children << StartingChild.new(:start => {:year => "2012", :month => "02", :day => "01"})
+        @calc.has_errors?.should == true
+        @calc.errors.size.should == 1
+      end
+      it "should be true if any starting children have errors" do
+        calc = ChildBenefitTaxCalculator.new(:year => "2012", :children_count => "1")
+        calc.valid?
+        puts calc.errors.full_messages
+        #puts calc.starting_children.first.errors.full_messages
+        calc.has_errors?.should == true
+      end
     end
   end
 

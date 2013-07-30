@@ -24,6 +24,7 @@ class ChildBenefitTaxController < ApplicationController
 
   def main
     @calculator = ChildBenefitTaxCalculator.new(params)
+    @calculator.valid?
   end
 
 end

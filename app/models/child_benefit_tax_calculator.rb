@@ -14,8 +14,8 @@ class ChildBenefitTaxCalculator
     "2013" => [Date.parse("2013-04-06"), Date.parse("2014-04-05")],
   }
 
-  validates_inclusion_of :tax_year, :in => [2012...Date.today.year]
   validate :valid_child_dates
+  validates_inclusion_of :tax_year, :in => 2012...Date.today.year
 
   def initialize(params = {})
     @total_annual_income = to_integer(params[:total_annual_income])
@@ -39,6 +39,10 @@ class ChildBenefitTaxCalculator
 
   def nothing_owed?
     adjusted_net_income_amount < NET_INCOME_THRESHOLD or tax_estimate.abs == 0
+  end
+  
+  def has_errors?
+    errors.any? or starting_children.map{|c| c.errors.any? }.any?
   end
 
   def percent_tax_charge
