@@ -111,8 +111,8 @@ feature "Child Benefit Tax Calculator" do
       fill_in "adjusted_net_income", :with => "£60,000"
 
       click_button "Get your estimate"
-      
-      page.should have_field("adjusted_net_income", :with => "£60,000")
+     
+      page.should have_field("adjusted_net_income", :with => "£60,000.00")
 
       within ".results" do
         page.should have_content("£500,000.00")
@@ -131,6 +131,46 @@ feature "Child Benefit Tax Calculator" do
       
       within ".results" do
         page.should have_content("There is no tax charge")
+      end
+    end
+  end
+
+  describe "calculating adjusted net income" do
+    before(:each) do
+      ChildBenefitTaxCalculator.any_instance.stub(:benefits_claimed_amount).and_return(100000)
+      ChildBenefitTaxCalculator.any_instance.stub(:tax_estimate).and_return(100000)     
+      ChildBenefitTaxCalculator.any_instance.stub(:calculate_adjusted_net_income).and_return(100000)
+      visit "/child-benefit-tax-calculator"
+      click_on "Start now"
+    end
+    it "should use the adjusted net income calculator inputs" do
+      select "2011", :from => "starting_children[0][start][year]"
+      select "January", :from => "starting_children[0][start][month]"
+      select "1", :from => "starting_children[0][start][day]"
+      choose "year_2012"
+
+      #click_on "Help working out your adjusted net income"
+      
+      fill_in "gross_income", :with => "£120,000"
+      fill_in "other_income", :with => "£8,000"
+      fill_in "pension_contributions_from_pay", :with => "£2000"
+      fill_in "retirement_annuities", :with => "£2000"
+      fill_in "cycle_scheme", :with => "£800"
+      fill_in "childcare", :with => "£1500"
+      fill_in "pensions", :with => "£3000"
+      fill_in "non_employment_income", :with => "£500"
+      fill_in "gift_aid_donations", :with => "£1500"
+      fill_in "outgoing_pension_contributions", :with => "£2000"
+      
+      click_on "Get your estimate"
+
+      page.should have_field "adjusted_net_income", :with => "£100,000.00"
+
+      within ".results_estimate", :text => "Child benefit received" do
+        page.should have_content "£100,000.00"
+      end
+      within ".results_estimate", :text => "Tax charge to pay" do
+        page.should have_content "£100,000.00"
       end
     end
   end

@@ -1,8 +1,10 @@
+# encoding: UTF-8
 class ChildBenefitTaxCalculator
 
   include ActiveModel::Validations
 
-  attr_reader :adjusted_net_income, :children_count, :starting_children, :stopping_children, :tax_year
+  attr_reader :adjusted_net_income_calculator, :adjusted_net_income, :children_count,
+    :starting_children, :tax_year
 
   NET_INCOME_THRESHOLD = 50000
 
@@ -18,12 +20,8 @@ class ChildBenefitTaxCalculator
   validate :valid_child_dates
 
   def initialize(params = {})
-    @total_annual_income = to_integer(params[:total_annual_income])
-    @gross_pension_contributions = to_integer(params[:gross_pension_contributions])
-    @net_pension_contributions = to_integer(params[:net_pension_contributions])
-    @trading_losses_self_employed = to_integer(params[:trading_losses_self_employed])
-    @gift_aid_donations = to_integer(params[:gift_aid_donations])
-    @adjusted_net_income = params[:adjusted_net_income]
+    @adjusted_net_income_calculator = AdjustedNetIncomeCalculator.new(params)
+    @adjusted_net_income = calculate_adjusted_net_income(params[:adjusted_net_income])
     @children_count = params[:children_count] ? params[:children_count].to_i : 1
     @starting_children = process_starting_children(params[:starting_children])
     @tax_year = params[:year].to_i
@@ -38,16 +36,16 @@ class ChildBenefitTaxCalculator
   end
 
   def nothing_owed?
-    adjusted_net_income_amount < NET_INCOME_THRESHOLD or tax_estimate.abs == 0
+    @adjusted_net_income < NET_INCOME_THRESHOLD or tax_estimate.abs == 0
   end
 
   def percent_tax_charge
-    if adjusted_net_income_amount >= 60001
+    if @adjusted_net_income >= 60001
       100
-    elsif (59900..60000).cover?(adjusted_net_income_amount)
+    elsif (59900..60000).cover?(@adjusted_net_income)
       99
     else
-      ((adjusted_net_income_amount - 50000)/100.0).floor
+      ((@adjusted_net_income - 50000)/100.0).floor
     end
   end
 
@@ -87,10 +85,6 @@ class ChildBenefitTaxCalculator
     (benefits_claimed_amount * (percent_tax_charge / 100.0)).floor
   end
   
-  def adjusted_net_income_amount
-    to_integer(@adjusted_net_income)
-  end
-
   private
 
   def process_starting_children(children)
@@ -136,24 +130,16 @@ class ChildBenefitTaxCalculator
     (( end_date - start_date ) / 7).floor
   end
 
-  def parse_child_date(date)
-    Date.new(date[:year].to_i, date[:month].to_i, date[:day].to_i)
-  end
-
-
-  def calculate_adjusted_income(adjusted_income)
-    if adjusted_income == 0
-      @total_annual_income - @gross_pension_contributions - (
-        @net_pension_contributions * 1.25
-      ) - @trading_losses_self_employed - (@gift_aid_donations * 1.25)
+  def calculate_adjusted_net_income(adjusted_net_income)
+    if adjusted_net_income.present?
+      adjusted_net_income.gsub(/[£, -]/,'').to_i
     else
-      adjusted_income
+      @adjusted_net_income_calculator.calculate_adjusted_net_income
     end
   end
 
-  def to_integer(val)
-    val.gsub!(/\D/,'') if val.is_a?(String)
-    val.to_i
+  def parse_child_date(date)
+    Date.new(date[:year].to_i, date[:month].to_i, date[:day].to_i)
   end
 
   def valid_child_dates

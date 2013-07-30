@@ -4,7 +4,7 @@ require 'spec_helper'
 describe ChildBenefitTaxCalculator do
   it "uses the adjusted net income if it's passed in" do
     calc = ChildBenefitTaxCalculator.new({
-      :adjusted_net_income=> 20
+      :adjusted_net_income=> "20"
     })
     calc.adjusted_net_income.should == 20
   end
@@ -21,23 +21,11 @@ describe ChildBenefitTaxCalculator do
     }).can_calculate?.should == true
   end
 
-  it "uses the total annual income if both are supplied" do
-    calc = ChildBenefitTaxCalculator.new({
-      :gross_pension_contributions => 10,
-      :net_pension_contributions => 10,
-      :trading_losses_self_employed => 10,
-      :gift_aid_donations => 10,
-      :total_annual_income => 100,
-      :adjusted_net_income => 20
-    })
-    calc.adjusted_net_income.should == 20
-  end
-
   it "parses integers from various formats of numerical input" do
     calc = ChildBenefitTaxCalculator.new({
       :adjusted_net_income => "£100,900"
     })
-    calc.adjusted_net_income_amount.should == 100900
+    calc.adjusted_net_income.should == 100900
   end
 
   describe "input validation" do
@@ -108,6 +96,34 @@ describe ChildBenefitTaxCalculator do
           }
         }
       }).benefits_claimed_amount.round(2).should == 438.1 
+    end
+  end
+
+  describe "calculating adjusted net income" do
+    it "should use the adjusted_net_income parameter where possible" do
+      ChildBenefitTaxCalculator.new({
+        :adjusted_net_income => "50099",
+        :gross_income => "68000",
+        :other_income => "2000",
+        :year => "2012",
+        :children_count => 2
+      }).adjusted_net_income.should == 50099
+    end
+    it "should calculate the adjusted net income with the relevant params" do
+      ChildBenefitTaxCalculator.new({
+        :gross_income => "£68000",
+        :other_income => "£2000",
+        :pensions => "£2000",
+        :property => "£1000",
+        :non_employment_income => "£1000",
+        :pension_contributions_from_pay => "£2000",
+        :gift_aid_donations => "£1000",
+        :retirement_annuities => "£1000",
+        :cycle_scheme => "£800",
+        :childcare => "£1500",
+        :year => "2012",
+        :children_count => 2
+      }).adjusted_net_income.should == 66950
     end
   end
 
@@ -187,9 +203,6 @@ describe ChildBenefitTaxCalculator do
       end
     end
 
-    # TODO: Not sure of the shape of the calculator when ANI is included yet.
-    # These tests will need alteration.
-    #
     describe "for the tax year 2012-13" do
       it "calculates the correct amount owed for % charge of 100" do
         ChildBenefitTaxCalculator.new({
