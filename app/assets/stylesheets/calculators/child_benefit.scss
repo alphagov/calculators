@@ -224,42 +224,6 @@ margin-right: 0.5em;
 #year_2013 {
 margin-left: 1em;
 }
-.validation-error {
-  font-family: "nta",Arial,sans-serif;
-  font-size: 16px;
-  font-size: 1.6rem;
-  line-height: 1.25;
-  font-weight: 300;
-  text-transform: none;
-  color: #df3034;
-  border: 3px solid #df3034;
-  box-sizing: border-box;
-  padding: 1em 1em 0.25em 1em;
-  margin: 1em -1em 1em -1em;
-  background-color: #fef7f7;
-}
-
-.validation-summary {
-  border: 3px solid #df3034;
-  background-color: #fef7f7;
-  margin: 1em -1em 1.5em -1em;
-  padding: 1em 1em 0.25em 1em;
-  h1 {
-    margin-bottom: 0;
-  }
-  ul {
-    padding-left: 2.2em;
-    li {
-    list-style: none;
-    @include core-16;
-      a {
-        color: #df3034;
-        text-decoration: none;
-      }
-    }
-  }
-
-}
 
 .get-started a {
   margin-right: 0.5em;
