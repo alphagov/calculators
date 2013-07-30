@@ -21,11 +21,11 @@
             <div class="validation-summary">
               <h1>Please check the form</h1>
               <ul>
-                <% @calculator.errors.each do |k, v| -%>
-                  <li><%= v %></li>
+                <% if @calculator.errors.has_key?(:tax_year) -%>
+                  <li><a href="#tax_year">Select a tax year</a></li>
                 <% end -%>
                 <% if @calculator.starting_children.map{|c| c.errors.any? }.any? -%>
-                  <li>Enter the dates child benefit started</li>
+                  <li><a href="#children">Enter the dates child benefit started</a></li>
                 <% end -%>
               </ul>
             </div>
@@ -50,14 +50,19 @@
             <%= render "starting_children" %>
           </fieldset>
 
-          <fieldset>
+          <fieldset id="tax_year">
             <%= step(3, "To work out the Child Benefit received during a tax year, choose a tax year.") %>
             <div class="application-notice info-notice">
             <p>Tax years run from 6 April to 5 April the following year.</p>
             </div>
-            <% ChildBenefitTaxCalculator::TAX_YEARS.each do |year, years| -%>
-              <%= radio_button_tag "year", year, (@calculator.tax_year == year.to_i) %>&nbsp;<%= tax_year_label(years) %> 
+            <div<% if @calculator.errors.has_key?(:tax_year) %> class="validation-error"<% end %>>
+            <% if @calculator.errors.has_key?(:tax_year) %>
+            <p>Select a tax year</p>
             <% end -%>
+            <% ChildBenefitTaxCalculator::TAX_YEARS.each do |year, years| -%>
+              <%= radio_button_tag "year", year, (@calculator.tax_year == year.to_i) %>&nbsp;<%= tax_year_label(years) %>
+            <% end -%>
+            </div>
           </fieldset>
 
           <fieldset id="adjusted_income">
