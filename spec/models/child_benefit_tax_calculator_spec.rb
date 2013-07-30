@@ -68,6 +68,11 @@ describe ChildBenefitTaxCalculator do
         #puts calc.starting_children.first.errors.full_messages
         calc.has_errors?.should == true
       end
+      it "should be false if the tax year and starting date are valid" do
+        ChildBenefitTaxCalculator.new(:year => "2012", :children_count => "1", :starting_children => {
+          "0" => { :start => { :year => "2012", :month => "01", :day => "07" } }
+        }).has_errors?.should == false
+      end
     end
   end
 

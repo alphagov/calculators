@@ -42,7 +42,7 @@ class ChildBenefitTaxCalculator
   end
   
   def has_errors?
-    errors.any? or starting_children.map{|c| c.errors.any? }.any?
+    errors.any? or starting_children.select{|c| c.errors.any? }.any?
   end
 
   def percent_tax_charge
@@ -169,7 +169,7 @@ class StartingChild
   
   include ActiveModel::Validations
 
-  validates_presence_of :start_date, :end_date
+  validates_presence_of :start_date
   validate :valid_dates
 
   attr_reader :start_date, :end_date

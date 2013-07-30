@@ -24,7 +24,7 @@
                 <% if @calculator.errors.has_key?(:tax_year) -%>
                   <li><a href="#tax_year">Select a tax year</a></li>
                 <% end -%>
-                <% if @calculator.starting_children.map{|c| c.errors.any? }.any? -%>
+                <% if @calculator.starting_children.select{|c| c.errors.any? }.any? -%>
                   <li><a href="#children">Enter the dates child benefit started</a></li>
                 <% end -%>
               </ul>
