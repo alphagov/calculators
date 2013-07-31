@@ -44,7 +44,7 @@
 
           <fieldset id="children">
             <%= step(2, "Enter the dates Child Benefit started and, if applicable, stopped.") %>
-            <div class="application-notice info-notice">
+            <div>
             <p>Child Benefit usually starts when you have a baby, adopt or move in with a new partner and their children.</p>
             </div>
             <%= render "starting_children" %>
@@ -52,7 +52,7 @@
 
           <fieldset id="tax_year">
             <%= step(3, "To work out the Child Benefit received during a tax year, choose a tax year.") %>
-            <div class="application-notice info-notice">
+            <div>
             <p>Tax years run from 6 April to 5 April the following year.</p>
             </div>
             <div<% if @calculator.errors.has_key?(:tax_year) %> class="validation-error"<% end %>>
@@ -67,7 +67,7 @@
 
           <fieldset id="adjusted_income">
             <%= step(4, "To work out the Child Benefit tax charge, enter your adjusted net income for the tax year. Otherwise, leave it blank.") %>
-            <div class="application-notice info-notice">
+            <div>
               <p>Enter your income or your partner's – whoever has the highest.</p>
             </div>
             <%= text_field_tag "adjusted_net_income", @calculator.adjusted_net_income, :placeholder => "£" %>
