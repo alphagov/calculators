@@ -14,6 +14,7 @@ describe ChildBenefitTaxController do
       get 'main', { :year => '2013' }
       response.should be_success
       assigns(:calculator).tax_year.should == 2013
+      assigns(:adjusted_net_income_calculator).calculate_adjusted_net_income.should == 0
     end
   end
 

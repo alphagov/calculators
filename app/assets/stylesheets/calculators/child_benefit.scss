@@ -50,6 +50,7 @@ article {
 } 
 
 label {
+  @include core-19;
   display: block;
 }
 
@@ -69,11 +70,14 @@ label {
 #calculator {
   fieldset {
     margin-bottom: 3em;
+    &#adjusted_income {
+      margin-bottom: 1em;
+    }
   }
 
   input[type="text"] {
     display:block;
-    margin: 0.5em 0;
+    margin: 0.2em 0 1em 0;
   }
 
   .steps {
@@ -157,14 +161,13 @@ width: 80%;
   padding-bottom: 1em;
 }
 
-details p {
-  padding-top: -2em;
-  font-size: 1.6rem;
+details {
+  margin-bottom: 3em;  
 }
 
 details summary {
+  @include core-19;
   font-family: "nta", "GDS-Regular", sans-serif;
-  font-size: 1.6rem;
   line-height: 1.31579;
   font-weight: 400;
   letter-spacing: 0;
@@ -172,6 +175,7 @@ details summary {
   color: #2E3191;
   cursor: pointer;
   display: block;
+  text-decoration: underline;
 }
 
 details summary:hover {
@@ -219,20 +223,6 @@ margin-right: 0.5em;
 
 #year_2013 {
 margin-left: 1em;
-}
-.validation-error {
-  font-family: "nta",Arial,sans-serif;
-  font-size: 16px;
-  font-size: 1.6rem;
-  line-height: 1.25;
-  font-weight: 300;
-  text-transform: none;
-  color: #df3034;
-  border: 3px solid #df3034;
-  box-sizing: border-box;
-  padding: 1em 1em 0.25em 1em;
-  margin: 1em -1em 1em -1em;
-  background-color: #fef7f7;
 }
 
 .get-started a {
