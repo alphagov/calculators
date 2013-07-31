@@ -49,7 +49,7 @@ describe ChildBenefitTaxController do
     it "should run calculator validations" do
       get 'main', { :results => "Get your estimate" }
       response.should be_success
-      assigns(:calculator).errors.full_messages.first.should == "Tax year is not included in the list"
+      assigns(:calculator).errors.has_key?(:tax_year).should == true 
     end
   end
 

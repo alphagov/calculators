@@ -1,7 +1,7 @@
 <% @calculator.starting_children.each_with_index do |child, index| -%>
-  <div<% if child.errors.has_key?(:start_date) %> class="validation-error"<% end -%>>
-  <% if child.errors.has_key?(:start_date) -%>
-    <p>Enter the date child benefit started</p>
+  <div<% if child.errors.any? %> class="validation-error"<% end -%>>
+  <% child.errors.each do |key, message| -%>
+    <p><%= message %></p>
   <% end -%>
     <h5>Child <%= index + 1 %></h5>
     <%= render "starting_child", :index => index, :child => child %>

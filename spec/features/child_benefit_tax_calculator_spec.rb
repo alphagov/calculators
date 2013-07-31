@@ -29,7 +29,7 @@ feature "Child Benefit Tax Calculator" do
 
     within ".validation-summary" do
       page.should have_content("Select a tax year")
-      page.should have_content("Enter the dates child benefit started")
+      page.should have_content("Enter the date child benefit started")
     end
 
     within "#tax_year" do
