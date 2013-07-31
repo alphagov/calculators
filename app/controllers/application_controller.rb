@@ -14,10 +14,6 @@ class ApplicationController < ActionController::Base
   end
 
   def fetch_artefact(slug)
-    artefact = content_api.artefact(slug)
-    raise RecordNotFound unless artefact
-    artefact
-  rescue URI::InvalidURIError
-     raise RecordNotFound
+    content_api.artefact(slug)
   end
 end
