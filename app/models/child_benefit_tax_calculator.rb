@@ -181,7 +181,7 @@ class StartingChild
 
   def valid_dates
     if @start_date and @end_date and @start_date >= @end_date
-      errors.add(:start_date, "must be before stopping date")
+      errors.add(:end_date, "must be before stopping date")
     end
   end
 

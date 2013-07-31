@@ -41,7 +41,7 @@ describe ChildBenefitTaxCalculator do
       @calc.starting_children << StartingChild.new(:start => {:year => "2012", :month => "02", :day => "01"},
                                                    :stop => {:year => "2012", :month => "01", :day => "01"})
       @calc.valid?
-      @calc.starting_children.second.errors[:start_date].include?("must be before stopping date").should == true
+      @calc.starting_children.second.errors[:end_date].include?("must be before stopping date").should == true
     end
     describe "has_errors?" do
       it "should be true if the calculator has errors" do
