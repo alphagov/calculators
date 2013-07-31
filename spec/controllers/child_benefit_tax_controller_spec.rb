@@ -1,6 +1,30 @@
 require 'spec_helper'
+require 'gds_api/test_helpers/content_api'
+require 'webmock/rspec'
 
 describe ChildBenefitTaxController do
+  include GdsApi::TestHelpers::ContentApi
+
+  before(:each) do
+    @artefact_data = artefact_for_slug('child-benefit-tax-calculator')
+    stub_request(:get, "http://contentapi.dev.gov.uk/child-benefit-tax-calculator.json").
+      with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip, deflate',
+                        'Content-Type'=>'application/json', 'User-Agent'=>'GDS Api Client v. 7.2.0'}).
+        to_return(:status => 200, :body => JSON.dump(@artefact_data), :headers => {})
+    
+    content_api_has_an_artefact("child-benefit-tax-calculator", @artefact_data)
+  end
+
+  describe "slimmer headers" do
+    it "should populate slimmer header with the child benefit tax calculator artefact" do
+      get 'main'
+      @response.headers["X-Slimmer-Artefact"].should == JSON.dump(@artefact_data)
+    end
+    it "should set the artefact format in the slimmer headers" do
+      get 'main'
+      @response.headers["X-Slimmer-Format"].should == @artefact_data['format']
+    end
+  end
 
   describe "GET 'landing'" do
     it "returns http success" do
