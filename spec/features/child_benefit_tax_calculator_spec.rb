@@ -8,13 +8,11 @@ feature "Child Benefit Tax Calculator" do
   include GdsApi::TestHelpers::ContentApi   
   
   before(:each) do
-    @artefact_data = artefact_for_slug('child-benefit-tax-calculator')
     stub_request(:get, "http://contentapi.dev.gov.uk/child-benefit-tax-calculator.json").
       with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip, deflate',
                         'Content-Type'=>'application/json', 'User-Agent'=>'GDS Api Client v. 7.2.0'}).
-        to_return(:status => 200, :body => JSON.dump(@artefact_data), :headers => {})
+        to_return(:status => 200, :body => "{}", :headers => {})
     
-    content_api_has_an_artefact("child-benefit-tax-calculator", @artefact_data)
   end
 
   it "should have a placeholder landing page" do
