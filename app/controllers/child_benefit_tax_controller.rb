@@ -1,5 +1,7 @@
 class ChildBenefitTaxController < ApplicationController
 
+  before_filter :setup_slimmer
+
   CALC_PARAM_KEYS = [:adjusted_net_income, :children_count, :starting_children, :year] +
     AdjustedNetIncomeCalculator::PARAM_KEYS
 
@@ -26,4 +28,10 @@ class ChildBenefitTaxController < ApplicationController
     @adjusted_net_income_calculator = @calculator.adjusted_net_income_calculator
   end
 
+  protected
+
+  def setup_slimmer
+    artefact = content_api.artefact('child-benefit-tax-calculator')
+    set_slimmer_artefact_headers(artefact)
+  end
 end

@@ -15,6 +15,7 @@ else
 end
 gem 'plek', '1.3.1'
 
+gem 'gds-api-adapters', '7.2.0'
 gem 'govuk_frontend_toolkit', '0.20.0'
 gem 'sass-rails', '3.2.5'
 
@@ -31,4 +32,5 @@ group :development, :test do
   gem 'capybara', '2.0.3' # 2.1.0 doesn't work on ruby 1.9.2
   gem 'simplecov-rcov', '0.2.3', :require => false
   gem 'ci_reporter', '1.8.4'
+  gem 'webmock', :require => false
 end
