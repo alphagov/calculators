@@ -31,8 +31,7 @@ class ChildBenefitTaxController < ApplicationController
   protected
 
   def setup_slimmer
-    artefact = fetch_artefact('child-benefit-tax-calculator')
+    artefact = content_api.artefact('child-benefit-tax-calculator')
     set_slimmer_artefact_headers(artefact)
   end
-
 end

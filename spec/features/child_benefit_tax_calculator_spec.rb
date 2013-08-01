@@ -1,19 +1,7 @@
 # encoding: utf-8
 require 'spec_helper'
-require 'gds_api/test_helpers/content_api'
-require 'webmock/rspec'
 
 feature "Child Benefit Tax Calculator" do
-  
-  include GdsApi::TestHelpers::ContentApi   
-  
-  before(:each) do
-    stub_request(:get, "http://contentapi.dev.gov.uk/child-benefit-tax-calculator.json").
-      with(:headers => {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip, deflate',
-                        'Content-Type'=>'application/json', 'User-Agent'=>'GDS Api Client v. 7.2.0'}).
-        to_return(:status => 200, :body => "{}", :headers => {})
-    
-  end
 
   it "should have a placeholder landing page" do
     visit "/child-benefit-tax-calculator"

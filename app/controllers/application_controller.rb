@@ -1,5 +1,5 @@
 require 'gds_api/helpers'
-require 'gds_api/content_api'
+require 'slimmer/headers'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
@@ -7,12 +7,10 @@ class ApplicationController < ActionController::Base
   include GdsApi::Helpers
   include Slimmer::Headers
 
-  def set_slimmer_artefact_headers(artefact)
-    set_slimmer_headers(:format => artefact['format'])
-    set_slimmer_artefact(artefact)
-  end
+  protected
 
-  def fetch_artefact(slug)
-    content_api.artefact(slug)
+  def set_slimmer_artefact_headers(artefact)
+    set_slimmer_headers(:format => 'calculator')
+    set_slimmer_artefact(artefact)
   end
 end
