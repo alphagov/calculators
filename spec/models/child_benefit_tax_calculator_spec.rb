@@ -30,18 +30,37 @@ describe ChildBenefitTaxCalculator do
 
   describe "input validation" do
     before(:each) do
-      @calc = ChildBenefitTaxCalculator.new
+      @calc = ChildBenefitTaxCalculator.new(:children_count => "1")
       @calc.valid?
     end
     it "should contain errors for year if none is given" do
-      @calc.errors[:tax_year].include?("is not included in the list").should == true
+      @calc.errors.has_key?(:tax_year).should == true
     end
     it "should validate dates provided for children" do
-      @calc.starting_children.first.errors[:start_date].include?("can't be blank").should == true
+      @calc.starting_children.first.errors.has_key?(:start_date).should == true
       @calc.starting_children << StartingChild.new(:start => {:year => "2012", :month => "02", :day => "01"},
                                                    :stop => {:year => "2012", :month => "01", :day => "01"})
       @calc.valid?
-      @calc.starting_children.second.errors[:start_date].include?("must be before stopping date").should == true
+      @calc.starting_children.second.errors.has_key?(:end_date).should == true
+    end
+    describe "has_errors?" do
+      it "should be true if the calculator has errors" do
+        @calc.starting_children << StartingChild.new(:start => {:year => "2012", :month => "02", :day => "01"})
+        @calc.has_errors?.should == true
+        @calc.errors.size.should == 1
+      end
+      it "should be true if any starting children have errors" do
+        calc = ChildBenefitTaxCalculator.new(:year => "2012", :children_count => "1")
+        calc.valid?
+        calc.errors.should be_empty
+        #puts calc.starting_children.first.errors.full_messages
+        calc.has_errors?.should == true
+      end
+      it "should be false if the tax year and starting date are valid" do
+        ChildBenefitTaxCalculator.new(:year => "2012", :children_count => "1", :starting_children => {
+          "0" => { :start => { :year => "2012", :month => "01", :day => "07" } }
+        }).has_errors?.should == false
+      end
     end
   end
 

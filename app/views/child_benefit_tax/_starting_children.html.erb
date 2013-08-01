@@ -1,4 +1,9 @@
-<% @calculator.starting_children.each_with_index do |child, index| %>
-  <h5>Child <%= index + 1 %></h5>
-  <%= render "starting_child", :index => index, :child => child %>
-<% end %>
+<% @calculator.starting_children.each_with_index do |child, index| -%>
+  <div<% if child.errors.any? %> class="validation-error"<% end -%>>
+    <% child.errors.each do |key, message| -%>
+      <p><%= message %></p>
+    <% end -%>
+    <h5>Child <%= index + 1 %></h5>
+    <%= render "starting_child", :index => index, :child => child %>
+  </div>
+<% end -%>

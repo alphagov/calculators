@@ -4,7 +4,7 @@ module ChildBenefitTaxHelper
     text_field_tag(name, number_to_currency((amount > 0 ? amount : nil), unit: "£", precision: 2), :placeholder => "£")
   end
 
-  def tax_year_label(years)
-    "#{years.first.year} to #{years.last.year}"
+  def tax_year_label(dates)
+    "#{dates.first.year} to #{dates.last.year}"
   end
 end
