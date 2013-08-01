@@ -2,6 +2,36 @@ require 'spec_helper'
 
 describe ChildBenefitTaxController do
 
+  describe "slimmer headers" do
+    context "when the artefact exists" do
+      before :each do
+        @artefact_data = artefact_for_slug('child-benefit-tax-calculator')
+        content_api_has_an_artefact("child-benefit-tax-calculator", @artefact_data)
+      end
+
+      it "should populate slimmer header with the child benefit tax calculator artefact" do
+        get 'main'
+        @response.headers["X-Slimmer-Artefact"].should == JSON.dump(@artefact_data)
+      end
+
+      it "should set the artefact format in the slimmer headers" do
+        get 'main'
+        @response.headers["X-Slimmer-Format"].should == "calculator"
+      end
+    end
+
+    context "when the artefact doesn't exist" do
+      before :each do
+        content_api_does_not_have_an_artefact("child-benefit-tax-calculator")
+      end
+
+      it "should return success" do
+        get 'main'
+        response.should be_success
+      end
+    end
+  end
+
   describe "GET 'landing'" do
     it "returns http success" do
       get 'landing'
