@@ -16,8 +16,8 @@ class ChildBenefitTaxCalculator
     "2013" => [Date.parse("2013-04-06"), Date.parse("2014-04-05")],
   }
 
-  validates_inclusion_of :tax_year, :in => [2012...Date.today.year]
   validate :valid_child_dates
+  validates_inclusion_of :tax_year, :in => 2012...Date.today.year, :message => "Select a tax year"
 
   def initialize(params = {})
     @adjusted_net_income_calculator = AdjustedNetIncomeCalculator.new(params)
@@ -37,6 +37,10 @@ class ChildBenefitTaxCalculator
 
   def nothing_owed?
     @adjusted_net_income < NET_INCOME_THRESHOLD or tax_estimate.abs == 0
+  end
+  
+  def has_errors?
+    errors.any? or starting_children.select{|c| c.errors.any? }.any?
   end
 
   def percent_tax_charge
@@ -151,7 +155,7 @@ class StartingChild
   
   include ActiveModel::Validations
 
-  validates_presence_of :start_date, :end_date
+  validates_presence_of :start_date, :message => "Enter the date child benefit started"
   validate :valid_dates
 
   attr_reader :start_date, :end_date
@@ -177,7 +181,7 @@ class StartingChild
 
   def valid_dates
     if @start_date and @end_date and @start_date >= @end_date
-      errors.add(:start_date, "must be before stopping date")
+      errors.add(:end_date, "Child benefit start date must be before stop date")
     end
   end
 

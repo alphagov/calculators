@@ -46,6 +46,11 @@ describe ChildBenefitTaxController do
       assigns(:calculator).tax_year.should == 2013
       assigns(:adjusted_net_income_calculator).calculate_adjusted_net_income.should == 0
     end
+    it "should run calculator validations" do
+      get 'main', { :results => "Get your estimate" }
+      response.should be_success
+      assigns(:calculator).errors.has_key?(:tax_year).should == true 
+    end
   end
 
   describe "GET process_form" do
@@ -62,7 +67,7 @@ describe ChildBenefitTaxController do
     it "should place an 'results' anchor onto the redirected response" do
       route_params = { :results => "Get your estimate" }
       get 'process_form', route_params
-      response.should redirect_to(:action => :main, :anchor => "results")
+      response.should redirect_to(:action => :main, :params => route_params, :anchor => "results")
     end
   end
 

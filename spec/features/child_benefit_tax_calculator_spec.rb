@@ -22,6 +22,26 @@ feature "Child Benefit Tax Calculator" do
     page.should have_css("input#adjusted_net_income[placeholder='£']")
   end
 
+  it "should display validation errors" do
+    visit "/child-benefit-tax-calculator"
+    click_on "Start now"
+    click_on "Get your estimate"
+
+    within ".validation-summary" do
+      page.should have_content("Select a tax year")
+      page.should have_content("Enter the date child benefit started")
+    end
+
+    within "#tax_year" do
+      page.should have_css(".validation-error")
+      page.should have_content("Select a tax year")
+    end
+    within "#children" do
+      page.should have_css(".validation-error")
+      page.should have_content("Enter the date child benefit started")
+    end
+  end
+
   describe "For more than one child" do
     before(:each) do
       visit "/child-benefit-tax-calculator"

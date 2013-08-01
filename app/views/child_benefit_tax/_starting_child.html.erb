@@ -5,7 +5,7 @@
     :start_year => 20.years.ago(Date.today).year, :end_year => 3.years.since(Date.today).year %>
   &nbsp;&nbsp;
 </div>
-<div class="date_selection">  
+<div class="date_selection">
   <label>Stop date</label>
   <%= select_date (child ? child.end_date : nil), :prefix => "starting_children[#{index}][stop]",
     :prompt => {:day => "Day", :month => "Month", :year => "Year" }, :order => [:day, :month, :year],

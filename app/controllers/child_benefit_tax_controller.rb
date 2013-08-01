@@ -2,7 +2,7 @@ class ChildBenefitTaxController < ApplicationController
 
   before_filter :setup_slimmer
 
-  CALC_PARAM_KEYS = [:adjusted_net_income, :children_count, :starting_children, :year] +
+  CALC_PARAM_KEYS = [:adjusted_net_income, :children_count, :starting_children, :year, :results] +
     AdjustedNetIncomeCalculator::PARAM_KEYS
 
   def landing
@@ -26,6 +26,7 @@ class ChildBenefitTaxController < ApplicationController
   def main
     @calculator = ChildBenefitTaxCalculator.new(params)
     @adjusted_net_income_calculator = @calculator.adjusted_net_income_calculator
+    @calculator.valid? if params[:results]
   end
 
   protected
