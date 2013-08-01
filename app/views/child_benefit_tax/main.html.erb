@@ -55,7 +55,7 @@
             <p>Tax years run from 6 April to 5 April the following year.</p>
             </div>
             <div<% if @calculator.errors.has_key?(:tax_year) %> class="validation-error"<% end %>>
-            <% @calculator.errors.each do |key, message| %>
+            <% @calculator.errors[:tax_year].each do |message| %>
               <p><%= message %></p>
             <% end -%>
             <% ChildBenefitTaxCalculator::TAX_YEARS.each do |year, years| -%>
