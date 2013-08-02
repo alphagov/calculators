@@ -142,7 +142,7 @@ describe ChildBenefitTaxCalculator do
         :childcare => "£1500",
         :year => "2012",
         :children_count => 2
-      }).adjusted_net_income.should == 66950
+      }).adjusted_net_income.should == 67450
     end
   end
 
