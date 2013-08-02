@@ -33,4 +33,5 @@ group :development, :test do
   gem 'simplecov-rcov', '0.2.3', :require => false
   gem 'ci_reporter', '1.8.4'
   gem 'webmock', :require => false
+  gem 'timecop', '0.6.2.2'
 end
