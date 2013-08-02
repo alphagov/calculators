@@ -47,7 +47,7 @@ feature "Child Benefit Tax Calculator" do
   it "should display validation errors" do
     visit "/child-benefit-tax-calculator"
     click_on "Start now"
-    click_on "Get your estimate"
+    click_on "Calculate"
 
     within ".validation-summary" do
       page.should have_content("Select a tax year")
@@ -128,7 +128,7 @@ feature "Child Benefit Tax Calculator" do
         select "5", :from => "starting_children_1_start_day"
         choose "year_2012"
         
-        click_button "Get your estimate"
+        click_button "Calculate"
         
         within ".results" do
           page.should have_content("£500,000.00")
@@ -152,7 +152,7 @@ feature "Child Benefit Tax Calculator" do
       choose "year_2012"
       fill_in "adjusted_net_income", :with => "£60,000"
 
-      click_button "Get your estimate"
+      click_button "Calculate"
      
       page.should have_field("adjusted_net_income", :with => "£60,000.00")
 
@@ -169,7 +169,7 @@ feature "Child Benefit Tax Calculator" do
       choose "year_2012"
       fill_in "adjusted_net_income", :with => "45000"
 
-      click_button "Get your estimate"
+      click_button "Calculate"
       
       within ".results" do
         page.should have_content("There is no tax charge")
@@ -199,7 +199,7 @@ feature "Child Benefit Tax Calculator" do
       fill_in "gift_aid_donations", :with => "£1500"
       fill_in "outgoing_pension_contributions", :with => "£2000"
       
-      click_on "Get your estimate"
+      click_on "Calculate"
 
       find_field("adjusted_net_income").value.should == "£120,825.00"
 
@@ -230,12 +230,12 @@ feature "Child Benefit Tax Calculator" do
       fill_in "gift_aid_donations", :with => "£1500"
       fill_in "outgoing_pension_contributions", :with => "£2000"
 
-      click_on "Get your estimate"
+      click_on "Calculate"
 
       find_field("adjusted_net_income").value.should == "£120,825.00"
 
       fill_in "gross_income", :with => "£50,000"
-      click_on "Get your estimate"
+      click_on "Calculate"
 
       find_field("adjusted_net_income").value.should == "£50,825.00"
 
