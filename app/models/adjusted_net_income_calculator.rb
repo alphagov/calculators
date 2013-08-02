@@ -16,6 +16,12 @@ class AdjustedNetIncomeCalculator
     additions - deductions
   end
 
+  def can_calculate?
+    PARAM_KEYS.any? do |key|
+      self.send(key) > 0
+    end
+  end
+
   private
 
   def additions
