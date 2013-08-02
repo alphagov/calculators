@@ -5,7 +5,7 @@
   <p>Use this to complete your tax return if you fill one in.</p>
 </div>
 <%# tax estimate %>
-<% if @calculator.adjusted_net_income > 0 -%>
+<% if @calculator.adjusted_net_income -%>
   <div class="results_estimate">
   <h2>Tax charge to pay</h2>
   <% if @calculator.adjusted_net_income < 50100 -%>
