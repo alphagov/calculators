@@ -1,57 +1,41 @@
 <% content_for :title, "Child Benefit tax calculator" %>
 <% content_for :wrapper_classes, "answer" %>
 
-<section id="content" role="main" class="group calculator-page">
-
+<main id="content" role="main" class="group">
   <header class="page-header group">
-    <div class="full-width">
+    <div>
       <h1><span>Quick answer</span> Child Benefit tax calculator</h1>
     </div>  
-  </header>    
-  <div class="article-container-start group">
-    <article role="article" class="group"><div class="inner">
-      <div class="intro">
-        <p>Use this tool to:</p>
-        <ul>
-          <li>work out how much Child Benefit you receive in a tax year</li>
-          <li>the Child Benefit tax charge you or your partner may have to pay</li>
-        </ul>
+    <a class="skip-to-related" href="#related">Not what you're looking for? ↓</a>
+  </header>
 
-        <div class="get-started">
-          <a rel="nofollow" href="/child-benefit-tax-calculator/process_form" class="big button">Start now</a>
-        </div>
-        <div id="before-you-start">
-          <h2>Before you start</h2>
-          <p>You’ll need the dates Child Benefit started and, if applicable, stopped.</p>
-          <p>The tax charge is based on your [adjusted net income] - the calculator can help you work this out.</p>
-        </div> 
+  <div class="article-container group">
+    <article role="article" class="group">
+      <div class="inner">
+        <section class="intro">
+          <p>Use this tool to:</p>
+          <ul>
+            <li>work out how much Child Benefit you receive in a tax year</li>
+            <li>the High Income Child Benefit tax charge you or your partner may have to pay</li>
+          </ul>
+
+          <p class="get-started">
+            <a rel="nofollow" href="/child-benefit-tax-calculator/main" class="big button">Start now</a>
+          </p>
+        </section>
+        <h2 id="before-you-start">Before you start</h2>
+        <p>The tax charge is based on your adjusted net income - the calculator can help you estimate this.</p>
+        <p>You’ll need the dates Child Benefit started and, if applicable, stopped.</p>
+      </div>
+    </article>
+
+    <div id="report-a-problem"></div>
+    <div class="meta-data group">
+      <div class="inner">
+        <p class="modified-date">Last updated: <%= last_updated_date.strftime("%e %B %Y") %></p>
       </div>
     </div>
-  </article><!-- report_a_problem -->
-<p class="report-a-problem-toggle"><a href="">Is there anything wrong with this page?</a></p>
-<div class="report-a-problem-container">
-  <p>Help us improve GOV.UK by telling us:</p>
-  <form accept-charset="UTF-8" action="/feedback" method="post">
-    <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"></div>
-    <input id="url" name="url" type="hidden" value="https://www.gov.uk/maternity-paternity-calculator"><label for="what_doing">
-      What you were doing
-      <input id="what_doing" name="what_doing" type="text"></label>
-    <label for="what_wrong">
-      What went wrong
-      <input id="what_wrong" name="what_wrong" type="text"></label>
-
-    <div><button name="commit" type="submit" class="button">Send</button></div>
-
-    <!--<p>If you have more extensive feedback, please visit the <a href="/feedback">support page</a>.</p>-->
-  <input type="hidden" name="javascript_enabled" value="true"><input type="hidden" name="referrer" value="https://www.gov.uk/search?q=maternity+calculator"></form>
-</div>
-<!-- end report_a_problem -->
-<div class="meta-data group">
-  <div class="inner">
-    <div class="print-and-modified-date group">
-      <p class="modified-date">Last updated: 10 June 2013</p>
-    </div>
   </div>
-</div>
+</main>
 
-</div>
+<div id="related-items"></div>
