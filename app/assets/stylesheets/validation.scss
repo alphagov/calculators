@@ -1,0 +1,45 @@
+.validation-error,
+.validation-summary {
+  margin: 1em 0;
+
+  @include media(tablet) {
+    margin: 1em -1em 1em 0.5em;
+  }
+}
+
+.validation-error {
+  @include core-16;
+  text-transform: none;
+  color: #df3034;
+  border: 3px solid #df3034;
+  box-sizing: border-box;
+  padding: 0 1em 1em 1em;
+  background-color: #fef7f7;
+  overflow: hidden;
+
+  .date_selection {
+  	padding-bottom: 0;
+  }
+}
+
+.validation-summary {
+  border: 3px solid #df3034;
+  background-color: #fef7f7;
+  padding: 0 1em 0.25em 1em;
+
+  h1 {
+    margin-bottom: 0;
+    margin-top: 1em;
+  }
+  ul {
+    padding-left: 2.2em;
+    li {
+    list-style: none;
+    @include core-19;
+      a {
+        color: #df3034;
+        text-decoration: none;
+      }
+    }
+  }
+}

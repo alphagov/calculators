@@ -1,11 +1,5 @@
 .calculator-page header.page-header div h1 {
-  font-family: "nta",Arial,sans-serif;
-  font-size: 48px;
-  font-size: 4.8rem;
-  line-height: 1.04167;
-  font-weight: 400;
-  text-transform: none;
-  font-weight: 700;
+  @include bold-48;
 
   .inner {
     padding-right: 2em;
@@ -15,32 +9,43 @@
   }
 }
 
+article {
+  @extend %contain-floats;
+
+  h2 {
+    margin: 2em 0 0.8em 0;
+    padding: 0;
+  }
+
+  h4 {
+    font-weight: bold;
+  }
+
+  p + .help-notice,
+  p + .info-notice {
+    margin-top: 1em;
+  }
+}
+
 /* ================================================================
  * FORMS
  * ================================================================
  */
 
-article {
-  @extend %contain-floats;
-  .questions {
-    width: 80%;
-  }
-    h4 {
-      font-weight: bold;
-    }
-  }
-  .questions, .results {
-    float: left;
-    @include media-down(tablet) {
-      width: 100%;
-      float: none;
-    }
-  }
+label {
+  @include core-19;
+  display: block;
+}
+
+select {
+  @include core-14;
+  margin: 0.2em 0.5em 0.4em 0;
+  vertical-align: baseline;
+  border: 1px solid;
+}
 
 .button {
-  @include core-19;
-  font-weight: bold;
-  -webkit-font-smoothing: antialiased;
+  @include bold-19;
 }
 
 .update-button {
@@ -48,11 +53,6 @@ article {
     display: none;
   }
 } 
-
-label {
-  @include core-19;
-  display: block;
-}
 
 #results .button {
   @include core-16;
@@ -63,11 +63,36 @@ label {
   margin-right: 10px;
 }
 
-#new-child-template, #stopped-child-template {
-  display: none;
+.questions {
+  width: 100%;
+  @include media(tablet) {
+    width: 80%;
+  }
+}
+
+.questions,
+.results {
+  float: left;
+  @include media(tablet) {
+    float: none;
+  }
+}
+
+.validation-error,
+article .application-notice {
+    zoom: 1;
+}
+
+article .application-notice {
+  margin: 1em -1em 1em -1em;
 }
 
 #calculator {
+  h5 {
+    font-weight: bold;
+    font-size: 1.9rem;
+  }
+
   fieldset {
     margin-bottom: 3em;
     &#adjusted_income {
@@ -80,6 +105,45 @@ label {
     margin: 0.2em 0 1em 0;
   }
 
+  input[type="radio"] {
+    margin-right: 0.5em;
+  }
+
+  #year_2013 {
+    margin-left: 1em;
+  }
+
+  p {
+    &.group {
+      margin-top: 0.5em;
+      padding: 0;
+    }
+
+    &.number-input {
+      margin-top: 1.5em;
+    }
+  }
+
+  #children h3 {
+    clear: left;
+  }
+
+  .date_selection {
+    float: left;
+    padding-bottom: 1.5em;
+    margin-right: 2em;
+    .label {
+      @include core-19;
+      margin: 0;
+      padding-top: 0.2em;
+    }
+  }
+
+  .tax_year label {
+    @include core-16;
+    display: inline;
+  }
+
   .steps {
     margin: 0;
     float: left;
@@ -87,7 +151,6 @@ label {
     height: 23px;
     margin-right: 0.75em;
   }
-
 
   #step-1 {
     background-image: url(https://assets.digital.cabinet-office.gov.uk/static/icon-step-1-6afb52055d0f49ccc1ffa7c33ef10fb2.png);
@@ -111,153 +174,71 @@ label {
   }
 
   .link{
-  @include core-19;
-  background: none;
-  padding-top: 0.5em;
-  color: #2e3191;
-  text-decoration: underline;
-  @include box-shadow(none);
-  border: none;
-  overflow: visible; 
-  &:hover, &:focus{
-    color: #2e8aca;
+    @include core-19;
+    background: none;
+    padding-top: 0.5em;
+    color: #2e3191;
+    text-decoration: underline;
+    @include box-shadow(none);
+    border: none;
+    overflow: visible; 
+
+    &:hover,
+    &:focus{
+      color: #2e8aca;
     }
   }
 }
 
-#add_new_starting_child,
-  #add_new_stopping_child {
-    label {
-      display: block;
+details {
+  margin-bottom: 3em;  
+
+  summary {
+    @include core-19;
+    line-height: 1.31579;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: #2E3191;
+    cursor: pointer;
+    display: block;
+    text-decoration: underline;
+  }
+
+  summary:hover {
+    color: #1D97FF;
   }
 }
 
 .results {
-width: 80%;
-}
+  width: 80%;
 
-.results h1 {
-  @include core-48;
-  font-weight: 600;
-}
+  h1 {
+    @include core-48;
+    font-weight: 600;
+  }
 
-.results h2 {
-  margin-top: 1em;
-}
+  h2 {
+    margin-top: 1em;
+  }
 
-.numbers {
-  @include core-80;
-  font-weight: 600;
-  margin: 0;
-}
-
-.results h4 {
-  @include core-24;
-  font-weight: 600;
-  margin-top: 1em;
+  h4 {
+    @include core-24;
+    font-weight: 600;
+    margin-top: 1em;
+  }
 }
 
 .results_estimate {
   padding-bottom: 1em;
-}
 
-details {
-  margin-bottom: 3em;  
-}
-
-details summary {
-  @include core-19;
-  font-family: "nta", "GDS-Regular", sans-serif;
-  line-height: 1.31579;
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: none;
-  color: #2E3191;
-  cursor: pointer;
-  display: block;
-  text-decoration: underline;
-}
-
-details summary:hover {
-  color: #1D97FF;
-}
-
-.validation-error,
-  article .application-notice {
-    zoom: 1;
-}
-
-article .application-notice{
-  margin: 1em -1em 1em -1em;
-}
-
-select {
-  @include core-14;
-  margin: 0.2em 0.5em 0.4em 0;
-  vertical-align: baseline;
-  border: 1px solid;
-}
-
-#calculator h5 {
-  font-weight: bold;
-  font-size: 1.9rem;
-}
-
-article  h2 {
-  margin: 2em 0 0.8em 0;
-  padding: 0;
-}
-
-#calculator p.group {
-  margin-top: 0.5em;
-  padding: 0;
-}
-
-#calculator p.number-input {
-  margin-top: 1.5em;
-}
-
-input[type="radio"] {
-margin-right: 0.5em;
-}
-
-#year_2013 {
-margin-left: 1em;
+  .numbers {
+    @include core-80;
+    font-weight: 600;
+    margin: 0;
+  }
 }
 
 .get-started a {
   margin-right: 0.5em;
-}
-
-article p + .help-notice, article p + .info-notice {
-  margin-top: 1em;
-}
-
-.skip-question {
-  color: #6f777b;
-  margin-top: -0.5em;
-}
-
-.before-you-start h2 {
-  margin-top: 10em;
-}
-
-#children h5 {
-  clear: left;
-}
-
-.date_selection {
-  float: left;
-  padding-bottom: 1.5em;
-  margin-right: 2em;
-  .label {
-    @include core-19;
-    margin: 0;
-    padding-top: 0.2em;
-  }
-}
-
-.tax_year label {
-  @include core-16;
-  display: inline;
 }

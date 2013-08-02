@@ -3,7 +3,7 @@
     <% child.errors.each do |key, message| -%>
       <p><%= message %></p>
     <% end -%>
-    <h5>Child <%= index + 1 %></h5>
+    <h3>Child <%= index + 1 %></h3>
     <%= render "starting_child", :index => index, :child => child %>
   </div>
 <% end -%>
