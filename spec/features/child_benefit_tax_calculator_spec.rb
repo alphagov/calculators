@@ -178,14 +178,9 @@ feature "Child Benefit Tax Calculator" do
   end
 
   describe "calculating adjusted net income" do
-    before(:each) do
-      ChildBenefitTaxCalculator.any_instance.stub(:benefits_claimed_amount).and_return(100000)
-      ChildBenefitTaxCalculator.any_instance.stub(:tax_estimate).and_return(100000)     
-      ChildBenefitTaxCalculator.any_instance.stub(:calculate_adjusted_net_income).and_return(100000)
-      visit "/child-benefit-tax-calculator"
-      click_on "Start now"
-    end
     it "should use the adjusted net income calculator inputs" do
+      visit "/child-benefit-tax-calculator/main"
+
       select "2011", :from => "starting_children[0][start][year]"
       select "January", :from => "starting_children[0][start][month]"
       select "1", :from => "starting_children[0][start][day]"
@@ -206,13 +201,11 @@ feature "Child Benefit Tax Calculator" do
       
       click_on "Get your estimate"
 
-      page.should have_field "adjusted_net_income", :with => "£100,000.00"
+      page.should have_field "adjusted_net_income", :with => "£120,825.00"
 
-      within ".results_estimate", :text => "Child benefit received" do
-        page.should have_content "£100,000.00"
-      end
-      within ".results_estimate", :text => "Tax charge to pay" do
-        page.should have_content "£100,000.00"
+      within ".results" do
+        page.should have_content "Child benefit received £263.90"
+        page.should have_content "Tax charge to pay £263.00"
       end
     end
   end
