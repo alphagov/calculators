@@ -3,11 +3,28 @@ require 'spec_helper'
 
 feature "Child Benefit Tax Calculator" do
 
-  it "should have a placeholder landing page" do
+  specify "inspecting the landing page" do
     visit "/child-benefit-tax-calculator"
-    within "header.page-header" do
-      page.should have_content("Quick answer Child Benefit tax calculator")
+
+    within 'head', :visible => :all do
+      page.should have_selector("title", :text => "Child Benefit tax calculator - GOV.UK", :visible => :all)
     end
+
+    within "main#content" do
+      within "header.page-header" do
+        page.should have_content("Child Benefit tax calculator")
+        page.should have_content("Quick answer")
+      end
+
+      within 'article[role=article]' do
+        within 'section.intro' do
+          page.should have_link("Start now", :href => "/child-benefit-tax-calculator/main")
+        end
+      end
+
+      page.should have_selector(".article-container #test-report_a_problem")
+    end
+    page.should have_selector("#test-related")
   end
 
   it "should not show results until enough info is entered" do
