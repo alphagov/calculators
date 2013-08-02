@@ -204,7 +204,7 @@ feature "Child Benefit Tax Calculator" do
       find_field("adjusted_net_income").value.should == "£120,825.00"
 
       within ".results" do
-        page.should have_content "Child benefit received £263.90"
+        page.should have_content "Child Benefit received £263.90"
         page.should have_content "Tax charge to pay £263.00"
       end
     end
@@ -240,7 +240,7 @@ feature "Child Benefit Tax Calculator" do
       find_field("adjusted_net_income").value.should == "£50,825.00"
 
       within ".results" do
-        page.should have_content "Child benefit received £263.90"
+        page.should have_content "Child Benefit received £263.90"
         page.should have_content "Tax charge to pay £21.00"
       end
     end
