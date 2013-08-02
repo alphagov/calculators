@@ -12,4 +12,19 @@ module ChildBenefitTaxHelper
   def can_haz_results?
     params[:results] and @calculator.can_calculate?
   end
+
+  def tax_payment_deadline
+    end_date = ChildBenefitTaxCalculator::TAX_YEARS[@calculator.tax_year.to_s].last
+    "31 January #{end_date.year + 1}"
+  end
+
+  def sa_register_deadline
+    end_date = ChildBenefitTaxCalculator::TAX_YEARS[@calculator.tax_year.to_s].last
+    "5 October #{end_date.year}"
+  end
+
+  def tax_year_incomplete?
+    end_date = ChildBenefitTaxCalculator::TAX_YEARS[@calculator.tax_year.to_s].last
+    end_date >= Date.today
+  end
 end

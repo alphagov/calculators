@@ -16,4 +16,21 @@ describe ChildBenefitTaxHelper do
     end
   end
 
+  describe "tax_year_incomplete?" do
+    before :each do
+      @calculator = stub(:tax_year => 2013)
+    end
+
+    it "should be true before the end of the tax year" do
+      Timecop.freeze('2014-04-04') do
+        tax_year_incomplete?.should be_true
+      end
+    end
+
+    it "should be false after the end of the tax year" do
+      Timecop.freeze('2014-04-06') do
+        tax_year_incomplete?.should be_false
+      end
+    end
+  end
 end
