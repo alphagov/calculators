@@ -7,4 +7,8 @@ module ChildBenefitTaxHelper
   def tax_year_label(dates)
     "#{dates.first.year} to #{dates.last.year}"
   end
+
+  def can_haz_results?
+    params[:results] and @calculator.can_calculate?
+  end
 end

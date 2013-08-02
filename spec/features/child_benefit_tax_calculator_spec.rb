@@ -31,6 +31,11 @@ feature "Child Benefit Tax Calculator" do
     visit "/child-benefit-tax-calculator"
     click_on "Start now"
     page.should have_no_css(".results")
+
+    choose "year_2012"
+    select "2", :from => "children_count"
+    click_on "Update"
+    page.should have_no_css(".results")
   end
 
   it "should have a blank adjusted net income field" do
