@@ -1,12 +1,18 @@
 <div class="date_selection">
-  <label>Start date</label>
+  <p class="label">Start date</p>
+  <% [:day, :month, :year].each do |time_unit| %>
+    <label for="starting_children_<%= index %>_start_<%= time_unit %>" class="visuallyhidden">Start <%= time_unit %></label>
+  <% end %>
   <%= select_date (child ? child.start_date : nil), :prefix => "starting_children[#{index}][start]", 
     :prompt => {:day => "Day", :month => "Month", :year => "Year" }, :order => [:day, :month, :year],
     :start_year => 20.years.ago(Date.today).year, :end_year => 3.years.since(Date.today).year %>
   &nbsp;&nbsp;
 </div>
 <div class="date_selection">
-  <label>Stop date</label>
+  <p class="label">Stop date</p>
+  <% [:day, :month, :year].each do |time_unit| %>
+    <label for="starting_children_<%= index %>_stop_<%= time_unit %>" class="visuallyhidden">Start <%= time_unit %></label>
+  <% end %>
   <%= select_date (child ? child.end_date : nil), :prefix => "starting_children[#{index}][stop]",
     :prompt => {:day => "Day", :month => "Month", :year => "Year" }, :order => [:day, :month, :year],
     :start_year => 2.years.ago(Date.today).year, :end_year => 10.years.since(Date.today).year %>

@@ -250,9 +250,14 @@ article p + .help-notice, article p + .info-notice {
   float: left;
   padding-bottom: 1.5em;
   margin-right: 2em;
-  label {
+  .label {
     @include core-19;
+    margin: 0;
     padding-top: 0.2em;
   }
 }
 
+.tax_year label {
+  @include core-16;
+  display: inline;
+}

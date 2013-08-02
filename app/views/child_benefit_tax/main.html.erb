@@ -1,7 +1,7 @@
 <% content_for :title, "Child Benefit tax calculator" %>
 <% content_for :body_classes, "full-width" %>
 
-<section id="content" role="main" class="group calculator-page">
+<main id="content" role="main" class="group calculator-page">
   <header class="page-header group full-width">
     <div class="full-width">
     <h1><span>Quick answer</span> Child Benefit tax calculator</h1>
@@ -10,7 +10,8 @@
   </header>
 
   <article id="calculator" role="article">
-    <section class="questions">
+    <section class="questions" aria-labelledby="questions">
+      <h1 class="visuallyhidden" id="questions">Questions</h1>
       <div class="inner">
         <%= form_tag("process_form", :method => :get, :id => "child_benefit_tax_calculator") do %>
           <!-- hidden field to store the tax year so it can persist -->
@@ -38,6 +39,7 @@
               <li>have claimed for in the past</li>
               <li>expect to claim for in the future</li>
             </ul>
+            <label for="children_count">Number of children</label>
             <%= select_tag "children_count", options_for_select((1..10).collect{|n| [n,n]}, @calculator.children_count) %>
             <%= submit_tag "Update", :name => "children", :class => "button update-button" %>
           </fieldset>
@@ -55,12 +57,15 @@
             <div class="application-notice info-notice">
             <p>Tax years run from 6 April to 5 April the following year.</p>
             </div>
-            <div<% if @calculator.errors.has_key?(:tax_year) %> class="validation-error"<% end %>>
+            <div class="tax_year<% if @calculator.errors.has_key?(:tax_year) %> validation-error<% end %>">
               <% @calculator.errors[:tax_year].each do |message| %>
                 <p><%= message %></p>
               <% end -%>
-              <% ChildBenefitTaxCalculator::TAX_YEARS.keys.each do |year| -%>
-                <%= radio_button_tag "year", year, (@calculator.tax_year == year.to_i) %>&nbsp;<%= tax_year_label(year) %>
+              <% ChildBenefitTaxCalculator::TAX_YEARS.keys.each do |year, dates| -%>
+                <label for="year_<%= year %>">
+                  <%= radio_button_tag "year", year, (@calculator.tax_year == year.to_i) %>
+                  <%= tax_year_label(dates) %>
+                </label>
               <% end -%>
             </div>
           </fieldset>
@@ -70,14 +75,15 @@
             <div class="application-notice info-notice">
               <p>Enter your income or your partner's – whoever has the highest.</p>
             </div>
+            <label for="adjusted_net_income" class="visuallyhidden">Adjusted net income</label>
             <%= money_input "adjusted_net_income", @calculator.adjusted_net_income %>
           </fieldset>
 
           <details>
             <summary>Help working out your adjusted net income</summary>
             <div class="application-notice info-notice">
-            <p>You can get some of this information from your P60, P11D, employer or a tax adviser</p>
-          </div>
+              <p>You can get some of this information from your P60, P11D, employer or a tax adviser</p>
+            </div>
             <fieldset id="adjusted_net_income_calculator">
             <%= label_tag "gross_income", "Salary" %>
             <%= money_input "gross_income", @adjusted_net_income_calculator.gross_income %>
@@ -110,12 +116,12 @@
     </section><!-- end .questions -->
     
     <% if can_haz_results? -%>
-    <section class="results" id="results">
+    <section class="results" aria-labelledby="results">
       <div class="inner">
-        <h1>Results</h1>
+        <h1 id="results">Results</h1>
         <%= render "results" %>
       </div><!-- end .inner -->
     </section>
     <% end -%>
   </article><!-- end .thirds -->
-</section>
+</main>
