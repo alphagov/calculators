@@ -59,8 +59,8 @@
               <% @calculator.errors[:tax_year].each do |message| %>
                 <p><%= message %></p>
               <% end -%>
-              <% ChildBenefitTaxCalculator::TAX_YEARS.each do |year, dates| -%>
-                <%= radio_button_tag "year", year, (@calculator.tax_year == year.to_i) %>&nbsp;<%= tax_year_label(dates) %>
+              <% ChildBenefitTaxCalculator::TAX_YEARS.keys.each do |year| -%>
+                <%= radio_button_tag "year", year, (@calculator.tax_year == year.to_i) %>&nbsp;<%= tax_year_label(year) %>
               <% end -%>
             </div>
           </fieldset>
@@ -76,12 +76,12 @@
           <details>
             <summary>Help working out your adjusted net income</summary>
             <div class="application-notice info-notice">
-            <p>You can find some of this information from your P60, P11D, your employer or a tax adviser</p>
+            <p>You can get some of this information from your P60, P11D, employer or a tax adviser</p>
           </div>
             <fieldset id="adjusted_net_income_calculator">
-            <%= label_tag "gross_income", "Your salary" %> 
+            <%= label_tag "gross_income", "Salary" %>
             <%= money_input "gross_income", @adjusted_net_income_calculator.gross_income %>
-            <%= label_tag "other_income", "Other employment income" %> 
+            <%= label_tag "other_income", "Other employment income - eg self employment, taxable benefits (like a company car or medical insurance), bonuses" %> 
             <%= money_input "other_income", @adjusted_net_income_calculator.other_income %>
             <%= label_tag "pension_contributions_from_pay", "Pension contributions deducted from your pay" %> 
             <%= money_input "pension_contributions_from_pay", @adjusted_net_income_calculator.pension_contributions_from_pay %>
@@ -89,13 +89,13 @@
             <%= money_input "retirement_annuities", @adjusted_net_income_calculator.retirement_annuities %>
             <%= label_tag "cycle_scheme", "Cycle scheme" %> 
             <%= money_input "cycle_scheme", @adjusted_net_income_calculator.cycle_scheme %>
-            <%= label_tag "childcare", "Childcare" %> 
+            <%= label_tag "childcare", "Childcare - eg childcare vouchers up to £55 a week, the value of any workplace nursery places" %>
             <%= money_input "childcare", @adjusted_net_income_calculator.childcare %>
             <%= label_tag "pensions", "Pensions - eg from a state pension" %> 
             <%= money_input "pensions", @adjusted_net_income_calculator.pensions %>
             <%= label_tag "property", "Property - eg rental income" %> 
             <%= money_input "property", @adjusted_net_income_calculator.property %>
-            <%= label_tag "non_employment_income", "Other income" %> 
+            <%= label_tag "non_employment_income", "Other income - eg from trading, taxable savings" %> 
             <%= money_input "non_employment_income", @adjusted_net_income_calculator.non_employment_income %>
             <%= label_tag "gift_aid_donations", "Gift Aid donations" %> 
             <%= money_input "gift_aid_donations", @adjusted_net_income_calculator.gift_aid_donations %>
@@ -104,7 +104,7 @@
             </fieldset>
           </details>
 
-          <%= submit_tag("Get your estimate", :name => "results", :class => "button") %>
+          <%= submit_tag "Calculate", :name => "results", :class => "button" %>
         <% end %>
       </div><!-- end .inner -->
     </section><!-- end .questions -->
