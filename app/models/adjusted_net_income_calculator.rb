@@ -23,8 +23,8 @@ class AdjustedNetIncomeCalculator
   end
 
   def deductions
-    grossed_up(@pension_contributions_from_pay) + grossed_up(@gift_aid_donations) + 
-      @retirement_annuities + @cycle_scheme + @childcare + @outgoing_pension_contributions
+    @pension_contributions_from_pay + grossed_up(@gift_aid_donations) + 
+      @retirement_annuities + @cycle_scheme + @childcare + grossed_up(@outgoing_pension_contributions)
   end
 
   def grossed_up(amount)

@@ -30,7 +30,7 @@ describe AdjustedNetIncomeCalculator do
       calc.childcare.should == 2000
       calc.outgoing_pension_contributions.should == 2000
 
-      calc.calculate_adjusted_net_income.should == 62125
+      calc.calculate_adjusted_net_income.should == 61875
     end
   end
 
