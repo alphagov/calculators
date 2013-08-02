@@ -201,13 +201,48 @@ feature "Child Benefit Tax Calculator" do
       
       click_on "Get your estimate"
 
-      page.should have_field "adjusted_net_income", :with => "£120,825.00"
+      find_field("adjusted_net_income").value.should == "£120,825.00"
 
       within ".results" do
         page.should have_content "Child benefit received £263.90"
         page.should have_content "Tax charge to pay £263.00"
       end
     end
-  end
 
+    it "should update the adjusted_net_income when the calculator values are updated." do
+      visit "/child-benefit-tax-calculator/main"
+
+      select "2011", :from => "starting_children[0][start][year]"
+      select "January", :from => "starting_children[0][start][month]"
+      select "1", :from => "starting_children[0][start][day]"
+      choose "year_2012"
+
+      #click_on "Help working out your adjusted net income"
+
+      fill_in "gross_income", :with => "£120,000"
+      fill_in "other_income", :with => "£8,000"
+      fill_in "pension_contributions_from_pay", :with => "£2000"
+      fill_in "retirement_annuities", :with => "£2000"
+      fill_in "cycle_scheme", :with => "£800"
+      fill_in "childcare", :with => "£1500"
+      fill_in "pensions", :with => "£3000"
+      fill_in "non_employment_income", :with => "£500"
+      fill_in "gift_aid_donations", :with => "£1500"
+      fill_in "outgoing_pension_contributions", :with => "£2000"
+
+      click_on "Get your estimate"
+
+      find_field("adjusted_net_income").value.should == "£120,825.00"
+
+      fill_in "gross_income", :with => "£50,000"
+      click_on "Get your estimate"
+
+      find_field("adjusted_net_income").value.should == "£50,825.00"
+
+      within ".results" do
+        page.should have_content "Child benefit received £263.90"
+        page.should have_content "Tax charge to pay £21.00"
+      end
+    end
+  end
 end

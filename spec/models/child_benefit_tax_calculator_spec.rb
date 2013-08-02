@@ -119,17 +119,35 @@ describe ChildBenefitTaxCalculator do
   end
 
   describe "calculating adjusted net income" do
-    it "should use the adjusted_net_income parameter where possible" do
+    it "should use the adjusted_net_income parameter when none of the calculation params are used" do
       ChildBenefitTaxCalculator.new({
         :adjusted_net_income => "50099",
-        :gross_income => "68000",
-        :other_income => "2000",
+        :other_income => "0",
         :year => "2012",
         :children_count => 2
       }).adjusted_net_income.should == 50099
     end
+
     it "should calculate the adjusted net income with the relevant params" do
       ChildBenefitTaxCalculator.new({
+        :gross_income => "£68000",
+        :other_income => "£2000",
+        :pensions => "£2000",
+        :property => "£1000",
+        :non_employment_income => "£1000",
+        :pension_contributions_from_pay => "£2000",
+        :gift_aid_donations => "£1000",
+        :retirement_annuities => "£1000",
+        :cycle_scheme => "£800",
+        :childcare => "£1500",
+        :year => "2012",
+        :children_count => 2
+      }).adjusted_net_income.should == 67450
+    end
+
+    it "should ignore the adjusted_net_income parameter when using the calculation form params" do
+      ChildBenefitTaxCalculator.new({
+        :adjusted_net_income => "£65,000",
         :gross_income => "£68000",
         :other_income => "£2000",
         :pensions => "£2000",
