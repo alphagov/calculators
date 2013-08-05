@@ -155,7 +155,7 @@ class StartingChild
   
   include ActiveModel::Validations
 
-  validates_presence_of :start_date, :message => "Enter the date child benefit started"
+  validates_presence_of :start_date, :message => "Enter the date Child Benefit started"
   validate :valid_dates
 
   attr_reader :start_date, :end_date
@@ -181,7 +181,7 @@ class StartingChild
 
   def valid_dates
     if @start_date and @end_date and @start_date >= @end_date
-      errors.add(:end_date, "Child benefit start date must be before stop date")
+      errors.add(:end_date, "Child Benefit start date must be before stop date")
     end
   end
 
