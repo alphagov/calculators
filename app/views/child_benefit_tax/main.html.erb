@@ -61,10 +61,10 @@
               <% @calculator.errors[:tax_year].each do |message| %>
                 <p><%= message %></p>
               <% end -%>
-              <% ChildBenefitTaxCalculator::TAX_YEARS.keys.each do |year, dates| -%>
+              <% ChildBenefitTaxCalculator::TAX_YEARS.keys.each do |year| -%>
                 <label for="year_<%= year %>">
                   <%= radio_button_tag "year", year, (@calculator.tax_year == year.to_i) %>
-                  <%= tax_year_label(dates) %>
+                  <%= tax_year_label(year) %>
                 </label>
               <% end -%>
             </div>
