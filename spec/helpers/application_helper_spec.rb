@@ -2,17 +2,14 @@ require "spec_helper"
 
 describe ApplicationHelper do
 
-  before do
-    @existing_website_root = ENV["GOVUK_WEBSITE_ROOT"]
+  it "appends the private frontend url to internal links when constant is set" do
+    stub_const("PRIVATE_FRONTEND_INTERNAL_LINKS", true)
+    internal_url("/blah").should == "http://private-frontend.dev.gov.uk/blah"
   end
 
-  after do
-    ENV["GOVUK_WEBSITE_ROOT"] = @existing_website_root
-  end
-
-  it "appends the website root to internal links" do
-    ENV["GOVUK_WEBSITE_ROOT"] = "https://www.dev.gov.uk"
-    internal_url("/blah").should == "https://www.dev.gov.uk/blah"
+  it "does not append the private frontend url to internal links when constant is not set" do
+    stub_const("PRIVATE_FRONTEND_INTERNAL_LINKS", false)
+    internal_url("/blah").should == "/blah"
   end
 
 end

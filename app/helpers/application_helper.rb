@@ -9,7 +9,7 @@ module ApplicationHelper
   end
 
   def internal_url(path)
-  	"#{ENV['GOVUK_WEBSITE_ROOT']}#{path}"
+    PRIVATE_FRONTEND_INTERNAL_LINKS ? "#{Plek.current.find('private-frontend')}#{path}" : "#{path}"
   end
 
 end
