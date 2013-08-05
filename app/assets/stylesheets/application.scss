@@ -5,6 +5,9 @@
 @import "_shims";
 @import "_css3";
 
+/* local includes */
 @import "_validation";
-@import "calculators/core.scss";
+
+/* styles */
+@import "core.scss";
 @import "calculators/child_benefit";
