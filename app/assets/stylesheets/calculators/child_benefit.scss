@@ -50,7 +50,14 @@ select {
 
 details.help-panel {
   position: relative;
-  margin-top: 3.4em;
+
+  @include media(mobile) {
+    margin-top:4.8em;
+  }
+
+  @include media(desktop) {
+    margin-top: 3.4em;
+  }
 
   p,
   fieldset {
@@ -67,7 +74,14 @@ details.help-panel {
   }
   summary {
     position: absolute;
-    top: -2em;
+
+    @include media(mobile) {
+      top: -3.4em;
+    }
+
+    @include media(desktop) {
+      top: -2em;
+    }
   }
 }
 
