@@ -46,17 +46,13 @@
 
           <fieldset id="children">
             <%= step(2, "Enter the dates Child Benefit started and, if applicable, stopped.") %>
-            <div class="application-notice info-notice">
             <p>Child Benefit usually starts when you have a baby, adopt or move in with a new partner and their children.</p>
-            </div>
             <%= render "starting_children" %>
           </fieldset>
 
           <fieldset id="tax_year">
             <%= step(3, "To work out the Child Benefit received during a tax year, choose a tax year.") %>
-            <div class="application-notice info-notice">
             <p>Tax years run from 6 April to 5 April the following year.</p>
-            </div>
             <div class="tax_year<% if @calculator.errors.has_key?(:tax_year) %> validation-error<% end %>">
               <% @calculator.errors[:tax_year].each do |message| %>
                 <p><%= message %></p>
@@ -72,18 +68,14 @@
 
           <fieldset id="adjusted_income">
             <%= step(4, "To work out the Child Benefit tax charge, enter your adjusted net income for the tax year. Otherwise, leave it blank.") %>
-            <div class="application-notice info-notice">
-              <p>Enter your income or your partner's – whoever has the highest.</p>
-            </div>
+            <p>Enter your income or your partner's – whoever has the highest.</p>
             <label for="adjusted_net_income" class="visuallyhidden">Adjusted net income</label>
             <%= money_input "adjusted_net_income", @calculator.adjusted_net_income %>
           </fieldset>
 
           <details>
             <summary>Help working out your adjusted net income</summary>
-            <div class="application-notice info-notice">
-              <p>You can get some of this information from your P60, P11D, employer or a tax adviser</p>
-            </div>
+            <p>You can get some of this information from your P60, P11D, employer or a tax adviser</p>
             <fieldset id="adjusted_net_income_calculator">
             <%= label_tag "gross_income", "Salary" %>
             <%= money_input "gross_income", @adjusted_net_income_calculator.gross_income %>
