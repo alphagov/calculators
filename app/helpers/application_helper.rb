@@ -9,7 +9,7 @@ module ApplicationHelper
   end
 
   def internal_url(path)
-    PRIVATE_FRONTEND_INTERNAL_LINKS ? "#{Plek.current.find('private-frontend')}#{path}" : "#{path}"
+    PRIVATE_FRONTEND_INTERNAL_LINKS ? "#{Plek.current.find('private-frontend')}#{path}?edition=1" : "#{path}"
   end
 
 end
