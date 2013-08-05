@@ -15,7 +15,7 @@
     <p class="numbers">£0.00</p>
     <p>There is no tax charge if your income is below £50,099.</p>
     <p>Your partner (if you have one) may have to pay the charge if their income is higher than yours.</p>
-    <p>Find out more about the <a href="/child-benefit-tax-charge">Child Benefit tax charge</a>.</p>
+    <p>Find out more about the <a href="<%= internal_url "/child-benefit-tax-charge" %>">Child Benefit tax charge</a>.</p>
     </div> 
   <% else -%>
     <p class="numbers"><%= number_to_currency @calculator.tax_estimate, unit: "£", precision: 2 %></p> 
@@ -28,13 +28,13 @@
 
     <p>The tax must be paid by <%= tax_payment_deadline %>.</p>
     <p>To pay the tax you must send a tax return.</p>
-    <p>There are <a href="/self-assessment-tax-return-deadlines">deadlines</a> for sending the return. If you’ve not sent one before, you should also register for Self Assessment by <%= sa_register_deadline %>.</p>
-    <p>Find out about <a href="/child-benefit-tax-charge/pay-the-charge">how and when to pay</a>.</p>
+    <p>There are <a href="<%= internal_url "/self-assessment-tax-return-deadlines" %>">deadlines</a> for sending the return. If you’ve not sent one before, you should also register for Self Assessment by <%= sa_register_deadline %>.</p>
+    <p>Find out about <a href="<%= internal_url "/child-benefit-tax-charge/pay-the-charge" %>">how and when to pay</a>.</p>
 
     <h2>Your Child Benefit</h2>
     <p>You can choose to:</p>
     <ul>
-      <li><a href="/child-benefit-tax-charge/stop-child-benefit">stop getting Child Benefit</a> - you must pay any tax you owe</li>
+      <li><a href="<%= internal_url "/child-benefit-tax-charge/stop-child-benefit" %>">stop getting Child Benefit</a> - you must pay any tax you owe</li>
       <li>carry on getting Child Benefit - for each tax year you get it you must fill in a tax return and pay any tax you owe</li>
     </ul>
 
@@ -42,7 +42,7 @@
       <p>Your result for the next tax year may be higher because the tax charge will apply to the whole tax year (and not just 7 January to 5 April 2013).</p>
     <% end -%>
 
-    <p>Find out about <a href="/child-benefit-tax-charge">stopping or carrying on Child Benefit</a>.</p>
+    <p>Find out about <a href="<%= internal_url "/child-benefit-tax-charge" %>">stopping or carrying on Child Benefit</a>.</p>
 
     <% if tax_year_incomplete? %>
       <p>This is an estimate - your circumstances may change before the end of the tax year.</p>
