@@ -54,7 +54,7 @@ feature "Child Benefit Tax Calculator" do
       page.should have_content("Enter the date child benefit started")
     end
 
-    within "#tax_year" do
+    within "#tax-year" do
       page.should have_css(".validation-error")
       page.should have_content("Select a tax year")
     end
