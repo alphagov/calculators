@@ -1,4 +1,4 @@
-<div class="date_selection">
+<div class="date-selection">
   <p class="label">Start date</p>
   <% [:day, :month, :year].each do |time_unit| %>
     <label for="starting_children_<%= index %>_start_<%= time_unit %>" class="visuallyhidden">Start <%= time_unit %></label>
@@ -8,7 +8,7 @@
     :start_year => 20.years.ago(Date.today).year, :end_year => 3.years.since(Date.today).year %>
   &nbsp;&nbsp;
 </div>
-<div class="date_selection">
+<div class="date-selection">
   <p class="label">Stop date</p>
   <% [:day, :month, :year].each do |time_unit| %>
     <label for="starting_children_<%= index %>_stop_<%= time_unit %>" class="visuallyhidden">Start <%= time_unit %></label>

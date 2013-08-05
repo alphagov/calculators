@@ -44,6 +44,39 @@ select {
   border: 1px solid;
 }
 
+.help-panel {
+  background: $panel-colour;
+}
+
+details.help-panel {
+  position: relative;
+  margin-top: 3.4em;
+
+  p,
+  fieldset {
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+
+  p {
+    padding-top: 1em;
+  }
+
+  fieldset {
+    padding-bottom: 1em;
+  }
+  summary {
+    position: absolute;
+    top: -2em;
+  }
+}
+
+.label {
+  @include core-19;
+  margin: 0;
+  padding-top: 0.2em;
+}
+
 .button {
   @include bold-19;
 }
@@ -94,9 +127,9 @@ article .application-notice {
   }
 
   fieldset {
-    margin-bottom: 3em;
+    margin-bottom: 1em;
     &#adjusted_income {
-      margin-bottom: 1em;
+      margin-bottom: 3em;
     }
   }
 
@@ -130,18 +163,13 @@ article .application-notice {
     margin: 0;
   }
 
-  .date_selection {
+  .date-selection {
     float: left;
     padding-bottom: 1.5em;
     margin-right: 2em;
-    .label {
-      @include core-19;
-      margin: 0;
-      padding-top: 0.2em;
-    }
   }
 
-  .tax_year label {
+  .tax-year label {
     @include core-16;
     display: inline;
   }
@@ -193,7 +221,7 @@ article .application-notice {
 }
 
 details {
-  margin-bottom: 3em;  
+  margin-bottom: 1em;  
 
   summary {
     @include core-19;

@@ -1,3 +1,6 @@
+$validation-border: $mellow-red;
+$validation-background: #fef7f7;
+
 .validation-error,
 .validation-summary {
   margin: 1em 0;
@@ -11,10 +14,10 @@
   @include core-16;
   text-transform: none;
   color: #df3034;
-  border: 3px solid #df3034;
+  border: 3px solid $validation-border;
   box-sizing: border-box;
   padding: 0 1em 1em 1em;
-  background-color: #fef7f7;
+  background-color: $validation-background;
   overflow: hidden;
 
   .date_selection {
