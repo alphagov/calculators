@@ -1,7 +1,7 @@
 <% content_for :title, "Child Benefit tax calculator" %>
 <% content_for :body_classes, "full-width" %>
 
-<section id="content" role="main" class="group calculator-page">
+<main id="content" role="main" class="group calculator-page">
   <header class="page-header group full-width">
     <div class="full-width">
     <h1><span>Quick answer</span> Child Benefit tax calculator</h1>
@@ -9,8 +9,9 @@
     <a class="skip-to-related" href="#related">Not what you're looking for? ↓</a>
   </header>
 
-  <article id="calculator" role="article">
-    <section class="questions">
+  <article id="calculator">
+    <section class="questions" aria-labelledby="questions">
+      <h1 class="visuallyhidden" id="questions">Questions</h1>
       <div class="inner">
         <%= form_tag("process_form", :method => :get, :id => "child_benefit_tax_calculator") do %>
           <!-- hidden field to store the tax year so it can persist -->
@@ -21,7 +22,7 @@
               <h1>Please check the form</h1>
               <ul>
                 <% @calculator.errors.each do |key, message| -%>
-                  <li><a href="#tax_year"><%= message %></a></li>
+                  <li><a href="#tax-year"><%= message %></a></li>
                 <% end -%>
                 <%# TODO: This could be tidied up into a model or helper method %>
                 <% @calculator.starting_children.map(&:errors).map(&:messages).map(&:values).flatten.uniq.each do |message| -%> 
@@ -38,71 +39,68 @@
               <li>have claimed for in the past</li>
               <li>expect to claim for in the future</li>
             </ul>
+            <label for="children_count" class="visuallyhidden">Number of children</label>
             <%= select_tag "children_count", options_for_select((1..10).collect{|n| [n,n]}, @calculator.children_count) %>
             <%= submit_tag "Update", :name => "children", :class => "button update-button" %>
           </fieldset>
 
           <fieldset id="children">
             <%= step(2, "Enter the dates Child Benefit started and, if applicable, stopped.") %>
-            <div class="application-notice info-notice">
             <p>Child Benefit usually starts when you have a baby, adopt or move in with a new partner and their children.</p>
-            </div>
             <%= render "starting_children" %>
           </fieldset>
 
-          <fieldset id="tax_year">
+          <fieldset id="tax-year">
             <%= step(3, "To work out the Child Benefit received during a tax year, choose a tax year.") %>
-            <div class="application-notice info-notice">
             <p>Tax years run from 6 April to 5 April the following year.</p>
-            </div>
-            <div<% if @calculator.errors.has_key?(:tax_year) %> class="validation-error"<% end %>>
+            <div class="tax-year<% if @calculator.errors.has_key?(:tax_year) %> validation-error<% end %>">
               <% @calculator.errors[:tax_year].each do |message| %>
                 <p><%= message %></p>
               <% end -%>
               <% ChildBenefitTaxCalculator::TAX_YEARS.keys.each do |year| -%>
-                <%= radio_button_tag "year", year, (@calculator.tax_year == year.to_i) %>&nbsp;<%= tax_year_label(year) %>
+                <label for="year_<%= year %>">
+                  <%= radio_button_tag "year", year, (@calculator.tax_year == year.to_i) %>
+                  <%= tax_year_label(year) %>
+                </label>
               <% end -%>
             </div>
           </fieldset>
 
           <fieldset id="adjusted_income">
             <%= step(4, "To work out the Child Benefit tax charge, enter your adjusted net income for the tax year. Otherwise, leave it blank.") %>
-            <div class="application-notice info-notice">
-              <p>Enter your income or your partner's – whoever has the highest.</p>
-            </div>
+            <details class="help-panel">
+              <summary>Help working out your adjusted net income</summary>
+              <p>You can get some of this information from your P60, P11D, employer or a tax adviser</p>
+              <fieldset id="adjusted_net_income_calculator">
+              <%= label_tag "gross_income", "Salary" %>
+              <%= money_input "gross_income", @adjusted_net_income_calculator.gross_income %>
+              <%= label_tag "other_income", "Other employment income - eg self employment, taxable benefits (like a company car or medical insurance), bonuses" %> 
+              <%= money_input "other_income", @adjusted_net_income_calculator.other_income %>
+              <%= label_tag "pension_contributions_from_pay", "Pension contributions deducted from your pay" %> 
+              <%= money_input "pension_contributions_from_pay", @adjusted_net_income_calculator.pension_contributions_from_pay %>
+              <%= label_tag "retirement_annuities", "Retirement annuity contracts" %> 
+              <%= money_input "retirement_annuities", @adjusted_net_income_calculator.retirement_annuities %>
+              <%= label_tag "cycle_scheme", "Cycle scheme" %> 
+              <%= money_input "cycle_scheme", @adjusted_net_income_calculator.cycle_scheme %>
+              <%= label_tag "childcare", "Childcare - eg childcare vouchers up to £55 a week, the value of any workplace nursery places" %>
+              <%= money_input "childcare", @adjusted_net_income_calculator.childcare %>
+              <%= label_tag "pensions", "Pensions - eg from a state pension" %> 
+              <%= money_input "pensions", @adjusted_net_income_calculator.pensions %>
+              <%= label_tag "property", "Property - eg rental income" %> 
+              <%= money_input "property", @adjusted_net_income_calculator.property %>
+              <%= label_tag "non_employment_income", "Other income - eg from trading, taxable savings" %> 
+              <%= money_input "non_employment_income", @adjusted_net_income_calculator.non_employment_income %>
+              <%= label_tag "gift_aid_donations", "Gift Aid donations" %> 
+              <%= money_input "gift_aid_donations", @adjusted_net_income_calculator.gift_aid_donations %>
+              <%= label_tag "outgoing_pension_contributions", "Pension contributions not paid from your salary" %> 
+              <%= money_input "outgoing_pension_contributions", @adjusted_net_income_calculator.outgoing_pension_contributions %>
+              </fieldset>
+            </details>
+
+            <p class="label">Enter your income or your partner's – whoever has the highest.</p>
+            <label for="adjusted_net_income" class="visuallyhidden">Adjusted net income</label>
             <%= money_input "adjusted_net_income", @calculator.adjusted_net_income %>
           </fieldset>
-
-          <details>
-            <summary>Help working out your adjusted net income</summary>
-            <div class="application-notice info-notice">
-            <p>You can get some of this information from your P60, P11D, employer or a tax adviser</p>
-          </div>
-            <fieldset id="adjusted_net_income_calculator">
-            <%= label_tag "gross_income", "Salary" %>
-            <%= money_input "gross_income", @adjusted_net_income_calculator.gross_income %>
-            <%= label_tag "other_income", "Other employment income - eg self employment, taxable benefits (like a company car or medical insurance), bonuses" %> 
-            <%= money_input "other_income", @adjusted_net_income_calculator.other_income %>
-            <%= label_tag "pension_contributions_from_pay", "Pension contributions deducted from your pay" %> 
-            <%= money_input "pension_contributions_from_pay", @adjusted_net_income_calculator.pension_contributions_from_pay %>
-            <%= label_tag "retirement_annuities", "Retirement annuity contracts" %> 
-            <%= money_input "retirement_annuities", @adjusted_net_income_calculator.retirement_annuities %>
-            <%= label_tag "cycle_scheme", "Cycle scheme" %> 
-            <%= money_input "cycle_scheme", @adjusted_net_income_calculator.cycle_scheme %>
-            <%= label_tag "childcare", "Childcare - eg childcare vouchers up to £55 a week, the value of any workplace nursery places" %>
-            <%= money_input "childcare", @adjusted_net_income_calculator.childcare %>
-            <%= label_tag "pensions", "Pensions - eg from a state pension" %> 
-            <%= money_input "pensions", @adjusted_net_income_calculator.pensions %>
-            <%= label_tag "property", "Property - eg rental income" %> 
-            <%= money_input "property", @adjusted_net_income_calculator.property %>
-            <%= label_tag "non_employment_income", "Other income - eg from trading, taxable savings" %> 
-            <%= money_input "non_employment_income", @adjusted_net_income_calculator.non_employment_income %>
-            <%= label_tag "gift_aid_donations", "Gift Aid donations" %> 
-            <%= money_input "gift_aid_donations", @adjusted_net_income_calculator.gift_aid_donations %>
-            <%= label_tag "outgoing_pension_contributions", "Pension contributions not paid from your salary" %> 
-            <%= money_input "outgoing_pension_contributions", @adjusted_net_income_calculator.outgoing_pension_contributions %>
-            </fieldset>
-          </details>
 
           <%= submit_tag "Calculate", :name => "results", :class => "button" %>
         <% end %>
@@ -110,12 +108,12 @@
     </section><!-- end .questions -->
     
     <% if can_haz_results? -%>
-    <section class="results" id="results">
+    <section class="results" aria-labelledby="results">
       <div class="inner">
-        <h1>Results</h1>
+        <h1 id="results">Results</h1>
         <%= render "results" %>
       </div><!-- end .inner -->
     </section>
     <% end -%>
   </article><!-- end .thirds -->
-</section>
+</main>
