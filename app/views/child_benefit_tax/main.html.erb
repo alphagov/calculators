@@ -94,6 +94,8 @@
               <%= money_input "gift_aid_donations", @adjusted_net_income_calculator.gift_aid_donations %>
               <%= label_tag "outgoing_pension_contributions", "Pension contributions not paid from your salary" %> 
               <%= money_input "outgoing_pension_contributions", @adjusted_net_income_calculator.outgoing_pension_contributions %>
+
+              <%= submit_tag "Work out adjusted net income", :name => "adjusted_income", :class => "button" %>
               </fieldset>
             </details>
 
