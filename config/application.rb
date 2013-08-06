@@ -65,6 +65,9 @@ module Calculators
 
     config.assets.precompile += %w(
       application.css
+      application-ie6.css
+      application-ie7.css
+      application-ie8.css
     )
 
     # Version of your assets, change this if you want to expire all your assets
