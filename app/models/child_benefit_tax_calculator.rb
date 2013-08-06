@@ -17,7 +17,7 @@ class ChildBenefitTaxCalculator
   }
 
   validate :valid_child_dates
-  validates_inclusion_of :tax_year, :in => 2012..Date.today.year, :message => "Select a tax year"
+  validates_inclusion_of :tax_year, :in => TAX_YEARS.keys.map(&:to_i), :message => "Select a tax year"
 
   def initialize(params = {})
     @adjusted_net_income_calculator = AdjustedNetIncomeCalculator.new(params)

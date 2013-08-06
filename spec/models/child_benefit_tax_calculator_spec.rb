@@ -36,6 +36,11 @@ describe ChildBenefitTaxCalculator do
     it "should contain errors for year if none is given" do
       @calc.errors.has_key?(:tax_year).should == true
     end
+    it "should contain errors for year if outside of tax years range" do
+      @calc = ChildBenefitTaxCalculator.new(:year => "2010")
+      @calc.valid?
+      @calc.errors.has_key?(:tax_year).should == true
+    end
     it "should validate dates provided for children" do
       @calc.starting_children.first.errors.has_key?(:start_date).should == true
       @calc.starting_children << StartingChild.new(:start => {:year => "2012", :month => "02", :day => "01"},
