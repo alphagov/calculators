@@ -272,7 +272,7 @@ feature "Child Benefit Tax Calculator" do
         end
       end
 
-      it "should display the amount of child benefid for 2013-2014" do
+      it "should display the amount of child benefit for 2013-2014" do
         choose "year_2013"
         
         click_button "Calculate"
