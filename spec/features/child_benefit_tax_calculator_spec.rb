@@ -38,12 +38,6 @@ feature "Child Benefit Tax Calculator" do
     page.should have_no_css(".results")
   end
 
-  it "should have a blank adjusted net income field" do
-    visit "/child-benefit-tax-calculator"
-    click_on "Start now"
-    page.should have_css("input#adjusted_net_income[placeholder='£']")
-  end
-
   it "should display validation errors" do
     visit "/child-benefit-tax-calculator"
     click_on "Start now"
@@ -150,14 +144,13 @@ feature "Child Benefit Tax Calculator" do
       select "January", :from => "starting_children[0][start][month]"
       select "1", :from => "starting_children[0][start][day]"
       choose "year_2012"
-      fill_in "adjusted_net_income", :with => "£60,000"
+      fill_in "Salary before tax", :with => "£60,000"
 
       click_button "Calculate"
      
-      page.should have_field("adjusted_net_income", :with => "£60,000.00")
-
       within ".results" do
         page.should have_content("£500,000.00")
+        page.should have_content("based on your estimated adjusted net income of £60,000.00")
       end
     end
 
@@ -167,7 +160,7 @@ feature "Child Benefit Tax Calculator" do
       select "January", :from => "starting_children[0][start][month]"
       select "1", :from => "starting_children[0][start][day]"
       choose "year_2012"
-      fill_in "adjusted_net_income", :with => "45000"
+      fill_in "Salary before tax", :with => "45000"
 
       click_button "Calculate"
       
@@ -201,11 +194,11 @@ feature "Child Benefit Tax Calculator" do
       
       click_on "Calculate"
 
-      find_field("adjusted_net_income").value.should == "£120,825.00"
-
       within ".results" do
         page.should have_content "Child Benefit received £263.90"
         page.should have_content "Tax charge to pay £263.00"
+
+        page.should have_content("based on your estimated adjusted net income of £120,825.00")
       end
     end
 
@@ -232,16 +225,17 @@ feature "Child Benefit Tax Calculator" do
 
       click_on "Calculate"
 
-      find_field("adjusted_net_income").value.should == "£120,825.00"
+      within ".results" do
+        page.should have_content("based on your estimated adjusted net income of £120,825.00")
+      end
 
-      fill_in "gross_income", :with => "£50,000"
+      fill_in "Salary before tax", :with => "£50,000"
       click_on "Calculate"
-
-      find_field("adjusted_net_income").value.should == "£50,825.00"
 
       within ".results" do
         page.should have_content "Child Benefit received £263.90"
         page.should have_content "Tax charge to pay £21.00"
+        page.should have_content("based on your estimated adjusted net income of £50,825.00")
       end
     end
   end
@@ -297,7 +291,7 @@ feature "Child Benefit Tax Calculator" do
         select "January", :from => "starting_children_0_start_month"
         select "1", :from => "starting_children_0_start_day"
 
-        fill_in "adjusted_net_income", :with => "55000"
+        fill_in "Salary before tax", :with => "55000"
       end
 
       it "should display the amount of child benefit and tax estimate for 2012-13" do
@@ -374,7 +368,7 @@ feature "Child Benefit Tax Calculator" do
         select "1", :from => "starting_children_0_start_day"
 
         choose "year_2013"
-        fill_in "adjusted_net_income", :with => "49000"
+        fill_in "Salary before tax", :with => "49000"
         click_button "Calculate"
 
         within ".results" do
