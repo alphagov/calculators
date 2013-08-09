@@ -14,16 +14,20 @@
     
     <% if @calculator.adjusted_net_income < 50100 -%>
       <p class="numbers">£0.00</p>
-      <p>Your estimated adjusted net income is <%= number_to_currency @calculator.adjusted_net_income, unit: "£", precision: 2 %>.</p>
       <p>There is no tax charge if your income is below £50,099.</p>
       <p>Your partner (if you have one) may have to pay the charge if their income is higher than yours.</p>
-      <p>Find out more about the <a href="<%= internal_url "/child-benefit-tax-charge" %>">Child Benefit tax charge</a>.</p>
+      <p>Find out more about the <a href="<%= internal_url "/child-benefit-tax-charge" %>">tax charge</a>.</p>
     <% else -%>
       <p class="numbers"><%= number_to_currency @calculator.tax_estimate, unit: "£", precision: 2 %></p> 
-      <p>This is based on your estimated adjusted net income of <%= number_to_currency @calculator.adjusted_net_income, unit: "£", precision: 2 %>.</p>
 
       <% if @calculator.tax_year == 2012 -%>
-        <p>The tax charge only applies to Child Benefit received between 7 January and 5 April 2013.</p>
+        <p>The tax charge only applies to the Child Benefit received between 7 January and 5 April 2013
+          and is based on your estimated adjusted net income of <%= number_to_currency @calculator.adjusted_net_income, unit: "£", precision: 2 %>.</p>
+      <% end -%>
+
+      <% if tax_year_incomplete? %>
+        <p>This is an estimate based on your adjusted net income of <%= number_to_currency @calculator.adjusted_net_income, unit: "£", precision: 2 %>
+          - your circumstances may change before the end of the tax year.</p>
       <% end -%>
 
       <h2>How and when to pay</h2>
@@ -47,10 +51,6 @@
       <p>Find out about <a href="<%= internal_url "/child-benefit-tax-charge" %>">stopping or carrying on Child Benefit</a>.</p>
     <% end -%>
   </div>
-
-  <% if tax_year_incomplete? %>
-    <p>This is an estimate - your circumstances may change before the end of the tax year.</p>
-  <% end -%>
 <% else %>
   <h2>Tax charge to pay</h2>
   <p>To work out the tax charge, enter your income or your partner's - whoever has the higher.</p>
