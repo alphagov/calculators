@@ -234,24 +234,9 @@ article .application-notice {
   }
 }
 
-details {
-  margin-bottom: 1em;  
-
-  summary {
-    @include core-19;
-    line-height: 1.31579;
-    font-weight: 400;
-    letter-spacing: 0;
-    text-transform: none;
-    color: #2E3191;
-    cursor: pointer;
-    display: block;
-    text-decoration: underline;
-  }
-
-  summary:hover {
-    color: #1D97FF;
-  }
+fieldset#adjusted_net_income_calculator {
+  margin-bottom: 3em;
+  margin-top: 2em;
 }
 
 .results {

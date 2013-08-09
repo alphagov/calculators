@@ -33,25 +33,20 @@
           <% end -%>
           
           <fieldset>
-            <%= step(1, "Enter the number of children you:") %>
-            <ul>
-              <li>are currently claiming for</li>
-              <li>have claimed for in the past</li>
-              <li>expect to claim for in the future</li>
-            </ul>
+            <%= step(1, "Enter the number of children Child Benefit is claimed for:") %>
             <label for="children_count" class="visuallyhidden">Number of children</label>
             <%= select_tag "children_count", options_for_select((1..10).collect{|n| [n,n]}, @calculator.children_count) %>
             <%= submit_tag "Update", :name => "children", :class => "button update-button" %>
           </fieldset>
 
           <fieldset id="children">
-            <%= step(2, "Enter the dates Child Benefit started and, if applicable, stopped.") %>
+            <%= step(2, "Enter the Child Benefit start and stop dates:") %>
             <p>Child Benefit usually starts when you have a baby, adopt or move in with a new partner and their children.</p>
             <%= render "starting_children" %>
           </fieldset>
 
           <fieldset id="tax-year">
-            <%= step(3, "To work out the Child Benefit received during a tax year, choose a tax year.") %>
+            <%= step(3, "Choose a tax year:") %>
             <p>Tax years run from 6 April to 5 April the following year.</p>
             <div class="tax-year<% if @calculator.errors.has_key?(:tax_year) %> validation-error<% end %>">
               <% @calculator.errors[:tax_year].each do |message| %>
@@ -67,41 +62,35 @@
           </fieldset>
 
           <fieldset id="adjusted_income">
-            <%= step(4, "To work out the Child Benefit tax charge, enter your adjusted net income for the tax year. Otherwise, leave it blank.") %>
-            <details class="help-panel">
-              <summary>Help working out your adjusted net income</summary>
-              <p>You can get some of this information from your P60, P11D, employer or a tax adviser</p>
-              <fieldset id="adjusted_net_income_calculator">
-              <%= label_tag "gross_income", "Salary" %>
-              <%= money_input "gross_income", @adjusted_net_income_calculator.gross_income %>
-              <%= label_tag "other_income", "Other employment income - eg self employment, taxable benefits (like a company car or medical insurance), bonuses" %> 
-              <%= money_input "other_income", @adjusted_net_income_calculator.other_income %>
-              <%= label_tag "pension_contributions_from_pay", "Pension contributions deducted from your pay" %> 
-              <%= money_input "pension_contributions_from_pay", @adjusted_net_income_calculator.pension_contributions_from_pay %>
-              <%= label_tag "retirement_annuities", "Retirement annuity contracts" %> 
-              <%= money_input "retirement_annuities", @adjusted_net_income_calculator.retirement_annuities %>
-              <%= label_tag "cycle_scheme", "Cycle scheme" %> 
-              <%= money_input "cycle_scheme", @adjusted_net_income_calculator.cycle_scheme %>
-              <%= label_tag "childcare", "Childcare - eg childcare vouchers up to £55 a week, the value of any workplace nursery places" %>
-              <%= money_input "childcare", @adjusted_net_income_calculator.childcare %>
-              <%= label_tag "pensions", "Pensions - eg from a state pension" %> 
-              <%= money_input "pensions", @adjusted_net_income_calculator.pensions %>
-              <%= label_tag "property", "Property - eg rental income" %> 
-              <%= money_input "property", @adjusted_net_income_calculator.property %>
-              <%= label_tag "non_employment_income", "Other income - eg from trading, taxable savings" %> 
-              <%= money_input "non_employment_income", @adjusted_net_income_calculator.non_employment_income %>
-              <%= label_tag "gift_aid_donations", "Gift Aid donations" %> 
-              <%= money_input "gift_aid_donations", @adjusted_net_income_calculator.gift_aid_donations %>
-              <%= label_tag "outgoing_pension_contributions", "Pension contributions not paid from your salary" %> 
-              <%= money_input "outgoing_pension_contributions", @adjusted_net_income_calculator.outgoing_pension_contributions %>
-
-              <%= submit_tag "Work out adjusted net income", :name => "adjusted_income", :class => "button" %>
-              </fieldset>
-            </details>
-
-            <p class="label">Enter your income or your partner's – whoever has the highest.</p>
-            <label for="adjusted_net_income" class="visuallyhidden">Adjusted net income</label>
-            <%= money_input "adjusted_net_income", @calculator.adjusted_net_income %>
+            <%= step(4, "Enter income details (optional):") %>
+            <ul>
+              <li>don’t combine your household income</li>
+              <li>use your partner’s income if it’s higher than yours</li>
+              <li>you may get some of this information from your P60, P11D, employer or tax adviser</li>
+            </ul>
+            <fieldset id="adjusted_net_income_calculator">
+            <%= label_tag "gross_income", "Salary before tax" %>
+            <%= money_input "gross_income", @adjusted_net_income_calculator.gross_income %>
+            <%= label_tag "other_income", "Other employment income - eg self employment, taxable benefits (like a company car or medical insurance), company dividends, bonuses" %>
+            <%= money_input "other_income", @adjusted_net_income_calculator.other_income %>
+            <%= label_tag "pension_contributions_from_pay", "Pension contributions deducted from your pay" %>
+            <%= money_input "pension_contributions_from_pay", @adjusted_net_income_calculator.pension_contributions_from_pay %>
+            <%= label_tag "retirement_annuities", "Retirement annuity contracts" %>
+            <%= money_input "retirement_annuities", @adjusted_net_income_calculator.retirement_annuities %>
+            <%= label_tag "cycle_scheme", "Cycle scheme" %>
+            <%= money_input "cycle_scheme", @adjusted_net_income_calculator.cycle_scheme %>
+            <%= label_tag "childcare", "Childcare - eg childcare vouchers up to £55 a week, the value of any workplace nursery places" %>
+            <%= money_input "childcare", @adjusted_net_income_calculator.childcare %>
+            <%= label_tag "pensions", "Pensions - eg from a state pension" %>
+            <%= money_input "pensions", @adjusted_net_income_calculator.pensions %>
+            <%= label_tag "property", "Property - eg rental income" %>
+            <%= money_input "property", @adjusted_net_income_calculator.property %>
+            <%= label_tag "non_employment_income", "Other income - eg from trading, taxable savings" %>
+            <%= money_input "non_employment_income", @adjusted_net_income_calculator.non_employment_income %>
+            <%= label_tag "gift_aid_donations", "Gift Aid donations" %>
+            <%= money_input "gift_aid_donations", @adjusted_net_income_calculator.gift_aid_donations %>
+            <%= label_tag "outgoing_pension_contributions", "Pension contributions not paid from your salary" %>
+            <%= money_input "outgoing_pension_contributions", @adjusted_net_income_calculator.outgoing_pension_contributions %>
           </fieldset>
 
           <%= submit_tag "Calculate", :name => "results", :class => "button" %>
