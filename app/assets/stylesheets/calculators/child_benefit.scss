@@ -1,30 +1,34 @@
-.calculator-page header.page-header div h1 {
-  @include bold-48;
+.calculator-page {
+  @include core-19;
 
-  .inner {
-    padding-right: 2em;
-    & > *:first-child{
-      margin-top: 30px;
+  header.page-header div h1 {
+    @include bold-48;
+
+    .inner {
+      padding-right: 2em;
+      & > *:first-child{
+        margin-top: 30px;
+      }
     }
   }
 }
 
-article {
-  @extend %contain-floats;
+ul {
+  padding-left: 1em;
+  margin: 0.2em 0 0.75em;
+  list-style-type: circle;
+  list-style-image: image-url("bullet-disc-5px.gif");
+}
 
-  h2 {
-    margin: 2em 0 0.8em 0;
-    padding: 0;
-  }
+li {
+  margin: 0.25em 0;
+  padding-left: 0.3em;
+}
 
-  h4 {
-    font-weight: bold;
-  }
-
-  p + .help-notice,
-  p + .info-notice {
-    margin-top: 1em;
-  }
+form.calculator,
+.results {
+  width: 75%;
+  padding: 0 2em 1em 2em;
 }
 
 /* ================================================================
@@ -32,16 +36,147 @@ article {
  * ================================================================
  */
 
-label {
-  @include core-19;
-  display: block;
-}
+form.calculator {
+  width: 75%;
+  padding: 0 2em 1em 2em;
 
-select {
-  @include core-14;
-  margin: 0.2em 0.5em 0.4em 0;
-  vertical-align: baseline;
-  border: 1px solid;
+  h2 {
+    margin: 2em 0 0.8em 0;
+    padding: 0;
+    @include bold-24;
+  }
+
+  h3 {
+    color: #0b0c0c;
+  }
+
+  h4 {
+    font-weight: bold;
+  }
+
+  h5 {
+    font-weight: bold;
+    font-size: 1.9rem;
+  }
+
+  p + .help-notice,
+  p + .info-notice {
+    margin-top: 1em;
+  }
+
+  fieldset {
+    margin-bottom: 1em;
+    &#adjusted_income {
+      margin-bottom: 3em;
+    }
+  }
+
+  label {
+    @include core-19;
+    display: block;
+  }
+
+  select {
+    @include core-14;
+    margin: 0.2em 0.5em 0.4em 0;
+    vertical-align: baseline;
+    border: 1px solid;
+  }
+
+  input[type="text"] {
+    display:block;
+    margin: 0.2em 0 1em 0;
+  }
+
+  input[type="radio"] {
+    margin-right: 0.5em;
+  }
+
+  #year_2013 {
+    margin-left: 1em;
+  }
+
+  p {
+    &.group {
+      margin-top: 0.5em;
+      padding: 0;
+    }
+
+    &.number-input {
+      margin-top: 1.5em;
+    }
+  }
+
+  #children {
+    margin-bottom: 0em;
+
+    h3 {
+      @include bold-19;
+      line-height: 1.5;
+      clear: left;
+      margin: 0;
+    }
+  }
+
+  .date-selection {
+    float: left;
+    margin-right: 2em;
+    padding-bottom: 1.5em;
+  }
+
+  div:last-child .date-selection {
+    padding-bottom: 0;
+  }
+
+  .tax-year label {
+    @include core-16;
+    display: inline;
+  }
+
+  .steps {
+    margin: 0;
+    float: left;
+    width: 23px;
+    height: 23px;
+    margin-right: 0.75em;
+  }
+
+  #step-1 {
+    background-image: image-url("icon-step-1.png");
+  }
+
+  #step-2 {
+    background-image: image-url("icon-step-2.png");
+  }
+
+  #step-3 {
+    background-image: image-url("icon-step-3.png");
+  }
+
+  #step-4 {
+    background-image: image-url("icon-step-4.png");
+  }
+
+  .intro {
+    padding: 0;
+    margin-bottom: 3em;
+  }
+
+  .link{
+    @include core-19;
+    background: none;
+    padding-top: 0.5em;
+    color: #2e3191;
+    text-decoration: underline;
+    @include box-shadow(none);
+    border: none;
+    overflow: visible; 
+
+    &:hover,
+    &:focus{
+      color: #2e8aca;
+    }
+  }
 }
 
 .help-panel {
@@ -117,121 +252,14 @@ details.help-panel {
   }
 }
 
-.questions,
-.results {
-  float: left;
-  @include media(tablet) {
-    float: none;
+.validation-summary {
+  h1 {
+    @include bold-24;
   }
 }
 
-.validation-error,
-article .application-notice {
+.validation-error {
     zoom: 1;
-}
-
-article .application-notice {
-  margin: 1em -1em 1em -1em;
-}
-
-#calculator {
-  h5 {
-    font-weight: bold;
-    font-size: 1.9rem;
-  }
-
-  fieldset {
-    margin-bottom: 1em;
-    &#adjusted_income {
-      margin-bottom: 3em;
-    }
-  }
-
-  input[type="text"] {
-    display:block;
-    margin: 0.2em 0 1em 0;
-  }
-
-  input[type="radio"] {
-    margin-right: 0.5em;
-  }
-
-  #year_2013 {
-    margin-left: 1em;
-  }
-
-  p {
-    &.group {
-      margin-top: 0.5em;
-      padding: 0;
-    }
-
-    &.number-input {
-      margin-top: 1.5em;
-    }
-  }
-
-  #children h3 {
-    line-height: 1.5;
-    clear: left;
-    margin: 0;
-  }
-
-  .date-selection {
-    float: left;
-    padding-bottom: 1.5em;
-    margin-right: 2em;
-  }
-
-  .tax-year label {
-    @include core-16;
-    display: inline;
-  }
-
-  .steps {
-    margin: 0;
-    float: left;
-    width: 23px;
-    height: 23px;
-    margin-right: 0.75em;
-  }
-
-  #step-1 {
-    background-image: image-url("icon-step-1.png");
-  }
-
-  #step-2 {
-    background-image: image-url("icon-step-2.png");
-  }
-
-  #step-3 {
-    background-image: image-url("icon-step-3.png");
-  }
-
-  #step-4 {
-    background-image: image-url("icon-step-4.png");
-  }
-
-  .intro {
-    padding: 0;
-    margin-bottom: 3em;
-  }
-
-  .link{
-    @include core-19;
-    background: none;
-    padding-top: 0.5em;
-    color: #2e3191;
-    text-decoration: underline;
-    @include box-shadow(none);
-    border: none;
-    overflow: visible; 
-
-    &:hover,
-    &:focus{
-      color: #2e8aca;
-    }
-  }
 }
 
 fieldset#adjusted_net_income_calculator {
@@ -242,19 +270,14 @@ fieldset#adjusted_net_income_calculator {
 .results {
   width: 80%;
 
-  h1 {
-    @include core-48;
-    font-weight: 600;
-  }
-
   h2 {
-    margin-top: 1em;
+    @include bold-48;
   }
 
-  h4 {
-    @include core-24;
-    font-weight: 600;
-    margin-top: 1em;
+  h3 {
+    @include bold-24;
+    margin: 1em 0 0.8em 0;
+    padding: 0;
   }
 }
 

@@ -9,17 +9,13 @@
     <a class="skip-to-related" href="#related">Not what you're looking for? ↓</a>
   </header>
 
-  <article id="calculator">
-    <section class="questions" aria-labelledby="questions">
-      <h1 class="visuallyhidden" id="questions">Questions</h1>
-      <div class="inner">
-        <%= form_tag("process_form", :method => :get, :id => "child_benefit_tax_calculator") do %>
+        <%= form_tag("process_form", :method => :get, :id => "child_benefit_tax_calculator", :class => "calculator") do %>
           <!-- hidden field to store the tax year so it can persist -->
           <input type="hidden" name="year" value="<%= params[:year] %>" />
 
           <% if @calculator.has_errors? -%>
             <div class="validation-summary">
-              <h1>Please check the form</h1>
+              <h2>Please check the form</h2>
               <ul>
                 <% @calculator.errors.each do |key, message| -%>
                   <li><a href="#tax-year"><%= message %></a></li>
@@ -95,16 +91,11 @@
 
           <%= submit_tag "Calculate", :name => "results", :class => "button" %>
         <% end %>
-      </div><!-- end .inner -->
-    </section><!-- end .questions -->
     
     <% if can_haz_results? -%>
-    <section class="results" aria-labelledby="results">
-      <div class="inner">
-        <h1 id="results">Results</h1>
-        <%= render "results" %>
-      </div><!-- end .inner -->
-    </section>
+    <div class="results">
+      <h2 id="results">Results</h2>
+      <%= render "results" %>
+    </div><!-- end .inner -->
     <% end -%>
-  </article><!-- end .thirds -->
 </main>

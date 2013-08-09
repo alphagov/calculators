@@ -1,7 +1,7 @@
 <div class="date-selection">
   <p class="label">Start date</p>
   <% [:day, :month, :year].each do |time_unit| %>
-    <label for="starting_children_<%= index %>_start_<%= time_unit %>" class="visuallyhidden">Start <%= time_unit %></label>
+    <label for="starting_children_<%= index %>_start_<%= time_unit %>" class="visuallyhidden">Start <%= time_unit %> for child <%= index + 1 %></label>
   <% end %>
   <%= select_date (child ? child.start_date : nil), :prefix => "starting_children[#{index}][start]", 
     :prompt => {:day => "Day", :month => "Month", :year => "Year" }, :order => [:day, :month, :year],
@@ -11,7 +11,7 @@
 <div class="date-selection">
   <p class="label">Stop date (optional)</p>
   <% [:day, :month, :year].each do |time_unit| %>
-    <label for="starting_children_<%= index %>_stop_<%= time_unit %>" class="visuallyhidden">Start <%= time_unit %></label>
+    <label for="starting_children_<%= index %>_stop_<%= time_unit %>" class="visuallyhidden">Stop <%= time_unit %> for child <%= index + 1 %></label>
   <% end %>
   <%= select_date (child ? child.end_date : nil), :prefix => "starting_children[#{index}][stop]",
     :prompt => {:day => "Day", :month => "Month", :year => "Year" }, :order => [:day, :month, :year],
