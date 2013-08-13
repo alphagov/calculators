@@ -405,11 +405,11 @@ feature "Child Benefit Tax Calculator" do
         child_benefit_value_is("£0.00")
       end
 
-      specify "should have no child benefit when start date is 01/05/2014" do
+      specify "should have no child benefit when start date is 01/04/2014" do
         visit "/child-benefit-tax-calculator/main"
 
         select "2014", :from => "starting_children_0_start_year"
-        select "May", :from => "starting_children_0_start_month"
+        select "April", :from => "starting_children_0_start_month"
         select "1", :from => "starting_children_0_start_day"
         choose "year_2013"
 
@@ -418,11 +418,11 @@ feature "Child Benefit Tax Calculator" do
         child_benefit_value_is("£0.00")
       end
 
-      specify "should have no child benefit when start date is 05/05/2014" do
+      specify "should have no child benefit when start date is 05/04/2014" do
         visit "/child-benefit-tax-calculator/main"
 
         select "2014", :from => "starting_children_0_start_year"
-        select "May", :from => "starting_children_0_start_month"
+        select "April", :from => "starting_children_0_start_month"
         select "5", :from => "starting_children_0_start_day"
         choose "year_2013"
 
