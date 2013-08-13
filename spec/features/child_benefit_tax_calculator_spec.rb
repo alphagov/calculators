@@ -402,11 +402,7 @@ feature "Child Benefit Tax Calculator" do
 
         click_button "Calculate"
 
-        within ".results" do
-          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h2[.='Child Benefit received']]" do
-            page.should have_content("£0.00")
-          end
-        end
+        child_benefit_value_is("£0.00")
       end
 
       specify "should have no child benefit when start date is 01/05/2014" do
@@ -419,11 +415,7 @@ feature "Child Benefit Tax Calculator" do
 
         click_button "Calculate"
 
-        within ".results" do
-          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h2[.='Child Benefit received']]" do
-            page.should have_content("£0.00")
-          end
-        end
+        child_benefit_value_is("£0.00")
       end
 
       specify "should have no child benefit when start date is 05/05/2014" do
@@ -436,11 +428,7 @@ feature "Child Benefit Tax Calculator" do
 
         click_button "Calculate"
 
-        within ".results" do
-          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h2[.='Child Benefit received']]" do
-            page.should have_content("£0.00")
-          end
-        end
+        child_benefit_value_is("£0.00")
       end
     end
   end
