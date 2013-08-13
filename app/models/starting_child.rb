@@ -25,6 +25,10 @@ class StartingChild
     @end_date ? @end_date : tax_years[tax_years.keys.sort.last].last
   end
 
+  def adjusted_start_date
+    return @start_date if @start_date <= Date.parse("7 January 2013")
+  end
+
   private
 
   def valid_dates
