@@ -389,4 +389,59 @@ feature "Child Benefit Tax Calculator" do
 
     end # ANI below threshold
   end
+
+  describe "child benefit week runs Monday to Sunday" do
+    context "tax year is 2013/2014" do
+      specify "should have no child benefit when start date is 31/03/2014" do
+        visit "/child-benefit-tax-calculator/main"
+
+        select "2014", :from => "starting_children_0_start_year"
+        select "March", :from => "starting_children_0_start_month"
+        select "31", :from => "starting_children_0_start_day"
+        choose "year_2013"
+
+        click_button "Calculate"
+
+        within ".results" do
+          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h2[.='Child Benefit received']]" do
+            page.should have_content("£0.00")
+          end
+        end
+      end
+
+      specify "should have no child benefit when start date is 01/05/2014" do
+        visit "/child-benefit-tax-calculator/main"
+
+        select "2014", :from => "starting_children_0_start_year"
+        select "May", :from => "starting_children_0_start_month"
+        select "1", :from => "starting_children_0_start_day"
+        choose "year_2013"
+
+        click_button "Calculate"
+
+        within ".results" do
+          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h2[.='Child Benefit received']]" do
+            page.should have_content("£0.00")
+          end
+        end
+      end
+
+      specify "should have no child benefit when start date is 05/05/2014" do
+        visit "/child-benefit-tax-calculator/main"
+
+        select "2014", :from => "starting_children_0_start_year"
+        select "May", :from => "starting_children_0_start_month"
+        select "5", :from => "starting_children_0_start_day"
+        choose "year_2013"
+
+        click_button "Calculate"
+
+        within ".results" do
+          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h2[.='Child Benefit received']]" do
+            page.should have_content("£0.00")
+          end
+        end
+      end
+    end
+  end
 end
