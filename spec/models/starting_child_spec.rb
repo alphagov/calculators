@@ -22,5 +22,13 @@ describe StartingChild do
       assert_equal Date.parse("7 January 2013"),
                    StartingChild.new(:start => {:year => "2013", :month => "01", :day => "07"}).adjusted_start_date
     end
+
+    it "should return the next Monday for the provided start date" do
+      assert_equal Date.parse("13 May 2013"),
+                   StartingChild.new(:start => {:year => "2013", :month => "05", :day => "08"}).adjusted_start_date
+
+      assert_equal Date.parse("19 August 2013"),
+                   StartingChild.new(:start => {:year => "2013", :month => "08", :day => "13"}).adjusted_start_date
+    end
   end
 end
