@@ -74,7 +74,7 @@ class ChildBenefitTaxCalculator
     (child_benefit_start_date...child_benefit_end_date).each_slice(7) do |week|
       all_weeks_children[week.first] = 0
       @starting_children.each do |child|
-        if days_include_week?(child.start_date, child.benefits_end, week.first)
+        if days_include_week?(child.adjusted_start_date, child.benefits_end, week.first)
           all_weeks_children[week.first] += 1
         end
       end
