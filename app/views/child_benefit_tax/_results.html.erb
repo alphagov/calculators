@@ -5,7 +5,7 @@
   <% if @calculator.tax_year == 2012 -%>
     <p>Received between 7 January and 5 April 2013.</p>
   <% end -%>
-  <p>Use this figure in your <%= tax_year_label(@calculator.tax_year) %> tax return (if you fill one in).</p>
+  <p>Use this figure in your <%= tax_year_label(@calculator.tax_year) %> Self Assessment tax return (if you fill one in).</p>
 </div>
 <%# tax estimate %>
 <% if @calculator.adjusted_net_income -%>
@@ -32,10 +32,14 @@
 
       <h3>How and when to pay</h3>
 
-      <p>The tax must be paid by <%= tax_payment_deadline %>.</p>
-      <p>To pay the tax you must send a tax return.</p>
+      <p>To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:</p>
+      <p>1. <a href="<%= internal_url "/register-for-self-assessment" %>">Register for Self Assessment</a> if you don’t already fill in a tax return - you should do this by <%= tax_payment_deadline %>.</p>
       <p>There are <a href="<%= internal_url "/self-assessment-tax-return-deadlines" %>">deadlines</a> for sending the return. If you’ve not sent one before, you should also register for Self Assessment by <%= sa_register_deadline %>.</p>
-      <p>Find out about <a href="<%= internal_url "/child-benefit-tax-charge/pay-the-charge" %>">how and when to pay</a>.</p>
+      <p>2. Fill in the tax return and confirm the amount of Child Benefit received for the tax year.</p>
+      <p>3. Send the tax return.</p>
+      <p>4. Pay the tax you owe.</p>
+      <p>There are <a href="<%= internal_url "/self-assessment-tax-return-deadlines" %>">deadlines</a> for sending the tax return and paying the tax.</p>
+      <p>The person with the highest income pays the tax charge, so use your partner’s income in the calculator if it’s higher than yours.</p>
 
       <h3>Your Child Benefit</h3>
       <p>You can choose to:</p>
