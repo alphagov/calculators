@@ -256,7 +256,7 @@ feature "Child Benefit Tax Calculator" do
         click_button "Calculate"
         
         within ".results" do
-          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h2[.='Child Benefit received']]" do
+          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h3[.='Child Benefit received']]" do
             page.should have_content("£263.90")
             page.should have_content("Received between 7 January and 5 April 2013.")
             page.should have_content("Use this figure in your 2012 to 2013 tax return (if you fill one in).")
@@ -272,7 +272,7 @@ feature "Child Benefit Tax Calculator" do
         click_button "Calculate"
         
         within ".results" do
-          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h2[.='Child Benefit received']]" do
+          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h3[.='Child Benefit received']]" do
             page.should have_content("£1,055.60")
             page.should_not have_content("Received between 7 January and 5 April 2013.")
             page.should have_content("Use this figure in your 2013 to 2014 tax return (if you fill one in).")
@@ -299,7 +299,7 @@ feature "Child Benefit Tax Calculator" do
         click_button "Calculate"
 
         within ".results" do
-          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h2[.='Child Benefit received']]" do
+          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h3[.='Child Benefit received']]" do
             page.should have_content("£263.90")
             page.should have_content("Received between 7 January and 5 April 2013.")
             page.should have_content("Use this figure in your 2012 to 2013 tax return (if you fill one in).")
@@ -307,7 +307,7 @@ feature "Child Benefit Tax Calculator" do
 
           page.should_not have_content("To work out the tax charge, enter your income")
 
-          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h2[.='Tax charge to pay']]" do
+          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h3[.='Tax charge to pay']]" do
             page.should have_content("£131.00")
             page.should have_content("The tax charge only applies to the Child Benefit received between 7 January and 5 April 2013 and is based on your estimated adjusted net income of £55,000.00.")
 
@@ -324,7 +324,7 @@ feature "Child Benefit Tax Calculator" do
         click_button "Calculate"
 
         within ".results" do
-          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h2[.='Child Benefit received']]" do
+          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h3[.='Child Benefit received']]" do
             page.should have_content("£1,055.60")
             page.should_not have_content("Received between 7 January and 5 April 2013.")
             page.should have_content("Use this figure in your 2013 to 2014 tax return (if you fill one in).")
@@ -332,7 +332,7 @@ feature "Child Benefit Tax Calculator" do
 
           page.should_not have_content("To work out the tax charge, enter your income")
 
-          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h2[.='Tax charge to pay']]" do
+          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h3[.='Tax charge to pay']]" do
             page.should have_content("£527.00")
             page.should_not have_content("The tax charge only applies to the Child Benefit received between 7 January and 5 April 2013")
 
@@ -351,7 +351,7 @@ feature "Child Benefit Tax Calculator" do
         click_button "Calculate"
 
         within ".results" do
-          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h2[.='Tax charge to pay']]" do
+          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h3[.='Tax charge to pay']]" do
             page.should have_content("This is an estimate based on your adjusted net income of £55,000.00 - your circumstances may change before the end of the tax year.")
           end
         end
@@ -372,7 +372,7 @@ feature "Child Benefit Tax Calculator" do
         click_button "Calculate"
 
         within ".results" do
-          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h2[.='Child Benefit received']]" do
+          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h3[.='Child Benefit received']]" do
             page.should have_content("£1,055.60")
             page.should_not have_content("Received between 7 January and 5 April 2013.")
             page.should have_content("Use this figure in your 2013 to 2014 tax return (if you fill one in).")
@@ -380,7 +380,7 @@ feature "Child Benefit Tax Calculator" do
 
           page.should_not have_content("To work out the tax charge, enter your income")
 
-          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h2[.='Tax charge to pay']]" do
+          within :xpath, ".//div[contains(@class, 'results_estimate')][.//h3[.='Tax charge to pay']]" do
             page.should have_content("£0.00")
             page.should have_content("There is no tax charge if your income is below £50,099.")
           end
