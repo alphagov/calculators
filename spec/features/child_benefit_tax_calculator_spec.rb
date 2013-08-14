@@ -392,6 +392,19 @@ feature "Child Benefit Tax Calculator" do
 
   describe "child benefit week runs Monday to Sunday" do
     context "tax year is 2012/2013" do
+      specify "should have no child benefit when start date is 07/01/2013" do
+        visit "/child-benefit-tax-calculator/main"
+
+        select "2013", :from => "starting_children_0_start_year"
+        select "January", :from => "starting_children_0_start_month"
+        select "7", :from => "starting_children_0_start_day"
+        choose "year_2012"
+
+        click_button "Calculate"
+
+        page.should contain_child_benefit_value("£263.90")
+      end
+
       specify "should have no child benefit when start date is 01/04/2013" do
         visit "/child-benefit-tax-calculator/main"
 
