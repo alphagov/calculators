@@ -26,7 +26,7 @@ class StartingChild
   end
 
   def adjusted_start_date
-    return @start_date if @start_date <= Date.parse("7 January 2013")
+    return @start_date if @start_date === Date.parse("7 January 2013")
     next_monday_for_date(@start_date)
   end
 

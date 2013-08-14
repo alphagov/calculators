@@ -15,15 +15,15 @@ describe StartingChild do
   end
 
   describe "adjusted_start_date" do
-    it "should return the same start date if on or before 7th January 2013" do
-      assert_equal Date.parse("1 January 2012"),
-                   StartingChild.new(:start => {:year => "2012", :month => "01", :day => "01"}).adjusted_start_date
-
+    it "should return the same start date if on 7th January 2013" do
       assert_equal Date.parse("7 January 2013"),
                    StartingChild.new(:start => {:year => "2013", :month => "01", :day => "07"}).adjusted_start_date
     end
 
     it "should return the next Monday for the provided start date" do
+      assert_equal Date.parse("9 January 2012"),
+                   StartingChild.new(:start => {:year => "2012", :month => "01", :day => "01"}).adjusted_start_date
+
       assert_equal Date.parse("13 May 2013"),
                    StartingChild.new(:start => {:year => "2013", :month => "05", :day => "08"}).adjusted_start_date
 
