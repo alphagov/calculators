@@ -373,7 +373,7 @@ describe ChildBenefitTaxCalculator do
           :children_count => 1,
           :starting_children => {
             "0" => {
-              :start => { :year => "2014", :month => "03", :day => "01" },
+              :start => { :year => "2014", :month => "02", :day => "22" },
               :stop => { :year => "", :month => "", :day => ""}
             }
           },

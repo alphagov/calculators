@@ -74,7 +74,7 @@ class ChildBenefitTaxCalculator
     (child_benefit_start_date...child_benefit_end_date).each_slice(7) do |week|
       all_weeks_children[week.first] = 0
       @starting_children.each do |child|
-        if days_include_week?(child.start_date, child.benefits_end, week.first)
+        if days_include_week?(child.adjusted_start_date, child.benefits_end, week.first)
           all_weeks_children[week.first] += 1
         end
       end
@@ -149,40 +149,4 @@ class ChildBenefitTaxCalculator
   def valid_child_dates
     @starting_children.each { |c| c.valid? }
   end
-end
-
-class StartingChild
-  
-  include ActiveModel::Validations
-
-  validates_presence_of :start_date, :message => "Enter the date Child Benefit started"
-  validate :valid_dates
-
-  attr_reader :start_date, :end_date
-  def initialize(params = {})
-    if ChildBenefitTaxCalculator.valid_date_params?(params[:start])
-      @start_date = Date.new(params[:start][:year].to_i,
-                             params[:start][:month].to_i,
-                             params[:start][:day].to_i)
-    end
-    if ChildBenefitTaxCalculator.valid_date_params?(params[:stop]) 
-      @end_date = Date.new(params[:stop][:year].to_i,
-                           params[:stop][:month].to_i,
-                           params[:stop][:day].to_i)
-    end
-  end
-
-  def benefits_end
-    tax_years = ChildBenefitTaxCalculator::TAX_YEARS
-    @end_date ? @end_date : tax_years[tax_years.keys.sort.last].last
-  end
-
-  private
-
-  def valid_dates
-    if @start_date and @end_date and @start_date >= @end_date
-      errors.add(:end_date, "Child Benefit start date must be before stop date")
-    end
-  end
-
 end

@@ -389,4 +389,88 @@ feature "Child Benefit Tax Calculator" do
 
     end # ANI below threshold
   end
+
+  describe "child benefit week runs Monday to Sunday" do
+    context "tax year is 2012/2013" do
+      specify "should have no child benefit when start date is 07/01/2013" do
+        visit "/child-benefit-tax-calculator/main"
+
+        select "2013", :from => "starting_children_0_start_year"
+        select "January", :from => "starting_children_0_start_month"
+        select "7", :from => "starting_children_0_start_day"
+        choose "year_2012"
+
+        click_button "Calculate"
+
+        page.should contain_child_benefit_value("£263.90")
+      end
+
+      specify "should have no child benefit when start date is 01/04/2013" do
+        visit "/child-benefit-tax-calculator/main"
+
+        select "2013", :from => "starting_children_0_start_year"
+        select "April", :from => "starting_children_0_start_month"
+        select "1", :from => "starting_children_0_start_day"
+        choose "year_2012"
+
+        click_button "Calculate"
+
+        page.should contain_child_benefit_value("£0.00")
+      end
+
+      specify "should have no child benefit when start date is 05/04/2013" do
+        visit "/child-benefit-tax-calculator/main"
+
+        select "2013", :from => "starting_children_0_start_year"
+        select "April", :from => "starting_children_0_start_month"
+        select "5", :from => "starting_children_0_start_day"
+        choose "year_2012"
+
+        click_button "Calculate"
+
+        page.should contain_child_benefit_value("£0.00")
+      end
+    end
+
+    context "tax year is 2013/2014" do
+      specify "should have no child benefit when start date is 31/03/2014" do
+        visit "/child-benefit-tax-calculator/main"
+
+        select "2014", :from => "starting_children_0_start_year"
+        select "March", :from => "starting_children_0_start_month"
+        select "31", :from => "starting_children_0_start_day"
+        choose "year_2013"
+
+        click_button "Calculate"
+
+        page.should contain_child_benefit_value("£0.00")
+      end
+
+      specify "should have no child benefit when start date is 01/04/2014" do
+        visit "/child-benefit-tax-calculator/main"
+
+        select "2014", :from => "starting_children_0_start_year"
+        select "April", :from => "starting_children_0_start_month"
+        select "1", :from => "starting_children_0_start_day"
+        choose "year_2013"
+
+        click_button "Calculate"
+
+        page.should contain_child_benefit_value("£0.00")
+      end
+
+      specify "should have no child benefit when start date is 05/04/2014" do
+        visit "/child-benefit-tax-calculator/main"
+
+        select "2014", :from => "starting_children_0_start_year"
+        select "April", :from => "starting_children_0_start_month"
+        select "5", :from => "starting_children_0_start_day"
+        choose "year_2013"
+
+        click_button "Calculate"
+
+        page.should contain_child_benefit_value("£0.00")
+      end
+    end
+  end
 end
