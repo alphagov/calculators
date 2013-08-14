@@ -402,7 +402,7 @@ feature "Child Benefit Tax Calculator" do
 
         click_button "Calculate"
 
-        child_benefit_value_is("£0.00")
+        page.should contain_child_benefit_value("£0.00")
       end
 
       specify "should have no child benefit when start date is 05/04/2013" do
@@ -415,7 +415,7 @@ feature "Child Benefit Tax Calculator" do
 
         click_button "Calculate"
 
-        child_benefit_value_is("£0.00")
+        page.should contain_child_benefit_value("£0.00")
       end
     end
 
@@ -430,7 +430,7 @@ feature "Child Benefit Tax Calculator" do
 
         click_button "Calculate"
 
-        child_benefit_value_is("£0.00")
+        page.should contain_child_benefit_value("£0.00")
       end
 
       specify "should have no child benefit when start date is 01/04/2014" do
@@ -443,7 +443,7 @@ feature "Child Benefit Tax Calculator" do
 
         click_button "Calculate"
 
-        child_benefit_value_is("£0.00")
+        page.should contain_child_benefit_value("£0.00")
       end
 
       specify "should have no child benefit when start date is 05/04/2014" do
@@ -456,7 +456,7 @@ feature "Child Benefit Tax Calculator" do
 
         click_button "Calculate"
 
-        child_benefit_value_is("£0.00")
+        page.should contain_child_benefit_value("£0.00")
       end
     end
   end
