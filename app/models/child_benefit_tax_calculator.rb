@@ -18,6 +18,7 @@ class ChildBenefitTaxCalculator
 
   validate :valid_child_dates
   validates_inclusion_of :tax_year, :in => TAX_YEARS.keys.map(&:to_i), :message => "Select a tax year"
+  validate :tax_year_contains_at_least_one_child
 
   def initialize(params = {})
     @adjusted_net_income_calculator = AdjustedNetIncomeCalculator.new(params)
@@ -152,5 +153,17 @@ class ChildBenefitTaxCalculator
 
   def valid_child_dates
     @starting_children.each { |c| c.valid? }
+  end
+
+  def tax_year_contains_at_least_one_child
+    return unless selected_tax_year.present?
+
+    out_of_tax_year = @starting_children.select {|c| c.start_date > selected_tax_year.last || (c.end_date.present? && c.end_date < selected_tax_year.first) }
+    if out_of_tax_year.any?
+      errors.add(:tax_year, "You haven't received any Child Benefit for the tax year selected. Check your Child Benefit dates or choose a different tax year.")
+      out_of_tax_year.each do |child|
+        child.errors.add(:end_date, "You haven't received any Child Benefit for the tax year selected. Check your Child Benefit dates or choose a different tax year.")
+      end
+    end
   end
 end
