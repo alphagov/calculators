@@ -127,8 +127,6 @@ feature "Child Benefit Tax Calculator" do
       page.should have_select("starting_children_0_start_month", :selected => "January")
       page.should have_select("starting_children_0_start_day", :selected => "1")
 
-      save_page
-
       page.should have_css("#starting_children_2_start_year")
       page.should have_css("#starting_children_2_start_month")
       page.should have_css("#starting_children_2_start_day")
