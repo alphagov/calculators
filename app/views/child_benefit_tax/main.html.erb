@@ -91,10 +91,10 @@
 
           <%= submit_tag "Calculate", :name => "results", :class => "button" %>
         <% end %>
-    
+
     <% if can_haz_results? -%>
     <div class="results">
-      <h2 id="results">Results</h2>
+      <h2 id="results" tabindex="0">Results</h2>
       <%= render "results" %>
     </div><!-- end .inner -->
     <% end -%>
