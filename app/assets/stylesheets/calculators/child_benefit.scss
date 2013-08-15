@@ -20,6 +20,10 @@ ul {
   list-style-image: image-url("bullet-disc-5px.gif");
 }
 
+ol {
+  list-style: decimal;
+}
+
 li {
   margin: 0.25em 0;
   padding-left: 0.3em;
