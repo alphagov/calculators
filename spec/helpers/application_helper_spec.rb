@@ -12,4 +12,12 @@ describe ApplicationHelper do
     internal_url("/blah").should == "/blah"
   end
 
+  it "generates the html for a step" do
+    step(1, "Blah").should == "<h2><span class='steps' id='step-1'><span class='visuallyhidden'>Step 1</span></span>Blah</h2>"
+  end
+
+  it "generates the html for a step with a description" do
+    step(1, "Blah", "(optional)").should == "<h2><span class='steps' id='step-1'><span class='visuallyhidden'>Step 1</span></span>Blah <span id='step-1-description'>(optional)</span></h2>"
+  end
+
 end
