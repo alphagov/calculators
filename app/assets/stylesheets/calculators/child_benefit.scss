@@ -43,6 +43,7 @@ form.calculator,
 form.calculator {
   width: 75%;
   padding: 0 2em 1em 2em;
+  margin-bottom: 3em;
 
   h2 {
     margin: 2em 0 0.8em 0;
@@ -238,7 +239,7 @@ details.help-panel {
   .js-enabled & {
     display: none;
   }
-} 
+}  s
 
 #results .button {
   @include core-16;

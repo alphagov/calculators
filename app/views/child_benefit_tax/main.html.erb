@@ -64,7 +64,7 @@
               <li>use your partner’s income if it’s higher than yours</li>
               <li>you may get some of this information from your P60, P11D, employer or tax adviser</li>
             </ul>
-            <fieldset id="adjusted_net_income_calculator">
+            <div id="adjusted_net_income_calculator">
             <%= label_tag "gross_income", "Salary before tax" %>
             <%= money_input "gross_income", @adjusted_net_income_calculator.gross_income %>
             <%= label_tag "other_income", "Other employment income - eg self employment, taxable benefits (like a company car or medical insurance), company dividends, bonuses" %>
@@ -87,6 +87,7 @@
             <%= money_input "gift_aid_donations", @adjusted_net_income_calculator.gift_aid_donations %>
             <%= label_tag "outgoing_pension_contributions", "Pension contributions not paid from your salary" %>
             <%= money_input "outgoing_pension_contributions", @adjusted_net_income_calculator.outgoing_pension_contributions %>
+          </div>
           </fieldset>
 
           <%= submit_tag "Calculate", :name => "results", :class => "button" %>
