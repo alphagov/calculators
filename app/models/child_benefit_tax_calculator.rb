@@ -54,15 +54,19 @@ class ChildBenefitTaxCalculator
   end
 
   def child_benefit_start_date
-    @tax_year == 2012 ? Date.parse('7 Jan 2013') : TAX_YEARS[@tax_year.to_s].first
+    @tax_year == 2012 ? Date.parse('7 Jan 2013') : selected_tax_year.first
   end
 
   def child_benefit_end_date
-    TAX_YEARS[@tax_year.to_s].last
+    selected_tax_year.last
   end
 
   def can_calculate?
     TAX_YEARS.keys.map(&:to_i).include?(@tax_year) and !@starting_children.empty?
+  end
+
+  def selected_tax_year
+    TAX_YEARS[@tax_year.to_s]
   end
 
   def can_estimate?
