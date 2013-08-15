@@ -8,6 +8,11 @@ describe ChildBenefitTaxHelper do
       money_input('foo', 0).should == '<input id="foo" name="foo" placeholder="£" type="text" />'
       money_input('foo', 200).should == '<input id="foo" name="foo" placeholder="£" type="text" value="£200.00" />'
     end
+
+    it "combines the field tag options with the placeholder value" do
+      money_input('foo', 0, :foo => "bar").should == '<input foo="bar" id="foo" name="foo" placeholder="£" type="text" />'
+      money_input('foo', 0, :placeholder => "Enter something").should == '<input id="foo" name="foo" placeholder="Enter something" type="text" />'
+    end
   end
 
   describe "tax_year_label" do

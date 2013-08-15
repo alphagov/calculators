@@ -58,7 +58,7 @@
           </fieldset>
 
           <fieldset id="adjusted_income">
-            <%= step(4, "Enter income details for the tax year (optional):") %>
+            <%= step(4, "Enter income details for the tax year", "(optional):") %>
             <ul>
               <li>don’t combine your household income</li>
               <li>use your partner’s income if it’s higher than yours</li>
@@ -66,27 +66,27 @@
             </ul>
             <fieldset id="adjusted_net_income_calculator">
             <%= label_tag "gross_income", "Salary before tax" %>
-            <%= money_input "gross_income", @adjusted_net_income_calculator.gross_income %>
+            <%= money_input "gross_income", @adjusted_net_income_calculator.gross_income, 'aria-describedby' => 'step-4-description' %>
             <%= label_tag "other_income", "Other employment income - eg self employment, taxable benefits (like a company car or medical insurance), company dividends, bonuses" %>
-            <%= money_input "other_income", @adjusted_net_income_calculator.other_income %>
+            <%= money_input "other_income", @adjusted_net_income_calculator.other_income, 'aria-describedby' => 'step-4-description' %>
             <%= label_tag "pension_contributions_from_pay", "Pension contributions deducted from your pay" %>
-            <%= money_input "pension_contributions_from_pay", @adjusted_net_income_calculator.pension_contributions_from_pay %>
+            <%= money_input "pension_contributions_from_pay", @adjusted_net_income_calculator.pension_contributions_from_pay, 'aria-describedby' => 'step-4-description' %>
             <%= label_tag "retirement_annuities", "Retirement annuity contracts" %>
-            <%= money_input "retirement_annuities", @adjusted_net_income_calculator.retirement_annuities %>
+            <%= money_input "retirement_annuities", @adjusted_net_income_calculator.retirement_annuities, 'aria-describedby' => 'step-4-description' %>
             <%= label_tag "cycle_scheme", "Cycle scheme" %>
-            <%= money_input "cycle_scheme", @adjusted_net_income_calculator.cycle_scheme %>
+            <%= money_input "cycle_scheme", @adjusted_net_income_calculator.cycle_scheme, 'aria-describedby' => 'step-4-description' %>
             <%= label_tag "childcare", "Childcare - eg childcare vouchers up to £55 a week, the value of any workplace nursery places" %>
-            <%= money_input "childcare", @adjusted_net_income_calculator.childcare %>
+            <%= money_input "childcare", @adjusted_net_income_calculator.childcare, 'aria-describedby' => 'step-4-description' %>
             <%= label_tag "pensions", "Pensions - eg from a state pension" %>
-            <%= money_input "pensions", @adjusted_net_income_calculator.pensions %>
+            <%= money_input "pensions", @adjusted_net_income_calculator.pensions, 'aria-describedby' => 'step-4-description' %>
             <%= label_tag "property", "Property - eg rental income" %>
-            <%= money_input "property", @adjusted_net_income_calculator.property %>
+            <%= money_input "property", @adjusted_net_income_calculator.property, 'aria-describedby' => 'step-4-description' %>
             <%= label_tag "non_employment_income", "Other income - eg from trading, taxable savings" %>
-            <%= money_input "non_employment_income", @adjusted_net_income_calculator.non_employment_income %>
+            <%= money_input "non_employment_income", @adjusted_net_income_calculator.non_employment_income, 'aria-describedby' => 'step-4-description' %>
             <%= label_tag "gift_aid_donations", "Gift Aid donations" %>
-            <%= money_input "gift_aid_donations", @adjusted_net_income_calculator.gift_aid_donations %>
+            <%= money_input "gift_aid_donations", @adjusted_net_income_calculator.gift_aid_donations, 'aria-describedby' => 'step-4-description' %>
             <%= label_tag "outgoing_pension_contributions", "Pension contributions not paid from your salary" %>
-            <%= money_input "outgoing_pension_contributions", @adjusted_net_income_calculator.outgoing_pension_contributions %>
+            <%= money_input "outgoing_pension_contributions", @adjusted_net_income_calculator.outgoing_pension_contributions, 'aria-describedby' => 'step-4-description' %>
           </fieldset>
 
           <%= submit_tag "Calculate", :name => "results", :class => "button" %>
