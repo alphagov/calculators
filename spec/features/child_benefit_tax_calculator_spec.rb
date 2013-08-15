@@ -259,7 +259,7 @@ feature "Child Benefit Tax Calculator" do
           within :xpath, ".//div[contains(@class, 'results_estimate')][.//h3[.='Child Benefit received']]" do
             page.should have_content("£263.90")
             page.should have_content("Received between 7 January and 5 April 2013.")
-            page.should have_content("Use this figure in your 2012 to 2013 tax return (if you fill one in).")
+            page.should have_content("Use this figure in your 2012 to 2013 Self Assessment tax return (if you fill one in).")
           end
 
           page.should have_content("To work out the tax charge, enter your income")
@@ -275,7 +275,7 @@ feature "Child Benefit Tax Calculator" do
           within :xpath, ".//div[contains(@class, 'results_estimate')][.//h3[.='Child Benefit received']]" do
             page.should have_content("£1,055.60")
             page.should_not have_content("Received between 7 January and 5 April 2013.")
-            page.should have_content("Use this figure in your 2013 to 2014 tax return (if you fill one in).")
+            page.should have_content("Use this figure in your 2013 to 2014 Self Assessment tax return (if you fill one in).")
           end
 
           page.should have_content("To work out the tax charge, enter your income")
@@ -302,7 +302,7 @@ feature "Child Benefit Tax Calculator" do
           within :xpath, ".//div[contains(@class, 'results_estimate')][.//h3[.='Child Benefit received']]" do
             page.should have_content("£263.90")
             page.should have_content("Received between 7 January and 5 April 2013.")
-            page.should have_content("Use this figure in your 2012 to 2013 tax return (if you fill one in).")
+            page.should have_content("Use this figure in your 2012 to 2013 Self Assessment tax return (if you fill one in).")
           end
 
           page.should_not have_content("To work out the tax charge, enter your income")
@@ -313,7 +313,7 @@ feature "Child Benefit Tax Calculator" do
 
             page.should have_content("Your result for the next tax year may be higher because the tax charge will apply to the whole tax year (and not just 7 January to 5 April 2013).")
 
-            page.should have_content("The tax must be paid by 31 January 2014")
+            page.should have_content("To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:")
             page.should have_content("register for Self Assessment by 5 October 2013")
           end
         end
@@ -327,7 +327,7 @@ feature "Child Benefit Tax Calculator" do
           within :xpath, ".//div[contains(@class, 'results_estimate')][.//h3[.='Child Benefit received']]" do
             page.should have_content("£1,055.60")
             page.should_not have_content("Received between 7 January and 5 April 2013.")
-            page.should have_content("Use this figure in your 2013 to 2014 tax return (if you fill one in).")
+            page.should have_content("Use this figure in your 2013 to 2014 Self Assessment tax return (if you fill one in).")
           end
 
           page.should_not have_content("To work out the tax charge, enter your income")
@@ -338,7 +338,7 @@ feature "Child Benefit Tax Calculator" do
 
             page.should_not have_content("Your result for the next tax year may be higher")
 
-            page.should have_content("The tax must be paid by 31 January 2015")
+            page.should have_content("To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:")
             page.should have_content("register for Self Assessment by 5 October 2014")
           end
         end
@@ -375,7 +375,7 @@ feature "Child Benefit Tax Calculator" do
           within :xpath, ".//div[contains(@class, 'results_estimate')][.//h3[.='Child Benefit received']]" do
             page.should have_content("£1,055.60")
             page.should_not have_content("Received between 7 January and 5 April 2013.")
-            page.should have_content("Use this figure in your 2013 to 2014 tax return (if you fill one in).")
+            page.should have_content("Use this figure in your 2013 to 2014 Self Assessment tax return (if you fill one in).")
           end
 
           page.should_not have_content("To work out the tax charge, enter your income")
