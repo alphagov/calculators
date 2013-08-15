@@ -107,6 +107,44 @@ feature "Child Benefit Tax Calculator" do
 
     end
 
+    it "should show the required number of date inputs without reloading the page", :js => true do
+      page.should have_select("children_count", :selected => '2')
+
+      page.should have_css("#starting_children_0_start_year")
+      page.should have_css("#starting_children_0_start_month")
+      page.should have_css("#starting_children_0_start_day")
+      page.should have_css("#starting_children_1_start_year")
+      page.should have_css("#starting_children_1_start_month")
+      page.should have_css("#starting_children_1_start_day")
+
+      page.find('#starting_children_0_start_year').select('2011')
+      page.find('#starting_children_0_start_month').select('January')
+      page.find('#starting_children_0_start_day').select('1')
+
+      select "3", :from => "children_count"
+
+      page.should have_select("starting_children_0_start_year", :selected => "2011")
+      page.should have_select("starting_children_0_start_month", :selected => "January")
+      page.should have_select("starting_children_0_start_day", :selected => "1")
+
+      save_page
+
+      page.should have_css("#starting_children_2_start_year")
+      page.should have_css("#starting_children_2_start_month")
+      page.should have_css("#starting_children_2_start_day")
+
+      select "2011", :from => "starting_children_1_start_year"
+      select "January", :from => "starting_children_1_start_month"
+      select "7", :from => "starting_children_1_start_day"
+
+      select "1", :from => "children_count"
+
+      page.should have_no_css("#starting_children_1_start_year")
+      page.should have_no_css("#starting_children_1_start_month")
+      page.should have_no_css("#starting_children_1_start_day")
+
+    end
+
     describe "Calculating benefits received for 2012-13" do
       before(:each) do
         ChildBenefitTaxCalculator.any_instance.stub(:benefits_claimed_amount).and_return(500000)
