@@ -350,7 +350,7 @@ feature "Child Benefit Tax Calculator" do
             page.should have_content("Your result for the next tax year may be higher because the tax charge will apply to the whole tax year (and not just 7 January to 5 April 2013).")
 
             page.should have_content("To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:")
-            page.should have_content("register for Self Assessment by 5 October 2013")
+            page.should have_content("you should do this by 5 October 2013")
           end
         end
       end
@@ -375,7 +375,7 @@ feature "Child Benefit Tax Calculator" do
             page.should_not have_content("Your result for the next tax year may be higher")
 
             page.should have_content("To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:")
-            page.should have_content("register for Self Assessment by 5 October 2014")
+            page.should have_content("you should do this by 5 October 2014")
           end
         end
       end
