@@ -18,6 +18,7 @@ class ChildBenefitTaxCalculator
 
   validate :valid_child_dates
   validates_inclusion_of :tax_year, :in => TAX_YEARS.keys.map(&:to_i), :message => "Select a tax year"
+  validate :tax_year_contains_at_least_one_child
 
   def initialize(params = {})
     @adjusted_net_income_calculator = AdjustedNetIncomeCalculator.new(params)
@@ -54,15 +55,19 @@ class ChildBenefitTaxCalculator
   end
 
   def child_benefit_start_date
-    @tax_year == 2012 ? Date.parse('7 Jan 2013') : TAX_YEARS[@tax_year.to_s].first
+    @tax_year == 2012 ? Date.parse('7 Jan 2013') : selected_tax_year.first
   end
 
   def child_benefit_end_date
-    TAX_YEARS[@tax_year.to_s].last
+    selected_tax_year.last
   end
 
   def can_calculate?
     TAX_YEARS.keys.map(&:to_i).include?(@tax_year) and !@starting_children.empty?
+  end
+
+  def selected_tax_year
+    TAX_YEARS[@tax_year.to_s]
   end
 
   def can_estimate?
@@ -148,5 +153,14 @@ class ChildBenefitTaxCalculator
 
   def valid_child_dates
     @starting_children.each { |c| c.valid? }
+  end
+
+  def tax_year_contains_at_least_one_child
+    return unless selected_tax_year.present? and @starting_children.any?
+
+    in_tax_year = @starting_children.reject {|c| c.start_date.nil? || c.start_date > selected_tax_year.last || ( c.end_date.present? && c.end_date < selected_tax_year.first ) }
+    if in_tax_year.empty?
+      @starting_children.first.errors.add(:end_date, "You haven't received any Child Benefit for the tax year selected. Check your Child Benefit dates or choose a different tax year.")
+    end
   end
 end
