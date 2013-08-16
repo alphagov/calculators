@@ -58,6 +58,34 @@ feature "Child Benefit Tax Calculator" do
     end
   end
 
+  it "should show error if no children are present in the selected tax year" do
+    visit "/child-benefit-tax-calculator"
+    click_on "Start now"
+
+    select "1", :from => "children_count"
+    click_button "Update"
+
+    page.find('#starting_children_0_start_year').select('2011')
+    page.find('#starting_children_0_start_month').select('January')
+    page.find('#starting_children_0_start_day').select('1')
+
+    page.find('#starting_children_0_stop_year').select('2012')
+    page.find('#starting_children_0_stop_month').select('January')
+    page.find('#starting_children_0_stop_day').select('1')
+
+    choose "year_2013"
+
+    click_on "Calculate"
+
+    within ".validation-summary" do
+      page.should have_content("You haven't received any Child Benefit for the tax year selected. Check your Child Benefit dates or choose a different tax year.")
+    end
+
+    within "#children" do
+      page.should have_css(".validation-error")
+    end
+  end
+
   describe "For more than one child" do
     before(:each) do
       visit "/child-benefit-tax-calculator"
