@@ -26,13 +26,14 @@ class StartingChild
   end
 
   def adjusted_start_date
-    return @start_date if @start_date === Date.parse("7 January 2013")
+    return @start_date if @start_date === ChildBenefitTaxCalculator::TAX_COMMENCEMENT_DATE
     next_monday_for_date(@start_date)
   end
 
   private
 
   def next_monday_for_date(date)
+    return nil if date.nil?
     date.advance(:days => 8 - date.wday)
   end
 
