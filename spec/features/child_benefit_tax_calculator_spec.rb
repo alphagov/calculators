@@ -350,7 +350,7 @@ feature "Child Benefit Tax Calculator" do
             page.should have_content("Your result for the next tax year may be higher because the tax charge will apply to the whole tax year (and not just 7 January to 5 April 2013).")
 
             page.should have_content("To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:")
-            page.should have_content("register for Self Assessment by 5 October 2013")
+            page.should have_content("you should do this by 5 October 2013")
           end
         end
       end
@@ -375,7 +375,7 @@ feature "Child Benefit Tax Calculator" do
             page.should_not have_content("Your result for the next tax year may be higher")
 
             page.should have_content("To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:")
-            page.should have_content("register for Self Assessment by 5 October 2014")
+            page.should have_content("you should do this by 5 October 2014")
           end
         end
       end
@@ -424,6 +424,32 @@ feature "Child Benefit Tax Calculator" do
       end
 
     end # ANI below threshold
+
+    context "with all children stopping before 7th January 2013" do
+      it "should say there's nothing to pay when no ANI is entered" do
+        visit "/child-benefit-tax-calculator/main"
+
+        select "2012", :from => "starting_children_0_start_year"
+        select "April", :from => "starting_children_0_start_month"
+        select "5", :from => "starting_children_0_start_day"
+
+        select "2013", :from => "starting_children_0_stop_year"
+        select "January", :from => "starting_children_0_stop_month"
+        select "5", :from => "starting_children_0_stop_day"
+
+        choose "year_2012"
+        click_button "Calculate"
+
+        within ".results" do
+          within ".results_estimate" do
+            page.should have_content "Your Child Benefit stopped before 7 January 2013 so you aren’t affected by the tax charge."
+            page.should have_content "Find out more about the tax charge"
+          end
+
+          page.should_not have_content("Use this figure in your 2012 to 2013 Self Assessment tax return")
+        end
+      end
+    end
   end
 
   describe "child benefit week runs Monday to Sunday" do

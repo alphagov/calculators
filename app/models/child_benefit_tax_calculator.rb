@@ -38,7 +38,7 @@ class ChildBenefitTaxCalculator
   def nothing_owed?
     @adjusted_net_income < NET_INCOME_THRESHOLD or tax_estimate.abs == 0
   end
-  
+
   def has_errors?
     errors.any? or starting_children.select{|c| c.errors.any? }.any?
   end
@@ -88,7 +88,11 @@ class ChildBenefitTaxCalculator
   def tax_estimate
     (benefits_claimed_amount * (percent_tax_charge / 100.0)).floor
   end
-  
+
+  def children_in_taxable_period?
+    @starting_children.select {|c| c.end_date.nil? || c.end_date > child_benefit_start_date }.any?
+  end
+
   private
 
   def process_starting_children(children)
