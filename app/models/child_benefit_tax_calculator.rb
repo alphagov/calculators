@@ -7,6 +7,7 @@ class ChildBenefitTaxCalculator
     :starting_children, :tax_year
 
   NET_INCOME_THRESHOLD = 50000
+  TAX_COMMENCEMENT_DATE = Date.parse('7 Jan 2013')
 
   FIRST_CHILD_RATE = 20.3
   FURTHER_CHILD_RATE = 13.4
@@ -39,7 +40,7 @@ class ChildBenefitTaxCalculator
   def nothing_owed?
     @adjusted_net_income < NET_INCOME_THRESHOLD or tax_estimate.abs == 0
   end
-  
+
   def has_errors?
     errors.any? or starting_children.select{|c| c.errors.any? }.any?
   end
@@ -55,7 +56,7 @@ class ChildBenefitTaxCalculator
   end
 
   def child_benefit_start_date
-    @tax_year == 2012 ? Date.parse('7 Jan 2013') : selected_tax_year.first
+    @tax_year == 2012 ? TAX_COMMENCEMENT_DATE : selected_tax_year.first
   end
 
   def child_benefit_end_date
@@ -93,7 +94,11 @@ class ChildBenefitTaxCalculator
   def tax_estimate
     (benefits_claimed_amount * (percent_tax_charge / 100.0)).floor
   end
-  
+
+  def children_in_taxable_period?
+    @starting_children.select {|c| c.end_date.nil? || c.end_date > TAX_COMMENCEMENT_DATE }.any?
+  end
+
   private
 
   def process_starting_children(children)
