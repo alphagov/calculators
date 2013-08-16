@@ -17,7 +17,7 @@ describe ChildBenefitTaxCalculator do
   it "is valid if given enough detail" do
     ChildBenefitTaxCalculator.new({
       :year => "2012", :children_count => "1",
-      :starting_children => { "0" => { :year => "2011", :month => "01", :day => "01" } }
+      :starting_children => { "0" => { :start => { :year => "2011", :month => "01", :day => "01" } } }
     }).can_calculate?.should == true
   end
 
@@ -57,6 +57,18 @@ describe ChildBenefitTaxCalculator do
       })
       @calc.valid?
       @calc.starting_children.first.errors.should have_key(:end_date)
+    end
+
+    it "can't calculate if there are any errors" do
+      @calc = ChildBenefitTaxCalculator.new(:year => "2013", :children_count => "1", :starting_children => {
+        "0" => {
+          :start => { :year => "2011", :month => "01", :day => "01" },
+          :stop => { :year => "2012", :month => "01", :day => "01" }
+        }
+      })
+      @calc.valid?
+
+      @calc.can_calculate?.should be_false
     end
     it "should be valid on starting child when some inside the tax year" do
       @calc = ChildBenefitTaxCalculator.new(:year => "2013", :children_count => "3", :starting_children => {

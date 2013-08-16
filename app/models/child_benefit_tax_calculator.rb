@@ -64,7 +64,7 @@ class ChildBenefitTaxCalculator
   end
 
   def can_calculate?
-    TAX_YEARS.keys.map(&:to_i).include?(@tax_year) and !@starting_children.empty?
+    valid? and !has_errors? and @starting_children.any?
   end
 
   def selected_tax_year
@@ -161,7 +161,7 @@ class ChildBenefitTaxCalculator
   end
 
   def tax_year_contains_at_least_one_child
-    return unless selected_tax_year.present? and @starting_children.any?
+    return unless selected_tax_year.present? and @starting_children.select(&:valid?).any?
 
     in_tax_year = @starting_children.reject {|c| c.start_date.nil? || c.start_date > selected_tax_year.last || ( c.end_date.present? && c.end_date < selected_tax_year.first ) }
     if in_tax_year.empty?
