@@ -7,6 +7,11 @@ describe ApplicationHelper do
     internal_url("/blah").should == "http://private-frontend.dev.gov.uk/blah?edition=1"
   end
 
+  it "appends the private frontend url with an edition number to internal links when constant is set" do
+    stub_const("PRIVATE_FRONTEND_INTERNAL_LINKS", true)
+    internal_url("/blah", 9).should == "http://private-frontend.dev.gov.uk/blah?edition=9"
+  end
+
   it "does not append the private frontend url to internal links when constant is not set" do
     stub_const("PRIVATE_FRONTEND_INTERNAL_LINKS", false)
     internal_url("/blah").should == "/blah"
