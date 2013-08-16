@@ -21,13 +21,13 @@
                   <li><a href="#tax-year"><%= message %></a></li>
                 <% end -%>
                 <%# TODO: This could be tidied up into a model or helper method %>
-                <% @calculator.starting_children.map(&:errors).map(&:messages).map(&:values).flatten.uniq.each do |message| -%> 
+                <% @calculator.starting_children.map(&:errors).map(&:messages).map(&:values).flatten.uniq.each do |message| -%>
                   <li><a href="#children"><%= message %></a></li>
                 <% end -%>
               </ul>
             </div>
           <% end -%>
-          
+
           <fieldset>
             <%= step(1, "Enter the number of children Child Benefit is claimed for:") %>
             <label for="children_count" class="visuallyhidden">Number of children</label>
