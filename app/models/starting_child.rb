@@ -33,6 +33,7 @@ class StartingChild
   private
 
   def next_monday_for_date(date)
+    return nil if date.nil?
     date.advance(:days => 8 - date.wday)
   end
 
