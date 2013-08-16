@@ -30,5 +30,9 @@ describe StartingChild do
       assert_equal Date.parse("19 August 2013"),
                    StartingChild.new(:start => {:year => "2013", :month => "08", :day => "13"}).adjusted_start_date
     end
+
+    it "should not blow up with a nil start date" do
+      StartingChild.new(:start => {}).adjusted_start_date.should be_nil
+    end
   end
 end
