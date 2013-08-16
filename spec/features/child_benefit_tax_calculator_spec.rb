@@ -81,9 +81,6 @@ feature "Child Benefit Tax Calculator" do
       page.should have_content("You haven't received any Child Benefit for the tax year selected. Check your Child Benefit dates or choose a different tax year.")
     end
 
-    within "#tax-year" do
-      page.should have_css(".validation-error")
-    end
     within "#children" do
       page.should have_css(".validation-error")
     end
