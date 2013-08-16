@@ -48,7 +48,7 @@ describe ChildBenefitTaxCalculator do
       @calc.valid?
       @calc.starting_children.second.errors.has_key?(:end_date).should == true
     end
-    it "should contain an error on starting child if outside of tax year" do
+    it "should contain an error on starting child if all outside of tax year" do
       @calc = ChildBenefitTaxCalculator.new(:year => "2013", :children_count => "1", :starting_children => {
         "0" => {
           :start => { :year => "2011", :month => "01", :day => "01" },
@@ -57,6 +57,24 @@ describe ChildBenefitTaxCalculator do
       })
       @calc.valid?
       @calc.starting_children.first.errors.should have_key(:end_date)
+    end
+    it "should be valid on starting child when some inside the tax year" do
+      @calc = ChildBenefitTaxCalculator.new(:year => "2013", :children_count => "3", :starting_children => {
+        "0" => {
+          :start => { :year => "2011", :month => "01", :day => "01" },
+          :stop => { :year => "2012", :month => "01", :day => "01" }
+        },
+        "1" => {
+          :start => { :year => "2013", :month => "01", :day => "01" },
+          :stop => { :year => "2014", :month => "01", :day => "01" }
+        },
+        "2" => {
+          :start => { :year => "2013", :month => "01", :day => "01" }
+        }
+      })
+      @calc.valid?
+      @calc.should_not have_errors
+      @calc.starting_children.first.errors.should be_empty
     end
     describe "has_errors?" do
       it "should be true if the calculator has errors" do

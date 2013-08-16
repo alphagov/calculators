@@ -156,13 +156,11 @@ class ChildBenefitTaxCalculator
   end
 
   def tax_year_contains_at_least_one_child
-    return unless selected_tax_year.present?
+    return unless selected_tax_year.present? and @starting_children.reject(&:nil?).any?
 
-    out_of_tax_year = @starting_children.reject {|c| c.nil? || c.start_date.nil? }.select {|c| c.start_date > selected_tax_year.last || (c.end_date.present? && c.end_date < selected_tax_year.first) }
-    if out_of_tax_year.any?
-      out_of_tax_year.each do |child|
-        child.errors.add(:end_date, "You haven't received any Child Benefit for the tax year selected. Check your Child Benefit dates or choose a different tax year.")
-      end
+    in_tax_year = @starting_children.reject {|c| c.nil? || c.start_date.nil? || c.start_date > selected_tax_year.last || ( c.end_date.present? && c.end_date < selected_tax_year.first ) }
+    if in_tax_year.empty?
+      @starting_children.first.errors.add(:end_date, "You haven't received any Child Benefit for the tax year selected. Check your Child Benefit dates or choose a different tax year.")
     end
   end
 end
