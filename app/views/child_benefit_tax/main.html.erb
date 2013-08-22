@@ -37,7 +37,10 @@
 
       <fieldset id="children">
         <%= step(2, "Enter the Child Benefit start and stop dates:") %>
-        <p>Child Benefit usually starts when you have a baby, adopt or move in with a new partner and their children. It usually stops when a child turns 16 or leaves full-time education.</p>
+        <ul>
+          <li>the start date is usually when you have a baby, adopt or move in with a new partner and their children</li>
+          <li>the stop date is usually when a child turns 16 or leaves full-time education</li>
+        </ul>
         <%= render "starting_children" %>
       </fieldset>
 
@@ -58,13 +61,12 @@
       </fieldset>
 
       <fieldset id="adjusted_income">
-        <%= step(4, "Enter income details for the tax year", "(optional):") %>
+        <%= step(4, "Enter income details for the tax year:") %>
         <ul>
           <li>don’t combine your household income</li>
           <li>use your partner’s income if it’s higher than yours</li>
           <li>you may get some of this information from your P60, P11D, employer or tax adviser</li>
         </ul>
-        <fieldset id="adjusted_net_income_calculator">
         <%= label_tag "gross_income", "Salary before tax" %>
         <%= money_input "gross_income", @adjusted_net_income_calculator.gross_income, 'aria-describedby' => 'step-4-description' %>
         <%= label_tag "other_income", "Other employment income - eg taxable benefits (like a company car or medical insurance), bonuses" %>
@@ -75,11 +77,11 @@
         <%= money_input "retirement_annuities", @adjusted_net_income_calculator.retirement_annuities, 'aria-describedby' => 'step-4-description' %>
         <%= label_tag "cycle_scheme", "Cycle scheme" %>
         <%= money_input "cycle_scheme", @adjusted_net_income_calculator.cycle_scheme, 'aria-describedby' => 'step-4-description' %>
-        <%= label_tag "childcare", "Childcare - eg childcare vouchers (up to £55 a week for the whole tax year), the value of any workplace nursery places" %>
+        <%= label_tag "childcare", "Childcare paid directly by your employer - eg childcare vouchers (for the whole year but no more than £55 a week), the value of any workplace nursery places" %>
         <%= money_input "childcare", @adjusted_net_income_calculator.childcare, 'aria-describedby' => 'step-4-description' %>
-        <%= label_tag "pensions", "Pensions - eg from a state pension" %>
+        <%= label_tag "pensions", "Income from pension(s) - eg from a state pension" %>
         <%= money_input "pensions", @adjusted_net_income_calculator.pensions, 'aria-describedby' => 'step-4-description' %>
-        <%= label_tag "property", "Property - eg rental income" %>
+        <%= label_tag "property", "Income from property - eg rental income" %>
         <%= money_input "property", @adjusted_net_income_calculator.property, 'aria-describedby' => 'step-4-description' %>
         <%= label_tag "non_employment_income", "Other income before tax - eg profits from self-employment, taxable savings, dividends" %>
         <%= money_input "non_employment_income", @adjusted_net_income_calculator.non_employment_income, 'aria-describedby' => 'step-4-description' %>
