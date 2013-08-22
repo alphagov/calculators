@@ -36,7 +36,7 @@
         <p>To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:</p>
         <ol>
           <li><a href="<%= internal_url "/register-for-self-assessment" %>">Register for Self Assessment</a> if you don’t already fill in a tax return - you should do this by <%= sa_register_deadline %>.</li>
-          <li>Fill in the tax return and confirm the amount of Child Benefit received for the tax year.</li>
+          <li>Fill in the tax return and include the amount of Child Benefit received for the tax year.</li>
           <li>Send the tax return.</li>
           <li>Pay the tax you owe.</li>
         </ol>
@@ -63,7 +63,7 @@
     </div>
   <% else %>
     <h3>Tax charge to pay</h3>
-    <p>To work out the tax charge, enter your income or your partner's - whoever has the higher.</p>
+    <p>To work out the tax charge, <a href="#adjusted_income">enter your income or your partner's</a> - whoever has the higher.</p>
     <p>Find out more about the <a href="<%= internal_url "/child-benefit-tax-charge" %>">tax charge</a>.</p>
   <% end %>
 <% else %>
