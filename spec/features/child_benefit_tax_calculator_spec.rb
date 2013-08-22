@@ -563,4 +563,15 @@ feature "Child Benefit Tax Calculator" do
       end
     end
   end
+
+  it "should redirect requests for the old smart-answer" do
+    visit "/child-benefit-tax-calculator/y"
+    i_should_be_on "/child-benefit-tax-calculator/main"
+
+    visit "/child-benefit-tax-calculator/y/income_work_out/2012-13"
+    i_should_be_on "/child-benefit-tax-calculator/main"
+
+    visit "/child-benefit-tax-calculator/y/income_work_out/2012-13.json"
+    i_should_be_on "/child-benefit-tax-calculator/main"
+  end
 end
