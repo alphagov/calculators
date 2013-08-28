@@ -58,6 +58,35 @@ feature "Child Benefit Tax Calculator" do
     end
   end
 
+  it "should disallow dates with too many days for the selected month", js: true  do
+    visit "/child-benefit-tax-calculator"
+    click_on "Start now"
+
+    select "2", :from => "children_count"
+
+    select "2012", :from => "starting_children[0][start][year]"
+    select "February", :from => "starting_children[0][start][month]"
+    select "31", :from => "starting_children[0][start][day]"
+
+    select "2002", :from => "starting_children[1][start][year]"
+    select "March", :from => "starting_children[1][start][month]"
+    select "1", :from => "starting_children[1][start][day]"
+
+    select "2012", :from => "starting_children[1][stop][year]"
+    select "February", :from => "starting_children[1][stop][month]"
+    select "31", :from => "starting_children[1][stop][day]"
+
+    choose "year_2012"
+
+    click_button "Calculate"
+
+    page.should have_selector(
+      '.validation-error',
+      text: 'Enter a valid date - there are only 29 days in February',
+      count: 2
+    )
+  end
+
   it "should show error if no children are present in the selected tax year" do
     visit "/child-benefit-tax-calculator"
     click_on "Start now"
@@ -93,6 +122,7 @@ feature "Child Benefit Tax Calculator" do
       select "2", :from => "children_count"
       click_button "Update"
     end
+
     it "should show the required number of date inputs" do
       page.should have_select("children_count", :selected => '2')
       
@@ -132,7 +162,6 @@ feature "Child Benefit Tax Calculator" do
       page.should have_no_css("#starting_children_1_start_year")
       page.should have_no_css("#starting_children_1_start_month")
       page.should have_no_css("#starting_children_1_start_day")
-
     end
 
     it "should show the required number of date inputs without reloading the page", :js => true do
