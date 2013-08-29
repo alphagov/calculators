@@ -1,23 +1,18 @@
 class StartingChild
   include ActiveModel::Validations
 
-  validates_presence_of :start_date, :message => "Enter the date Child Benefit started"
+  validates_presence_of :start_date,
+                        message: "Enter the date Child Benefit started",
+                        unless: :start_date_with_too_many_days?
+
   validate :valid_dates
 
-  attr_reader :start_date, :end_date
+  attr_accessor :start_date, :end_date
 
   def initialize(params = {})
-    if ChildBenefitTaxCalculator.valid_date_params?(params[:start])
-      @start_date = Date.new(params[:start][:year].to_i,
-                             params[:start][:month].to_i,
-                             params[:start][:day].to_i)
-    end
-
-    if ChildBenefitTaxCalculator.valid_date_params?(params[:stop])
-      @end_date = Date.new(params[:stop][:year].to_i,
-                           params[:stop][:month].to_i,
-                           params[:stop][:day].to_i)
-    end
+    @dates_with_too_many_days = []
+    set_date(:start_date, params[:start])
+    set_date(:end_date, params[:stop])
   end
 
   def benefits_end
@@ -38,8 +33,54 @@ class StartingChild
   end
 
   def valid_dates
+    @dates_with_too_many_days.each do |error|
+      msg = "Enter a valid date - there are only #{error[:max_days]} days in #{error[:month]}"
+      errors.add(error[:date_attr], msg)
+    end
     if @start_date and @end_date and @start_date >= @end_date
       errors.add(:end_date, "Child Benefit start date must be before stop date")
     end
   end
+
+  def set_date(date_attr, date_params)
+    if date_params && buildable_date?(date_attr, date_params)
+      self.send(
+        "#{date_attr.to_s}=",
+        Date.new(date_params[:year].to_i,
+                  date_params[:month].to_i,
+                  date_params[:day].to_i
+        )
+      )
+    end
+  end
+
+  def buildable_date?(date_attr, date_params)
+    date_values_present?(date_params) &&
+    valid_day_for_month_in_year?(
+      date_attr, date_params)
+  end
+
+  def date_values_present?(date_params)
+    date_params[:year].present? &&
+    date_params[:month].present? &&
+    date_params[:day].present?
+  end
+
+  def valid_day_for_month_in_year?(date_attr, date_params)
+    month_in_year = Date.new(
+      date_params[:year].to_i, date_params[:month].to_i, 1)
+    day = date_params[:day].to_i
+    max_days = month_in_year.end_of_month.day
+    if day > max_days
+      @dates_with_too_many_days << {
+        date_attr: date_attr, month: month_in_year.strftime("%B"), max_days: max_days }
+      return false
+    end
+    true
+  end
+
+  def start_date_with_too_many_days?
+    @dates_with_too_many_days.select {|e| e.has_value?(:start_date)}.any?
+  end
 end
+

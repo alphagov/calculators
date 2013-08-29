@@ -3,32 +3,62 @@ require 'spec_helper'
 describe StartingChild do
   it "should expect a start date to be present" do
     child = StartingChild.new
+    child.should_not be_valid
+    child.errors[:start_date].should include "Enter the date Child Benefit started"
+  end
 
-    assert child.invalid?
-    assert_equal ({:start_date => ["Enter the date Child Benefit started"]}), child.errors.messages
+  it "should reject dates with days exceeding maximum for a month" do
+    child = StartingChild.new(
+              stop: {year: "2013", month: "02", day: "29"})
+    child.should_not be_valid
+    error_msg = "Enter a valid date - there are only 28 days in February"
+    child.errors[:end_date].should include error_msg
+  end
+
+  it "should allow for leap years when checking for too many days" do
+    child = StartingChild.new(start: {year: "2012", month: "02", day: "29"})
+    child.errors[:start_date].should be_empty
+  end
+
+  context "when the start date has too many days for its month" do
+    before :each do
+      @child = StartingChild.new(
+        start: {year: "2013", month: "02", day: "29"})
+      @child.valid?
+    end
+
+    it "should reject it" do
+      error_msg = "Enter a valid date - there are only 28 days in February"
+      @child.errors[:start_date].should include error_msg
+    end
+
+    it "should suppress validating its presence " do
+      error_msg = "Enter the date Child Benefit started"
+      @child.errors[:start_date].should_not include error_msg
+    end
   end
 
   it "should produce a valid StartingChild object" do
     child = StartingChild.new(:start => {:year => "2012", :month => "02", :day => "01"},
                               :stop  => {:year => "2012", :month => "03", :day => "01"})
-    assert child.valid?
+    child.should be_valid
   end
 
   describe "adjusted_start_date" do
     it "should return the same start date if on 7th January 2013" do
-      assert_equal Date.parse("7 January 2013"),
-                   StartingChild.new(:start => {:year => "2013", :month => "01", :day => "07"}).adjusted_start_date
+      child = StartingChild.new(:start => {:year => "2013", :month => "01", :day => "07"})
+      child.adjusted_start_date.should == Date.parse("7 January 2013")
     end
 
     it "should return the next Monday for the provided start date" do
-      assert_equal Date.parse("9 January 2012"),
-                   StartingChild.new(:start => {:year => "2012", :month => "01", :day => "01"}).adjusted_start_date
+      child = StartingChild.new(:start => {:year => "2012", :month => "01", :day => "01"})
+      child.adjusted_start_date.should ==  Date.parse("9 January 2012")
 
-      assert_equal Date.parse("13 May 2013"),
-                   StartingChild.new(:start => {:year => "2013", :month => "05", :day => "08"}).adjusted_start_date
+      child = StartingChild.new(:start => {:year => "2013", :month => "05", :day => "08"})
+      child.adjusted_start_date.should == Date.parse("13 May 2013")
 
-      assert_equal Date.parse("19 August 2013"),
-                   StartingChild.new(:start => {:year => "2013", :month => "08", :day => "13"}).adjusted_start_date
+      child = StartingChild.new(:start => {:year => "2013", :month => "08", :day => "13"})
+      child.adjusted_start_date.should == Date.parse("19 August 2013")
     end
 
     it "should not blow up with a nil start date" do
