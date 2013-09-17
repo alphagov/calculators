@@ -17,12 +17,12 @@
         <div class="validation-summary">
           <h2>Please check the form</h2>
           <ul>
-            <% @calculator.errors.each do |key, message| -%>
-              <li><a href="#tax-year"><%= message %></a></li>
-            <% end -%>
             <%# TODO: This could be tidied up into a model or helper method %>
             <% @calculator.starting_children.map(&:errors).map(&:messages).map(&:values).flatten.uniq.each do |message| -%>
               <li><a href="#children"><%= message %></a></li>
+            <% end -%>
+            <% @calculator.errors.each do |key, message| -%>
+              <li><a href="#tax-year"><%= message %></a></li>
             <% end -%>
           </ul>
         </div>
