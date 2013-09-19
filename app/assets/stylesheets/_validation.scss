@@ -1,47 +1,64 @@
 $validation-border: $mellow-red;
-$validation-background: #fef7f7;
 
-.validation-error,
-.validation-summary {
-  margin: 1em 0;
 
-  @include media(tablet) {
-    margin: 1em -1em 1em 0.5em;
-  }
-}
+article {
+  form {
+    .validation-summary,
+    .validation-error {
+      @include media(tablet) {
+        margin: 0 -1em 1em 0.5em;
+      }
+    }
 
-.validation-error {
-  @include core-16;
-  text-transform: none;
-  color: #df3034;
-  border: 3px solid $validation-border;
-  box-sizing: border-box;
-  padding: 0 1em 1em 1em;
-  background-color: $validation-background;
-  overflow: hidden;
 
-  .date_selection {
-  	padding-bottom: 0;
-  }
-}
+    .validation-summary {
+      border: 3px solid #df3034;
+      padding: 1em 1em 0.8em 1em;
 
-.validation-summary {
-  border: 3px solid #df3034;
-  background-color: #fef7f7;
-  padding: 0 1em 0.25em 1em;
+      h2 {
+       margin: 0 0 0.5em 0;
+      }
+      
+      ul {
 
-  h1 {
-    margin-bottom: 0;
-    margin-top: 1em;
-  }
-  ul {
-    padding-left: 2.2em;
-    li {
-    list-style: none;
-    @include core-19;
-      a {
-        color: #df3034;
-        text-decoration: none;
+        margin:0 0 0 0.8em;
+        padding:0;
+
+        li {
+
+          margin:0;
+          padding:0;
+
+          @include core-19;
+          a {
+            color: $black;
+            text-decoration: none;
+          }
+          a:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    .validation-error {
+      @include core-16;
+      text-transform: none;
+      border-left: 10px solid $validation-border;
+      padding: 0.25em 1em 1em 1em;
+      margin: 0;
+      overflow: hidden;
+
+      .date_selection {
+      	padding-bottom: 0;
+      }
+
+      p {
+        font-weight: 600;
+      }
+
+      .date-selection p {
+        font-weight: 400;
       }
     }
   }
