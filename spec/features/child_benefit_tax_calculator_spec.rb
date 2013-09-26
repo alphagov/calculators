@@ -603,4 +603,9 @@ feature "Child Benefit Tax Calculator" do
     visit "/child-benefit-tax-calculator/y/income_work_out/2012-13.json"
     i_should_be_on "/child-benefit-tax-calculator"
   end
+
+  it "should contain a selector for the feedback form" do
+    visit "/child-benefit-tax-calculator/main"
+    page.should have_selector("main#content div#test-report_a_problem")
+  end
 end
