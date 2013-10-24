@@ -62,6 +62,9 @@ describe StartingChild do
 
       child = StartingChild.new(:start => {:year => "2013", :month => "01", :day => "06"})
       child.adjusted_start_date.should == Date.parse("7 January 2013")
+
+      child = StartingChild.new(:start => {:year => "2013", :month => "01", :day => "14"})
+      child.adjusted_start_date.should == Date.parse("21 January 2013")
     end
 
     it "should not blow up with a nil start date" do
