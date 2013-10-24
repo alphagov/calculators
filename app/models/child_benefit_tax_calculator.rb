@@ -37,6 +37,10 @@ class ChildBenefitTaxCalculator
     self.class.valid_date_params?(params)
   end
 
+  def monday_on_or_after(date)
+    date + ((1 - date.wday) % 7)
+  end
+  
   def nothing_owed?
     @adjusted_net_income < NET_INCOME_THRESHOLD or tax_estimate.abs == 0
   end
@@ -78,10 +82,11 @@ class ChildBenefitTaxCalculator
   def benefits_claimed_amount
     all_weeks_children = {}
     (child_benefit_start_date...child_benefit_end_date).each_slice(7) do |week|
-      all_weeks_children[week.first] = 0
+      monday = monday_on_or_after(week.first)
+      all_weeks_children[monday] = 0
       @starting_children.each do |child|
-        if days_include_week?(child.adjusted_start_date, child.benefits_end, week.first)
-          all_weeks_children[week.first] += 1
+        if eligible?(child, tax_year, monday)
+          all_weeks_children[monday] += 1
         end
       end
     end
@@ -110,6 +115,19 @@ class ChildBenefitTaxCalculator
           ary << StartingChild.new
         end
       end
+    end
+  end
+
+  def eligible?(child, tax_year, week_start_date)
+    eligible_for_tax_year?(child, tax_year) and
+      days_include_week?(child.adjusted_start_date, child.benefits_end, week_start_date)
+  end
+
+  def eligible_for_tax_year?(child, tax_year)
+    if tax_year == 2012
+      !(Date.parse('1 April 2013')..Date.parse('5 April 2013')).cover?(child.start_date)
+    else
+      !(Date.parse('31 March 2014')..Date.parse('5 April 2014')).cover?(child.start_date)
     end
   end
 
