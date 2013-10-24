@@ -29,7 +29,7 @@ class StartingChild
 
   def next_monday_for_date(date)
     return nil if date.nil?
-    ChildBenefitTaxCalculator.new.monday_on_or_after(date)
+    date + (date.wday < 1 ? 1 : (1 - date.wday) + 7)
   end
 
   def valid_dates
