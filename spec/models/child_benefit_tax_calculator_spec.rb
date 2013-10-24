@@ -609,5 +609,13 @@ describe ChildBenefitTaxCalculator do
       calc.benefits_claimed_amount.round(2).should == 438.10
       calc.tax_estimate.round(2).should == 219
     end
+    it "should calculate one week for one child observing the 'next Monday' rule." do
+      ChildBenefitTaxCalculator.new({:year => "2012", :children_count => 1, :starting_children => {
+        "0" => {
+          :start => {:day => '14', :month => '01', :year => '2013'},
+          :stop => {:day => '21', :month => '01', :year => '2013'}
+        }
+      }}).benefits_claimed_amount.round(2).should == 20.30
+    end
   end
 end
