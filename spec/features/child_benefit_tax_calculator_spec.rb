@@ -520,8 +520,7 @@ feature "Child Benefit Tax Calculator" do
         choose "year_2012"
 
         click_button "Calculate"
-
-        page.should contain_child_benefit_value("£263.90")
+        page.should contain_child_benefit_value("£243.60")
       end
 
       specify "should have no child benefit when start date is 01/04/2013" do

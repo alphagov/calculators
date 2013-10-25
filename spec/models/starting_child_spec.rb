@@ -45,9 +45,9 @@ describe StartingChild do
   end
 
   describe "adjusted_start_date" do
-    it "should return the same start date if on 7th January 2013" do
+    it "should return the next Monday if start date is 7th January 2013" do
       child = StartingChild.new(:start => {:year => "2013", :month => "01", :day => "07"})
-      child.adjusted_start_date.should == Date.parse("7 January 2013")
+      child.adjusted_start_date.should == Date.parse("14 January 2013")
     end
 
     it "should return the next Monday for the provided start date" do
