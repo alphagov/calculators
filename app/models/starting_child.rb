@@ -20,17 +20,13 @@ class StartingChild
     @end_date ? @end_date : tax_years[tax_years.keys.sort.last].last
   end
 
+  # Return the next Monday if start_date is not nil.
   def adjusted_start_date
-    return @start_date if @start_date === ChildBenefitTaxCalculator::TAX_COMMENCEMENT_DATE
-    next_monday_for_date(@start_date)
+    return nil if start_date.nil?
+    start_date + (start_date.wday < 1 ? 1 : (1 - start_date.wday) + 7)
   end
 
   private
-
-  def next_monday_for_date(date)
-    return nil if date.nil?
-    date + (date.wday < 1 ? 1 : (1 - date.wday) + 7)
-  end
 
   def valid_dates
     @dates_with_too_many_days.each do |error|
