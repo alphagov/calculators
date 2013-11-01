@@ -14,6 +14,8 @@ namespace :panopticon do
       OpenStruct.new({
         :title => "Child Benefit tax calculator",
         :slug => "child-benefit-tax-calculator",
+        :paths => [],
+        :prefixes => ["/child-benefit-tax-calculator"],
         :need_id => "2482",
         :state => "live",
         :description => "Work out the Child Benefit you've received and your High Income Child Benefit tax charge",
