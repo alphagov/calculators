@@ -553,7 +553,7 @@ describe ChildBenefitTaxCalculator do
       calc.benefits_claimed_amount.round(2).should == 1886.40
       calc.tax_estimate.round(2).should == 565.0
     end
-    it "should do foo" do
+    it "should give an accurate figure for 40 weeks at £20.30" do
       calc = ChildBenefitTaxCalculator.new({ :adjusted_net_income => "61000", :year => "2013", 
         :children_count => 1, :starting_children => {
           "0" => {
