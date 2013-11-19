@@ -14,8 +14,8 @@
         <input type="hidden" name="year" value="<%= params[:year] %>" />
 
         <% if @calculator.has_errors? -%>
-          <div class="validation-summary">
-            <h2>Please check the form</h2>
+          <div role="group" aria-labelledby="errorHeading" tabindex="-1" class="validation-summary">
+            <h2 id="errorHeading">Please check the form</h2>
             <ul>
               <%# TODO: This could be tidied up into a model or helper method %>
               <% @calculator.starting_children.map(&:errors).map(&:messages).map(&:values).flatten.uniq.each do |message| -%>
