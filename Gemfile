@@ -15,7 +15,7 @@ else
 end
 gem 'plek', '1.3.1'
 
-gem 'gds-api-adapters', '7.2.0'
+gem 'gds-api-adapters', '8.2.1'
 gem 'govuk_frontend_toolkit', '0.20.0'
 gem 'sass-rails', '3.2.5'
 
