@@ -11,7 +11,7 @@ gem 'aws-ses', '0.5.0', :require => 'aws/ses'
 if ENV['SLIMMER_DEV']
   gem 'slimmer', :path => '../slimmer'
 else
-  gem 'slimmer', '3.20.0'
+  gem 'slimmer', '3.25.0'
 end
 gem 'plek', '1.3.1'
 
