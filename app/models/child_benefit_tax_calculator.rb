@@ -18,7 +18,7 @@ class ChildBenefitTaxCalculator
   }
 
   validate :valid_child_dates
-  validates_inclusion_of :tax_year, :in => TAX_YEARS.keys.map(&:to_i), :message => "Select a tax year"
+  validates_inclusion_of :tax_year, :in => TAX_YEARS.keys.map(&:to_i), :message => "select a tax year"
   validate :tax_year_contains_at_least_one_child
 
   def initialize(params = {})

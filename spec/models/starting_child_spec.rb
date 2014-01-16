@@ -4,14 +4,14 @@ describe StartingChild do
   it "should expect a start date to be present" do
     child = StartingChild.new
     child.should_not be_valid
-    child.errors[:start_date].should include "Enter the date Child Benefit started"
+    child.errors[:start_date].should include "enter the date Child Benefit started"
   end
 
   it "should reject dates with days exceeding maximum for a month" do
     child = StartingChild.new(
               stop: {year: "2013", month: "02", day: "29"})
     child.should_not be_valid
-    error_msg = "Enter a valid date - there are only 28 days in February"
+    error_msg = "enter a valid date - there are only 28 days in February"
     child.errors[:end_date].should include error_msg
   end
 
@@ -28,12 +28,12 @@ describe StartingChild do
     end
 
     it "should reject it" do
-      error_msg = "Enter a valid date - there are only 28 days in February"
+      error_msg = "enter a valid date - there are only 28 days in February"
       @child.errors[:start_date].should include error_msg
     end
 
     it "should suppress validating its presence " do
-      error_msg = "Enter the date Child Benefit started"
+      error_msg = "enter the date Child Benefit started"
       @child.errors[:start_date].should_not include error_msg
     end
   end
