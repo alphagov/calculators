@@ -2,7 +2,7 @@ class StartingChild
   include ActiveModel::Validations
 
   validates_presence_of :start_date,
-                        message: "Enter the date Child Benefit started",
+                        message: "enter the date Child Benefit started",
                         unless: :start_date_with_too_many_days?
 
   validate :valid_dates
@@ -30,11 +30,11 @@ class StartingChild
 
   def valid_dates
     @dates_with_too_many_days.each do |error|
-      msg = "Enter a valid date - there are only #{error[:max_days]} days in #{error[:month]}"
+      msg = "enter a valid date - there are only #{error[:max_days]} days in #{error[:month]}"
       errors.add(error[:date_attr], msg)
     end
     if @start_date and @end_date and @start_date >= @end_date
-      errors.add(:end_date, "Child Benefit start date must be before stop date")
+      errors.add(:end_date, "child Benefit start date must be before stop date")
     end
   end
 

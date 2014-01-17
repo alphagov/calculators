@@ -44,17 +44,17 @@ feature "Child Benefit Tax Calculator" do
     click_on "Calculate"
 
     within ".validation-summary" do
-      page.should have_content("Select a tax year")
-      page.should have_content("Enter the date Child Benefit started")
+      page.should have_content("select a tax year")
+      page.should have_content("enter the date Child Benefit started")
     end
 
     within "#tax-year" do
       page.should have_css(".validation-error")
-      page.should have_content("Select a tax year")
+      page.should have_content("select a tax year")
     end
     within "#children" do
       page.should have_css(".validation-error")
-      page.should have_content("Enter the date Child Benefit started")
+      page.should have_content("enter the date Child Benefit started")
     end
   end
 
@@ -82,7 +82,7 @@ feature "Child Benefit Tax Calculator" do
 
     page.should have_selector(
       '.validation-error',
-      text: 'Enter a valid date - there are only 29 days in February',
+      text: 'enter a valid date - there are only 29 days in February',
       count: 2
     )
   end
