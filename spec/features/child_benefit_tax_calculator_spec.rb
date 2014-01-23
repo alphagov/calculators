@@ -13,7 +13,6 @@ feature "Child Benefit Tax Calculator" do
     within "main#content" do
       within "header.page-header" do
         page.should have_content("Child Benefit tax calculator")
-        page.should have_content("Quick answer")
       end
 
       within 'article[role=article]' do
