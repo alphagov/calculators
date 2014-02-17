@@ -19,7 +19,7 @@ gem 'gds-api-adapters', '8.2.1'
 gem 'govuk_frontend_toolkit', '0.20.0'
 gem 'sass-rails', '3.2.5'
 
-gem 'logstasher', '0.4.1'
+gem 'logstasher', '0.4.8'
 
 # Gems used only for assets and not required
 # in production environments by default.
