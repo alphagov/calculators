@@ -110,7 +110,7 @@ describe ChildBenefitTaxCalculator do
   end
 
   describe "calculating benefits received" do
-    it "should give the total amount of benefits received for a full tax year" do
+    it "should give the total amount of benefits received for a full tax year 2012" do
       ChildBenefitTaxCalculator.new({
         :year => "2012",
         :children_count => "1",
@@ -122,7 +122,7 @@ describe ChildBenefitTaxCalculator do
         }
       }).benefits_claimed_amount.round(2).should == 263.9
     end
-    it "should give the total amount of benefits received for a full tax year" do
+    it "should give the total amount of benefits received for a full tax year 2013" do
       ChildBenefitTaxCalculator.new({
         :year => "2013",
         :children_count => "1",
@@ -563,6 +563,61 @@ describe ChildBenefitTaxCalculator do
       }})
       calc.benefits_claimed_amount.should == 812.0
       calc.tax_estimate.should == 812
+    end
+    
+    describe "tests for 2014 rates" do
+      it "should calculate 3 children already in the household for all of 2014/15" do
+         ChildBenefitTaxCalculator.new({:year => "2014", :children_count => 3, :starting_children => {
+          "0" => {
+            :start => {:day => '06', :month => '04', :year => '2014'},
+            :stop => {:day => '', :month => '', :year => ''}
+          },
+          "1" => {
+            :start => {:day => '06', :month => '04', :year => '2014'},
+            :stop => {:day => '', :month => '', :year => ''}
+          },
+          "2" => {
+            :start => {:day => '06', :month => '04', :year => '2014'},
+            :stop => {:day => '', :month => '', :year => ''}
+          },
+        }}).benefits_claimed_amount.round(2).should == 2475.2
+      end
+      
+      it "should give the total amount of benefits received for a full tax year 2014" do
+        ChildBenefitTaxCalculator.new({
+          :year => "2014",
+          :children_count => "1",
+          :starting_children => {
+            "0" => {
+              :start => { :year => "2014", :month => "04", :day => "06" },
+              :stop => { :year => "2015", :month => "04", :day => "05" }
+            }
+          }
+        }).benefits_claimed_amount.round(2).should == 1066.0
+      end
+      
+      it "should give total amount of benefits one child full year one child half a year" do
+        ChildBenefitTaxCalculator.new({:year => "2014", :children_count => 2, :starting_children => {
+          "0" => {
+            :start => {:day => '06', :month => '04', :year => '2014'},
+            :stop => {:day => '', :month => '', :year => ''}
+          },
+          "1" => {
+            :start => {:day => '06', :month => '04', :year => '2014'},
+            :stop => {:day => '06', :month => '11', :year => '2014'}
+          },
+        }}).benefits_claimed_amount.round(2).should == 1486.05
+      end
+      
+      it "should give total amount of benefits for one child for half a year" do
+        calc = ChildBenefitTaxCalculator.new({:year => "2014", :children_count => 1, :starting_children => {
+          "0" => {
+            :start => {:day => '06', :month => '04', :year => '2014'},
+            :stop => {:day => '06', :month => '11', :year => '2014'}
+          },
+        }})
+        calc.benefits_claimed_amount.round(2).should == 635.5
+      end
     end
   end
 end

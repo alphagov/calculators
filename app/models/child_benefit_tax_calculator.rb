@@ -9,14 +9,12 @@ class ChildBenefitTaxCalculator
   NET_INCOME_THRESHOLD = 50000
   TAX_COMMENCEMENT_DATE = Date.parse('7 Jan 2013')
 
-  FIRST_CHILD_RATE = 20.3
-  FURTHER_CHILD_RATE = 13.4
-
   TAX_YEARS = {
     "2012" => [Date.parse("2012-04-06"), Date.parse("2013-04-05")],
     "2013" => [Date.parse("2013-04-06"), Date.parse("2014-04-05")],
+    "2014" => [Date.parse("2014-04-06"), Date.parse("2015-04-05")],
   }
-
+  
   validate :valid_child_dates
   validates_inclusion_of :tax_year, :in => TAX_YEARS.keys.map(&:to_i), :message => "select a tax year"
   validate :tax_year_contains_at_least_one_child
@@ -127,7 +125,7 @@ class ChildBenefitTaxCalculator
     if tax_year == 2012
       !(Date.parse('1 April 2013')..Date.parse('5 April 2013')).cover?(child.start_date)
     else
-      !(Date.parse('31 March 2014')..Date.parse('5 April 2014')).cover?(child.start_date)
+      !(Date.parse("31 March #{tax_year + 1}")..Date.parse("5 April #{tax_year + 1}")).cover?(child.start_date)
     end
   end
 
@@ -142,8 +140,9 @@ class ChildBenefitTaxCalculator
   end
 
   def weekly_sum_for_children(num_children)
+    rate = ChildBenefitRates.new(tax_year)
     if num_children > 0
-      FIRST_CHILD_RATE + (num_children - 1 ) * FURTHER_CHILD_RATE
+      rate.first_child_rate + (num_children - 1 ) * rate.additional_child_rate
     else
       0
     end
