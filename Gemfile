@@ -20,6 +20,7 @@ gem 'govuk_frontend_toolkit', '0.20.0'
 gem 'sass-rails', '3.2.5'
 
 gem 'logstasher', '0.4.8'
+gem 'airbrake', '3.1.15'
 
 # Gems used only for assets and not required
 # in production environments by default.
