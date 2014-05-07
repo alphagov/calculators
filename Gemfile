@@ -5,9 +5,6 @@ gem 'rails', '3.2.17'
 
 gem 'unicorn', '4.6.2'
 
-gem 'exception_notification', '3.0.1'
-gem 'aws-ses', '0.5.0', :require => 'aws/ses'
-
 if ENV['SLIMMER_DEV']
   gem 'slimmer', :path => '../slimmer'
 else
