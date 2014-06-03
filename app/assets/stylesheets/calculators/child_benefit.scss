@@ -80,13 +80,6 @@ form.calculator {
     display: block;
   }
 
-  select {
-    @include core-14;
-    margin: 0.2em 0.5em 0.4em 0;
-    vertical-align: baseline;
-    border: 1px solid;
-  }
-
   input[type="text"] {
     display:block;
     margin: 0.2em 0 1em 0;
