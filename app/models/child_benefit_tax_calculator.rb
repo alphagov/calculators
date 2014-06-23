@@ -83,9 +83,7 @@ class ChildBenefitTaxCalculator
       monday = monday_on_or_after(week.first)
       all_weeks_children[monday] = 0
       @starting_children.each do |child|
-        if eligible?(child, tax_year, monday)
-          all_weeks_children[monday] += 1
-        end
+        all_weeks_children[monday] += 1 if eligible?(child, tax_year, monday)
       end
     end
     # calculate total for all weeks
