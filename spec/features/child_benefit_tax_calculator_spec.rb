@@ -82,7 +82,7 @@ feature "Child Benefit Tax Calculator" do
     page.should have_selector(
       ".validation-error",
       text: "enter a valid date - there are only 29 days in February",
-      count: 2
+      count: 2,
     )
   end
 

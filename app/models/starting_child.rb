@@ -42,10 +42,11 @@ class StartingChild
     if date_params && buildable_date?(date_attr, date_params)
       self.send(
         "#{date_attr}=",
-        Date.new(date_params[:year].to_i,
-                  date_params[:month].to_i,
-                  date_params[:day].to_i
-        )
+        Date.new(
+          date_params[:year].to_i,
+          date_params[:month].to_i,
+          date_params[:day].to_i,
+        ),
       )
     end
   end

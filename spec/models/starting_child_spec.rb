@@ -39,8 +39,10 @@ describe StartingChild do
   end
 
   it "should produce a valid StartingChild object" do
-    child = StartingChild.new(start: {year: "2012", month: "02", day: "01"},
-                              stop: {year: "2012", month: "03", day: "01"})
+    child = StartingChild.new(
+      start: {year: "2012", month: "02", day: "01"},
+      stop: {year: "2012", month: "03", day: "01"},
+    )
     child.should be_valid
   end
 
