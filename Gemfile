@@ -36,4 +36,5 @@ group :development, :test do
   gem 'webmock', :require => false
   gem 'timecop', '0.6.2.2'
   gem 'poltergeist', '1.3.0'
+  gem 'rubocop'
 end
