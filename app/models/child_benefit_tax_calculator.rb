@@ -28,7 +28,7 @@ class ChildBenefitTaxCalculator
   end
 
   def self.valid_date_params?(params)
-    params and params[:year].present? and params[:month].present? and params[:day].present?
+    params && params[:year].present? && params[:month].present? && params[:day].present?
   end
 
   def valid_date_params?(params)
@@ -107,7 +107,7 @@ class ChildBenefitTaxCalculator
   def process_starting_children(children)
     [].tap do |ary|
       @children_count.times do |n|
-        if children and children[n.to_s] and valid_date_params?(children[n.to_s][:start])
+        if children && children[n.to_s] && valid_date_params?(children[n.to_s][:start])
           ary << StartingChild.new(children[n.to_s])
         else
           ary << StartingChild.new
@@ -117,7 +117,7 @@ class ChildBenefitTaxCalculator
   end
 
   def eligible?(child, tax_year, week_start_date)
-    eligible_for_tax_year?(child, tax_year) and
+    eligible_for_tax_year?(child, tax_year) &&
       days_include_week?(child.adjusted_start_date, child.benefits_end, week_start_date)
   end
 
