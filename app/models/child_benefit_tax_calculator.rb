@@ -14,9 +14,9 @@ class ChildBenefitTaxCalculator
     "2013" => [Date.parse("2013-04-06"), Date.parse("2014-04-05")],
     "2014" => [Date.parse("2014-04-06"), Date.parse("2015-04-05")],
   }
-  
+
   validate :valid_child_dates
-  validates_inclusion_of :tax_year, :in => TAX_YEARS.keys.map(&:to_i), :message => "select a tax year"
+  validates_inclusion_of :tax_year, in: TAX_YEARS.keys.map(&:to_i), message: "select a tax year"
   validate :tax_year_contains_at_least_one_child
 
   def initialize(params = {})
@@ -38,13 +38,13 @@ class ChildBenefitTaxCalculator
   def monday_on_or_after(date)
     date + ((1 - date.wday) % 7)
   end
-  
+
   def nothing_owed?
-    @adjusted_net_income < NET_INCOME_THRESHOLD or tax_estimate.abs == 0
+    @adjusted_net_income < NET_INCOME_THRESHOLD || tax_estimate.abs == 0
   end
 
   def has_errors?
-    errors.any? or starting_children.select{|c| c.errors.any? }.any?
+    errors.any? || starting_children.select {|c| c.errors.any? }.any?
   end
 
   def percent_tax_charge
@@ -53,7 +53,7 @@ class ChildBenefitTaxCalculator
     elsif (59900..60000).cover?(@adjusted_net_income)
       99
     else
-      ((@adjusted_net_income - 50000)/100.0).floor
+      ((@adjusted_net_income - 50000) / 100.0).floor
     end
   end
 
@@ -66,7 +66,7 @@ class ChildBenefitTaxCalculator
   end
 
   def can_calculate?
-    valid? and !has_errors? and @starting_children.any?
+    valid? && !has_errors? && @starting_children.any?
   end
 
   def selected_tax_year
@@ -74,7 +74,7 @@ class ChildBenefitTaxCalculator
   end
 
   def can_estimate?
-    @total_annual_income > 0 and can_calculate?
+    @total_annual_income > 0 && can_calculate?
   end
 
   def benefits_claimed_amount
@@ -142,7 +142,7 @@ class ChildBenefitTaxCalculator
   def weekly_sum_for_children(num_children)
     rate = ChildBenefitRates.new(tax_year)
     if num_children > 0
-      rate.first_child_rate + (num_children - 1 ) * rate.additional_child_rate
+      rate.first_child_rate + (num_children - 1) * rate.additional_child_rate
     else
       0
     end
@@ -158,7 +158,7 @@ class ChildBenefitTaxCalculator
   end
 
   def benefit_taxable_weeks(start_date, end_date)
-    (( end_date - start_date ) / 7).floor
+    (( end_date - start_date) / 7).floor
   end
 
   def calculate_adjusted_net_income(adjusted_net_income)
@@ -178,9 +178,9 @@ class ChildBenefitTaxCalculator
   end
 
   def tax_year_contains_at_least_one_child
-    return unless selected_tax_year.present? and @starting_children.select(&:valid?).any?
+    return unless selected_tax_year.present? && @starting_children.select(&:valid?).any?
 
-    in_tax_year = @starting_children.reject {|c| c.start_date.nil? || c.start_date > selected_tax_year.last || ( c.end_date.present? && c.end_date < selected_tax_year.first ) }
+    in_tax_year = @starting_children.reject {|c| c.start_date.nil? || c.start_date > selected_tax_year.last || ( c.end_date.present? && c.end_date < selected_tax_year.first) }
     if in_tax_year.empty?
       @starting_children.first.errors.add(:end_date, "You haven't received any Child Benefit for the tax year selected. Check your Child Benefit dates or choose a different tax year.")
     end

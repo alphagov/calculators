@@ -11,4 +11,4 @@ module PathHelpers
   end
 end
 
-RSpec.configuration.include PathHelpers, :type => :feature
+RSpec.configuration.include PathHelpers, type: :feature

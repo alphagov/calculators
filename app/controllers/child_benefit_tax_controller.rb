@@ -10,10 +10,10 @@ class ChildBenefitTaxController < ApplicationController
 
   def process_form
 
-    redirect_hash = { :action => :main }
-  
+    redirect_hash = { action: :main }
+
     [:children, :adjusted_income, :results].each do |anchor|
-      redirect_hash.merge!(:anchor => anchor.to_s) if params[anchor]
+      redirect_hash.merge!(anchor: anchor.to_s) if params[anchor]
     end
 
     CALC_PARAM_KEYS.each do |name|

@@ -1,21 +1,21 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe ChildBenefitTaxController do
 
   describe "slimmer headers" do
     context "when the artefact exists" do
       before :each do
-        @artefact_data = artefact_for_slug('child-benefit-tax-calculator')
+	@artefact_data = artefact_for_slug('child-benefit-tax-calculator')
         content_api_has_an_artefact("child-benefit-tax-calculator", @artefact_data)
       end
 
       it "should populate slimmer header with the child benefit tax calculator artefact" do
-        get 'main'
+	get 'main'
         @response.headers["X-Slimmer-Artefact"].should == JSON.dump(@artefact_data)
       end
 
       it "should set the artefact format in the slimmer headers" do
-        get 'main'
+	get 'main'
         @response.headers["X-Slimmer-Format"].should == "calculator"
       end
     end
@@ -26,7 +26,7 @@ describe ChildBenefitTaxController do
       end
 
       it "should return success" do
-        get 'main'
+	get 'main'
         response.should be_success
       end
     end
@@ -49,25 +49,25 @@ describe ChildBenefitTaxController do
     it "should run calculator validations" do
       get 'main', { :results => "Get your estimate" }
       response.should be_success
-      assigns(:calculator).errors.has_key?(:tax_year).should == true 
+      assigns(:calculator).errors.has_key?(:tax_year).should == true
     end
   end
 
   describe "GET process_form" do
     it "should place a 'starting_children' anchor onto the redirected response" do
-      route_params = { :children => "Update" }
-      get 'process_form', route_params
-      response.should redirect_to(:action => :main, :anchor => "children")
+      route_params = { children: "Update" }
+      get "process_form", route_params
+      response.should redirect_to(action: :main, anchor: "children")
     end
     it "should place an 'adjusted_income' anchor onto the redirected response" do
-      route_params = { :adjusted_income => "I don't know my adjusted net income" }
-      get 'process_form', route_params
-      response.should redirect_to(:action => :main, :anchor => "adjusted_income")
+      route_params = { adjusted_income: "I don't know my adjusted net income" }
+      get "process_form", route_params
+      response.should redirect_to(action: :main, anchor: "adjusted_income")
     end
     it "should place an 'results' anchor onto the redirected response" do
-      route_params = { :results => "Get your estimate" }
-      get 'process_form', route_params
-      response.should redirect_to(:action => :main, :params => route_params, :anchor => "results")
+      route_params = { results: "Get your estimate" }
+      get "process_form", route_params
+      response.should redirect_to(action: :main, params: route_params, anchor: "results")
     end
   end
 
