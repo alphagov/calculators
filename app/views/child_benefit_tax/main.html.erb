@@ -52,7 +52,7 @@
               <p><%= message %></p>
             <% end -%>
             <% ChildBenefitTaxCalculator::TAX_YEARS.keys.each do |year| -%>
-              <label for="year_<%= year %>">
+              <label for="year_<%= year %>" class="selectable">
                 <%= radio_button_tag "year", year, (@calculator.tax_year == year.to_i) %>
                 <%= tax_year_label(year) %>
               </label>
