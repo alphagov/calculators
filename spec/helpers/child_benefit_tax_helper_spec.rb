@@ -2,16 +2,16 @@
 require 'spec_helper'
 
 describe ChildBenefitTaxHelper do
-  
+
   describe "money_input" do
     it "should create an html text input with sensible defaults" do
-      money_input('foo', 0).should == '<input id="foo" name="foo" placeholder="£" type="text" />'
-      money_input('foo', 200).should == '<input id="foo" name="foo" placeholder="£" type="text" value="£200.00" />'
+      money_input("foo", 0).should == '<input id="foo" name="foo" placeholder="£" type="text" />'
+      money_input("foo", 200).should == '<input id="foo" name="foo" placeholder="£" type="text" value="£200.00" />'
     end
 
     it "combines the field tag options with the placeholder value" do
-      money_input('foo', 0, :foo => "bar").should == '<input foo="bar" id="foo" name="foo" placeholder="£" type="text" />'
-      money_input('foo', 0, :placeholder => "Enter something").should == '<input id="foo" name="foo" placeholder="Enter something" type="text" />'
+      money_input("foo", 0, foo: "bar").should == '<input foo="bar" id="foo" name="foo" placeholder="£" type="text" />'
+      money_input("foo", 0, placeholder: "Enter something").should == '<input id="foo" name="foo" placeholder="Enter something" type="text" />'
     end
   end
 
@@ -23,7 +23,7 @@ describe ChildBenefitTaxHelper do
 
   describe "tax_year_incomplete?" do
     before :each do
-      @calculator = stub(:tax_year => 2013)
+      @calculator = stub(tax_year: 2013)
     end
 
     it "should be true before the end of the tax year" do

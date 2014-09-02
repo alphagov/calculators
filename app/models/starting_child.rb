@@ -33,7 +33,7 @@ class StartingChild
       msg = "enter a valid date - there are only #{error[:max_days]} days in #{error[:month]}"
       errors.add(error[:date_attr], msg)
     end
-    if @start_date and @end_date and @start_date >= @end_date
+    if @start_date && @end_date && @start_date >= @end_date
       errors.add(:end_date, "child Benefit start date must be before stop date")
     end
   end
@@ -41,11 +41,12 @@ class StartingChild
   def set_date(date_attr, date_params)
     if date_params && buildable_date?(date_attr, date_params)
       self.send(
-        "#{date_attr.to_s}=",
-        Date.new(date_params[:year].to_i,
-                  date_params[:month].to_i,
-                  date_params[:day].to_i
-        )
+        "#{date_attr}=",
+        Date.new(
+          date_params[:year].to_i,
+          date_params[:month].to_i,
+          date_params[:day].to_i,
+        ),
       )
     end
   end
@@ -79,4 +80,3 @@ class StartingChild
     @dates_with_too_many_days.select {|e| e.has_value?(:start_date)}.any?
   end
 end
-

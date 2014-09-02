@@ -1,9 +1,9 @@
 # encoding: UTF-8
 class AdjustedNetIncomeCalculator
-  
+
   PARAM_KEYS = [:gross_income, :other_income, :pension_contributions_from_pay,
-    :retirement_annuities, :cycle_scheme, :childcare, :pensions, :property,
-    :non_employment_income, :gift_aid_donations, :outgoing_pension_contributions]
+                :retirement_annuities, :cycle_scheme, :childcare, :pensions, :property,
+                :non_employment_income, :gift_aid_donations, :outgoing_pension_contributions]
 
   def initialize(params)
     PARAM_KEYS.each do |key|
@@ -29,7 +29,7 @@ class AdjustedNetIncomeCalculator
   end
 
   def deductions
-    @pension_contributions_from_pay + grossed_up(@gift_aid_donations) + 
+    @pension_contributions_from_pay + grossed_up(@gift_aid_donations) +
       @retirement_annuities + @cycle_scheme + @childcare + grossed_up(@outgoing_pension_contributions)
   end
 
