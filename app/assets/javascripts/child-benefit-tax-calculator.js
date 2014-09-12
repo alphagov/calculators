@@ -59,4 +59,3 @@
   root.GOVUK.childBenefitTaxCalculator = calculator;
   GOVUK.childBenefitTaxCalculator.setEventHandlers();
 }).call(this);
-
