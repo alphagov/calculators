@@ -59,8 +59,3 @@
   root.GOVUK.childBenefitTaxCalculator = calculator;
   GOVUK.childBenefitTaxCalculator.setEventHandlers();
 }).call(this);
-
-$(document).ready(function() {
-  var $buttons = $("label input[type='radio'], label input[type='checkbox']");
-  GOVUK.selectionButtons($buttons);
-});
