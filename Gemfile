@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+source 'https://BnrJb6FZyzspBboNJzYZ@gem.fury.io/govuk/'
 
 gem 'rails', '3.2.17'
 
@@ -12,7 +13,7 @@ end
 gem 'plek', '1.3.1'
 
 gem 'gds-api-adapters', '8.2.1'
-gem 'govuk_frontend_toolkit', '1.6.0'
+gem 'govuk_frontend_toolkit', '0.20.0'
 gem 'sass-rails', '3.2.5'
 
 gem 'logstasher', '0.4.8'
