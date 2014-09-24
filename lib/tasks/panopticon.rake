@@ -16,7 +16,7 @@ namespace :panopticon do
         :slug => "child-benefit-tax-calculator",
         :paths => [],
         :prefixes => ["/child-benefit-tax-calculator"],
-        :need_id => "2482",
+        :need_id => "100266",
         :state => "live",
         :description => "Work out the Child Benefit you've received and your High Income Child Benefit tax charge",
         :indexable_content => [
