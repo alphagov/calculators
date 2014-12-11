@@ -87,7 +87,7 @@
           <%= money_input "non_employment_income", @adjusted_net_income_calculator.non_employment_income, 'aria-describedby' => 'step-4-description' %>
           <%= label_tag "gift_aid_donations", "Gift Aid donations" %>
           <%= money_input "gift_aid_donations", @adjusted_net_income_calculator.gift_aid_donations, 'aria-describedby' => 'step-4-description' %>
-          <%= label_tag "outgoing_pension_contributions", "Pension contributions not paid from your salary" %>
+          <%= label_tag "outgoing_pension_contributions", "Pension contributions not paid from your salary (the amount you actually paid, not the grossed-up amount)" %>
           <%= money_input "outgoing_pension_contributions", @adjusted_net_income_calculator.outgoing_pension_contributions, 'aria-describedby' => 'step-4-description' %>
         </fieldset>
 
