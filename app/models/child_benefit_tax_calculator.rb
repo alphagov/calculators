@@ -48,9 +48,9 @@ class ChildBenefitTaxCalculator
   end
 
   def percent_tax_charge
-    if @adjusted_net_income >= 60001
+    if @adjusted_net_income >= 60000
       100
-    elsif (59900..60000).cover?(@adjusted_net_income)
+    elsif (59900..59999).cover?(@adjusted_net_income)
       99
     else
       ((@adjusted_net_income - 50000) / 100.0).floor
