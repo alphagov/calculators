@@ -260,14 +260,21 @@ describe ChildBenefitTaxCalculator do
         children_count: 2,
       ).percent_tax_charge.should == 40.0
     end
-    it "should be 99.0 for an income of 60000" do
+    it "should be 99.0 for an income of 59999" do
       ChildBenefitTaxCalculator.new(
-        adjusted_net_income: "60000",
+        adjusted_net_income: "59999",
         year: "2012",
         children_count: 2,
       ).percent_tax_charge.should == 99.0
     end
     it "should be 100.0 for an income of 60000" do
+      ChildBenefitTaxCalculator.new(
+        adjusted_net_income: "60000",
+        year: "2012",
+        children_count: 2,
+      ).percent_tax_charge.should == 100.0
+    end
+    it "should be 100.0 for an income of 60001" do
       ChildBenefitTaxCalculator.new(
         adjusted_net_income: "60001",
         year: "2012",
