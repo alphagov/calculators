@@ -42,7 +42,7 @@ form.calculator,
 
 form.calculator {
   width: 75%;
-  padding: 0 2em 1em 2em;
+  padding: 0 0 1em;
 
   h2 {
     margin: 2em 0 0.8em 0;
@@ -163,7 +163,7 @@ form.calculator {
     text-decoration: underline;
     @include box-shadow(none);
     border: none;
-    overflow: visible; 
+    overflow: visible;
 
     &:hover,
     &:focus{
@@ -227,7 +227,7 @@ details.help-panel {
   .js-enabled & {
     display: none;
   }
-} 
+}
 
 #results .button {
   @include core-16;
