@@ -58,6 +58,7 @@ feature "Child Benefit Tax Calculator" do
   end
 
   it "should disallow dates with too many days for the selected month", js: true  do
+    Timecop.travel "2014-09-01"
     visit "/child-benefit-tax-calculator"
     click_on "Start now"
 
@@ -87,6 +88,7 @@ feature "Child Benefit Tax Calculator" do
   end
 
   it "should show error if no children are present in the selected tax year" do
+    Timecop.travel "2014-09-01"
     visit "/child-benefit-tax-calculator"
     click_on "Start now"
 
