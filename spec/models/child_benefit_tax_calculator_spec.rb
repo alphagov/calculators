@@ -674,5 +674,73 @@ describe ChildBenefitTaxCalculator do
         calc.benefits_claimed_amount.round(2).should == 635.5
       end
     end
+
+    describe "tests for 2015 rates" do
+      it "should calculate 3 children already in the household for all of 2015/16" do
+        ChildBenefitTaxCalculator.new(
+          year: "2015",
+          children_count: 3,
+          starting_children: {
+            "0" => {
+              start: {day: "06", month: "04", year: "2015"},
+              stop: {day: "", month: "", year: ""},
+            },
+            "1" => {
+              start: {day: "06", month: "04", year: "2015"},
+              stop: {day: "", month: "", year: ""},
+            },
+            "2" => {
+              start: {day: "06", month: "04", year: "2015"},
+              stop: {day: "", month: "", year: ""},
+            },
+         },
+       ).benefits_claimed_amount.round(2).should == 2501.2
+      end
+
+      it "should give the total amount of benefits received for a full tax year 2015" do
+        ChildBenefitTaxCalculator.new(
+          year: "2015",
+          children_count: "1",
+          starting_children: {
+            "0" => {
+              start: { year: "2015", month: "04", day: "06" },
+              stop: { year: "2016", month: "04", day: "05" },
+            },
+          },
+        ).benefits_claimed_amount.round(2).should == 1076.4
+      end
+
+      it "should give total amount of benefits one child full year one child half a year" do
+        ChildBenefitTaxCalculator.new(
+          year: "2015",
+          children_count: 2,
+          starting_children: {
+            "0" => {
+              start: {day: "06", month: "04", year: "2015"},
+              stop: {day: "", month: "", year: ""},
+            },
+            "1" => {
+              start: {day: "06", month: "04", year: "2015"},
+              stop: {day: "06", month: "11", year: "2016"},
+            },
+          },
+        ).benefits_claimed_amount.round(2).should == 1788.8
+      end
+
+      it "should give total amount of benefits for one child for half a year" do
+        calc = ChildBenefitTaxCalculator.new(
+          year: "2015",
+          children_count: 1,
+          starting_children: {
+            "0" => {
+              start: {day: "06", month: "04", year: "2015"},
+              stop: {day: "06", month: "11", year: "2015"},
+            },
+          },
+        )
+        calc.benefits_claimed_amount.round(2).should == 621.0
+      end
+    end
   end
+
 end

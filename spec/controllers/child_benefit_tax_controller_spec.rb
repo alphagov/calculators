@@ -5,17 +5,17 @@ describe ChildBenefitTaxController do
   describe "slimmer headers" do
     context "when the artefact exists" do
       before :each do
-	@artefact_data = artefact_for_slug('child-benefit-tax-calculator')
+        @artefact_data = artefact_for_slug('child-benefit-tax-calculator')
         content_api_has_an_artefact("child-benefit-tax-calculator", @artefact_data)
       end
 
       it "should populate slimmer header with the child benefit tax calculator artefact" do
-	get 'main'
+        get 'main'
         @response.headers["X-Slimmer-Artefact"].should == JSON.dump(@artefact_data)
       end
 
       it "should set the artefact format in the slimmer headers" do
-	get 'main'
+        get 'main'
         @response.headers["X-Slimmer-Format"].should == "calculator"
       end
     end
@@ -26,7 +26,7 @@ describe ChildBenefitTaxController do
       end
 
       it "should return success" do
-	get 'main'
+        get 'main'
         response.should be_success
       end
     end
