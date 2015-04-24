@@ -1,12 +1,12 @@
 # encoding: UTF-8
 require 'spec_helper'
 
-describe ChildBenefitRates do
+describe ChildBenefitRates, :type => :model do
 
   describe "test initialization of instance variable" do
 
     it "should intialize instance correctly" do
-      ChildBenefitRates.new(2014).year.should == 2014
+      expect(ChildBenefitRates.new(2014).year).to eq(2014)
     end
 
     it "should raise error" do
@@ -21,8 +21,8 @@ describe ChildBenefitRates do
     end
 
     it "should return correct rates" do
-      @calc.first_child_rate.should == 20.3
-      @calc.additional_child_rate.should == 13.4
+      expect(@calc.first_child_rate).to eq(20.3)
+      expect(@calc.additional_child_rate).to eq(13.4)
     end
 
   end
@@ -33,8 +33,8 @@ describe ChildBenefitRates do
     end
 
     it "should return correct rates" do
-      @calc.first_child_rate.should == 20.3
-      @calc.additional_child_rate.should == 13.4
+      expect(@calc.first_child_rate).to eq(20.3)
+      expect(@calc.additional_child_rate).to eq(13.4)
     end
 
   end
@@ -45,8 +45,8 @@ describe ChildBenefitRates do
     end
 
     it "should return correct rates" do
-      @calc.first_child_rate.should == 20.5
-      @calc.additional_child_rate.should == 13.55
+      expect(@calc.first_child_rate).to eq(20.5)
+      expect(@calc.additional_child_rate).to eq(13.55)
     end
 
   end
@@ -57,8 +57,8 @@ describe ChildBenefitRates do
     end
 
     it "should return correct rates" do
-      @calc.first_child_rate.should == 20.7
-      @calc.additional_child_rate.should == 13.7
+      expect(@calc.first_child_rate).to eq(20.7)
+      expect(@calc.additional_child_rate).to eq(13.7)
     end
 
   end
