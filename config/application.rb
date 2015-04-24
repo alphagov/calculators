@@ -8,12 +8,7 @@ require "action_mailer/railtie"
 require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
-if defined?(Bundler)
-  # If you precompile assets before deploying to production, use this line
-  Bundler.require(*Rails.groups(assets: %w(development test)))
-  # If you want your assets lazily compiled in production, use this line
-  # Bundler.require(:default, :assets, Rails.env)
-end
+Bundler.require(:default, Rails.env)
 
 module Calculators
   class Application < Rails::Application
@@ -73,7 +68,7 @@ module Calculators
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-    config.assets.prefix = 'calculators'
+    config.assets.prefix = '/calculators'
 
     # Disable Rack::Cache
     config.action_dispatch.rack_cache = nil

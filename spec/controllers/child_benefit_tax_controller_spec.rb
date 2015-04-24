@@ -11,7 +11,7 @@ describe ChildBenefitTaxController do
 
       it "should populate slimmer header with the child benefit tax calculator artefact" do
         get 'main'
-        @response.headers["X-Slimmer-Artefact"].should == JSON.dump(@artefact_data)
+        JSON.parse(@response.headers["X-Slimmer-Artefact"]).should == @artefact_data
       end
 
       it "should set the artefact format in the slimmer headers" do

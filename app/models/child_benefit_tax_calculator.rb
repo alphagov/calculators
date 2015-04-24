@@ -1,4 +1,5 @@
-# encoding: UTF-8
+require 'active_model'
+
 class ChildBenefitTaxCalculator
 
   include ActiveModel::Validations

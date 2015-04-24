@@ -74,7 +74,7 @@ describe ChildBenefitTaxCalculator do
       )
       @calc.valid?
 
-      @calc.can_calculate?.should be_false
+      @calc.can_calculate?.should eq false
     end
     it "should be valid on starting child when some inside the tax year" do
       @calc = ChildBenefitTaxCalculator.new(
@@ -447,7 +447,7 @@ describe ChildBenefitTaxCalculator do
           },
           year: "2012",
         )
-        calc.children_in_taxable_period?.should be_true
+        calc.children_in_taxable_period?.should eq true
       end
 
       it "does not have any children in taxable period when stop dates all before 7th Jan 2013" do
@@ -469,7 +469,7 @@ describe ChildBenefitTaxCalculator do
           },
           year: "2012",
         )
-        calc.children_in_taxable_period?.should be_false
+        calc.children_in_taxable_period?.should eq false
       end
     end # tax year 2012
 
