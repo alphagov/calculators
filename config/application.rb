@@ -72,5 +72,10 @@ module Calculators
 
     # Disable Rack::Cache
     config.action_dispatch.rack_cache = nil
+
+    # Override Rails 4 default which restricts framing to SAMEORIGIN.
+    config.action_dispatch.default_headers = {
+      'X-Frame-Options' => 'ALLOWALL'
+    }
   end
 end
