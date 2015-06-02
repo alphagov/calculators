@@ -26,7 +26,7 @@ group :development, :test do
   gem 'rspec-rails', '3.2.1'
   gem 'capybara', '2.4.4'
   gem 'simplecov-rcov', '0.2.3', :require => false
-  gem 'ci_reporter', '1.8.4'
+  gem 'ci_reporter_rspec', '~> 1.0.0'
   gem 'webmock', :require => false
   gem 'timecop', '0.6.2.2'
   gem 'poltergeist', '1.6.0'
