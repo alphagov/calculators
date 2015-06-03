@@ -8,7 +8,7 @@ gem 'unicorn', '4.6.2'
 if ENV['SLIMMER_DEV']
   gem 'slimmer', :path => '../slimmer'
 else
-  gem 'slimmer', '8.1.0'
+  gem 'slimmer', '8.2.1'
 end
 gem 'plek', '1.3.1'
 

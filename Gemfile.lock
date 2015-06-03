@@ -176,7 +176,7 @@ GEM
     simplecov-html (0.7.1)
     simplecov-rcov (0.2.3)
       simplecov (>= 0.4.1)
-    slimmer (8.1.0)
+    slimmer (8.2.1)
       activesupport
       json
       nokogiri (>= 1.5.0, < 1.7.0)
@@ -231,7 +231,7 @@ DEPENDENCIES
   rubocop
   sass-rails (= 5.0.3)
   simplecov-rcov (= 0.2.3)
-  slimmer (= 8.1.0)
+  slimmer (= 8.2.1)
   timecop (= 0.6.2.2)
   uglifier (>= 2.7.1)
   unicorn (= 4.6.2)
