@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://BnrJb6FZyzspBboNJzYZ@gem.fury.io/govuk/'
 
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.2'
 
 gem 'unicorn', '4.6.2'
 
