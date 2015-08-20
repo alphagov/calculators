@@ -8,6 +8,7 @@ feature "Child Benefit Tax Calculator" do
 
     within "head", visible: :all do
       expect(page).to have_selector("title", text: "Child Benefit tax calculator - GOV.UK", visible: :all)
+      expect(page).to have_selector(%Q{meta[name='description'][content="Work out the Child Benefit you've received and your High Income Child Benefit tax charge"]}, visible: false)
     end
 
     within "main#content" do
