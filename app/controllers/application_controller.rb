@@ -5,7 +5,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   include GdsApi::Helpers
+  include Slimmer::Template
   include Slimmer::Headers
+
+  slimmer_template 'wrapper'
 
   protected
 
