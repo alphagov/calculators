@@ -3,6 +3,7 @@ class Calculator
     title: "Child Benefit tax calculator",
     slug: "child-benefit-tax-calculator",
     paths: [],
+    content_id: "0e1de8f1-9909-4e45-a6a3-bffe95470275",
     prefixes: ["/child-benefit-tax-calculator"],
     need_id: "100266",
     state: "live",
