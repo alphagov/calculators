@@ -3,7 +3,7 @@
 REPO_NAME=${REPO_NAME:-"alphagov/calculators"}
 CONTEXT_MESSAGE=${CONTEXT_MESSAGE:-"default"}
 GH_STATUS_GIT_COMMIT=${SCHEMA_GIT_COMMIT:-${GIT_COMMIT}}
-TEST_TASK="ci:setup:rspec default"
+DEFAULT_TASK="ci:setup:rspec default"
 
 function github_status {
   REPO_NAME="$1"
@@ -49,7 +49,7 @@ export GOVUK_CONTENT_SCHEMAS_PATH=tmp/govuk-content-schemas
 export RAILS_ENV=test
 bundle install --path "${HOME}/bundles/${JOB_NAME}" --deployment --without development
 
-if bundle exec rake ${TEST_TASK:-"default"}; then
+if bundle exec rake ${TEST_TASK:-$DEFAULT_TASK}; then
   github_status "$REPO_NAME" success "succeeded on Jenkins"
 else
   github_status "$REPO_NAME" failure "failed on Jenkins"
