@@ -13,6 +13,7 @@ class CalculatorContentItem
   def payload
     {
       title: calculator.title,
+      content_id: calculator.content_id,
       format: 'placeholder_calculator',
       publishing_app: 'calculators',
       rendering_app: 'calculators',

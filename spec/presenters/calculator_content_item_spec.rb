@@ -16,6 +16,7 @@ describe CalculatorContentItem do
       payload = CalculatorContentItem.new(calculator).payload
 
       expect(payload[:title]).to eql('Child Benefit tax calculator')
+      expect(payload[:content_id]).to be_a(String)
     end
   end
 
