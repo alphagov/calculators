@@ -22,11 +22,9 @@ class CalculatorContentItem
     {
       title: calculator.title,
       base_path: base_path,
-      content_id: content_id,
       format: 'placeholder_calculator',
       publishing_app: 'calculators',
       rendering_app: 'calculators',
-      update_type: update_type,
       locale: 'en',
       public_updated_at: Time.now.iso8601,
       routes: [
