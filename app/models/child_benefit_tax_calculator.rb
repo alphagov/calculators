@@ -99,10 +99,6 @@ class ChildBenefitTaxCalculator
     (benefits_claimed_amount * (percent_tax_charge / 100.0)).floor
   end
 
-  def children_in_taxable_period?
-    @starting_children.select {|c| c.end_date.nil? || c.end_date > TAX_COMMENCEMENT_DATE }.any?
-  end
-
   private
 
   def process_starting_children(children)
