@@ -428,49 +428,6 @@ describe ChildBenefitTaxCalculator, :type => :model do
         #child from 01/02 to 01/03 => 5 weeks * 20.3
         expect(calc.tax_estimate.round(1)).to eq(81)
       end
-
-      it "has children in taxable period when children claimed for after 7th January" do
-        calc = ChildBenefitTaxCalculator.new(
-          children_count: 3,
-          starting_children: {
-            "0" => {
-              start: { year: "2011", month: "02", day: "01" },
-              stop: { year: "2013", month: "01", day: "15" },
-            },
-            "1" => {
-              start: { year: "2011", month: "02", day: "01" },
-              stop: { year: "2013", month: "05", day: "01" },
-            },
-            "2" => {
-              start: { year: "2011", month: "02", day: "01" },
-            },
-          },
-          year: "2012",
-        )
-        expect(calc.children_in_taxable_period?).to eq true
-      end
-
-      it "does not have any children in taxable period when stop dates all before 7th Jan 2013" do
-        calc = ChildBenefitTaxCalculator.new(
-          children_count: 3,
-          starting_children: {
-            "0" => {
-              start: { year: "2011", month: "02", day: "01" },
-              stop: { year: "2013", month: "01", day: "05" },
-            },
-            "1" => {
-              start: { year: "2011", month: "02", day: "01" },
-              stop: { year: "2012", month: "12", day: "01" },
-            },
-            "2" => {
-              start: { year: "2011", month: "02", day: "01" },
-              stop: { year: "2013", month: "01", day: "02" },
-            },
-          },
-          year: "2012",
-        )
-        expect(calc.children_in_taxable_period?).to eq false
-      end
     end # tax year 2012
 
     describe "tax year 2013" do
