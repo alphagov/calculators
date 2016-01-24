@@ -291,7 +291,7 @@ feature "Child Benefit Tax Calculator" do
         expect(page).to have_content "Child Benefit received £263.90"
         expect(page).to have_content "Tax charge to pay £263.00"
 
-        expect(page).to have_content("based on your estimated adjusted net income of £120,825.00")
+        expect(page).to have_content("based on your estimated adjusted net income of £120,325.00")
       end
     end
 
@@ -319,7 +319,7 @@ feature "Child Benefit Tax Calculator" do
       click_on "Calculate"
 
       within ".results" do
-        expect(page).to have_content("based on your estimated adjusted net income of £120,825.00")
+        expect(page).to have_content("based on your estimated adjusted net income of £120,325.00")
       end
 
       fill_in "Salary before tax", with: "£50,000"
@@ -327,8 +327,8 @@ feature "Child Benefit Tax Calculator" do
 
       within ".results" do
         expect(page).to have_content "Child Benefit received £263.90"
-        expect(page).to have_content "Tax charge to pay £21.00"
-        expect(page).to have_content("based on your estimated adjusted net income of £50,825.00")
+        expect(page).to have_content "Tax charge to pay £7.00"
+        expect(page).to have_content("based on your estimated adjusted net income of £50,325.00")
       end
     end
   end
