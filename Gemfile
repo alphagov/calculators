@@ -20,7 +20,7 @@ gem 'logstasher', '0.4.8'
 gem 'airbrake', '3.1.15'
 gem 'rack_strip_client_ip', '0.0.1'
 
-gem 'uglifier', '>= 2.7.1'
+gem 'uglifier', '>= 2.7.2'
 
 group :development, :test do
   gem 'rspec-rails', '3.2.1'

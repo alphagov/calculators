@@ -63,7 +63,7 @@ GEM
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
-    execjs (2.5.2)
+    execjs (2.6.0)
     gds-api-adapters (26.7.0)
       link_header
       lrucache (~> 0.1.1)
@@ -214,7 +214,7 @@ GEM
     timecop (0.6.2.2)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uglifier (2.7.1)
+    uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     unf (0.1.4)
@@ -254,6 +254,6 @@ DEPENDENCIES
   simplecov-rcov (= 0.2.3)
   slimmer (= 9.0.0)
   timecop (= 0.6.2.2)
-  uglifier (>= 2.7.1)
+  uglifier (>= 2.7.2)
   unicorn (= 4.6.2)
   webmock
