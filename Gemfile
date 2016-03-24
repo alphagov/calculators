@@ -30,4 +30,5 @@ group :development, :test do
   gem 'webmock', '~> 1.24.2', :require => false
   gem 'timecop', '~> 0.8.0'
   gem 'poltergeist', '1.6.0'
+  gem 'govuk-lint', '0.8.1'
 end
