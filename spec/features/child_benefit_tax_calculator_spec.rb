@@ -2,13 +2,12 @@
 require "spec_helper"
 
 feature "Child Benefit Tax Calculator" do
-
   specify "inspecting the landing page" do
     visit "/child-benefit-tax-calculator"
 
     within "head", visible: :all do
       expect(page).to have_selector("title", text: "Child Benefit tax calculator - GOV.UK", visible: :all)
-      expect(page).to have_selector(%Q{meta[name='description'][content="Work out the Child Benefit you've received and your High Income Child Benefit tax charge"]}, visible: false)
+      expect(page).to have_selector(%{meta[name='description'][content="Work out the Child Benefit you've received and your High Income Child Benefit tax charge"]}, visible: false)
     end
 
     within "main#content" do
@@ -56,7 +55,7 @@ feature "Child Benefit Tax Calculator" do
     end
   end
 
-  it "should disallow dates with too many days for the selected month", js: true  do
+  it "should disallow dates with too many days for the selected month", js: true do
     Timecop.travel "2014-09-01"
     visit "/child-benefit-tax-calculator"
     click_on "Start now"
@@ -197,7 +196,6 @@ feature "Child Benefit Tax Calculator" do
       expect(page).to have_no_css("#starting_children_1_start_year")
       expect(page).to have_no_css("#starting_children_1_start_month")
       expect(page).to have_no_css("#starting_children_1_start_day")
-
     end
 
     describe "Calculating benefits received for 2012-13" do
@@ -452,7 +450,6 @@ feature "Child Benefit Tax Calculator" do
     end # with the tax estimate
 
     context "with an Adjusted Net Income below the threshold" do
-
       it "should say there's nothing to pay" do
         visit "/child-benefit-tax-calculator/main"
 
@@ -479,7 +476,6 @@ feature "Child Benefit Tax Calculator" do
           end
         end
       end
-
     end # ANI below threshold
   end
 

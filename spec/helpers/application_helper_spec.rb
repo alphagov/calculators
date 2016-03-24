@@ -1,7 +1,6 @@
 require "spec_helper"
 
-describe ApplicationHelper, :type => :helper do
-
+describe ApplicationHelper, type: :helper do
   it "appends the private frontend url to internal links when constant is set" do
     stub_const("PRIVATE_FRONTEND_INTERNAL_LINKS", true)
     expect(internal_url("/blah")).to eq("http://private-frontend.dev.gov.uk/blah?edition=1")
@@ -24,5 +23,4 @@ describe ApplicationHelper, :type => :helper do
   it "generates the html for a step with a description" do
     expect(step(1, "Blah", "(optional)")).to eq("<h2><span class='steps' id='step-1'><span class='visuallyhidden'>Step 1</span></span>Blah <span id='step-1-description'>(optional)</span></h2>")
   end
-
 end

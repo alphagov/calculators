@@ -1,7 +1,6 @@
 require 'active_model'
 
 class ChildBenefitTaxCalculator
-
   include ActiveModel::Validations
 
   attr_reader :adjusted_net_income_calculator, :adjusted_net_income, :children_count,
@@ -46,7 +45,7 @@ class ChildBenefitTaxCalculator
   end
 
   def has_errors?
-    errors.any? || starting_children.select {|c| c.errors.any? }.any?
+    errors.any? || starting_children.select { |c| c.errors.any? }.any?
   end
 
   def percent_tax_charge
@@ -99,7 +98,7 @@ class ChildBenefitTaxCalculator
     (benefits_claimed_amount * (percent_tax_charge / 100.0)).floor
   end
 
-  private
+private
 
   def process_starting_children(children)
     [].tap do |ary|
@@ -155,14 +154,14 @@ class ChildBenefitTaxCalculator
   end
 
   def benefit_taxable_weeks(start_date, end_date)
-    (( end_date - start_date) / 7).floor
+    ((end_date - start_date) / 7).floor
   end
 
   def calculate_adjusted_net_income(adjusted_net_income)
     if @adjusted_net_income_calculator.can_calculate?
       @adjusted_net_income_calculator.calculate_adjusted_net_income
     elsif adjusted_net_income.present?
-      adjusted_net_income.gsub(/[£, -]/,'').to_i
+      adjusted_net_income.gsub(/[£, -]/, '').to_i
     end
   end
 
@@ -171,13 +170,13 @@ class ChildBenefitTaxCalculator
   end
 
   def valid_child_dates
-    @starting_children.each { |c| c.valid? }
+    @starting_children.each(&:valid?)
   end
 
   def tax_year_contains_at_least_one_child
     return unless selected_tax_year.present? && @starting_children.select(&:valid?).any?
 
-    in_tax_year = @starting_children.reject {|c| c.start_date.nil? || c.start_date > selected_tax_year.last || ( c.end_date.present? && c.end_date < selected_tax_year.first) }
+    in_tax_year = @starting_children.reject { |c| c.start_date.nil? || c.start_date > selected_tax_year.last || (c.end_date.present? && c.end_date < selected_tax_year.first) }
     if in_tax_year.empty?
       @starting_children.first.errors.add(:end_date, "You haven't received any Child Benefit for the tax year selected. Check your Child Benefit dates or choose a different tax year.")
     end

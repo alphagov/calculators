@@ -1,7 +1,6 @@
 require "spec_helper"
 
-describe ChildBenefitTaxController, :type => :controller do
-
+describe ChildBenefitTaxController, type: :controller do
   describe "slimmer headers" do
     context "when the artefact exists" do
       before :each do
@@ -41,13 +40,13 @@ describe ChildBenefitTaxController, :type => :controller do
 
   describe "GET main" do
     it "should create a calculator using params" do
-      get 'main', { :year => '2013' }
+      get 'main', year: '2013'
       expect(response).to be_success
       expect(assigns(:calculator).tax_year).to eq(2013)
       expect(assigns(:adjusted_net_income_calculator).calculate_adjusted_net_income).to eq(0)
     end
     it "should run calculator validations" do
-      get 'main', { :results => "Get your estimate" }
+      get 'main', results: "Get your estimate"
       expect(response).to be_success
       expect(assigns(:calculator).errors.has_key?(:tax_year)).to eq(true)
     end
@@ -70,5 +69,4 @@ describe ChildBenefitTaxController, :type => :controller do
       expect(response).to redirect_to(action: :main, params: route_params, anchor: "results")
     end
   end
-
 end

@@ -1,8 +1,7 @@
 # encoding: UTF-8
 require 'spec_helper'
 
-describe ChildBenefitTaxHelper, :type => :helper do
-
+describe ChildBenefitTaxHelper, type: :helper do
   describe "money_input" do
     it "should create an html text input with sensible defaults" do
       expect(money_input("foo", 0)).to eq('<input type="text" name="foo" id="foo" placeholder="£" />')

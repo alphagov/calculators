@@ -1,8 +1,7 @@
 # encoding: UTF-8
 require 'spec_helper'
 
-describe AdjustedNetIncomeCalculator, :type => :model do
-
+describe AdjustedNetIncomeCalculator, type: :model do
   describe "adjusted_net_income" do
     it "should calculate with minimal parameters" do
       expect(AdjustedNetIncomeCalculator.new(gross_income: "£60,000").calculate_adjusted_net_income).to eq(60000)
@@ -33,5 +32,4 @@ describe AdjustedNetIncomeCalculator, :type => :model do
       expect(calc.calculate_adjusted_net_income).to eq(61625)
     end
   end
-
 end
