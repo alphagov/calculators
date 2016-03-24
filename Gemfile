@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.5.1'
+gem 'rails', '4.2.6'
 
 gem 'unicorn', '4.6.2'
 
@@ -14,7 +14,7 @@ gem 'plek', '~> 1.12.0'
 gem 'gds-api-adapters', '~> 30.0.0'
 gem 'govuk_frontend_toolkit', '~> 4.9.1'
 gem 'govuk-content-schema-test-helpers', '~> 1.4.0'
-gem 'sass-rails', '5.0.3'
+gem 'sass-rails', '5.0.4'
 
 gem 'logstasher', '0.6.5'
 gem 'airbrake', '~> 4.3.0'
