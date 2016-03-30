@@ -1,4 +1,4 @@
-<div class="results_estimate">
+<div class="results-estimate">
   <h3>Child Benefit received</h3>
   <p class="numbers"><%= number_to_currency @calculator.benefits_claimed_amount, unit: "£", precision: 2 %></p>
   <% if @calculator.tax_year == 2012 -%>
@@ -8,7 +8,7 @@
 </div>
 <%# tax estimate %>
 <% if @calculator.adjusted_net_income -%>
-  <div class="results_estimate">
+  <div class="results-estimate">
     <h3>Tax charge to pay</h3>
 
     <% if @calculator.adjusted_net_income < 50100 -%>
