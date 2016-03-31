@@ -101,6 +101,7 @@ li {
     }
   }
 
+  // scss-lint:disable IdSelector
   #children {
     margin-bottom: 0;
 
@@ -135,18 +136,22 @@ li {
     margin-right: 0.75em;
   }
 
+  // scss-lint:disable IdSelector
   #step-1 {
     background-image: image-url("icon-steps/icon-step-1.png");
   }
 
+  // scss-lint:disable IdSelector
   #step-2 {
     background-image: image-url("icon-steps/icon-step-2.png");
   }
 
+  // scss-lint:disable IdSelector
   #step-3 {
     background-image: image-url("icon-steps/icon-step-3.png");
   }
 
+  // scss-lint:disable IdSelector
   #step-4 {
     background-image: image-url("icon-steps/icon-step-4.png");
   }
@@ -228,6 +233,7 @@ li {
   }
 }
 
+// scss-lint:disable IdSelector
 #results .button {
   @include core-16;
   margin-top: 5em;
