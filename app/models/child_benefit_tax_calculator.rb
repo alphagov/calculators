@@ -14,6 +14,7 @@ class ChildBenefitTaxCalculator
     "2013" => [Date.parse("2013-04-06"), Date.parse("2014-04-05")],
     "2014" => [Date.parse("2014-04-06"), Date.parse("2015-04-05")],
     "2015" => [Date.parse("2015-04-06"), Date.parse("2016-04-05")],
+    "2016" => [Date.parse("2016-04-06"), Date.parse("2017-04-05")],
   }
 
   validate :valid_child_dates
