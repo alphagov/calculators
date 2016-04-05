@@ -1,5 +1,4 @@
 module PathHelpers
-
   # Takes a URL path (with optional query string), and asserts that it matches the current URL.
   def i_should_be_on(path_with_query, options = {})
     expected = URI.parse(path_with_query)

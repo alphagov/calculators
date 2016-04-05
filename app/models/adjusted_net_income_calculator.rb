@@ -1,6 +1,5 @@
 # encoding: UTF-8
 class AdjustedNetIncomeCalculator
-
   PARAM_KEYS = [:gross_income, :other_income, :pension_contributions_from_pay,
                 :retirement_annuities, :cycle_scheme, :childcare, :pensions, :property,
                 :non_employment_income, :gift_aid_donations, :outgoing_pension_contributions]
@@ -22,7 +21,7 @@ class AdjustedNetIncomeCalculator
     end
   end
 
-  private
+private
 
   def additions
     @gross_income + @other_income + @pensions + @property + @non_employment_income
@@ -38,7 +37,7 @@ class AdjustedNetIncomeCalculator
   end
 
   def integer_value(val)
-    val.gsub!(/[£, -]/,'') if val.is_a?(String)
+    val.gsub!(/[£, -]/, '') if val.is_a?(String)
     val.to_i
   end
 end

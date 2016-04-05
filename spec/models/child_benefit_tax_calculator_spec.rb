@@ -1,7 +1,7 @@
 # encoding: UTF-8
 require 'spec_helper'
 
-describe ChildBenefitTaxCalculator, :type => :model do
+describe ChildBenefitTaxCalculator, type: :model do
   it "uses the adjusted net income if it's passed in" do
     calc = ChildBenefitTaxCalculator.new(adjusted_net_income: "20")
     expect(calc.adjusted_net_income).to eq(20)
@@ -40,8 +40,8 @@ describe ChildBenefitTaxCalculator, :type => :model do
     it "should validate dates provided for children" do
       expect(@calc.starting_children.first.errors.has_key?(:start_date)).to eq(true)
       @calc.starting_children << StartingChild.new(
-        start: {year: "2012", month: "02", day: "01"},
-        stop: {year: "2012", month: "01", day: "01"},
+        start: { year: "2012", month: "02", day: "01" },
+        stop: { year: "2012", month: "01", day: "01" },
       )
       @calc.valid?
       expect(@calc.starting_children.second.errors.has_key?(:end_date)).to eq(true)
@@ -100,7 +100,7 @@ describe ChildBenefitTaxCalculator, :type => :model do
     end
     describe "has_errors?" do
       it "should be true if the calculator has errors" do
-        @calc.starting_children << StartingChild.new(start: {year: "2012", month: "02", day: "01"})
+        @calc.starting_children << StartingChild.new(start: { year: "2012", month: "02", day: "01" })
         expect(@calc.has_errors?).to eq(true)
         expect(@calc.errors.size).to eq(1)
       end
@@ -371,7 +371,7 @@ describe ChildBenefitTaxCalculator, :type => :model do
           starting_children: {
             "0" => {
               start: { year: "2011", month: "01", day: "01" },
-              stop: { year: "", month: "", day: ""},
+              stop: { year: "", month: "", day: "" },
             },
           },
           year: "2013",
@@ -390,7 +390,7 @@ describe ChildBenefitTaxCalculator, :type => :model do
           starting_children: {
             "0" => {
               start: { year: "2013", month: "03", day: "01" },
-              stop: { year: "", month: "", day: ""},
+              stop: { year: "", month: "", day: "" },
             },
           },
           year: "2012",
@@ -405,7 +405,7 @@ describe ChildBenefitTaxCalculator, :type => :model do
           starting_children: {
             "0" => {
               start: { year: "2012", month: "05", day: "01" },
-              stop: { year: "", month: "", day: ""},
+              stop: { year: "", month: "", day: "" },
             },
           },
           year: "2012",
@@ -438,7 +438,7 @@ describe ChildBenefitTaxCalculator, :type => :model do
           starting_children: {
             "0" => {
               start: { year: "2014", month: "02", day: "22" },
-              stop: { year: "", month: "", day: ""},
+              stop: { year: "", month: "", day: "" },
             },
           },
           year: "2013",
@@ -456,16 +456,16 @@ describe ChildBenefitTaxCalculator, :type => :model do
         children_count: 3,
         starting_children: {
           "0" => {
-            start: {day: "06", month: "01", year: "2013"},
-            stop: {day: "05", month: "04", year: "2013"},
+            start: { day: "06", month: "01", year: "2013" },
+            stop: { day: "05", month: "04", year: "2013" },
           },
           "1" => {
-            start: {day: "06", month: "01", year: "2013"},
-            stop: {day: "05", month: "04", year: "2013"},
+            start: { day: "06", month: "01", year: "2013" },
+            stop: { day: "05", month: "04", year: "2013" },
           },
           "2" => {
-            start: {day: "06", month: "01", year: "2013"},
-            stop: {day: "05", month: "04", year: "2013"},
+            start: { day: "06", month: "01", year: "2013" },
+            stop: { day: "05", month: "04", year: "2013" },
           },
        },
      ).benefits_claimed_amount.round(2)).to eq(612.30)
@@ -475,16 +475,16 @@ describe ChildBenefitTaxCalculator, :type => :model do
         adjusted_net_income: "56000",
         year: "2012", children_count: 3, starting_children: {
           "0" => {
-            start: {day: "06", month: "01", year: "2013"},
-            stop: {day: "05", month: "04", year: "2013"},
+            start: { day: "06", month: "01", year: "2013" },
+            stop: { day: "05", month: "04", year: "2013" },
           },
           "1" => {
-            start: {day: "06", month: "01", year: "2013"},
-            stop: {day: "05", month: "04", year: "2013"},
+            start: { day: "06", month: "01", year: "2013" },
+            stop: { day: "05", month: "04", year: "2013" },
           },
           "2" => {
-            start: {day: "07", month: "01", year: "2013"},
-            stop: {day: "05", month: "04", year: "2013"},
+            start: { day: "07", month: "01", year: "2013" },
+            stop: { day: "05", month: "04", year: "2013" },
           },
         },
       )
@@ -497,8 +497,8 @@ describe ChildBenefitTaxCalculator, :type => :model do
         children_count: 1,
         starting_children: {
           "0" => {
-            start: {day: "14", month: "01", year: "2013"},
-            stop: {day: "21", month: "01", year: "2013"},
+            start: { day: "14", month: "01", year: "2013" },
+            stop: { day: "21", month: "01", year: "2013" },
           },
         },
       ).benefits_claimed_amount.round(2)).to eq(20.30)
@@ -510,16 +510,16 @@ describe ChildBenefitTaxCalculator, :type => :model do
         children_count: 3,
         starting_children: {
           "0" => {
-            start: {day: "06", month: "04", year: "2013"},
-            stop: {day: "", month: "", year: ""},
+            start: { day: "06", month: "04", year: "2013" },
+            stop: { day: "", month: "", year: "" },
           },
           "1" => {
-            start: {day: "06", month: "04", year: "2013"},
-            stop: {day: "", month: "", year: ""},
+            start: { day: "06", month: "04", year: "2013" },
+            stop: { day: "", month: "", year: "" },
           },
           "2" => {
-            start: {day: "06", month: "04", year: "2013"},
-            stop: {day: "", month: "", year: ""},
+            start: { day: "06", month: "04", year: "2013" },
+            stop: { day: "", month: "", year: "" },
           },
         },
       )
@@ -533,16 +533,16 @@ describe ChildBenefitTaxCalculator, :type => :model do
         children_count: 3,
         starting_children: {
           "0" => {
-            start: {day: "06", month: "04", year: "2013"},
-            stop: {day: "", month: "", year: ""},
+            start: { day: "06", month: "04", year: "2013" },
+            stop: { day: "", month: "", year: "" },
           },
           "1" => {
-            start: {day: "06", month: "04", year: "2013"},
-            stop: {day: "", month: "", year: ""},
+            start: { day: "06", month: "04", year: "2013" },
+            stop: { day: "", month: "", year: "" },
           },
           "2" => {
-            start: {day: "06", month: "04", year: "2013"},
-            stop: {day: "14", month: "06", year: "2013"},
+            start: { day: "06", month: "04", year: "2013" },
+            stop: { day: "14", month: "06", year: "2013" },
           },
         },
       )
@@ -556,8 +556,8 @@ describe ChildBenefitTaxCalculator, :type => :model do
         children_count: 1,
         starting_children: {
           "0" => {
-            start: {day: "24", month: "06", year: "2013"},
-            stop: {day: "", month: "", year: ""},
+            start: { day: "24", month: "06", year: "2013" },
+            stop: { day: "", month: "", year: "" },
           },
         },
       )
@@ -572,16 +572,16 @@ describe ChildBenefitTaxCalculator, :type => :model do
           children_count: 3,
           starting_children: {
             "0" => {
-              start: {day: "06", month: "04", year: "2014"},
-              stop: {day: "", month: "", year: ""},
+              start: { day: "06", month: "04", year: "2014" },
+              stop: { day: "", month: "", year: "" },
             },
             "1" => {
-              start: {day: "06", month: "04", year: "2014"},
-              stop: {day: "", month: "", year: ""},
+              start: { day: "06", month: "04", year: "2014" },
+              stop: { day: "", month: "", year: "" },
             },
             "2" => {
-              start: {day: "06", month: "04", year: "2014"},
-              stop: {day: "", month: "", year: ""},
+              start: { day: "06", month: "04", year: "2014" },
+              stop: { day: "", month: "", year: "" },
             },
          },
        ).benefits_claimed_amount.round(2)).to eq(2475.2)
@@ -606,12 +606,12 @@ describe ChildBenefitTaxCalculator, :type => :model do
           children_count: 2,
           starting_children: {
             "0" => {
-              start: {day: "06", month: "04", year: "2014"},
-              stop: {day: "", month: "", year: ""},
+              start: { day: "06", month: "04", year: "2014" },
+              stop: { day: "", month: "", year: "" },
             },
             "1" => {
-              start: {day: "06", month: "04", year: "2014"},
-              stop: {day: "06", month: "11", year: "2014"},
+              start: { day: "06", month: "04", year: "2014" },
+              stop: { day: "06", month: "11", year: "2014" },
             },
           },
         ).benefits_claimed_amount.round(2)).to eq(1486.05)
@@ -623,8 +623,8 @@ describe ChildBenefitTaxCalculator, :type => :model do
           children_count: 1,
           starting_children: {
             "0" => {
-              start: {day: "06", month: "04", year: "2014"},
-              stop: {day: "06", month: "11", year: "2014"},
+              start: { day: "06", month: "04", year: "2014" },
+              stop: { day: "06", month: "11", year: "2014" },
             },
           },
         )
@@ -639,16 +639,16 @@ describe ChildBenefitTaxCalculator, :type => :model do
           children_count: 3,
           starting_children: {
             "0" => {
-              start: {day: "06", month: "04", year: "2015"},
-              stop: {day: "", month: "", year: ""},
+              start: { day: "06", month: "04", year: "2015" },
+              stop: { day: "", month: "", year: "" },
             },
             "1" => {
-              start: {day: "06", month: "04", year: "2015"},
-              stop: {day: "", month: "", year: ""},
+              start: { day: "06", month: "04", year: "2015" },
+              stop: { day: "", month: "", year: "" },
             },
             "2" => {
-              start: {day: "06", month: "04", year: "2015"},
-              stop: {day: "", month: "", year: ""},
+              start: { day: "06", month: "04", year: "2015" },
+              stop: { day: "", month: "", year: "" },
             },
          },
        ).benefits_claimed_amount.round(2)).to eq(2501.2)
@@ -673,12 +673,12 @@ describe ChildBenefitTaxCalculator, :type => :model do
           children_count: 2,
           starting_children: {
             "0" => {
-              start: {day: "06", month: "04", year: "2015"},
-              stop: {day: "", month: "", year: ""},
+              start: { day: "06", month: "04", year: "2015" },
+              stop: { day: "", month: "", year: "" },
             },
             "1" => {
-              start: {day: "06", month: "04", year: "2015"},
-              stop: {day: "06", month: "11", year: "2016"},
+              start: { day: "06", month: "04", year: "2015" },
+              stop: { day: "06", month: "11", year: "2016" },
             },
           },
         ).benefits_claimed_amount.round(2)).to eq(1788.8)
@@ -690,8 +690,8 @@ describe ChildBenefitTaxCalculator, :type => :model do
           children_count: 1,
           starting_children: {
             "0" => {
-              start: {day: "06", month: "04", year: "2015"},
-              stop: {day: "06", month: "11", year: "2015"},
+              start: { day: "06", month: "04", year: "2015" },
+              stop: { day: "06", month: "11", year: "2015" },
             },
           },
         )
@@ -699,5 +699,4 @@ describe ChildBenefitTaxCalculator, :type => :model do
       end
     end
   end
-
 end

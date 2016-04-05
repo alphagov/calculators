@@ -26,7 +26,7 @@ class StartingChild
     start_date + (start_date.wday < 1 ? 1 : (1 - start_date.wday) + 7)
   end
 
-  private
+private
 
   def valid_dates
     @dates_with_too_many_days.each do |error|
@@ -53,14 +53,14 @@ class StartingChild
 
   def buildable_date?(date_attr, date_params)
     date_values_present?(date_params) &&
-    valid_day_for_month_in_year?(
-      date_attr, date_params)
+      valid_day_for_month_in_year?(
+        date_attr, date_params)
   end
 
   def date_values_present?(date_params)
     date_params[:year].present? &&
-    date_params[:month].present? &&
-    date_params[:day].present?
+      date_params[:month].present? &&
+      date_params[:day].present?
   end
 
   def valid_day_for_month_in_year?(date_attr, date_params)
@@ -77,6 +77,6 @@ class StartingChild
   end
 
   def start_date_with_too_many_days?
-    @dates_with_too_many_days.select {|e| e.has_value?(:start_date)}.any?
+    @dates_with_too_many_days.select { |e| e.has_value?(:start_date) }.any?
   end
 end

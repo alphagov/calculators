@@ -1,13 +1,13 @@
 // from the toolkit gem
-@import "_colours";
-@import "_typography";
-@import "_conditionals";
-@import "_shims";
-@import "_css3";
+@import "colours";
+@import "typography";
+@import "conditionals";
+@import "shims";
+@import "css3";
 
-/* local includes */
-@import "_validation";
+// local includes
+@import "validation";
 
-/* styles */
-@import "core.scss";
+// styles
+@import "core";
 @import "calculators/child_benefit";

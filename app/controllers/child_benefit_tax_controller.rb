@@ -1,5 +1,4 @@
 class ChildBenefitTaxController < ApplicationController
-
   before_filter :setup_slimmer
 
   CALC_PARAM_KEYS = [:adjusted_net_income, :children_count, :starting_children, :year, :results] +
@@ -9,7 +8,6 @@ class ChildBenefitTaxController < ApplicationController
   end
 
   def process_form
-
     redirect_hash = { action: :main }
 
     [:children, :adjusted_income, :results].each do |anchor|
@@ -29,7 +27,7 @@ class ChildBenefitTaxController < ApplicationController
     @calculator.valid? if params[:results]
   end
 
-  protected
+protected
 
   def setup_slimmer
     artefact = content_api.artefact('child-benefit-tax-calculator')

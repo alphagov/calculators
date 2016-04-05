@@ -1,12 +1,13 @@
 .calculator-page {
   @include core-19;
 
-  header.page-header div h1 {
+  .page-header div h1 {
     @include bold-48;
 
     .inner {
       padding-right: 2em;
-      & > *:first-child{
+
+      > *:first-child {
         margin-top: 30px;
       }
     }
@@ -29,29 +30,28 @@ li {
   padding-left: 0.3em;
 }
 
-form.calculator,
+.calculator,
 .results {
   width: 75%;
-  padding: 0 2em 1em 2em;
+  padding: 0 2em 1em;
 }
 
-/* ================================================================
- * FORMS
- * ================================================================
- */
+// ================================================================
+// FORMS
+// ================================================================
 
-form.calculator {
+.calculator {
   width: 75%;
   padding: 0 0 1em;
 
   h2 {
-    margin: 2em 0 0.8em 0;
+    margin: 2em 0 0.8em;
     padding: 0;
     @include bold-24;
   }
 
   h3 {
-    color: #0b0c0c;
+    color: $black;
   }
 
   h4 {
@@ -70,7 +70,8 @@ form.calculator {
 
   fieldset {
     margin-bottom: 1em;
-    &#adjusted_income {
+
+    &:last-of-type {
       margin-bottom: 3em;
     }
   }
@@ -81,8 +82,8 @@ form.calculator {
   }
 
   input[type="text"] {
-    display:block;
-    margin: 0.2em 0 1em 0;
+    display: block;
+    margin: 0.2em 0 1em;
   }
 
   input[type="radio"] {
@@ -100,8 +101,9 @@ form.calculator {
     }
   }
 
+  // scss-lint:disable IdSelector
   #children {
-    margin-bottom: 0em;
+    margin-bottom: 0;
 
     h3 {
       @include bold-19;
@@ -134,18 +136,22 @@ form.calculator {
     margin-right: 0.75em;
   }
 
+  // scss-lint:disable IdSelector
   #step-1 {
     background-image: image-url("icon-steps/icon-step-1.png");
   }
 
+  // scss-lint:disable IdSelector
   #step-2 {
     background-image: image-url("icon-steps/icon-step-2.png");
   }
 
+  // scss-lint:disable IdSelector
   #step-3 {
     background-image: image-url("icon-steps/icon-step-3.png");
   }
 
+  // scss-lint:disable IdSelector
   #step-4 {
     background-image: image-url("icon-steps/icon-step-4.png");
   }
@@ -155,32 +161,29 @@ form.calculator {
     margin-bottom: 3em;
   }
 
-  .link{
+  .link {
     @include core-19;
     background: none;
     padding-top: 0.5em;
-    color: #2e3191;
+    color: $link-colour;
     text-decoration: underline;
     @include box-shadow(none);
     border: none;
     overflow: visible;
 
     &:hover,
-    &:focus{
-      color: #2e8aca;
+    &:focus {
+      color: $link-hover-colour;
     }
   }
 }
 
 .help-panel {
   background: $panel-colour;
-}
-
-details.help-panel {
   position: relative;
 
   @include media(mobile) {
-    margin-top:4.8em;
+    margin-top: 4.8em;
   }
 
   @include media(desktop) {
@@ -200,6 +203,7 @@ details.help-panel {
   fieldset {
     padding-bottom: 1em;
   }
+
   summary {
     position: absolute;
 
@@ -229,6 +233,7 @@ details.help-panel {
   }
 }
 
+// scss-lint:disable IdSelector
 #results .button {
   @include core-16;
   margin-top: 5em;
@@ -240,6 +245,7 @@ details.help-panel {
 
 .questions {
   width: 100%;
+
   @include media(tablet) {
     width: 80%;
   }
@@ -252,12 +258,7 @@ details.help-panel {
 }
 
 .validation-error {
-    zoom: 1;
-}
-
-fieldset#adjusted_net_income_calculator {
-  margin-bottom: 3em;
-  margin-top: 2em;
+  zoom: 1;
 }
 
 .results {
@@ -269,12 +270,12 @@ fieldset#adjusted_net_income_calculator {
 
   h3 {
     @include bold-24;
-    margin: 1em 0 0.8em 0;
+    margin: 1em 0 0.8em;
     padding: 0;
   }
 }
 
-.results_estimate {
+.results-estimate {
   padding-bottom: 1em;
 
   .numbers {

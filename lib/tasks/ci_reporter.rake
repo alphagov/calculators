@@ -1,3 +1,3 @@
-if Rails.env.development? or Rails.env.test?
+if Rails.env.development? || Rails.env.test?
   require 'ci/reporter/rake/rspec'
 end

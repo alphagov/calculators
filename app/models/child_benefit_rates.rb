@@ -1,6 +1,5 @@
 # encoding: UTF-8
 class ChildBenefitRates
-
   attr_reader :year
 
   RATES = {
@@ -24,8 +23,8 @@ class ChildBenefitRates
   end
 
 private
+
   def rates_for_year
     RATES[year]
   end
-
 end

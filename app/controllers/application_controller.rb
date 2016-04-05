@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   slimmer_template 'wrapper'
 
-  protected
+protected
 
   def set_slimmer_artefact_headers(artefact)
     set_slimmer_headers(format: "calculator")
