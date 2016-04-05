@@ -698,5 +698,72 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(calc.benefits_claimed_amount.round(2)).to eq(621.0)
       end
     end
+
+    describe "tests for 2016 rates" do
+      it "should calculate 3 children already in the household for all of 2016/17" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2016",
+          children_count: 3,
+          starting_children: {
+            "0" => {
+              start: { day: "06", month: "04", year: "2016" },
+              stop: { day: "", month: "", year: "" },
+            },
+            "1" => {
+              start: { day: "06", month: "04", year: "2016" },
+              stop: { day: "", month: "", year: "" },
+            },
+            "2" => {
+              start: { day: "06", month: "04", year: "2016" },
+              stop: { day: "", month: "", year: "" },
+            },
+         },
+       ).benefits_claimed_amount.round(2)).to eq(2501.2)
+      end
+
+      it "should give the total amount of benefits received for a full tax year 2016" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2016",
+          children_count: "1",
+          starting_children: {
+            "0" => {
+              start: { year: "2016", month: "04", day: "06" },
+              stop: { year: "2017", month: "04", day: "05" },
+            },
+          },
+        ).benefits_claimed_amount.round(2)).to eq(1076.4)
+      end
+
+      it "should give total amount of benefits one child full year one child half a year" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2016",
+          children_count: 2,
+          starting_children: {
+            "0" => {
+              start: { day: "06", month: "04", year: "2016" },
+              stop: { day: "", month: "", year: "" },
+            },
+            "1" => {
+              start: { day: "06", month: "04", year: "2016" },
+              stop: { day: "06", month: "10", year: "2016" },
+            },
+          },
+        ).benefits_claimed_amount.round(2)).to eq(1432.6)
+      end
+
+      it "should give total amount of benefits for one child for half a year" do
+        calc = ChildBenefitTaxCalculator.new(
+          year: "2016",
+          children_count: 1,
+          starting_children: {
+            "0" => {
+              start: { day: "06", month: "04", year: "2016" },
+              stop: { day: "06", month: "11", year: "2016" },
+            },
+          },
+        )
+        expect(calc.benefits_claimed_amount.round(2)).to eq(621.0)
+      end
+    end
   end
 end
