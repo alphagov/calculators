@@ -11,7 +11,8 @@ Calculators::Application.configure do
   config.action_controller.perform_caching = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_files = false
+  # unless running on Heroku
+  config.serve_static_files = ENV['RUNNING_ON_HEROKU'].present?
 
   config.assets.js_compress = :uglifier
 
@@ -62,8 +63,17 @@ Calculators::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  # Enable JSON-style logging
-  config.logstasher.enabled = true
-  config.logstasher.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.json.log")
-  config.logstasher.supress_app_log = true
+  if ENV['RUNNING_ON_HEROKU'].blank?
+    # Enable JSON-style logging
+    config.logstasher.enabled = true
+    config.logstasher.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.json.log")
+    config.logstasher.suppress_app_logs = true
+  else
+    # flush output to the underlying OS without buffering
+    STDOUT.sync = true
+
+    # enable STDOUT logging for Heroku
+    config.logger = Logger.new(STDOUT)
+    config.logger.level = Logger.const_get(ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].upcase : 'INFO')
+  end
 end
