@@ -85,15 +85,6 @@ feature "Child Benefit Tax Calculator" do
     )
   end
 
-  it "should allow stop date to be three years in the past" do
-    Timecop.freeze('2014-04-04')
-    visit "/child-benefit-tax-calculator"
-    click_on "Start now"
-
-    expected_year_list = ("2011".."2024").to_a
-    expect(page).to have_select("starting_children_0_stop_year", options: expected_year_list.unshift("Year"))
-  end
-
   it "should show error if no children are present in the selected tax year" do
     Timecop.travel "2014-09-01"
     visit "/child-benefit-tax-calculator"
