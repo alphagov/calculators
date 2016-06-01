@@ -23,6 +23,7 @@ class CalculatorContentItem
       title: calculator.title,
       base_path: base_path,
       format: 'placeholder_calculator',
+      details: {},
       publishing_app: 'calculators',
       rendering_app: 'calculators',
       locale: 'en',
