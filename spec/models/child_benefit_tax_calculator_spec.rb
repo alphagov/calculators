@@ -15,6 +15,7 @@ describe ChildBenefitTaxCalculator, type: :model do
   it "is valid if given enough detail" do
     expect(ChildBenefitTaxCalculator.new(
       year: "2012", children_count: "1",
+      is_part_year_claim: "yes",
       starting_children: { "0" => { start: { year: "2011", month: "01", day: "01" } } },
     ).can_calculate?).to eq(true)
   end
@@ -26,7 +27,7 @@ describe ChildBenefitTaxCalculator, type: :model do
 
   describe "input validation" do
     before(:each) do
-      @calc = ChildBenefitTaxCalculator.new(children_count: "1")
+      @calc = ChildBenefitTaxCalculator.new(children_count: "1", is_part_year_claim: "no")
       @calc.valid?
     end
     it "should contain errors for year if none is given" do
@@ -65,6 +66,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       @calc = ChildBenefitTaxCalculator.new(
         year: "2013",
         children_count: "1",
+        is_part_year_claim: "yes",
         starting_children: {
           "0" => {
             start: { year: "2011", month: "01", day: "01" },
@@ -80,6 +82,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       @calc = ChildBenefitTaxCalculator.new(
         year: "2013",
         children_count: "3",
+        is_part_year_claim: "yes",
         starting_children: {
           "0" => {
             start: { year: "2011", month: "01", day: "01" },
@@ -105,7 +108,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(@calc.errors.size).to eq(1)
       end
       it "should be true if any starting children have errors" do
-        calc = ChildBenefitTaxCalculator.new(year: "2012", children_count: "1")
+        calc = ChildBenefitTaxCalculator.new(year: "2012", children_count: "1", is_part_year_claim: "yes")
         calc.valid?
         expect(calc.errors).to be_empty
         #puts calc.starting_children.first.errors.full_messages
@@ -119,6 +122,25 @@ describe ChildBenefitTaxCalculator, type: :model do
             "0" => { start: { year: "2012", month: "01", day: "07" } },
           },
         ).has_errors?).to eq(false)
+      end
+    end
+
+    describe "#is_part_year_claim" do
+      it "should contain errors if tax claim duration is not provided" do
+        calc = ChildBenefitTaxCalculator.new(children_count: "1", year: 2012)
+        calc.valid?
+        expect(calc.errors).to have_key(:is_part_year_claim)
+        expect(calc.errors.size).to eq(1)
+      end
+      it "should not contain errors if tax claim duration is set to no" do
+        calc = ChildBenefitTaxCalculator.new(children_count: "1", year: 2012, is_part_year_claim: "no")
+        calc.valid?
+        expect(calc.errors).to be_empty
+      end
+      it "should not contain errors if tax claim duration is set to yes" do
+        calc = ChildBenefitTaxCalculator.new(children_count: "1", year: 2012, is_part_year_claim: "yes")
+        calc.valid?
+        expect(calc.errors).to be_empty
       end
     end
   end
