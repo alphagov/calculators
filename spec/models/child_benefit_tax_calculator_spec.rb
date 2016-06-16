@@ -488,10 +488,10 @@ describe ChildBenefitTaxCalculator, type: :model do
           },
         },
       )
-      expect(calc.benefits_claimed_amount.round(2)).to eq(598.90)
-      expect(calc.tax_estimate).to eq(359)
+      expect(calc.benefits_claimed_amount.round(2)).to eq(612.30)
+      expect(calc.tax_estimate).to eq(367)
     end
-    it "should calculate one week for one child observing the 'next Monday' rule." do
+    it "should calculate two weeks for one child observing the 'Monday' rules." do
       expect(ChildBenefitTaxCalculator.new(
         year: "2012",
         children_count: 1,
@@ -501,7 +501,7 @@ describe ChildBenefitTaxCalculator, type: :model do
             stop: { day: "21", month: "01", year: "2013" },
           },
         },
-      ).benefits_claimed_amount.round(2)).to eq(20.30)
+      ).benefits_claimed_amount.round(2)).to eq(40.60)
     end
     it "should calculate 3 children already in the household for 2013/2014" do
       calc = ChildBenefitTaxCalculator.new(
@@ -556,7 +556,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         children_count: 1,
         starting_children: {
           "0" => {
-            start: { day: "24", month: "06", year: "2013" },
+            start: { day: "01", month: "07", year: "2013" },
             stop: { day: "", month: "", year: "" },
           },
         },
@@ -651,7 +651,7 @@ describe ChildBenefitTaxCalculator, type: :model do
               stop: { day: "", month: "", year: "" },
             },
          },
-       ).benefits_claimed_amount.round(2)).to eq(2501.2)
+       ).benefits_claimed_amount.round(2)).to eq(2549.3)
       end
 
       it "should give the total amount of benefits received for a full tax year 2015" do
@@ -664,7 +664,7 @@ describe ChildBenefitTaxCalculator, type: :model do
               stop: { year: "2016", month: "04", day: "05" },
             },
           },
-        ).benefits_claimed_amount.round(2)).to eq(1076.4)
+        ).benefits_claimed_amount.round(2)).to eq(1097.1)
       end
 
       it "should give total amount of benefits one child full year one child half a year" do
@@ -681,7 +681,7 @@ describe ChildBenefitTaxCalculator, type: :model do
               stop: { day: "06", month: "11", year: "2016" },
             },
           },
-        ).benefits_claimed_amount.round(2)).to eq(1788.8)
+        ).benefits_claimed_amount.round(2)).to eq(1823.2)
       end
 
       it "should give total amount of benefits for one child for half a year" do
@@ -695,7 +695,7 @@ describe ChildBenefitTaxCalculator, type: :model do
             },
           },
         )
-        expect(calc.benefits_claimed_amount.round(2)).to eq(621.0)
+        expect(calc.benefits_claimed_amount.round(2)).to eq(641.7)
       end
     end
 
