@@ -4,7 +4,7 @@ class ChildBenefitTaxCalculator
   include ActiveModel::Validations
 
   attr_reader :adjusted_net_income_calculator, :adjusted_net_income, :children_count,
-    :starting_children, :tax_year
+    :starting_children, :tax_year, :is_part_year_claim
 
   NET_INCOME_THRESHOLD = 50000
   TAX_COMMENCEMENT_DATE = Date.parse('7 Jan 2013')
@@ -18,6 +18,7 @@ class ChildBenefitTaxCalculator
   }
 
   validate :valid_child_dates
+  validates_presence_of :is_part_year_claim, message: "select part year tax claim"
   validates_inclusion_of :tax_year, in: TAX_YEARS.keys.map(&:to_i), message: "select a tax year"
   validate :tax_year_contains_at_least_one_child
 
@@ -25,6 +26,7 @@ class ChildBenefitTaxCalculator
     @adjusted_net_income_calculator = AdjustedNetIncomeCalculator.new(params)
     @adjusted_net_income = calculate_adjusted_net_income(params[:adjusted_net_income])
     @children_count = params[:children_count] ? params[:children_count].to_i : 1
+    @is_part_year_claim = params[:is_part_year_claim]
     @starting_children = process_starting_children(params[:starting_children])
     @tax_year = params[:year].to_i
   end
@@ -48,7 +50,11 @@ class ChildBenefitTaxCalculator
   end
 
   def has_errors?
-    errors.any? || starting_children.select { |c| c.errors.any? }.any?
+    errors.any? || starting_children_errors?
+  end
+
+  def starting_children_errors?
+    is_part_year_claim == 'yes' && starting_children.select { |c| c.errors.any? }.any?
   end
 
   def percent_tax_charge
