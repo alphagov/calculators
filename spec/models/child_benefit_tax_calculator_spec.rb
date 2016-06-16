@@ -15,6 +15,7 @@ describe ChildBenefitTaxCalculator, type: :model do
   it "is valid if given enough detail" do
     expect(ChildBenefitTaxCalculator.new(
       year: "2012", children_count: "1",
+      is_part_year_claim: "yes",
       starting_children: { "0" => { start: { year: "2011", month: "01", day: "01" } } },
     ).can_calculate?).to eq(true)
   end
@@ -26,7 +27,7 @@ describe ChildBenefitTaxCalculator, type: :model do
 
   describe "input validation" do
     before(:each) do
-      @calc = ChildBenefitTaxCalculator.new(children_count: "1")
+      @calc = ChildBenefitTaxCalculator.new(children_count: "1", is_part_year_claim: "no")
       @calc.valid?
     end
     it "should contain errors for year if none is given" do
@@ -50,6 +51,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       @calc = ChildBenefitTaxCalculator.new(
         year: "2013",
         children_count: "1",
+        is_part_year_claim: "yes",
         starting_children: {
           "0" => {
             start: { year: "2011", month: "01", day: "01" },
@@ -65,6 +67,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       @calc = ChildBenefitTaxCalculator.new(
         year: "2013",
         children_count: "1",
+        is_part_year_claim: "yes",
         starting_children: {
           "0" => {
             start: { year: "2011", month: "01", day: "01" },
@@ -80,6 +83,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       @calc = ChildBenefitTaxCalculator.new(
         year: "2013",
         children_count: "3",
+        is_part_year_claim: "yes",
         starting_children: {
           "0" => {
             start: { year: "2011", month: "01", day: "01" },
@@ -105,7 +109,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(@calc.errors.size).to eq(1)
       end
       it "should be true if any starting children have errors" do
-        calc = ChildBenefitTaxCalculator.new(year: "2012", children_count: "1")
+        calc = ChildBenefitTaxCalculator.new(year: "2012", children_count: "1", is_part_year_claim: "yes")
         calc.valid?
         expect(calc.errors).to be_empty
         #puts calc.starting_children.first.errors.full_messages
@@ -115,6 +119,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(ChildBenefitTaxCalculator.new(
           year: "2012",
           children_count: "1",
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => { start: { year: "2012", month: "01", day: "07" } },
           },
@@ -135,7 +140,13 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(calc.errors).to be_empty
       end
       it "should not contain errors if tax claim duration is set to yes" do
-        calc = ChildBenefitTaxCalculator.new(children_count: "1", year: 2012, is_part_year_claim: "yes")
+        calc = ChildBenefitTaxCalculator.new(children_count: "1",
+            year: 2012,
+            is_part_year_claim: "yes",
+            starting_children: {
+              "0" => { start: { year: "2012", month: "01", day: "07" } },
+            }
+          )
         calc.valid?
         expect(calc.errors).to be_empty
       end
@@ -147,6 +158,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       expect(ChildBenefitTaxCalculator.new(
         year: "2012",
         children_count: "1",
+        is_part_year_claim: "yes",
         starting_children: {
           "0" => {
             start: { year: "2011", month: "02", day: "01" },
@@ -159,6 +171,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       expect(ChildBenefitTaxCalculator.new(
         year: "2013",
         children_count: "1",
+        is_part_year_claim: "yes",
         starting_children: {
           "0" => {
             start: { year: "2013", month: "04", day: "06" },
@@ -171,6 +184,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       expect(ChildBenefitTaxCalculator.new(
         year: "2012",
         children_count: "1",
+        is_part_year_claim: "yes",
         starting_children: {
           "0" => {
             start: { year: "2012", month: "06", day: "01" },
@@ -183,6 +197,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       expect(ChildBenefitTaxCalculator.new(
         year: "2012",
         children_count: "2",
+        is_part_year_claim: "yes",
         starting_children: {
           "0" => {
             start: { year: "2012", month: "06", day: "01" },
@@ -204,6 +219,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         other_income: "0",
         year: "2012",
         children_count: 2,
+        is_part_year_claim: "no",
       ).adjusted_net_income).to eq(50099)
     end
 
@@ -221,6 +237,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         childcare: "£1500",
         year: "2012",
         children_count: 2,
+        is_part_year_claim: "no",
       ).adjusted_net_income).to eq(66950)
     end
 
@@ -239,6 +256,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         childcare: "£1500",
         year: "2012",
         children_count: 2,
+        is_part_year_claim: "no",
       ).adjusted_net_income).to eq(66950)
     end
   end
@@ -249,6 +267,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         adjusted_net_income: "50099",
         year: "2012",
         children_count: 2,
+        is_part_year_claim: "no",
       ).percent_tax_charge).to eq(0.0)
     end
     it "should be 1.0 for an income of 50199" do
@@ -256,6 +275,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         adjusted_net_income: "50199",
         year: "2012",
         children_count: 2,
+        is_part_year_claim: "no",
       ).percent_tax_charge).to eq(1.0)
     end
     it "should be 2.0 for an income of 50200" do
@@ -263,6 +283,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         adjusted_net_income: "50200",
         year: "2012",
         children_count: 2,
+        is_part_year_claim: "no",
       ).percent_tax_charge).to eq(2.0)
     end
     it "should be 40.0 for an income of 54013" do
@@ -270,6 +291,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         adjusted_net_income: "54013",
         year: "2012",
         children_count: 2,
+        is_part_year_claim: "no",
       ).percent_tax_charge).to eq(40.0)
     end
     it "should be 40.0 for an income of 54089" do
@@ -277,12 +299,14 @@ describe ChildBenefitTaxCalculator, type: :model do
         adjusted_net_income: "54089",
         year: "2012",
         children_count: 2,
+        is_part_year_claim: "no",
       ).percent_tax_charge).to eq(40.0)
     end
     it "should be 99.0 for an income of 59999" do
       expect(ChildBenefitTaxCalculator.new(
         adjusted_net_income: "59999",
         year: "2012",
+        is_part_year_claim: "no",
         children_count: 2,
       ).percent_tax_charge).to eq(99.0)
     end
@@ -291,6 +315,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         adjusted_net_income: "60000",
         year: "2012",
         children_count: 2,
+        is_part_year_claim: "no",
       ).percent_tax_charge).to eq(100.0)
     end
     it "should be 100.0 for an income of 60001" do
@@ -298,6 +323,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         adjusted_net_income: "60001",
         year: "2012",
         children_count: 2,
+        is_part_year_claim: "no",
       ).percent_tax_charge).to eq(100.0)
     end
   end
@@ -307,6 +333,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       it "should be true for incomes under the threshold" do
         expect(ChildBenefitTaxCalculator.new(
           adjusted_net_income: "49999",
+          is_part_year_claim: "yes",
           children_count: 1,
           starting_children: {
             "0" => { start: { year: "2011", month: "01", day: "01" } },
@@ -317,6 +344,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       it "should be true for incomes over the threshold" do
         expect(ChildBenefitTaxCalculator.new(
           adjusted_net_income: "50100",
+          is_part_year_claim: "yes",
           children_count: 1,
           starting_children: {
             "0" => { start: { year: "2011", month: "01", day: "01" } },
@@ -330,6 +358,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       it "calculates the correct amount owed for % charge of 100" do
         expect(ChildBenefitTaxCalculator.new(
           adjusted_net_income: "60001",
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => { start: { year: "2011", month: "01", day: "01" } },
           },
@@ -341,6 +370,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(ChildBenefitTaxCalculator.new(
           adjusted_net_income: "59900",
           children_count: 1,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => { start: { year: "2011", month: "01", day: "01" } },
           },
@@ -352,6 +382,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(ChildBenefitTaxCalculator.new(
           adjusted_net_income: "54000",
           children_count: 1,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => { start: { year: "2011", month: "01", day: "01" } },
           },
@@ -365,6 +396,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         calc = ChildBenefitTaxCalculator.new(
           adjusted_net_income: "60001",
           children_count: 1,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => { start: { year: "2013", month: "01", day: "01" } },
           },
@@ -376,6 +408,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         calc = ChildBenefitTaxCalculator.new(
           adjusted_net_income: "59900",
           children_count: 1,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => { start: { year: "2013", month: "01", day: "01" } },
           },
@@ -387,6 +420,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         calc = ChildBenefitTaxCalculator.new(
           adjusted_net_income: "54000",
           children_count: "1",
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { year: "2011", month: "01", day: "01" },
@@ -406,6 +440,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         calc = ChildBenefitTaxCalculator.new(
           adjusted_net_income: "61000",
           children_count: 1,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { year: "2013", month: "03", day: "01" },
@@ -421,6 +456,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         calc = ChildBenefitTaxCalculator.new(
           adjusted_net_income: "61000",
           children_count: 1,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { year: "2012", month: "05", day: "01" },
@@ -436,6 +472,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         calc = ChildBenefitTaxCalculator.new(
           adjusted_net_income: "61000",
           children_count: 1,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { year: "2013", month: "02", day: "01" },
@@ -454,6 +491,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         calc = ChildBenefitTaxCalculator.new(
           adjusted_net_income: "61000",
           children_count: 1,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { year: "2014", month: "02", day: "22" },
@@ -473,6 +511,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       expect(ChildBenefitTaxCalculator.new(
         year: "2012",
         children_count: 3,
+        is_part_year_claim: "yes",
         starting_children: {
           "0" => {
             start: { day: "06", month: "01", year: "2013" },
@@ -492,7 +531,9 @@ describe ChildBenefitTaxCalculator, type: :model do
     it "should calculate 3 children for 2012/2013 one child starting on 7 Jan 2013" do
       calc = ChildBenefitTaxCalculator.new(
         adjusted_net_income: "56000",
-        year: "2012", children_count: 3, starting_children: {
+        year: "2012", children_count: 3,
+        is_part_year_claim: "yes",
+        starting_children: {
           "0" => {
             start: { day: "06", month: "01", year: "2013" },
             stop: { day: "05", month: "04", year: "2013" },
@@ -514,6 +555,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       expect(ChildBenefitTaxCalculator.new(
         year: "2012",
         children_count: 1,
+        is_part_year_claim: "yes",
         starting_children: {
           "0" => {
             start: { day: "14", month: "01", year: "2013" },
@@ -527,6 +569,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         adjusted_net_income: "52000",
         year: "2013",
         children_count: 3,
+        is_part_year_claim: "yes",
         starting_children: {
           "0" => {
             start: { day: "06", month: "04", year: "2013" },
@@ -550,6 +593,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         adjusted_net_income: "53000",
         year: "2013",
         children_count: 3,
+        is_part_year_claim: "yes",
         starting_children: {
           "0" => {
             start: { day: "06", month: "04", year: "2013" },
@@ -573,6 +617,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         adjusted_net_income: "61000",
         year: "2013",
         children_count: 1,
+        is_part_year_claim: "yes",
         starting_children: {
           "0" => {
             start: { day: "24", month: "06", year: "2013" },
@@ -589,6 +634,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(ChildBenefitTaxCalculator.new(
           year: "2014",
           children_count: 3,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { day: "06", month: "04", year: "2014" },
@@ -610,6 +656,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(ChildBenefitTaxCalculator.new(
           year: "2014",
           children_count: "1",
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { year: "2014", month: "04", day: "06" },
@@ -623,6 +670,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(ChildBenefitTaxCalculator.new(
           year: "2014",
           children_count: 2,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { day: "06", month: "04", year: "2014" },
@@ -640,6 +688,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         calc = ChildBenefitTaxCalculator.new(
           year: "2014",
           children_count: 1,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { day: "06", month: "04", year: "2014" },
@@ -656,6 +705,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(ChildBenefitTaxCalculator.new(
           year: "2015",
           children_count: 3,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { day: "06", month: "04", year: "2015" },
@@ -677,6 +727,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(ChildBenefitTaxCalculator.new(
           year: "2015",
           children_count: "1",
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { year: "2015", month: "04", day: "06" },
@@ -690,6 +741,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(ChildBenefitTaxCalculator.new(
           year: "2015",
           children_count: 2,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { day: "06", month: "04", year: "2015" },
@@ -707,6 +759,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         calc = ChildBenefitTaxCalculator.new(
           year: "2015",
           children_count: 1,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { day: "06", month: "04", year: "2015" },
@@ -723,6 +776,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(ChildBenefitTaxCalculator.new(
           year: "2016",
           children_count: 3,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { day: "06", month: "04", year: "2016" },
@@ -744,6 +798,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(ChildBenefitTaxCalculator.new(
           year: "2016",
           children_count: "1",
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { year: "2016", month: "04", day: "06" },
@@ -757,6 +812,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(ChildBenefitTaxCalculator.new(
           year: "2016",
           children_count: 2,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { day: "06", month: "04", year: "2016" },
@@ -774,6 +830,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         calc = ChildBenefitTaxCalculator.new(
           year: "2016",
           children_count: 1,
+          is_part_year_claim: "yes",
           starting_children: {
             "0" => {
               start: { day: "06", month: "04", year: "2016" },
