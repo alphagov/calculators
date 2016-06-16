@@ -104,6 +104,7 @@ li {
   // scss-lint:disable IdSelector
   #children {
     margin-bottom: 0;
+    float: left;
 
     h3 {
       @include bold-19;
