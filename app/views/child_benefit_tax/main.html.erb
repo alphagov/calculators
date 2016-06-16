@@ -50,14 +50,21 @@
             <% end -%>
           </div>
         </fieldset>
-
-        <fieldset id="children">
-          <%= step(3, "Enter the Child Benefit start and stop dates:") %>
-          <ul>
-            <li>the start date is called an ‘effective date’ - you can find it on your Child Benefit award notice</li>
-            <li>the stop date is usually when a child turns 16 or leaves full-time education</li>
-          </ul>
-          <%= render "starting_children" %>
+        
+        <fieldset id="is-part-year-claim">
+          <%= step(3, "Choose a tax claim duration:") %>
+          <p>Are you claiming for a part of the tax year for any of your children?</p>
+          <div class="is-part-year-claim<% if @calculator.errors.has_key?(:is_part_year_claim) %> validation-error<% end %>">
+            <% @calculator.errors[:is_part_year_claim].each do |message| %>
+              <p><%= message %></p>
+            <% end -%>
+            <% ["yes", "no"].each do |option| -%>
+              <label for="is_part_year_claim_<%= option %>" class="selectable">
+                <%= radio_button_tag "is_part_year_claim", option, (@calculator.is_part_year_claim == option) %>
+                <%= option.capitalize %>
+              </label>
+            <% end -%>
+          </div>
         </fieldset>
 
         <fieldset id="adjusted_income">
@@ -93,6 +100,14 @@
 
         <%= submit_tag "Calculate", :name => "results", :class => "button" %>
       <% end %>
+      <div id="children-template" style="display:none">
+        <h2>Enter the Child Benefit start and stop dates:</h2>
+        <ul>
+          <li>the start date is usually when you have a baby, adopt or move in with a new partner and their children</li>
+          <li>the stop date is usually when a child turns 16 or leaves full-time education</li>
+        </ul>
+        <%= render "starting_children" %>
+      </div>
 
       <% if can_haz_results? -%>
       <div class="results">
