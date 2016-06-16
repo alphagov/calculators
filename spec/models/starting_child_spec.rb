@@ -47,9 +47,9 @@ describe StartingChild, type: :model do
   end
 
   describe "adjusted_start_date" do
-    it "should return the next Monday if start date is 7th January 2013" do
+    it "should not adjust the start date if start date is a Monday" do
       child = StartingChild.new(start: { year: "2013", month: "01", day: "07" })
-      expect(child.adjusted_start_date).to eq(Date.parse("14 January 2013"))
+      expect(child.adjusted_start_date).to eq(Date.parse("07 January 2013"))
     end
 
     it "should return the next Monday for the provided start date" do
@@ -64,9 +64,6 @@ describe StartingChild, type: :model do
 
       child = StartingChild.new(start: { year: "2013", month: "01", day: "06" })
       expect(child.adjusted_start_date).to eq(Date.parse("7 January 2013"))
-
-      child = StartingChild.new(start: { year: "2013", month: "01", day: "14" })
-      expect(child.adjusted_start_date).to eq(Date.parse("21 January 2013"))
     end
 
     it "should not blow up with a nil start date" do
