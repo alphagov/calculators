@@ -121,6 +121,25 @@ describe ChildBenefitTaxCalculator, type: :model do
         ).has_errors?).to eq(false)
       end
     end
+
+    describe "#is_part_year_claim" do
+      it "should contain errors if tax claim duration is not provided" do
+        calc = ChildBenefitTaxCalculator.new(children_count: "1", year: 2012)
+        calc.valid?
+        expect(calc.errors).to have_key(:is_part_year_claim)
+        expect(calc.errors.size).to eq(1)
+      end
+      it "should not contain errors if tax claim duration is set to no" do
+        calc = ChildBenefitTaxCalculator.new(children_count: "1", year: 2012, is_part_year_claim: "no")
+        calc.valid?
+        expect(calc.errors).to be_empty
+      end
+      it "should not contain errors if tax claim duration is set to yes" do
+        calc = ChildBenefitTaxCalculator.new(children_count: "1", year: 2012, is_part_year_claim: "yes")
+        calc.valid?
+        expect(calc.errors).to be_empty
+      end
+    end
   end
 
   describe "calculating benefits received" do
@@ -763,6 +782,33 @@ describe ChildBenefitTaxCalculator, type: :model do
           },
         )
         expect(calc.benefits_claimed_amount.round(2)).to eq(621.0)
+      end
+
+      it "should set the start date to start of the selected tax year" do
+        calc = ChildBenefitTaxCalculator.new(
+          year: "2015",
+          children_count: 1,
+          is_part_year_claim: "no"
+        )
+
+        expect(calc.child_benefit_start_date).to eq(Date.parse("06 April 2015"))
+        expect(calc.child_benefit_end_date).to eq(Date.parse("05 April 2016"))
+      end
+
+      it "should set the stop date to end of the selected tax year" do
+        calc = ChildBenefitTaxCalculator.new(
+          year: "2015",
+          children_count: 1,
+          is_part_year_claim: "yes",
+          starting_children: {
+            "0" => {
+              start: { day: "06", month: "04", year: "2015" },
+              stop: { day: "", month: "", year: "" },
+            },
+          },
+        )
+
+        expect(calc.child_benefit_end_date).to eq(Date.parse("05 April 2016"))
       end
     end
   end
