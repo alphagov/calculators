@@ -24,6 +24,32 @@ describe ChildBenefitTaxCalculator, type: :model do
     expect(calc.adjusted_net_income).to eq(100900)
   end
 
+  describe "#monday_on_or_after" do
+    subject { ChildBenefitTaxCalculator.new }
+
+    it "should return the tomorrow if the date is a Sunday" do
+      sunday = Date.parse("1 January 2012")
+      monday = Date.parse("2 January 2012")
+
+      expect(subject.monday_on_or_after(sunday)).to eq(monday)
+    end
+
+    it "should return today if today is a Monday" do
+      monday = Date.parse("2 January 2012")
+
+      expect(subject.monday_on_or_after(monday)).to eq(monday)
+    end
+
+    it "should return the following Monday for days between Tueday and Saturday" do
+      tuesday = Date.parse("3 January 2012")
+      saturday = Date.parse("7 January 2012")
+      next_monday = Date.parse("9 January 2012")
+
+      expect(subject.monday_on_or_after(tuesday)).to eq(next_monday)
+      expect(subject.monday_on_or_after(saturday)).to eq(next_monday)
+    end
+  end
+
   describe "input validation" do
     before(:each) do
       @calc = ChildBenefitTaxCalculator.new(children_count: "1")
