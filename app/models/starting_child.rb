@@ -20,21 +20,6 @@ class StartingChild
     @end_date ? @end_date : tax_years[tax_years.keys.sort.last].last
   end
 
-  # Return the date of the Monday in the future that is closest to the start_date.
-  # If the start_date is a Monday, use the start_date.
-  def adjusted_start_date
-    return nil if start_date.nil?
-
-    if start_date.wday < 1
-      start_date + 1.day
-    elsif start_date.wday > 1
-      number_of_days_til_next_monday = ((1 - start_date.wday) + 7)
-      start_date + number_of_days_til_next_monday
-    else
-      start_date
-    end
-  end
-
 private
 
   def valid_dates
