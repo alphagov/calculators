@@ -7,6 +7,9 @@
 
   var calculator = {
     childrenCountInput: $("#children_count"),
+    partYearChildrenCountInput: function(){
+      return $("div#children #part_year_children_count")
+    },
     childrenContainerTemplate: $("div#children-template"),
     taxClaimContainer: $("fieldset#is-part-year-claim"),
     taxClaimDurationInputs: $("input[id^='is_part_year_claim_']"),
@@ -14,7 +17,6 @@
       return $("div#children");
     },
     setEventHandlers: function() {
-      calculator.childrenCountInput.on('change', calculator.updateChildrenFields);
       calculator.taxClaimDurationInputs.on('change', calculator.triggerChildrenFieldsEvent);
       calculator.setUpForm();
     },
@@ -31,14 +33,16 @@
           var childrenTag = calculator.childrenContainerTemplate.clone();
           calculator.taxClaimContainer.append(childrenTag);
           childrenTag.attr("id", "children").show();
+          calculator.partYearChildrenCountInput().on('change', calculator.updateChildrenFields);
           calculator.updateChildrenFields();
         }
       } else {
+        calculator.partYearChildrenCountInput().off('change');
         calculator.childrenContainer().remove();
       }
     },
     updateChildrenFields: function() {
-      var numStartingChildren = calculator.childrenCountInput.val(),
+      var numStartingChildren = calculator.partYearChildrenCountInput().val(),
         childFields = calculator.childrenContainer().find("> div.child"),
         numChildFields = childFields.size(),
         numNewFields = numStartingChildren - numChildFields;
