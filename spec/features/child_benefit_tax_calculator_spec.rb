@@ -108,6 +108,14 @@ feature "Child Benefit Tax Calculator", js: true do
           end
         end
       end
+      it "should ask how many children are being claimed for a part year" do
+        choose "Yes"
+        within "#is-part-year-claim" do
+          within "#children" do
+            expect(page).to have_select("part_year_children_count")
+          end
+        end
+      end
     end
   end
 
