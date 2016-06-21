@@ -139,7 +139,6 @@ describe ChildBenefitTaxCalculator, type: :model do
         calc = ChildBenefitTaxCalculator.new(year: "2012", children_count: "1", is_part_year_claim: "yes")
         calc.valid?
         expect(calc.errors).to be_empty
-        #puts calc.starting_children.first.errors.full_messages
         expect(calc.has_errors?).to eq(true)
       end
       it "should be false if the tax year and starting date are valid" do
