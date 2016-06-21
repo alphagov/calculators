@@ -181,7 +181,7 @@ private
   end
 
   def valid_child_dates
-    @starting_children.each(&:valid?)
+    is_part_year_claim == 'yes' && @starting_children.each(&:valid?)
   end
 
   def tax_year_contains_at_least_one_child
