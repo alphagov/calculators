@@ -53,7 +53,7 @@ describe ChildBenefitTaxCalculator, type: :model do
 
   describe "input validation" do
     before(:each) do
-      @calc = ChildBenefitTaxCalculator.new(children_count: "1", is_part_year_claim: "no")
+      @calc = ChildBenefitTaxCalculator.new(children_count: "1", is_part_year_claim: "yes")
       @calc.valid?
     end
     it "should contain errors for year if none is given" do
@@ -66,6 +66,7 @@ describe ChildBenefitTaxCalculator, type: :model do
     end
     it "should validate dates provided for children" do
       expect(@calc.starting_children.first.errors.has_key?(:start_date)).to eq(true)
+
       @calc.starting_children << StartingChild.new(
         start: { year: "2012", month: "02", day: "01" },
         stop: { year: "2012", month: "01", day: "01" },
