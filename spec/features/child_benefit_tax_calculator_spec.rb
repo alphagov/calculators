@@ -305,6 +305,7 @@ feature "Child Benefit Tax Calculator", js: true do
       end
 
       it "calculates the overall benefits received for both children" do
+        select "2", from: "children_count"
         choose "Yes"
         select "2", from: "part_year_children_count"
         click_button "Update Children"
