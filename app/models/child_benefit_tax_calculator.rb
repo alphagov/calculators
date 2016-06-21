@@ -20,12 +20,14 @@ class ChildBenefitTaxCalculator
   validate :valid_child_dates
   validates_presence_of :is_part_year_claim, message: "select part year tax claim"
   validates_inclusion_of :tax_year, in: TAX_YEARS.keys.map(&:to_i), message: "select a tax year"
+  validate :valid_number_of_children
   validate :tax_year_contains_at_least_one_child
 
   def initialize(params = {})
     @adjusted_net_income_calculator = AdjustedNetIncomeCalculator.new(params)
     @adjusted_net_income = calculate_adjusted_net_income(params[:adjusted_net_income])
     @children_count = params[:children_count] ? params[:children_count].to_i : 1
+    @part_year_children_count = params[:part_year_children_count] ? params[:part_year_children_count].to_i : 0
     @is_part_year_claim = params[:is_part_year_claim]
     @starting_children = process_starting_children(params[:starting_children])
     @tax_year = params[:year].to_i
@@ -182,6 +184,12 @@ private
 
   def valid_child_dates
     is_part_year_claim == 'yes' && @starting_children.each(&:valid?)
+  end
+
+  def valid_number_of_children
+    if @is_part_year_claim == 'yes' && (@children_count < @part_year_children_count)
+      errors.add(:part_year_children_count, "The number of children being claimed cannot exceed the total number of children being claimed for.")
+    end
   end
 
   def tax_year_contains_at_least_one_child

@@ -64,6 +64,27 @@ describe ChildBenefitTaxCalculator, type: :model do
       @calc.valid?
       expect(@calc.errors).to have_key(:tax_year)
     end
+    it "should contain errors if number of children is less than those being part claimed" do
+      @calc = ChildBenefitTaxCalculator.new(
+        year: "2013",
+        children_count: "1",
+        part_year_children_count: "2",
+        is_part_year_claim: "yes",
+        starting_children: {
+          "0" => {
+            start: { year: "2013", month: "01", day: "01" },
+            stop: { year: "2014", month: "01", day: "01" },
+          },
+          "1" => {
+            start: { year: "2013", month: "03", day: "01" },
+            stop: { year: "2014", month: "03", day: "01" },
+          },
+        },
+      )
+      @calc.valid?
+
+      expect(@calc.errors).to have_key(:part_year_children_count)
+    end
     it "should validate dates provided for children" do
       expect(@calc.starting_children.first.errors.has_key?(:start_date)).to eq(true)
 
