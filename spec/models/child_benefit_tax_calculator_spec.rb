@@ -24,6 +24,32 @@ describe ChildBenefitTaxCalculator, type: :model do
     expect(calc.adjusted_net_income).to eq(100900)
   end
 
+  describe "#monday_on_or_after" do
+    subject { ChildBenefitTaxCalculator.new }
+
+    it "should return the tomorrow if the date is a Sunday" do
+      sunday = Date.parse("1 January 2012")
+      monday = Date.parse("2 January 2012")
+
+      expect(subject.monday_on_or_after(sunday)).to eq(monday)
+    end
+
+    it "should return today if today is a Monday" do
+      monday = Date.parse("2 January 2012")
+
+      expect(subject.monday_on_or_after(monday)).to eq(monday)
+    end
+
+    it "should return the following Monday for days between Tueday and Saturday" do
+      tuesday = Date.parse("3 January 2012")
+      saturday = Date.parse("7 January 2012")
+      next_monday = Date.parse("9 January 2012")
+
+      expect(subject.monday_on_or_after(tuesday)).to eq(next_monday)
+      expect(subject.monday_on_or_after(saturday)).to eq(next_monday)
+    end
+  end
+
   describe "input validation" do
     before(:each) do
       @calc = ChildBenefitTaxCalculator.new(children_count: "1")
@@ -488,10 +514,10 @@ describe ChildBenefitTaxCalculator, type: :model do
           },
         },
       )
-      expect(calc.benefits_claimed_amount.round(2)).to eq(598.90)
-      expect(calc.tax_estimate).to eq(359)
+      expect(calc.benefits_claimed_amount.round(2)).to eq(612.30)
+      expect(calc.tax_estimate).to eq(367)
     end
-    it "should calculate one week for one child observing the 'next Monday' rule." do
+    it "should calculate two weeks for one child observing the 'Monday' rules." do
       expect(ChildBenefitTaxCalculator.new(
         year: "2012",
         children_count: 1,
@@ -501,7 +527,7 @@ describe ChildBenefitTaxCalculator, type: :model do
             stop: { day: "21", month: "01", year: "2013" },
           },
         },
-      ).benefits_claimed_amount.round(2)).to eq(20.30)
+      ).benefits_claimed_amount.round(2)).to eq(40.60)
     end
     it "should calculate 3 children already in the household for 2013/2014" do
       calc = ChildBenefitTaxCalculator.new(
@@ -556,7 +582,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         children_count: 1,
         starting_children: {
           "0" => {
-            start: { day: "24", month: "06", year: "2013" },
+            start: { day: "01", month: "07", year: "2013" },
             stop: { day: "", month: "", year: "" },
           },
         },
@@ -651,7 +677,7 @@ describe ChildBenefitTaxCalculator, type: :model do
               stop: { day: "", month: "", year: "" },
             },
          },
-       ).benefits_claimed_amount.round(2)).to eq(2501.2)
+       ).benefits_claimed_amount.round(2)).to eq(2549.3)
       end
 
       it "should give the total amount of benefits received for a full tax year 2015" do
@@ -664,7 +690,7 @@ describe ChildBenefitTaxCalculator, type: :model do
               stop: { year: "2016", month: "04", day: "05" },
             },
           },
-        ).benefits_claimed_amount.round(2)).to eq(1076.4)
+        ).benefits_claimed_amount.round(2)).to eq(1097.1)
       end
 
       it "should give total amount of benefits one child full year one child half a year" do
@@ -681,7 +707,7 @@ describe ChildBenefitTaxCalculator, type: :model do
               stop: { day: "06", month: "11", year: "2016" },
             },
           },
-        ).benefits_claimed_amount.round(2)).to eq(1788.8)
+        ).benefits_claimed_amount.round(2)).to eq(1823.2)
       end
 
       it "should give total amount of benefits for one child for half a year" do
@@ -695,7 +721,7 @@ describe ChildBenefitTaxCalculator, type: :model do
             },
           },
         )
-        expect(calc.benefits_claimed_amount.round(2)).to eq(621.0)
+        expect(calc.benefits_claimed_amount.round(2)).to eq(641.7)
       end
     end
 

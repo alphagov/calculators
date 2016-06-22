@@ -20,12 +20,6 @@ class StartingChild
     @end_date ? @end_date : tax_years[tax_years.keys.sort.last].last
   end
 
-  # Return the next Monday if start_date is not nil.
-  def adjusted_start_date
-    return nil if start_date.nil?
-    start_date + (start_date.wday < 1 ? 1 : (1 - start_date.wday) + 7)
-  end
-
 private
 
   def valid_dates
