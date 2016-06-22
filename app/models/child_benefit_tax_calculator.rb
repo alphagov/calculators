@@ -4,7 +4,7 @@ class ChildBenefitTaxCalculator
   include ActiveModel::Validations
 
   attr_reader :adjusted_net_income_calculator, :adjusted_net_income, :children_count,
-    :starting_children, :tax_year, :is_part_year_claim
+    :starting_children, :tax_year, :is_part_year_claim, :part_year_children_count
 
   NET_INCOME_THRESHOLD = 50000
   TAX_COMMENCEMENT_DATE = Date.parse('7 Jan 2013')
