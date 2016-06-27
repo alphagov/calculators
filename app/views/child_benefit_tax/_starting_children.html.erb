@@ -1,9 +1,16 @@
-<% @calculator.starting_children.each_with_index do |child, index| -%>
-  <div class="child<% if child.errors.any? %> validation-error<% end -%>">
-    <% child.errors.each do |key, message| -%>
-      <p><%= message %></p>
-    <% end -%>
-    <h3>Child <span class="child-number"><%= index + 1 %></span></h3>
-    <%= render "starting_child", :index => index, :child => child %>
+<% if @calculator.starting_children.count == 0 %>
+  <div class="child">
+    <h3>Child <span class="child-number"> 1 </span></h3>
+    <%= render "starting_child", index: 0, child: StartingChild.new  %>
   </div>
-<% end -%>
+<% else %>
+  <% @calculator.starting_children.each_with_index do |child, index| -%>
+    <div class="child<% if child.errors.any? %> validation-error<% end -%>">
+      <% child.errors.each do |key, message| -%>
+        <p><%= message %></p>
+      <% end -%>
+      <h3>Child <span class="child-number"><%= index + 1 %></span></h3>
+      <%= render "starting_child", :index => index, :child => child %>
+    </div>
+  <% end -%>
+<% end %>
