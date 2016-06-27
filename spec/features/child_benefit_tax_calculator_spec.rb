@@ -137,6 +137,23 @@ feature "Child Benefit Tax Calculator", js: true do
         end
       end
     end
+
+    context "when NO, then YES is selected for tax claim duration" do
+      it "should display a date selector for one part year child" do
+        choose "year_2015"
+        choose "No"
+        click_button "Calculate"
+
+        choose "Yes"
+        within "#is-part-year-claim" do
+          within "#children" do
+            expect(page).to have_css("#starting_children_0_start_year")
+            expect(page).to have_css("#starting_children_0_start_month")
+            expect(page).to have_css("#starting_children_0_start_day")
+          end
+        end
+      end
+    end
   end
 
   it "should disallow dates with too many days for the selected month" do
@@ -168,6 +185,80 @@ feature "Child Benefit Tax Calculator", js: true do
       text: "enter a valid date - there are only 29 days in February",
       count: 2,
     )
+  end
+
+  it "should reload children with valid dates if one child has a date error" do
+    visit "/child-benefit-tax-calculator"
+    click_on "Start now"
+    choose "year_2014"
+    choose "Yes"
+    select "2", from: "children_count"
+    select "2", from: "part_year_children_count"
+    click_button "Update Children"
+
+
+    select "2014", from: "starting_children[0][start][year]"
+    select "April", from: "starting_children[0][start][month]"
+    select "31", from: "starting_children[0][start][day]"
+
+    select "2014", from: "starting_children[1][start][year]"
+    select "June", from: "starting_children[1][start][month]"
+    select "1", from: "starting_children[1][start][day]"
+
+    select "2014", from: "starting_children[1][stop][year]"
+    select "September", from: "starting_children[1][stop][month]"
+    select "1", from: "starting_children[1][stop][day]"
+
+    click_button "Calculate"
+
+    expect(page).to have_selector(
+      ".validation-error",
+      text: "enter a valid date - there are only 30 days in April",
+      count: 1,
+    )
+
+    expect(page).to have_select("children_count", selected: "2")
+    expect(page).to have_select("part_year_children_count", selected: "2")
+
+    expect(page).to have_select("starting_children_1_start_year", selected: "2014")
+    expect(page).to have_select("starting_children_1_start_month", selected: "June")
+    expect(page).to have_select("starting_children_1_start_day", selected: "1")
+
+    expect(page).to have_select("starting_children_1_stop_year", selected: "2014")
+    expect(page).to have_select("starting_children_1_stop_month", selected: "September")
+    expect(page).to have_select("starting_children_1_stop_day", selected: "1")
+  end
+
+  it "should reload part year children with the correct dates" do
+    Timecop.travel "2014-05-01"
+    visit "/child-benefit-tax-calculator"
+    click_on "Start now"
+    choose "year_2014"
+    choose "Yes"
+    select "2", from: "children_count"
+    select "1", from: "part_year_children_count"
+    click_button "Update Children"
+
+    select "2014", from: "starting_children[0][start][year]"
+    select "June", from: "starting_children[0][start][month]"
+    select "1", from: "starting_children[0][start][day]"
+
+    select "2014", from: "starting_children[0][stop][year]"
+    select "September", from: "starting_children[0][stop][month]"
+    select "1", from: "starting_children[0][stop][day]"
+
+    click_button "Calculate"
+
+    expect(page).to have_select("children_count", selected: "2")
+    expect(page).to have_select("part_year_children_count", selected: "1")
+
+    expect(page).to have_select("starting_children_0_start_year", selected: "2014")
+    expect(page).to have_select("starting_children_0_start_month", selected: "June")
+    expect(page).to have_select("starting_children_0_start_day", selected: "1")
+
+    expect(page).to have_select("starting_children_0_stop_year", selected: "2014")
+    expect(page).to have_select("starting_children_0_stop_month", selected: "September")
+    expect(page).to have_select("starting_children_0_stop_day", selected: "1")
   end
 
   it "should allow stop date to be three years in the past" do
