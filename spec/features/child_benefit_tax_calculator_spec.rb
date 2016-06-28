@@ -1,7 +1,7 @@
 # encoding: utf-8
 require "spec_helper"
 
-feature "Child Benefit Tax Calculator" do
+feature "Child Benefit Tax Calculator", js: true do
   specify "inspecting the landing page" do
     visit "/child-benefit-tax-calculator"
 
@@ -35,30 +35,87 @@ feature "Child Benefit Tax Calculator" do
     expect(page).to have_no_css(".results")
   end
 
-  it "should display validation errors" do
-    visit "/child-benefit-tax-calculator"
-    click_on "Start now"
-    click_on "Calculate"
-
-    within ".validation-summary" do
-      expect(page).to have_content("select a tax year")
-      expect(page).to have_content("enter the date Child Benefit started")
+  context "page errors" do
+    before :each do
+      visit "/child-benefit-tax-calculator"
+      click_on "Start now"
     end
 
-    within "#tax-year" do
-      expect(page).to have_css(".validation-error")
-      expect(page).to have_content("select a tax year")
+    context "when tax claim duration isn't selected" do
+      it "should display validation errors" do
+        click_on "Calculate"
+        within ".validation-summary" do
+          expect(page).to have_content("select a tax year")
+          expect(page).to have_content("enter the date Child Benefit started")
+        end
+
+        within "#tax-year" do
+          expect(page).to have_css(".validation-error")
+          expect(page).to have_content("select a tax year")
+        end
+
+        within "#is-part-year-claim" do
+          expect(page).to have_css(".validation-error")
+          expect(page).to have_no_css("#children")
+          expect(page).to have_content("select part year tax claim")
+        end
+      end
     end
-    within "#children" do
-      expect(page).to have_css(".validation-error")
-      expect(page).to have_content("enter the date Child Benefit started")
+
+    context "when NO is selected for tax claim duration" do
+      it "should display validation errors" do
+        choose "No"
+        click_on "Calculate"
+        within ".validation-summary" do
+          expect(page).to have_content("select a tax year")
+          expect(page).to have_content("enter the date Child Benefit started")
+        end
+
+        within "#tax-year" do
+          expect(page).to have_css(".validation-error")
+          expect(page).to have_content("select a tax year")
+        end
+
+        within "#is-part-year-claim" do
+          expect(page).to have_no_css(".validation-error")
+          expect(page).to have_no_css("#children")
+          expect(page).to have_no_content("select part year tax claim")
+        end
+      end
+    end
+
+    context "when YES is selected for tax claim duration" do
+      it "should display validation errors" do
+        choose "Yes"
+        click_on "Calculate"
+        within ".validation-summary" do
+          expect(page).to have_content("select a tax year")
+          expect(page).to have_content("enter the date Child Benefit started")
+        end
+
+        within "#tax-year" do
+          expect(page).to have_css(".validation-error")
+          expect(page).to have_content("select a tax year")
+        end
+
+        within "#is-part-year-claim" do
+          expect(page).to have_css(".validation-error")
+          expect(page).to have_no_content("select part year tax claim")
+
+          within "#children" do
+            expect(page).to have_css(".validation-error")
+            expect(page).to have_content("enter the date Child Benefit started")
+          end
+        end
+      end
     end
   end
 
-  it "should disallow dates with too many days for the selected month", js: true do
+  it "should disallow dates with too many days for the selected month" do
     Timecop.travel "2014-09-01"
     visit "/child-benefit-tax-calculator"
     click_on "Start now"
+    choose "Yes"
 
     select "2", from: "children_count"
 
@@ -89,6 +146,7 @@ feature "Child Benefit Tax Calculator" do
     Timecop.freeze('2014-04-04')
     visit "/child-benefit-tax-calculator"
     click_on "Start now"
+    choose "Yes"
 
     expected_year_list = ("2011".."2024").to_a
     expect(page).to have_select("starting_children_0_stop_year", options: expected_year_list.unshift("Year"))
@@ -98,6 +156,7 @@ feature "Child Benefit Tax Calculator" do
     Timecop.travel "2014-09-01"
     visit "/child-benefit-tax-calculator"
     click_on "Start now"
+    choose "Yes"
 
     select "1", from: "children_count"
     click_button "Update"
@@ -127,6 +186,7 @@ feature "Child Benefit Tax Calculator" do
     before(:each) do
       visit "/child-benefit-tax-calculator"
       click_on "Start now"
+      choose "Yes"
       select "2", from: "children_count"
       click_button "Update"
     end
@@ -172,7 +232,7 @@ feature "Child Benefit Tax Calculator" do
       expect(page).to have_no_css("#starting_children_1_start_day")
     end
 
-    it "should show the required number of date inputs without reloading the page", js: true do
+    it "should show the required number of date inputs without reloading the page" do
       expect(page).to have_select("children_count", selected: "2")
 
       expect(page).to have_css("#starting_children_0_start_year")
@@ -236,10 +296,12 @@ feature "Child Benefit Tax Calculator" do
       allow_any_instance_of(ChildBenefitTaxCalculator).to receive(:benefits_claimed_amount).and_return(500000)
       visit "/child-benefit-tax-calculator"
       click_on "Start now"
+      choose "Yes"
     end
 
     it "should give an estimated total of tax due related to income" do
       allow_any_instance_of(ChildBenefitTaxCalculator).to receive(:tax_estimate).and_return(500000)
+
       select "2011", from: "starting_children[0][start][year]"
       select "January", from: "starting_children[0][start][month]"
       select "1", from: "starting_children[0][start][day]"
@@ -271,9 +333,12 @@ feature "Child Benefit Tax Calculator" do
   end
 
   describe "calculating adjusted net income" do
+    before(:each) do
+      visit "/child-benefit-tax-calculator"
+      click_on "Start now"
+      choose "Yes"
+    end
     it "should use the adjusted net income calculator inputs" do
-      visit "/child-benefit-tax-calculator/main"
-
       select "2011", from: "starting_children[0][start][year]"
       select "January", from: "starting_children[0][start][month]"
       select "1", from: "starting_children[0][start][day]"
@@ -303,8 +368,6 @@ feature "Child Benefit Tax Calculator" do
     end
 
     it "should update the adjusted_net_income when the calculator values are updated." do
-      visit "/child-benefit-tax-calculator/main"
-
       select "2011", from: "starting_children[0][start][year]"
       select "January", from: "starting_children[0][start][month]"
       select "1", from: "starting_children[0][start][day]"
@@ -341,10 +404,14 @@ feature "Child Benefit Tax Calculator" do
   end
 
   describe "displaying the results" do
+    before(:each) do
+      visit "/child-benefit-tax-calculator"
+      click_on "Start now"
+      choose "Yes"
+    end
+
     context "without the tax estimate" do
       before :each do
-        visit "/child-benefit-tax-calculator/main"
-
         select "2011", from: "starting_children_0_start_year"
         select "January", from: "starting_children_0_start_month"
         select "1", from: "starting_children_0_start_day"
@@ -385,8 +452,6 @@ feature "Child Benefit Tax Calculator" do
 
     context "with the tax estimate" do
       before :each do
-        visit "/child-benefit-tax-calculator/main"
-
         select "2011", from: "starting_children_0_start_year"
         select "January", from: "starting_children_0_start_month"
         select "1", from: "starting_children_0_start_day"
@@ -460,8 +525,6 @@ feature "Child Benefit Tax Calculator" do
 
     context "with an Adjusted Net Income below the threshold" do
       it "should say there's nothing to pay" do
-        visit "/child-benefit-tax-calculator/main"
-
         select "2011", from: "starting_children_0_start_year"
         select "January", from: "starting_children_0_start_month"
         select "1", from: "starting_children_0_start_day"
@@ -489,10 +552,14 @@ feature "Child Benefit Tax Calculator" do
   end
 
   describe "child benefit week runs Monday to Sunday" do
+    before(:each) do
+      visit "/child-benefit-tax-calculator"
+      click_on "Start now"
+      choose "Yes"
+    end
+
     context "tax year is 2012/2013" do
       specify "should have no child benefit when start date is 07/01/2013" do
-        visit "/child-benefit-tax-calculator/main"
-
         select "2013", from: "starting_children_0_start_year"
         select "January", from: "starting_children_0_start_month"
         select "7", from: "starting_children_0_start_day"
@@ -503,8 +570,6 @@ feature "Child Benefit Tax Calculator" do
       end
 
       specify "should have no child benefit when start date is 01/04/2013" do
-        visit "/child-benefit-tax-calculator/main"
-
         select "2013", from: "starting_children_0_start_year"
         select "April", from: "starting_children_0_start_month"
         select "1", from: "starting_children_0_start_day"
@@ -516,8 +581,6 @@ feature "Child Benefit Tax Calculator" do
       end
 
       specify "should have no child benefit when start date is 05/04/2013" do
-        visit "/child-benefit-tax-calculator/main"
-
         select "2013", from: "starting_children_0_start_year"
         select "April", from: "starting_children_0_start_month"
         select "5", from: "starting_children_0_start_day"
@@ -531,8 +594,6 @@ feature "Child Benefit Tax Calculator" do
 
     context "tax year is 2013/2014" do
       specify "should have no child benefit when start date is 31/03/2014" do
-        visit "/child-benefit-tax-calculator/main"
-
         select "2014", from: "starting_children_0_start_year"
         select "March", from: "starting_children_0_start_month"
         select "31", from: "starting_children_0_start_day"
@@ -544,8 +605,6 @@ feature "Child Benefit Tax Calculator" do
       end
 
       specify "should have no child benefit when start date is 01/04/2014" do
-        visit "/child-benefit-tax-calculator/main"
-
         select "2014", from: "starting_children_0_start_year"
         select "April", from: "starting_children_0_start_month"
         select "1", from: "starting_children_0_start_day"
@@ -557,8 +616,6 @@ feature "Child Benefit Tax Calculator" do
       end
 
       specify "should have no child benefit when start date is 05/04/2014" do
-        visit "/child-benefit-tax-calculator/main"
-
         select "2014", from: "starting_children_0_start_year"
         select "April", from: "starting_children_0_start_month"
         select "5", from: "starting_children_0_start_day"
