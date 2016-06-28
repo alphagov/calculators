@@ -37,8 +37,10 @@ class ChildBenefitTaxCalculator
     self.class.valid_date_params?(params)
   end
 
+  # Return the date of the Monday in the future that is closest to the date supplied.
+  # If the date supplied is a Monday, do not adjust it.
   def monday_on_or_after(date)
-    date + ((1 - date.wday) % 7)
+    date.monday? ? date : date.next_week(:monday)
   end
 
   def nothing_owed?
@@ -114,8 +116,10 @@ private
   end
 
   def eligible?(child, tax_year, week_start_date)
+    adjusted_start_date = monday_on_or_after(child.start_date)
+
     eligible_for_tax_year?(child, tax_year) &&
-      days_include_week?(child.adjusted_start_date, child.benefits_end, week_start_date)
+      days_include_week?(adjusted_start_date, child.benefits_end, week_start_date)
   end
 
   def eligible_for_tax_year?(child, tax_year)
