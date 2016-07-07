@@ -589,6 +589,40 @@ feature "Child Benefit Tax Calculator", js: true do
     end # ANI below threshold
   end
 
+  describe "displaying results for full year children only" do
+    before(:each) do
+      visit "/child-benefit-tax-calculator"
+      click_on "Start now"
+    end
+
+    context "one child" do
+      it "should correctly display the amount for one child" do
+        choose "year_2015"
+        choose "No"
+
+        click_button "Calculate"
+
+        within ".results" do
+          expect(page).to have_content("£1,097.10")
+        end
+      end
+    end
+
+    context "two children" do
+      it "should correctly display the amount for two children" do
+        select "2", from: "children_count"
+        choose "year_2015"
+        choose "No"
+
+        click_button "Calculate"
+
+        within ".results" do
+          expect(page).to have_content("£1,823.20")
+        end
+      end
+    end
+  end
+
   describe "child benefit week runs Monday to Sunday" do
     before(:each) do
       visit "/child-benefit-tax-calculator"

@@ -78,7 +78,7 @@ class ChildBenefitTaxCalculator
   end
 
   def can_calculate?
-    valid? && !has_errors? && @starting_children.any?
+    valid? && !has_errors?
   end
 
   def selected_tax_year
