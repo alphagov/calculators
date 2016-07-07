@@ -211,6 +211,18 @@ describe ChildBenefitTaxCalculator, type: :model do
     end
   end
 
+  describe "full year children only" do
+    it "should be able to calculate the child benefit amount" do
+      calc = ChildBenefitTaxCalculator.new(
+        children_count: 1,
+        year: "2015",
+        is_part_year_claim: "no",
+        starting_children: {}
+      )
+      expect(calc.can_calculate?).to eq(true)
+    end
+  end
+
   describe "full year and part year children" do
     it "should not contain errors if valid part year and full year children" do
       calc = ChildBenefitTaxCalculator.new(
