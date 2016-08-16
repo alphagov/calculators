@@ -35,8 +35,17 @@
           <%= submit_tag "Update", :name => "children", :class => "button update-button" %>
         </fieldset>
 
+        <fieldset id="children">
+          <%= step(2, "Enter the Child Benefit start and stop dates:") %>
+          <ul>
+            <li>the start date is usually when you have a baby, adopt or move in with a new partner and their children</li>
+            <li>the stop date is usually when a child turns 16 or leaves full-time education</li>
+          </ul>
+          <%= render "starting_children" %>
+        </fieldset>
+
         <fieldset id="tax-year">
-          <%= step(2, "Choose a tax year:") %>
+          <%= step(3, "Choose a tax year:") %>
           <p>Tax years run from 6 April to 5 April the following year.</p>
           <div class="tax-year<% if @calculator.errors.has_key?(:tax_year) %> validation-error<% end %>">
             <% @calculator.errors[:tax_year].each do |message| %>
@@ -49,15 +58,6 @@
               </label>
             <% end -%>
           </div>
-        </fieldset>
-
-        <fieldset id="children">
-          <%= step(3, "Enter the Child Benefit start and stop dates:") %>
-          <ul>
-            <li>the start date is usually when you have a baby, adopt or move in with a new partner and their children</li>
-            <li>the stop date is usually when a child turns 16 or leaves full-time education</li>
-          </ul>
-          <%= render "starting_children" %>
         </fieldset>
 
         <fieldset id="adjusted_income">
