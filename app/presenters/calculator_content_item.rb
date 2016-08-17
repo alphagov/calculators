@@ -22,7 +22,8 @@ class CalculatorContentItem
     {
       title: calculator.title,
       base_path: base_path,
-      format: 'placeholder_calculator',
+      schema_name: 'placeholder_calculator',
+      document_type: 'calculator_document',
       details: {},
       publishing_app: 'calculators',
       rendering_app: 'calculators',
