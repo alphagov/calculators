@@ -29,14 +29,14 @@
         <% end -%>
 
         <fieldset>
-          <%= step(1, "Enter the number of children Child Benefit is claimed for:") %>
+          <%= step(1, "How many children do you want to claim Child Benefit for?") %>
           <label for="children_count" class="visuallyhidden">Number of children</label>
           <%= select_tag "children_count", options_for_select((1..10).collect{|n| [n,n]}, @calculator.children_count) %>
           <%= submit_tag "Update", :name => "children", :class => "button update-button" %>
         </fieldset>
 
         <fieldset id="tax-year">
-          <%= step(2, "Choose a tax year:") %>
+          <%= step(2, "Which tax year are you claiming for?") %>
           <p>Tax years run from 6 April to 5 April the following year.</p>
           <div class="tax-year<% if @calculator.errors.has_key?(:tax_year) %> validation-error<% end %>">
             <% @calculator.errors[:tax_year].each do |message| %>
@@ -52,8 +52,7 @@
         </fieldset>
 
         <fieldset id="is-part-year-claim">
-          <%= step(3, "Choose a tax claim duration:") %>
-          <p>Are you claiming for a part of the tax year for any of your children?</p>
+          <%= step(3, "Are you claiming for only a part of the tax year for any of your children?") %>
           <div class="is-part-year-claim<% if @calculator.errors.has_key?(:is_part_year_claim) %> validation-error<% end %>">
             <% @calculator.errors[:is_part_year_claim].each do |message| %>
               <p><%= message %></p>
@@ -68,15 +67,15 @@
         </fieldset>
 
         <fieldset id="adjusted_income">
-          <%= step(4, "Enter income details for the tax year (optional):") %>
+          <%= step(4, "Enter your income details for the tax year (optional):") %>
           <ul>
             <li>don’t combine your household income</li>
             <li>use your partner’s income if it’s higher than yours</li>
-            <li>you may get some of this information from your P60, P11D, employer or tax adviser</li>
+            <li>you can get some of this information from your P60, P11D, employer or tax adviser</li>
           </ul>
           <%= label_tag "gross_income", "Salary before tax" %>
           <%= money_input "gross_income", @adjusted_net_income_calculator.gross_income, 'aria-describedby' => 'step-4-description' %>
-          <%= label_tag "other_income", "Other employment income - eg taxable benefits (like a company car or medical insurance), bonuses" %>
+          <%= label_tag "other_income", "Other employment income - for example taxable benefits (like a company car or medical insurance) or bonuses" %>
           <%= money_input "other_income", @adjusted_net_income_calculator.other_income, 'aria-describedby' => 'step-4-description' %>
           <%= label_tag "pension_contributions_from_pay", "Pension contributions deducted from your pay (don't include contributions deducted before tax)" %>
           <%= money_input "pension_contributions_from_pay", @adjusted_net_income_calculator.pension_contributions_from_pay, 'aria-describedby' => 'step-4-description' %>
@@ -84,13 +83,13 @@
           <%= money_input "retirement_annuities", @adjusted_net_income_calculator.retirement_annuities, 'aria-describedby' => 'step-4-description' %>
           <%= label_tag "cycle_scheme", "Cycle scheme" %>
           <%= money_input "cycle_scheme", @adjusted_net_income_calculator.cycle_scheme, 'aria-describedby' => 'step-4-description' %>
-          <%= label_tag "childcare", "Childcare paid directly by your employer - eg childcare vouchers (for the whole year but no more than £55 a week), the value of any workplace nursery places" %>
+          <%= label_tag "childcare", "Childcare paid directly by your employer - for example childcare vouchers (for the whole year but no more than £55 a week) or the value of any workplace nursery places" %>
           <%= money_input "childcare", @adjusted_net_income_calculator.childcare, 'aria-describedby' => 'step-4-description' %>
-          <%= label_tag "pensions", "Income from pension(s) - eg from a state pension" %>
+          <%= label_tag "pensions", "Income from pension(s) - for example from a state pension" %>
           <%= money_input "pensions", @adjusted_net_income_calculator.pensions, 'aria-describedby' => 'step-4-description' %>
-          <%= label_tag "property", "Income from property - eg rental income" %>
+          <%= label_tag "property", "Income from property - for example rental income" %>
           <%= money_input "property", @adjusted_net_income_calculator.property, 'aria-describedby' => 'step-4-description' %>
-          <%= label_tag "non_employment_income", "Other income before tax - eg profits from self-employment, taxable savings, dividends" %>
+          <%= label_tag "non_employment_income", "Other income before tax - for example profits from self-employment, taxable savings, dividends" %>
           <%= money_input "non_employment_income", @adjusted_net_income_calculator.non_employment_income, 'aria-describedby' => 'step-4-description' %>
           <%= label_tag "gift_aid_donations", "Gift Aid donations" %>
           <%= money_input "gift_aid_donations", @adjusted_net_income_calculator.gift_aid_donations, 'aria-describedby' => 'step-4-description' %>
@@ -102,7 +101,7 @@
       <% end %>
       <div id="children-template" style="display:none">
         <div class="part-year-children-count">
-          <h2>Enter the number of children only being claimed for part of the year:<h2>
+          <h2>How many children do you want to claim only a part of the tax year for?<h2>
           <label for="part_year_children_count" class="visuallyhidden">Number of part year children</label>
           <%= select_tag "part_year_children_count", options_for_select((1..10).collect{|n| [n,n]}, @calculator.part_year_children_count) %>
           <%= submit_tag "Update Children", :name => "children", :class => "button update-button" %>
@@ -110,7 +109,7 @@
 
         <h2>Enter the Child Benefit start and stop dates:</h2>
         <ul>
-          <li>the start date is called an ‘effective date’ - you can find it on your Child Benefit award notice</li>
+          <li>you can find the start date on your Child Benefit award notice</li>
           <li>the stop date is usually when a child turns 16 or leaves full-time education</li>
         </ul>
         <%= render "starting_children" %>
