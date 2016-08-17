@@ -198,7 +198,7 @@ private
 
   def valid_number_of_children
     if @is_part_year_claim == 'yes' && (@children_count < @part_year_children_count)
-      errors.add(:part_year_children_count, "The number of children being claimed cannot exceed the total number of children being claimed for.")
+      errors.add(:part_year_children_count, "the number of children you're claiming a part year for can't be more than the total number of children you're claiming for")
     end
   end
 
