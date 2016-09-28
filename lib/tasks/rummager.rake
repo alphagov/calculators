@@ -1,6 +1,6 @@
 namespace :rummager do
   desc "Indexes all calculators in Rummager"
-  task index_all: :environment do
+  task index: :environment do
     require 'gds_api/rummager'
 
     logger = GdsApi::Base.logger = Logger.new(STDERR).tap { |l| l.level = Logger::INFO }
