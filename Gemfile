@@ -7,13 +7,14 @@ gem 'unicorn', '~> 5.0.0'
 if ENV['SLIMMER_DEV']
   gem 'slimmer', path: '../slimmer'
 else
-  gem 'slimmer', '~> 9.1.0'
+  gem 'slimmer', '~> 9.6.0'
 end
 gem 'plek', '~> 1.12.0'
 
-gem 'gds-api-adapters', '~> 36.4.0'
+gem 'gds-api-adapters', '~> 37.1.0'
 gem 'govuk_frontend_toolkit', '~> 4.9.1'
 gem 'govuk-content-schema-test-helpers', '~> 1.4.0'
+gem 'govuk_navigation_helpers', '~> 2.0.0'
 gem 'sass-rails', '5.0.4'
 
 gem 'logstasher', '0.6.5'
@@ -31,4 +32,5 @@ group :development, :test do
   gem 'timecop', '~> 0.8.0'
   gem 'poltergeist', '1.6.0'
   gem 'govuk-lint', '0.8.1'
+  gem 'pry-byebug'
 end
