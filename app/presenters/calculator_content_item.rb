@@ -23,7 +23,7 @@ class CalculatorContentItem
       title: calculator.title,
       base_path: base_path,
       schema_name: 'placeholder_calculator',
-      document_type: 'calculator_document',
+      document_type: 'calculator',
       details: {},
       publishing_app: 'calculators',
       rendering_app: 'calculators',
