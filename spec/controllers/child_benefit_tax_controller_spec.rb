@@ -1,34 +1,12 @@
 require "spec_helper"
 
 describe ChildBenefitTaxController, type: :controller do
-  describe "slimmer headers" do
-    context "when the artefact exists" do
-      before :each do
-        @artefact_data = artefact_for_slug('child-benefit-tax-calculator')
-        content_api_has_an_artefact("child-benefit-tax-calculator", @artefact_data)
-      end
+  # Force the tests to render the views
+  # Works around https://github.com/alphagov/slimmer/issues/170
+  render_views
 
-      it "should populate slimmer header with the child benefit tax calculator artefact" do
-        get 'main'
-        expect(JSON.parse(@response.headers["X-Slimmer-Artefact"])).to eq(@artefact_data)
-      end
-
-      it "should set the artefact format in the slimmer headers" do
-        get 'main'
-        expect(@response.headers["X-Slimmer-Format"]).to eq("calculator")
-      end
-    end
-
-    context "when the artefact doesn't exist" do
-      before :each do
-        content_api_does_not_have_an_artefact("child-benefit-tax-calculator")
-      end
-
-      it "should return success" do
-        get 'main'
-        expect(response).to be_success
-      end
-    end
+  before do
+    stub_request(:get, Plek.new.find("content-store") + "/content/child-benefit-tax-calculator").to_return(body: {}.to_json)
   end
 
   describe "GET 'landing'" do

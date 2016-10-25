@@ -2,6 +2,10 @@
 require "spec_helper"
 
 feature "Child Benefit Tax Calculator", js: true do
+  before do
+    stub_request(:get, Plek.new.find("content-store") + "/content/child-benefit-tax-calculator").to_return(body: {}.to_json)
+  end
+
   specify "inspecting the landing page" do
     visit "/child-benefit-tax-calculator"
 
@@ -21,7 +25,8 @@ feature "Child Benefit Tax Calculator", js: true do
         end
       end
     end
-    expect(page).to have_selector("#test-related")
+    expect(page).to have_css(shared_component_selector('breadcrumbs'))
+    expect(page).to have_css(shared_component_selector('related_items'))
   end
 
   it "should not show results until enough info is entered" do

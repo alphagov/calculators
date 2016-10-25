@@ -1,5 +1,5 @@
 class ChildBenefitTaxController < ApplicationController
-  before_filter :setup_slimmer
+  before_filter :setup_navigation_helpers
 
   CALC_PARAM_KEYS = [:adjusted_net_income, :children_count, :starting_children, :year, :results, :part_year_children_count] +
     AdjustedNetIncomeCalculator::PARAM_KEYS
@@ -29,12 +29,19 @@ class ChildBenefitTaxController < ApplicationController
 
 protected
 
-  def setup_slimmer
-    artefact = begin
-                 content_api.artefact('child-benefit-tax-calculator')
-               rescue
-                 nil
-               end
-    set_slimmer_artefact_headers(artefact)
+  def setup_navigation_helpers
+    @content_item = Services.content_store.content_item("/child-benefit-tax-calculator").to_hash
+    # Remove the organisations from the content item - this will prevent the
+    # govuk:analytics:organisations meta tag from being generated until there is
+    # a better way of doing this.
+    if @content_item["links"]
+      @content_item["links"].delete("organisations")
+    end
+
+    @navigation_helpers = GovukNavigationHelpers::NavigationHelper.new(@content_item)
+    section_name = @content_item.dig("links", "parent", 0, "links", "parent", 0, "title")
+    if section_name
+      @meta_section = section_name.downcase
+    end
   end
 end
