@@ -22,7 +22,7 @@ class CalculatorContentItem
     {
       title: calculator.title,
       base_path: base_path,
-      schema_name: 'placeholder_calculator',
+      schema_name: 'generic',
       document_type: 'calculator',
       details: {},
       publishing_app: 'calculators',
@@ -30,7 +30,7 @@ class CalculatorContentItem
       locale: 'en',
       public_updated_at: Time.now.iso8601,
       routes: [
-        { type: 'exact', path: base_path }
+        { type: 'prefix', path: base_path }
       ]
     }
   end

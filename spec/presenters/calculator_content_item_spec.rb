@@ -7,7 +7,7 @@ describe CalculatorContentItem do
 
       payload = CalculatorContentItem.new(calculator).payload
 
-      expect(payload).to be_valid_against_schema('placeholder')
+      expect(payload).to be_valid_against_schema('generic')
     end
 
     it 'has the correct data' do
