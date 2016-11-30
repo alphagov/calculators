@@ -2,9 +2,13 @@ class Calculator
   ALL = [{
     title: "Child Benefit tax calculator",
     slug: "child-benefit-tax-calculator",
-    paths: [],
     content_id: "0e1de8f1-9909-4e45-a6a3-bffe95470275",
-    prefixes: ["/child-benefit-tax-calculator"],
+
+    # Sending an empty array for `paths` and `prefixes` will make sure we don't
+    # register routes in Panopticon.
+    prefixes: [],
+    paths: [],
+
     need_id: "100266",
     state: "live",
     description: "Work out the Child Benefit you've received and your High Income Child Benefit tax charge.",
