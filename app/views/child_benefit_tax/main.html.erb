@@ -101,7 +101,7 @@
       <% end %>
       <div id="children-template" style="display:none">
         <div class="part-year-children-count">
-          <h2>How many children do you want to claim only a part of the tax year for?<h2>
+          <h2>How many children do you want to claim only a part of the tax year for?</h2>
           <label for="part_year_children_count" class="visuallyhidden">Number of part year children</label>
           <%= select_tag "part_year_children_count", options_for_select((1..10).collect{|n| [n,n]}, @calculator.part_year_children_count) %>
           <%= submit_tag "Update Children", :name => "children", :class => "button update-button" %>
