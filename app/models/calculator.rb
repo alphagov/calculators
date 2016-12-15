@@ -9,7 +9,6 @@ class Calculator
     prefixes: [],
     paths: [],
 
-    need_id: "100266",
     state: "live",
     description: "Work out the Child Benefit you've received and your High Income Child Benefit tax charge.",
     indexable_content: [
