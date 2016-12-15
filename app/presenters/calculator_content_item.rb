@@ -34,4 +34,10 @@ class CalculatorContentItem
       ]
     }
   end
+
+  def links
+    {
+      meets_user_needs: ["ccb9f417-ac8d-4ff5-80ea-695c86dac9fb"]
+    }
+  end
 end
