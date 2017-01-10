@@ -45,7 +45,8 @@ This script will create and configure an app on Heroku, push the __current branc
 
 ### Dependencies
 
-- [panopticon](https://github.com/alphagov/panopticon): this app sends data to panopticon to register URLs.
+- [publishing-api](https://github.com/alphagov/publishing-api): this app sends
+  data to publishing-api to register URLs.
 - [rummager](https://github.com/alphagov/rummager): this app indexes its pages
   for search via Rummager.
 
