@@ -77,6 +77,8 @@
           <%= money_input "gross_income", @adjusted_net_income_calculator.gross_income, 'aria-describedby' => 'step-4-description' %>
           <%= label_tag "other_income", "Other employment income - for example taxable benefits (like a company car or medical insurance) or bonuses" %>
           <%= money_input "other_income", @adjusted_net_income_calculator.other_income, 'aria-describedby' => 'step-4-description' %>
+          <%= label_tag "pension_contributions_before_tax", "Pension contributions deducted from your pay before tax" %>
+          <%= money_input "pension_contributions_before_tax", @adjusted_net_income_calculator.pension_contributions_before_tax, 'aria-describedby' => 'step-4-description' %>
           <%= label_tag "pension_contributions_from_pay", "Pension contributions deducted from your pay (don't include contributions deducted before tax)" %>
           <%= money_input "pension_contributions_from_pay", @adjusted_net_income_calculator.pension_contributions_from_pay, 'aria-describedby' => 'step-4-description' %>
           <%= label_tag "retirement_annuities", "Retirement annuity contracts" %>

@@ -1,6 +1,6 @@
 # encoding: UTF-8
 class AdjustedNetIncomeCalculator
-  PARAM_KEYS = [:gross_income, :other_income, :pension_contributions_from_pay,
+  PARAM_KEYS = [:gross_income, :other_income, :pension_contributions_before_tax, :pension_contributions_from_pay,
                 :retirement_annuities, :cycle_scheme, :childcare, :pensions, :property,
                 :non_employment_income, :gift_aid_donations, :outgoing_pension_contributions, :is_part_year_claim]
 
@@ -28,7 +28,7 @@ private
   end
 
   def deductions
-    grossed_up(@pension_contributions_from_pay) + grossed_up(@gift_aid_donations) +
+    @pension_contributions_before_tax + grossed_up(@pension_contributions_from_pay) + grossed_up(@gift_aid_donations) +
       @retirement_annuities + @cycle_scheme + @childcare + grossed_up(@outgoing_pension_contributions)
   end
 
