@@ -25,6 +25,7 @@ class SearchPayload
       description: description,
       indexable_content: indexable_content,
       link: "/#{slug}",
+      content_store_document_type: "calculator",
     }
   end
 end
