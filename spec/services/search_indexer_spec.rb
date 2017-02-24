@@ -23,6 +23,7 @@ RSpec.describe SearchIndexer do
           "You'll need the dates Child Benefit started and, if applicable, stopped.",
         ].join(" "),
         link: "/child-benefit-tax-calculator",
+        content_store_document_type: "calculator",
       )
       SearchIndexer.call(calculator)
     end
