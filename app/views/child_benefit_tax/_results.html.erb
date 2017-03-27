@@ -15,7 +15,7 @@
       <p class="numbers">£0.00</p>
       <p>There is no tax charge if your income is below £50,099.</p>
       <p>Your partner (if you have one) may have to pay the charge if their income is higher than yours.</p>
-      <p>Find out more about the <a href="<%= internal_url "/child-benefit-tax-charge" %>">tax charge</a>.</p>
+      <p>Find out more about the <a href="/child-benefit-tax-charge">tax charge</a>.</p>
     <% else -%>
       <p class="numbers"><%= number_to_currency @calculator.tax_estimate, unit: "£", precision: 2 %></p>
 
@@ -33,13 +33,13 @@
 
       <p>To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:</p>
       <ol>
-        <li><a href="<%= internal_url "/register-for-self-assessment" %>">Register for Self Assessment</a> if you don’t already fill in a tax return - you should do this by <%= sa_register_deadline %>.</li>
+        <li><a href="/register-for-self-assessment">Register for Self Assessment</a> if you don’t already fill in a tax return - you should do this by <%= sa_register_deadline %>.</li>
         <li>Fill in the tax return and include the amount of Child Benefit received for the tax year.</li>
         <li>Send the tax return.</li>
         <li>Pay the tax you owe.</li>
       </ol>
 
-      <p>There are <a href="<%= internal_url "/self-assessment-tax-return-deadlines", 9 %>">deadlines</a> for sending the tax return and paying the tax.</p>
+      <p>There are <a href="/self-assessment-tax-return-deadlines">deadlines</a> for sending the tax return and paying the tax.</p>
 
       <div class="application-notice info-notice">
         <p>The person with the highest income pays the tax charge, so use your partner’s income in the calculator if it’s higher than yours.</p>
@@ -48,7 +48,7 @@
       <h3>Your Child Benefit</h3>
       <p>You can choose to:</p>
       <ul>
-        <li><a href="<%= internal_url "/child-benefit-tax-charge/stop-child-benefit" %>">stop getting Child Benefit</a> - you must pay any tax you owe</li>
+        <li><a href="/child-benefit-tax-charge/stop-child-benefit">stop getting Child Benefit</a> - you must pay any tax you owe</li>
         <li>carry on getting Child Benefit - for each tax year you get it you must fill in a tax return and pay any tax you owe</li>
       </ul>
 
@@ -56,11 +56,11 @@
         <p>Your result for the next tax year may be higher because the tax charge will apply to the whole tax year (and not just 7 January to 5 April 2013).</p>
       <% end -%>
 
-      <p>Find out about <a href="<%= internal_url "/child-benefit-tax-charge" %>">stopping or carrying on Child Benefit</a>.</p>
+      <p>Find out about <a href="/child-benefit-tax-charge">stopping or carrying on Child Benefit</a>.</p>
     <% end -%>
   </div>
 <% else %>
   <h3>Tax charge to pay</h3>
   <p>To work out the tax charge, <a href="#adjusted_income">enter your income or your partner's</a> - whoever has the higher.</p>
-  <p>Find out more about the <a href="<%= internal_url "/child-benefit-tax-charge" %>">tax charge</a>.</p>
+  <p>Find out more about the <a href="/child-benefit-tax-charge">tax charge</a>.</p>
 <% end %>
