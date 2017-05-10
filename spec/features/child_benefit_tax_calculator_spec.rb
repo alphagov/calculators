@@ -173,7 +173,7 @@ feature "Child Benefit Tax Calculator", js: true do
     select "February", from: "starting_children[0][start][month]"
     select "31", from: "starting_children[0][start][day]"
 
-    select "2002", from: "starting_children[1][start][year]"
+    select "2012", from: "starting_children[1][start][year]"
     select "March", from: "starting_children[1][start][month]"
     select "1", from: "starting_children[1][start][day]"
 
