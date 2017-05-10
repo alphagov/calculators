@@ -266,13 +266,27 @@ feature "Child Benefit Tax Calculator", js: true do
     expect(page).to have_select("starting_children_0_stop_day", selected: "1")
   end
 
-  it "should allow stop date to be three years in the past" do
-    Timecop.freeze('2014-04-04')
+  it "should render start date to be ten years in the past" do
+    allow(DateHelper).to receive(:years_ago).and_return(Date.parse("2010-01-01"))
+    allow(DateHelper).to receive(:years_since).and_return(Date.parse("2012-01-01"))
+
     visit "/child-benefit-tax-calculator"
     click_on "Start now"
     choose "Yes"
 
-    expected_year_list = ("2011".."2024").to_a
+    expected_year_list = ("2010".."2012").to_a
+    expect(page).to have_select("starting_children_0_start_year", options: expected_year_list.unshift("Year"))
+  end
+
+  it "should render stop date containing the specified date range" do
+    allow(DateHelper).to receive(:years_ago).and_return(Date.parse("2012-01-01"))
+    allow(DateHelper).to receive(:years_since).and_return(Date.parse("2014-01-01"))
+
+    visit "/child-benefit-tax-calculator"
+    click_on "Start now"
+
+    choose "Yes"
+    expected_year_list = ("2012".."2014").to_a
     expect(page).to have_select("starting_children_0_stop_year", options: expected_year_list.unshift("Year"))
   end
 
