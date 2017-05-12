@@ -274,8 +274,8 @@ feature "Child Benefit Tax Calculator", js: true do
     click_on "Start now"
     choose "Yes"
 
-    expected_year_list = ("2010".."2012").to_a
-    expect(page).to have_select("starting_children_0_start_year", options: expected_year_list.unshift("Year"))
+    expected_year_list = ("2010".."2012").to_a.unshift("Year")
+    expect(page).to have_select("starting_children_0_start_year", options: expected_year_list)
   end
 
   it "should render stop date containing the specified date range" do
@@ -286,8 +286,8 @@ feature "Child Benefit Tax Calculator", js: true do
     click_on "Start now"
 
     choose "Yes"
-    expected_year_list = ("2012".."2014").to_a
-    expect(page).to have_select("starting_children_0_stop_year", options: expected_year_list.unshift("Year"))
+    expected_year_list = ("2012".."2014").to_a.unshift("Year")
+    expect(page).to have_select("starting_children_0_stop_year", options: expected_year_list)
   end
 
   it "should show error if no children are present in the selected tax year" do
