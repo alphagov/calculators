@@ -7,7 +7,7 @@ gem 'unicorn', '~> 5.0.0'
 if ENV['SLIMMER_DEV']
   gem 'slimmer', path: '../slimmer'
 else
-  gem 'slimmer', '~> 10.1.1'
+  gem 'slimmer'
 end
 gem 'plek', '~> 1.12.0'
 
