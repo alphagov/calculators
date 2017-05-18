@@ -25,16 +25,22 @@ gem 'rack_strip_client_ip', '0.0.1'
 
 gem 'uglifier', '~> 2.7', '>= 2.7.2'
 
+group :development do
+  gem 'better_errors', '~>2.1'
+  gem 'binding_of_caller', '~>0.7'
+end
+
 group :development, :test do
-  gem 'capybara'
-  gem 'poltergeist'
-  gem 'rspec-rails', '~> 3.6.0'
-  gem 'simplecov-rcov', '0.2.3', require: false
-  gem 'ci_reporter_rspec', '~> 1.0.0'
-  gem 'webmock', '~> 1.24.2', require: false
   gem 'timecop', '~> 0.8.0'
   gem 'govuk-lint', '0.8.1'
   gem 'pry-byebug'
-  gem 'better_errors', '~>2.1'
-  gem 'binding_of_caller', '~>0.7'
+end
+
+group :test do
+  gem 'poltergeist'
+  gem 'rspec-rails', '~> 3.6.0'
+  gem 'capybara'
+  gem 'simplecov-rcov', '0.2.3', require: false
+  gem 'ci_reporter_rspec', '~> 1.0.0'
+  gem 'webmock', '~> 1.24.2', require: false
 end
