@@ -281,7 +281,7 @@ DEPENDENCIES
   airbrake (~> 4.3.0)
   better_errors (~> 2.1)
   binding_of_caller (~> 0.7)
-  capybara
+  capybara (~> 2.14.3)
   ci_reporter_rspec (~> 1.0.0)
   gds-api-adapters (~> 46.0)
   govuk-content-schema-test-helpers (~> 1.4.0)

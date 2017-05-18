@@ -39,7 +39,7 @@ end
 group :test do
   gem 'poltergeist'
   gem 'rspec-rails', '~> 3.6.0'
-  gem 'capybara'
+  gem 'capybara', '~> 2.14.3'
   gem 'simplecov-rcov', '0.2.3', require: false
   gem 'ci_reporter_rspec', '~> 1.0.0'
   gem 'webmock', '~> 1.24.2', require: false
