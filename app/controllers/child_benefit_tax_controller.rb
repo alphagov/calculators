@@ -1,7 +1,7 @@
 class ChildBenefitTaxController < ApplicationController
-  before_filter :fetch_content_item
-  before_filter :set_up_education_navigation_ab_testing
-  before_filter :setup_navigation_helpers
+  before_action :fetch_content_item
+  before_action :set_up_education_navigation_ab_testing
+  before_action :setup_navigation_helpers
 
   CALC_PARAM_KEYS = [:adjusted_net_income, :children_count, :starting_children, :year, :results, :part_year_children_count] +
     AdjustedNetIncomeCalculator::PARAM_KEYS
