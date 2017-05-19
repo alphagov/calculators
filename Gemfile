@@ -25,7 +25,7 @@ gem 'sass-rails', '5.0.6'
 gem 'govuk_elements_rails', '~> 3.0.0'
 
 gem 'logstasher', '0.6.5'
-gem 'airbrake', '~> 4.3.0'
+gem "airbrake", github: 'alphagov/airbrake', branch: 'silence-dep-warnings-for-rails-5'
 gem 'rack_strip_client_ip', '0.0.1'
 gem 'nokogiri'
 
