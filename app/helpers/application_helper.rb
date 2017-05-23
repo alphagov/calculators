@@ -5,7 +5,7 @@ module ApplicationHelper
   end
 
   def step(num, text, description = nil)
-    text << " <span id='step-#{num}-description'>#{description}</span>" if description.present?
-    "<h2><span class='steps' id='step-#{num}'><span class='visuallyhidden'>Step #{num}</span></span>#{text}</h2>".html_safe
+    text << "<span id='step-#{num}-description'>#{description}</span>" if description.present?
+    "<div class=\"govuk-govspeak\"><ul class=\"steps\"><li class=\"steps-step#{num}\"><h2>#{text}</h2></li></ul></div>".html_safe
   end
 end

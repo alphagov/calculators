@@ -1,11 +1,11 @@
 <% if @calculator.starting_children.count == 0 %>
-  <div class="child">
+  <div class="child form-group">
     <h3>Child <span class="child-number"> 1 </span></h3>
     <%= render "starting_child", index: 0, child: StartingChild.new  %>
   </div>
 <% else %>
   <% @calculator.starting_children.each_with_index do |child, index| -%>
-    <div class="child<% if child.errors.any? %> validation-error<% end -%>">
+    <div class="child form-group<% if child.errors.any? %> validation-error<% end -%> ">
       <% child.errors.each do |key, message| -%>
         <p><%= message %></p>
       <% end -%>

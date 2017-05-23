@@ -1,4 +1,4 @@
-<div class="date-selection">
+<div class="date-selection column-half">
   <p class="label">Start date</p>
   <% [:day, :month, :year].each do |time_unit| %>
     <label for="starting_children_<%= index %>_start_<%= time_unit %>" class="visuallyhidden">Start <%= time_unit %> for child <span class="child-number"><%= index + 1 %></span></label>
@@ -8,7 +8,7 @@
     :start_year => DateHelper.years_ago(1, "2012-01-01").year, :end_year => DateHelper.years_since(1).year %>
   &nbsp;&nbsp;
 </div>
-<div class="date-selection">
+<div class="date-selection column-half">
   <p class="label">Stop date (optional)</p>
   <% [:day, :month, :year].each do |time_unit| %>
     <label for="starting_children_<%= index %>_stop_<%= time_unit %>" class="visuallyhidden">Stop <%= time_unit %> for child <span class="child-number"><%= index + 1 %></span></label>
