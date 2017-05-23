@@ -12,11 +12,12 @@ end
 gem 'plek', '~> 1.12.0'
 
 gem 'gds-api-adapters', '~> 46.0'
-gem 'govuk_frontend_toolkit', '~> 4.9.1'
+gem 'govuk_frontend_toolkit', '~> 6.0.3'
 gem 'govuk-content-schema-test-helpers', '~> 1.4.0'
 gem 'govuk_navigation_helpers', '~> 6.2'
 gem 'govuk_ab_testing', '~>2.3'
 gem 'sass-rails', '5.0.4'
+gem 'govuk_elements_rails', '~> 3.0.0'
 
 gem 'logstasher', '0.6.5'
 gem 'airbrake', '~> 4.3.0'
