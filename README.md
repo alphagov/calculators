@@ -19,6 +19,12 @@ This means that if the 2012 tax year is selected the calculator will only calcul
 ./startup.sh
 ```
 
+To run the app with the live content store and static
+
+```
+./startup.sh --live
+```
+
 The only content in this app is [child-benefit-tax-calculator](http://calculators.dev.gov.uk/child-benefit-tax-calculator)
 
 ## Running tests
