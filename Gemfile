@@ -33,4 +33,6 @@ group :development, :test do
   gem 'poltergeist', '1.6.0'
   gem 'govuk-lint', '0.8.1'
   gem 'pry-byebug'
+  gem 'better_errors', '~>2.1'
+  gem 'binding_of_caller', '~>0.7'
 end
