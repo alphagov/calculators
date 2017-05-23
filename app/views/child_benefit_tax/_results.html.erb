@@ -1,6 +1,6 @@
 <div class="results-estimate">
-  <h3>Child Benefit received</h3>
-  <p class="numbers"><%= number_to_currency @calculator.benefits_claimed_amount, unit: "£", precision: 2 %></p>
+  <h3 class="heading-medium">Child Benefit received</h3>
+  <p class="heading-xlarge numbers"><%= number_to_currency @calculator.benefits_claimed_amount, unit: "£", precision: 2 %></p>
   <% if @calculator.tax_year == 2012 -%>
     <p>Received between 7 January and 5 April 2013.</p>
   <% end -%>
@@ -9,15 +9,14 @@
 <%# tax estimate %>
 <% if @calculator.adjusted_net_income -%>
   <div class="results-estimate">
-    <h3>Tax charge to pay</h3>
-
+    <h3 class="heading-medium">Tax charge to pay</h3>
     <% if @calculator.adjusted_net_income < 50100 -%>
-      <p class="numbers">£0.00</p>
+      <p class="numbers heading-xlarge">£0.00</p>
       <p>There is no tax charge if your income is below £50,099.</p>
       <p>Your partner (if you have one) may have to pay the charge if their income is higher than yours.</p>
       <p>Find out more about the <a href="/child-benefit-tax-charge">tax charge</a>.</p>
     <% else -%>
-      <p class="numbers"><%= number_to_currency @calculator.tax_estimate, unit: "£", precision: 2 %></p>
+      <p class="numbers heading-xlarge"><%= number_to_currency @calculator.tax_estimate, unit: "£", precision: 2 %></p>
 
       <% if @calculator.tax_year == 2012 -%>
         <p>The tax charge only applies to the Child Benefit received between 7 January and 5 April 2013
@@ -29,10 +28,10 @@
           - your circumstances may change before the end of the tax year.</p>
       <% end -%>
 
-      <h3>How and when to pay</h3>
+      <h3 class="heading-large">How and when to pay</h3>
 
       <p>To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:</p>
-      <ol>
+      <ol class="list list-number">
         <li><a href="/register-for-self-assessment">Register for Self Assessment</a> if you don’t already fill in a tax return - you should do this by <%= sa_register_deadline %>.</li>
         <li>Fill in the tax return and include the amount of Child Benefit received for the tax year.</li>
         <li>Send the tax return.</li>
@@ -45,9 +44,9 @@
         <p>The person with the highest income pays the tax charge, so use your partner’s income in the calculator if it’s higher than yours.</p>
       </div>
 
-      <h3>Your Child Benefit</h3>
+      <h3 class="heading-medium">Your Child Benefit</h3>
       <p>You can choose to:</p>
-      <ul>
+      <ul class="list list-bullet">
         <li><a href="/child-benefit-tax-charge/stop-child-benefit">stop getting Child Benefit</a> - you must pay any tax you owe</li>
         <li>carry on getting Child Benefit - for each tax year you get it you must fill in a tax return and pay any tax you owe</li>
       </ul>
@@ -60,7 +59,7 @@
     <% end -%>
   </div>
 <% else %>
-  <h3>Tax charge to pay</h3>
+  <h3 class="heading-medium">Tax charge to pay</h3>
   <p>To work out the tax charge, <a href="#adjusted_income">enter your income or your partner's</a> - whoever has the higher.</p>
   <p>Find out more about the <a href="/child-benefit-tax-charge">tax charge</a>.</p>
 <% end %>

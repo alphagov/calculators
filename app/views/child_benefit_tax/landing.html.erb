@@ -1,12 +1,9 @@
 <% content_for :title, "Child Benefit tax calculator" %>
 <% content_for :wrapper_classes, "answer" %>
-
 <div class="grid-row">
-<main id="content" role="main" class="group">
+<main id="content" role="main" class="group column-two-thirds">
   <header class="page-header group">
-    <div>
-      <h1>Child Benefit tax calculator</h1>
-    </div>
+    <h1 class="heading-xlarge">Child Benefit tax calculator</h1>
   </header>
 
   <div class="article-container group">
@@ -38,8 +35,7 @@
   </div>
 </main>
 
-<div class="related-container">
+<div class="related-container column-one-third">
   <%= render partial: 'govuk_component/related_items', locals: @navigation_helpers.related_items %>
 </div>
-
 </div>

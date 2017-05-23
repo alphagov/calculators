@@ -43,9 +43,10 @@
     },
     updateChildrenFields: function() {
       var numStartingChildren = calculator.partYearChildrenCountInput().val(),
-        childFields = calculator.childrenContainer().find("> div.child"),
+        childFields = calculator.childrenContainer().find("div.child"),
         numChildFields = childFields.size(),
         numNewFields = numStartingChildren - numChildFields;
+
       if (numStartingChildren < 1 || numStartingChildren > 10) {
         return false;
       }
@@ -77,7 +78,7 @@
     childFieldToClone: function() {
       // Always clone the first field so that we don't have to guess
       // the index (it will always be zero)
-      return calculator.childrenContainer().find("> div.child").first();
+      return calculator.childrenContainer().find("div.child").first();
     },
     replaceIndex: function(index, str) {
       return str.replace("0", index);
