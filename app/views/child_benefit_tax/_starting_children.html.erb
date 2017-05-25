@@ -7,7 +7,8 @@
   <% @calculator.starting_children.each_with_index do |child, index| -%>
     <div class="child form-group<% if child.errors.any? %> form-group-error<% end -%> ">
       <% child.errors.each do |key, message| %>
-        <span class="error-message"><%= message.capitalize %></span>
+        <% message[0] = message[0].capitalize %>
+        <span class="error-message"><%= message %></span>
       <% end %>
       <h3>Child <span class="child-number"><%= index + 1 %></span></h3>
       <%= render "starting_child", :index => index, :child => child %>
