@@ -2,9 +2,9 @@
 
 <%= render 'govuk_component/title', title: "Child Benefit tax calculator" %>
 
-<div class="grid-row calculator-form">
+<div class="grid-row">
   <article role="article" class="column-two-thirds">
-    <%= form_tag("process_form", method: :get, id: "child_benefit_tax_calculator") do %>
+    <%= form_tag("process_form", method: :get, id: "child_benefit_tax_calculator", class: "calculator-form") do %>
       <%# hidden field to store the tax year so it can persist %>
       <input type="hidden" name="year" value="<%= params[:year] %>" />
 
