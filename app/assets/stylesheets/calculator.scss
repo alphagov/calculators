@@ -1,6 +1,10 @@
 .calculator-form {
   @include core-19;
 
+  .error-summary h2 {
+    margin-top: 0;
+  }
+
   ul,
   p {
     @include core-19;

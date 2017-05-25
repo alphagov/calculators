@@ -9,16 +9,16 @@
       <input type="hidden" name="year" value="<%= params[:year] %>" />
 
       <% if @calculator.has_errors? -%>
-        <div role="group" aria-labelledby="errorHeading" tabindex="-1" class="validation-summary">
-          <h2 id="errorHeading">Please check the form</h2>
-          <ul>
+        <div role="group" aria-labelledby="error-heading" tabindex="-1" class="error-summary">
+          <h2 id="error-heading">Please check the form</h2>
+          <ul class="error-summary-list">
             <%# TODO: This could be tidied up into a model or helper method %>
-            <% @calculator.starting_children.map(&:errors).map(&:messages).map(&:values).flatten.uniq.each do |message| -%>
+            <% @calculator.starting_children.map(&:errors).map(&:messages).map(&:values).flatten.uniq.each do |message| %>
               <li><a href="#children"><%= message %></a></li>
-            <% end -%>
-            <% @calculator.errors.each do |key, message| -%>
+            <% end %>
+            <% @calculator.errors.each do |key, message| %>
               <li><a href="#tax-year"><%= message %></a></li>
-            <% end -%>
+            <% end %>
           </ul>
         </div>
       <% end -%>
@@ -31,12 +31,12 @@
       </fieldset>
 
       <fieldset id="tax-year">
-        <div class="form-group">
-          <%= step(2, "Which tax year are you claiming for?") %>
-          <p>Tax years run from 6 April to 5 April the following year.</p>
-          <div class="tax-year<% if @calculator.errors.has_key?(:tax_year) %> validation-error<% end %>">
+        <%= step(2, "Which tax year are you claiming for?") %>
+        <p>Tax years run from 6 April to 5 April the following year.</p>
+        <div class="form-group <% if @calculator.errors.has_key?(:tax_year) %> form-group-error<% end %>">
+          <div class="tax-year">
             <% @calculator.errors[:tax_year].each do |message| %>
-              <p><%= message %></p>
+              <span class="error-message"><%= message.capitalize %></span>
             <% end %>
             <% ChildBenefitTaxCalculator::TAX_YEARS.keys.each do |year| -%>
               <div class="multiple-choice">
@@ -51,11 +51,11 @@
       </fieldset>
 
       <fieldset id="is-part-year-claim">
-        <div class="form-group">
-          <%= step(3, "Are you claiming for only a part of the tax year for any of your children?") %>
-          <div class="is-part-year-claim<% if @calculator.errors.has_key?(:is_part_year_claim) %> validation-error<% end %>">
+        <%= step(3, "Are you claiming for only a part of the tax year for any of your children?") %>
+        <div class="form-group <% if @calculator.errors.has_key?(:is_part_year_claim) %> form-group-error<% end %>">
+          <div class="is-part-year-claim">
             <% @calculator.errors[:is_part_year_claim].each do |message| %>
-              <p><%= message %></p>
+              <span class="error-message"><%= message.capitalize %></span>
             <% end -%>
             <% ["yes", "no"].each do |option| %>
               <div class="multiple-choice">
