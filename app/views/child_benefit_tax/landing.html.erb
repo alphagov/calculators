@@ -1,45 +1,45 @@
 <% content_for :title, "Child Benefit tax calculator" %>
-<% content_for :wrapper_classes, "answer" %>
+
 <div class="grid-row">
-<main id="content" role="main" class="group column-two-thirds">
-  <header class="page-header group">
-    <h1 class="heading-xlarge">Child Benefit tax calculator</h1>
-  </header>
+  <div class="column-two-thirds">
+    <header class="page-header group">
+      <h1 class="heading-xlarge">Child Benefit tax calculator</h1>
+    </header>
 
-  <div class="article-container group">
-    <article role="article" class="group">
-      <div class="inner">
-        <section class="intro">
-          <p>Use this tool to work out:</p>
-          <ul class="list list-bullet">
-            <li>how much Child Benefit you receive in a tax year</li>
-            <li>the High Income Child Benefit tax charge you or your partner may have to pay</li>
-          </ul>
+    <div class="article-container group">
+      <article role="article" class="group">
+        <div class="inner">
+          <section class="intro">
+            <p>Use this tool to work out:</p>
+            <ul class="list list-bullet">
+              <li>how much Child Benefit you receive in a tax year</li>
+              <li>the High Income Child Benefit tax charge you or your partner may have to pay</li>
+            </ul>
 
-          <p class="get-started">
-            <a rel="nofollow" href="/child-benefit-tax-calculator/main" class="big button button-start">Start now</a>
-          </p>
-        </section>
-        <h2 id="before-you-start" class="heading-medium">Before you start</h2>
-        <p>You may be affected by the tax charge if your income is over £50,000.</p>
-        <p>Your partner is responsible for paying the tax charge if their income is more than £50,000 and higher than yours.</p>
-        <p>You’ll need the dates Child Benefit started and, if applicable, <a href="/child-benefit/eligibility">Child Benefit stopped</a>.</p>
-      </div>
-    </article>
+            <p class="get-started">
+              <a rel="nofollow" href="/child-benefit-tax-calculator/main" class="big button button-start">Start now</a>
+            </p>
+          </section>
+          <h2 id="before-you-start" class="heading-medium">Before you start</h2>
+          <p>You may be affected by the tax charge if your income is over £50,000.</p>
+          <p>Your partner is responsible for paying the tax charge if their income is more than £50,000 and higher than yours.</p>
+          <p>You’ll need the dates Child Benefit started and, if applicable, <a href="/child-benefit/eligibility">Child Benefit stopped</a>.</p>
+        </div>
+      </article>
 
-    <div class="meta-data group">
-      <div class="inner">
-        <p class="modified-date">Last updated: <%= last_updated_date.strftime("%e %B %Y") %></p>
+      <div class="meta-data group">
+        <div class="inner">
+          <p class="modified-date">Last updated: <%= last_updated_date.strftime("%e %B %Y") %></p>
+        </div>
       </div>
     </div>
   </div>
-</main>
 
-<div class="related-container column-one-third">
-  <% if @education_navigation_ab_test.should_present_new_navigation_view? %>
-    <%= render partial: 'govuk_component/taxonomy_sidebar', locals: @navigation_helpers.taxonomy_sidebar %>
-  <% else %>
-    <%= render partial: 'govuk_component/related_items', locals: @navigation_helpers.related_items %>
-  <% end %>
-</div>
+  <div class="related-container column-one-third">
+    <% if @education_navigation_ab_test.should_present_new_navigation_view? %>
+      <%= render partial: 'govuk_component/taxonomy_sidebar', locals: @navigation_helpers.taxonomy_sidebar %>
+    <% else %>
+      <%= render partial: 'govuk_component/related_items', locals: @navigation_helpers.related_items %>
+    <% end %>
+  </div>
 </div>
