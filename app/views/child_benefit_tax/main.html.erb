@@ -31,33 +31,41 @@
       </fieldset>
 
       <fieldset id="tax-year">
-        <%= step(2, "Which tax year are you claiming for?") %>
-        <p>Tax years run from 6 April to 5 April the following year.</p>
-        <div class="tax-year<% if @calculator.errors.has_key?(:tax_year) %> validation-error<% end %>">
-          <% @calculator.errors[:tax_year].each do |message| %>
-            <p><%= message %></p>
-          <% end -%>
-          <% ChildBenefitTaxCalculator::TAX_YEARS.keys.each do |year| -%>
-            <label for="year_<%= year %>" class="selectable">
-              <%= radio_button_tag "year", year, (@calculator.tax_year == year.to_i) %>
-              <%= tax_year_label(year) %>
-            </label>
-          <% end -%>
+        <div class="form-group">
+          <%= step(2, "Which tax year are you claiming for?") %>
+          <p>Tax years run from 6 April to 5 April the following year.</p>
+          <div class="tax-year<% if @calculator.errors.has_key?(:tax_year) %> validation-error<% end %>">
+            <% @calculator.errors[:tax_year].each do |message| %>
+              <p><%= message %></p>
+            <% end %>
+            <% ChildBenefitTaxCalculator::TAX_YEARS.keys.each do |year| -%>
+              <div class="multiple-choice">
+                <%= radio_button_tag "year", year, (@calculator.tax_year == year.to_i) %>
+                <label for="year_<%= year %>">
+                  <%= tax_year_label(year) %>
+                </label>
+              </div>
+            <% end %>
+          </div>
         </div>
       </fieldset>
 
       <fieldset id="is-part-year-claim">
-        <%= step(3, "Are you claiming for only a part of the tax year for any of your children?") %>
-        <div class="is-part-year-claim<% if @calculator.errors.has_key?(:is_part_year_claim) %> validation-error<% end %>">
-          <% @calculator.errors[:is_part_year_claim].each do |message| %>
-            <p><%= message %></p>
-          <% end -%>
-          <% ["yes", "no"].each do |option| -%>
-            <label for="is_part_year_claim_<%= option %>" class="selectable">
-              <%= radio_button_tag "is_part_year_claim", option, (@calculator.is_part_year_claim == option) %>
-              <%= option.capitalize %>
-            </label>
-          <% end -%>
+        <div class="form-group">
+          <%= step(3, "Are you claiming for only a part of the tax year for any of your children?") %>
+          <div class="is-part-year-claim<% if @calculator.errors.has_key?(:is_part_year_claim) %> validation-error<% end %>">
+            <% @calculator.errors[:is_part_year_claim].each do |message| %>
+              <p><%= message %></p>
+            <% end -%>
+            <% ["yes", "no"].each do |option| %>
+              <div class="multiple-choice">
+                <%= radio_button_tag "is_part_year_claim", option, (@calculator.is_part_year_claim == option) %>
+                <label for="is_part_year_claim_<%= option %>">
+                  <%= option.capitalize %>
+                </label>
+              </div>
+            <% end %>
+          </div>
         </div>
       </fieldset>
 
