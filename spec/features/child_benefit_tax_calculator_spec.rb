@@ -49,12 +49,12 @@ feature "Child Benefit Tax Calculator", js: true do
           expect(page).to have_no_content("enter the date Child Benefit started")
         end
 
-        within "#tax-year" do
+        within "#tax_year" do
           expect(page).to have_css(".error-message")
           expect(page).to have_content("Select a tax year")
         end
 
-        within "#is-part-year-claim" do
+        within "#is_part_year_claim" do
           expect(page).to have_css(".error-message")
           expect(page).to have_no_css("#children")
           expect(page).to have_content("Select part year tax claim")
@@ -71,12 +71,12 @@ feature "Child Benefit Tax Calculator", js: true do
           expect(page).to have_no_content("enter the date Child Benefit started")
         end
 
-        within "#tax-year" do
+        within "#tax_year" do
           expect(page).to have_css(".error-message")
           expect(page).to have_content("Select a tax year")
         end
 
-        within "#is-part-year-claim" do
+        within "#is_part_year_claim" do
           expect(page).to have_no_css(".error-message")
           expect(page).to have_no_css("#children")
           expect(page).to have_no_content("Select part year tax claim")
@@ -93,12 +93,12 @@ feature "Child Benefit Tax Calculator", js: true do
           expect(page).to have_content("enter the date Child Benefit started")
         end
 
-        within "#tax-year" do
+        within "#tax_year" do
           expect(page).to have_css(".error-message")
           expect(page).to have_content("Select a tax year")
         end
 
-        within "#is-part-year-claim" do
+        within "#is_part_year_claim" do
           expect(page).to have_css(".error-message")
           expect(page).to have_no_content("Select part year tax claim")
 
@@ -111,7 +111,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
       it "should ask how many children are being claimed for a part year" do
         choose "Yes"
-        within "#is-part-year-claim" do
+        within "#is_part_year_claim" do
           within "#children" do
             expect(page).to have_select("part_year_children_count")
           end
@@ -123,7 +123,7 @@ feature "Child Benefit Tax Calculator", js: true do
         select "2", from: "part_year_children_count"
         click_button "Update Children"
 
-        within "#is-part-year-claim" do
+        within "#is_part_year_claim" do
           within "#children" do
             expect(page).to have_select("part_year_children_count", selected: "2")
 
@@ -145,7 +145,7 @@ feature "Child Benefit Tax Calculator", js: true do
         click_button "Calculate"
 
         choose "Yes"
-        within "#is-part-year-claim" do
+        within "#is_part_year_claim" do
           within "#children" do
             expect(page).to have_css("#starting_children_0_start_year")
             expect(page).to have_css("#starting_children_0_start_month")
@@ -194,8 +194,11 @@ feature "Child Benefit Tax Calculator", js: true do
     choose "Yes"
     select "2", from: "children_count"
     select "2", from: "part_year_children_count"
-    click_button "Update Children"
-
+    within "#is_part_year_claim" do
+      Capybara.ignore_hidden_elements = false
+      click_button "Update Children"
+      Capybara.ignore_hidden_elements = true
+    end
 
     select "2014", from: "starting_children[0][start][year]"
     select "April", from: "starting_children[0][start][month]"
@@ -237,7 +240,11 @@ feature "Child Benefit Tax Calculator", js: true do
     choose "Yes"
     select "2", from: "children_count"
     select "1", from: "part_year_children_count"
-    click_button "Update Children"
+    within "#is_part_year_claim" do
+      Capybara.ignore_hidden_elements = false
+      click_button "Update Children"
+      Capybara.ignore_hidden_elements = true
+    end
 
     select "2014", from: "starting_children[0][start][year]"
     select "June", from: "starting_children[0][start][month]"
@@ -292,7 +299,11 @@ feature "Child Benefit Tax Calculator", js: true do
     choose "Yes"
 
     select "1", from: "part_year_children_count"
-    click_button "Update Children"
+    within "#is_part_year_claim" do
+      Capybara.ignore_hidden_elements = false
+      click_button "Update Children"
+      Capybara.ignore_hidden_elements = true
+    end
 
     page.find("#starting_children_0_start_year").select("2011")
     page.find("#starting_children_0_start_month").select("January")
