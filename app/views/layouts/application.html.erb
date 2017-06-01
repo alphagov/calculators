@@ -14,11 +14,17 @@
     <% if @meta_section %>
       <meta name="govuk:section" content="<%= @meta_section %>">
     <% end %>
+    <% if @education_navigation_ab_test.ab_test_applies? %>
+      <%= @education_navigation_ab_test.requested_variant.analytics_meta_tag.html_safe %>
+    <% end %>
   </head>
 
   <body class="mainstream <%= yield :body_classes %>">
     <div id="wrapper" class="<%= yield :wrapper_classes %>">
-      <%= render partial: 'govuk_component/breadcrumbs', locals: @navigation_helpers.breadcrumbs %>
+      <% if @education_navigation_ab_test.should_present_new_navigation_view? %>
+        <%= render partial: 'beta_banner/beta_banner' %>
+      <% end %>
+      <%= render partial: 'govuk_component/breadcrumbs', locals: @breadcrumbs %>
       <%= yield %>
     </div>
   </body>

@@ -39,7 +39,11 @@
 </main>
 
 <div class="related-container">
-  <%= render partial: 'govuk_component/related_items', locals: @navigation_helpers.related_items %>
+  <% if @education_navigation_ab_test.should_present_new_navigation_view? %>
+    <%= render partial: 'govuk_component/taxonomy_sidebar', locals: @navigation_helpers.taxonomy_sidebar %>
+  <% else %>
+    <%= render partial: 'govuk_component/related_items', locals: @navigation_helpers.related_items %>
+  <% end %>
 </div>
 
 </div>
