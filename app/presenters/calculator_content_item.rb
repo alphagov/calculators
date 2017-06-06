@@ -30,7 +30,7 @@ class CalculatorContentItem
       locale: 'en',
       public_updated_at: Time.now.iso8601,
       routes: [
-        { type: 'prefix', path: base_path }
+        { type: 'exact', path: base_path }
       ]
     }
   end
