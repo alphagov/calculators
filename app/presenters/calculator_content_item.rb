@@ -28,7 +28,6 @@ class CalculatorContentItem
       publishing_app: 'calculators',
       rendering_app: 'calculators',
       locale: 'en',
-      public_updated_at: Time.now.iso8601,
       routes: [
         { type: 'exact', path: base_path }
       ]
