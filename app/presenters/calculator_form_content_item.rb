@@ -6,6 +6,10 @@ class CalculatorFormContentItem < CalculatorContentItem
     "/#{calculator.slug}/main"
   end
 
+  def route_type
+    'prefix'
+  end
+
   def content_id
     "882aecb2-90c9-49b1-908d-c800bf22da5a"
   end

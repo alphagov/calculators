@@ -17,6 +17,14 @@ describe CalculatorFormContentItem do
 
       expect(payload[:title]).to eql('Child Benefit tax calculator')
     end
+
+    it 'uses a prefix route' do
+      calculator = Calculator.all.first
+
+      payload = CalculatorFormContentItem.new(calculator).payload
+
+      expect(payload[:routes].first[:type]).to eql('prefix')
+    end
   end
 
   describe '#content_id' do

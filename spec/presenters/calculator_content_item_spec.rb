@@ -17,6 +17,14 @@ describe CalculatorContentItem do
 
       expect(payload[:title]).to eql('Child Benefit tax calculator')
     end
+
+    it 'uses an exact route' do
+      calculator = Calculator.all.first
+
+      payload = CalculatorContentItem.new(calculator).payload
+
+      expect(payload[:routes].first[:type]).to eql('exact')
+    end
   end
 
   describe '#base_path' do

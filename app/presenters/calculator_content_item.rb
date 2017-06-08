@@ -18,6 +18,10 @@ class CalculatorContentItem
     'minor'
   end
 
+  def route_type
+    'exact'
+  end
+
   def payload
     {
       title: calculator.title,
@@ -29,7 +33,7 @@ class CalculatorContentItem
       rendering_app: 'calculators',
       locale: 'en',
       routes: [
-        { type: 'exact', path: base_path }
+        { type: route_type, path: base_path }
       ]
     }
   end
