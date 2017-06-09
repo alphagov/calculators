@@ -6,9 +6,6 @@ class ChildBenefitTaxController < ApplicationController
   CALC_PARAM_KEYS = [:adjusted_net_income, :children_count, :starting_children, :year, :results, :part_year_children_count] +
     AdjustedNetIncomeCalculator::PARAM_KEYS
 
-  def landing
-  end
-
   def process_form
     redirect_hash = { action: :main }
 

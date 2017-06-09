@@ -13,13 +13,6 @@ describe ChildBenefitTaxController, type: :controller do
       expect_any_instance_of(GdsApi::ContentStore).to receive(:content_item).and_return({})
     end
 
-    describe "GET 'landing'" do
-      it "returns http success" do
-        get 'landing'
-        expect(response).to be_success
-      end
-    end
-
     describe "GET main" do
       it "should create a calculator using params" do
         get 'main', year: '2013'
@@ -64,13 +57,6 @@ describe ChildBenefitTaxController, type: :controller do
       end
 
       %w[A B].each do |variant|
-        it "should not affect the landing page with the #{variant} variant" do
-          setup_ab_variant('EducationNavigation', variant)
-          expect_normal_navigation
-          get :landing
-          assert_response_not_modified_for_ab_test('EducationNavigation')
-        end
-
         it "should not affect the main page with the #{variant} variant" do
           setup_ab_variant('EducationNavigation', variant)
           expect_normal_navigation_with_no_related_items
@@ -92,25 +78,6 @@ describe ChildBenefitTaxController, type: :controller do
             ],
           },
         )
-      end
-
-      it "should show normal navigation on the landing page by default" do
-        expect_normal_navigation
-        get :landing
-      end
-
-      it "should show normal navigation on the landing page for the 'A' version" do
-        expect_normal_navigation
-        with_variant EducationNavigation: "A" do
-          get :landing
-        end
-      end
-
-      it "should show new navigation on the landing page for the 'B' version" do
-        expect_new_navigation
-        with_variant EducationNavigation: "B" do
-          get :landing
-        end
       end
 
       it "should show normal navigation on the main page by default" do
