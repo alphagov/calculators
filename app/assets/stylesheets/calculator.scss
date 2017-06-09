@@ -1,0 +1,82 @@
+.calculator-form {
+  @include core-19;
+  margin-bottom: $gutter * 2;
+
+  .error-summary h2 {
+    margin-top: 0;
+  }
+
+  .error-summary ul {
+    margin-bottom: 0;
+  }
+
+  ul,
+  p {
+    @include core-19;
+    margin-top: $gutter-half;
+    margin-bottom: $gutter-half;
+
+    @include media(tablet) {
+      margin-top: $gutter-two-thirds;
+      margin-bottom: $gutter-two-thirds;
+    }
+  }
+
+  ul {
+    list-style: disc;
+    list-style-position: outside;
+    margin-left: $gutter-two-thirds;
+  }
+
+  h2 {
+    @include bold-24;
+    margin-top: em(45, 24);
+    margin-bottom: em(20, 24);
+    position: relative;
+  }
+
+  h3 {
+    @include bold-19;
+
+    margin-top: em(10, 16);
+    margin-bottom: em(5, 16);
+
+    @include media(tablet) {
+      margin-top: em(20, 19);
+    }
+  }
+
+  .step {
+    padding-left: 2.2em;
+
+    @include media(tablet) {
+      padding-left: 1.5em;
+    }
+
+    &:before {
+      @include core-16;
+
+      position: absolute;
+      left: 0;
+      margin-top: -1px;
+      height: 18px;
+      width: 18px;
+      padding: 4px;
+      border-radius: 50%;
+      background-color: $black;
+      color: $white;
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+
+  @for $i from 1 through 14 {
+    .step-#{$i}:before {
+      content: "#{$i}";
+    }
+  }
+}
+
+.related-container {
+  margin-top: 40px;
+}

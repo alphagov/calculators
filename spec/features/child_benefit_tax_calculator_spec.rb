@@ -14,24 +14,19 @@ feature "Child Benefit Tax Calculator", js: true do
       expect(page).to have_selector(%{meta[name='description'][content="Work out the Child Benefit you've received and your High Income Child Benefit tax charge"]}, visible: false)
     end
 
-    within "main#content" do
-      within "header.page-header" do
-        expect(page).to have_content("Child Benefit tax calculator")
-      end
-
-      within "article[role=article]" do
-        within "section.intro" do
-          expect(page).to have_link("Start now", href: "/child-benefit-tax-calculator/main")
-        end
-      end
+    within "#content" do
+      expect(page).to have_content("Child Benefit tax calculator")
+      expect(page).to have_link("Start now", href: "/child-benefit-tax-calculator/main")
     end
+
+    expect(page).to have_css(shared_component_selector('title'))
+    expect(page).to have_css(shared_component_selector('govspeak'))
     expect(page).to have_css(shared_component_selector('breadcrumbs'))
     expect(page).to have_css(shared_component_selector('related_items'))
   end
 
   it "should not show results until enough info is entered" do
-    visit "/child-benefit-tax-calculator"
-    click_on "Start now"
+    visit "/child-benefit-tax-calculator/main"
     expect(page).to have_no_css(".results")
 
     choose "year_2012"
@@ -42,28 +37,27 @@ feature "Child Benefit Tax Calculator", js: true do
 
   context "page errors" do
     before :each do
-      visit "/child-benefit-tax-calculator"
-      click_on "Start now"
+      visit "/child-benefit-tax-calculator/main"
     end
 
     context "when tax claim duration isn't selected" do
       it "should display validation errors" do
         click_on "Calculate"
-        within ".validation-summary" do
+        within ".error-summary" do
           expect(page).to have_content("select a tax year")
           expect(page).to have_content("select part year tax claim")
           expect(page).to have_no_content("enter the date Child Benefit started")
         end
 
-        within "#tax-year" do
-          expect(page).to have_css(".validation-error")
-          expect(page).to have_content("select a tax year")
+        within "#tax_year" do
+          expect(page).to have_css(".error-message")
+          expect(page).to have_content("Select a tax year")
         end
 
-        within "#is-part-year-claim" do
-          expect(page).to have_css(".validation-error")
+        within "#is_part_year_claim" do
+          expect(page).to have_css(".error-message")
           expect(page).to have_no_css("#children")
-          expect(page).to have_content("select part year tax claim")
+          expect(page).to have_content("Select part year tax claim")
         end
       end
     end
@@ -72,20 +66,20 @@ feature "Child Benefit Tax Calculator", js: true do
       it "should display validation errors" do
         choose "No"
         click_on "Calculate"
-        within ".validation-summary" do
+        within ".error-summary" do
           expect(page).to have_content("select a tax year")
           expect(page).to have_no_content("enter the date Child Benefit started")
         end
 
-        within "#tax-year" do
-          expect(page).to have_css(".validation-error")
-          expect(page).to have_content("select a tax year")
+        within "#tax_year" do
+          expect(page).to have_css(".error-message")
+          expect(page).to have_content("Select a tax year")
         end
 
-        within "#is-part-year-claim" do
-          expect(page).to have_no_css(".validation-error")
+        within "#is_part_year_claim" do
+          expect(page).to have_no_css(".error-message")
           expect(page).to have_no_css("#children")
-          expect(page).to have_no_content("select part year tax claim")
+          expect(page).to have_no_content("Select part year tax claim")
         end
       end
     end
@@ -94,41 +88,42 @@ feature "Child Benefit Tax Calculator", js: true do
       it "should display validation errors" do
         choose "Yes"
         click_on "Calculate"
-        within ".validation-summary" do
+        within ".error-summary" do
           expect(page).to have_content("select a tax year")
           expect(page).to have_content("enter the date Child Benefit started")
         end
 
-        within "#tax-year" do
-          expect(page).to have_css(".validation-error")
-          expect(page).to have_content("select a tax year")
+        within "#tax_year" do
+          expect(page).to have_css(".error-message")
+          expect(page).to have_content("Select a tax year")
         end
 
-        within "#is-part-year-claim" do
-          expect(page).to have_css(".validation-error")
-          expect(page).to have_no_content("select part year tax claim")
+        within "#is_part_year_claim" do
+          expect(page).to have_css(".error-message")
+          expect(page).to have_no_content("Select part year tax claim")
 
           within "#children" do
-            expect(page).to have_css(".validation-error")
-            expect(page).to have_content("enter the date Child Benefit started")
+            expect(page).to have_css(".error-message")
+            expect(page).to have_content("Enter the date Child Benefit started")
           end
         end
       end
 
       it "should ask how many children are being claimed for a part year" do
         choose "Yes"
-        within "#is-part-year-claim" do
+        within "#is_part_year_claim" do
           within "#children" do
             expect(page).to have_select("part_year_children_count")
           end
         end
       end
+
       it "should show two date selectors if two part year children are selected" do
         choose "Yes"
         select "2", from: "part_year_children_count"
         click_button "Update Children"
 
-        within "#is-part-year-claim" do
+        within "#is_part_year_claim" do
           within "#children" do
             expect(page).to have_select("part_year_children_count", selected: "2")
 
@@ -150,7 +145,7 @@ feature "Child Benefit Tax Calculator", js: true do
         click_button "Calculate"
 
         choose "Yes"
-        within "#is-part-year-claim" do
+        within "#is_part_year_claim" do
           within "#children" do
             expect(page).to have_css("#starting_children_0_start_year")
             expect(page).to have_css("#starting_children_0_start_month")
@@ -186,8 +181,8 @@ feature "Child Benefit Tax Calculator", js: true do
     click_button "Calculate"
 
     expect(page).to have_selector(
-      ".validation-error",
-      text: "enter a valid date - there are only 29 days in February",
+      ".error-message",
+      text: "Enter a valid date - there are only 29 days in February",
       count: 2,
     )
   end
@@ -199,8 +194,11 @@ feature "Child Benefit Tax Calculator", js: true do
     choose "Yes"
     select "2", from: "children_count"
     select "2", from: "part_year_children_count"
-    click_button "Update Children"
-
+    within "#is_part_year_claim" do
+      Capybara.ignore_hidden_elements = false
+      click_button "Update Children"
+      Capybara.ignore_hidden_elements = true
+    end
 
     select "2014", from: "starting_children[0][start][year]"
     select "April", from: "starting_children[0][start][month]"
@@ -217,8 +215,8 @@ feature "Child Benefit Tax Calculator", js: true do
     click_button "Calculate"
 
     expect(page).to have_selector(
-      ".validation-error",
-      text: "enter a valid date - there are only 30 days in April",
+      ".error-message",
+      text: "Enter a valid date - there are only 30 days in April",
       count: 1,
     )
 
@@ -242,7 +240,11 @@ feature "Child Benefit Tax Calculator", js: true do
     choose "Yes"
     select "2", from: "children_count"
     select "1", from: "part_year_children_count"
-    click_button "Update Children"
+    within "#is_part_year_claim" do
+      Capybara.ignore_hidden_elements = false
+      click_button "Update Children"
+      Capybara.ignore_hidden_elements = true
+    end
 
     select "2014", from: "starting_children[0][start][year]"
     select "June", from: "starting_children[0][start][month]"
@@ -297,7 +299,11 @@ feature "Child Benefit Tax Calculator", js: true do
     choose "Yes"
 
     select "1", from: "part_year_children_count"
-    click_button "Update Children"
+    within "#is_part_year_claim" do
+      Capybara.ignore_hidden_elements = false
+      click_button "Update Children"
+      Capybara.ignore_hidden_elements = true
+    end
 
     page.find("#starting_children_0_start_year").select("2011")
     page.find("#starting_children_0_start_month").select("January")
@@ -311,12 +317,12 @@ feature "Child Benefit Tax Calculator", js: true do
 
     click_on "Calculate"
 
-    within ".validation-summary" do
+    within ".error-summary" do
       expect(page).to have_content("You haven't received any Child Benefit for the tax year selected. Check your Child Benefit dates or choose a different tax year.")
     end
 
     within "#children" do
-      expect(page).to have_css(".validation-error")
+      expect(page).to have_css(".error-message")
     end
   end
 
@@ -432,8 +438,10 @@ feature "Child Benefit Tax Calculator", js: true do
 
         click_button "Calculate"
 
-        within ".results" do
-          expect(page).to have_content("£500,000.00")
+        within(shared_component_selector("govspeak")) do
+          component_args = JSON.parse(page.text)
+          content = component_args.fetch("content")
+          expect(content).to have_content("£500,000.00")
         end
       end
     end
@@ -458,9 +466,11 @@ feature "Child Benefit Tax Calculator", js: true do
 
       click_button "Calculate"
 
-      within ".results" do
-        expect(page).to have_content("£500,000.00")
-        expect(page).to have_content("based on your estimated adjusted net income of £60,000.00")
+      within(shared_component_selector("govspeak")) do
+        component_args = JSON.parse(page.text)
+        content = component_args.fetch("content")
+        expect(content).to have_content("£500,000.00")
+        expect(content).to have_content("based on your estimated adjusted net income of £60,000.00")
       end
     end
 
@@ -474,8 +484,10 @@ feature "Child Benefit Tax Calculator", js: true do
 
       click_button "Calculate"
 
-      within ".results" do
-        expect(page).to have_content("There is no tax charge")
+      within(shared_component_selector("govspeak")) do
+        component_args = JSON.parse(page.text)
+        content = component_args.fetch("content")
+        expect(content).to have_content("There is no tax charge")
       end
     end
   end
@@ -492,8 +504,6 @@ feature "Child Benefit Tax Calculator", js: true do
       select "1", from: "starting_children[0][start][day]"
       choose "year_2012"
 
-      #click_on "Help working out your adjusted net income"
-
       fill_in "gross_income", with: "£120,000"
       fill_in "other_income", with: "£8,000"
       fill_in "pension_contributions_from_pay", with: "£2000"
@@ -507,11 +517,13 @@ feature "Child Benefit Tax Calculator", js: true do
 
       click_on "Calculate"
 
-      within ".results" do
-        expect(page).to have_content "Child Benefit received £263.90"
-        expect(page).to have_content "Tax charge to pay £263.00"
+      within(shared_component_selector("govspeak")) do
+        component_args = JSON.parse(page.text)
+        content = component_args.fetch("content")
 
-        expect(page).to have_content("based on your estimated adjusted net income of £120,325.00")
+        expect(content).to have_content "Child Benefit received £263.90"
+        expect(content).to have_content "Tax charge to pay £263.00"
+        expect(content).to have_content("based on your estimated adjusted net income of £120,325.00")
       end
     end
 
@@ -536,17 +548,22 @@ feature "Child Benefit Tax Calculator", js: true do
 
       click_on "Calculate"
 
-      within ".results" do
-        expect(page).to have_content("based on your estimated adjusted net income of £120,325.00")
+      within(shared_component_selector("govspeak")) do
+        component_args = JSON.parse(page.text)
+        content = component_args.fetch("content")
+        expect(content).to have_content("based on your estimated adjusted net income of £120,325.00")
       end
 
       fill_in "Salary before tax", with: "£50,000"
       click_on "Calculate"
 
-      within ".results" do
-        expect(page).to have_content "Child Benefit received £263.90"
-        expect(page).to have_content "Tax charge to pay £7.00"
-        expect(page).to have_content("based on your estimated adjusted net income of £50,325.00")
+      within(shared_component_selector("govspeak")) do
+        component_args = JSON.parse(page.text)
+        content = component_args.fetch("content")
+
+        expect(content).to have_content "Child Benefit received £263.90"
+        expect(content).to have_content "Tax charge to pay £7.00"
+        expect(content).to have_content("based on your estimated adjusted net income of £50,325.00")
       end
     end
   end
@@ -570,14 +587,14 @@ feature "Child Benefit Tax Calculator", js: true do
 
         click_button "Calculate"
 
-        within ".results" do
-          within :xpath, ".//div[contains(@class, 'results-estimate')][.//h3[.='Child Benefit received']]" do
-            expect(page).to have_content("£263.90")
-            expect(page).to have_content("Received between 7 January and 5 April 2013.")
-            expect(page).to have_content("Use this figure in your 2012 to 2013 Self Assessment tax return (if you fill one in).")
-          end
+        within(shared_component_selector("govspeak")) do
+          component_args = JSON.parse(page.text)
+          content = component_args.fetch("content")
 
-          expect(page).to have_content("To work out the tax charge, enter your income")
+          expect(content).to have_content("£263.90")
+          expect(content).to have_content("Received between 7 January and 5 April 2013.")
+          expect(content).to have_content("Use this figure in your 2012 to 2013 Self Assessment tax return (if you fill one in).")
+          expect(content).to have_content("To work out the tax charge, enter your income")
         end
       end
 
@@ -586,14 +603,14 @@ feature "Child Benefit Tax Calculator", js: true do
 
         click_button "Calculate"
 
-        within ".results" do
-          within :xpath, ".//div[contains(@class, 'results-estimate')][.//h3[.='Child Benefit received']]" do
-            expect(page).to have_content("£1,055.60")
-            expect(page).not_to have_content("Received between 7 January and 5 April 2013.")
-            expect(page).to have_content("Use this figure in your 2013 to 2014 Self Assessment tax return (if you fill one in).")
-          end
+        within(shared_component_selector("govspeak")) do
+          component_args = JSON.parse(page.text)
+          content = component_args.fetch("content")
 
-          expect(page).to have_content("To work out the tax charge, enter your income")
+          expect(content).to have_content("£1,055.60")
+          expect(content).not_to have_content("Received between 7 January and 5 April 2013.")
+          expect(content).to have_content("Use this figure in your 2013 to 2014 Self Assessment tax return (if you fill one in).")
+          expect(content).to have_content("To work out the tax charge, enter your income")
         end
       end
     end # without tax estimate
@@ -611,24 +628,20 @@ feature "Child Benefit Tax Calculator", js: true do
         choose "year_2012"
         click_button "Calculate"
 
-        within ".results" do
-          within :xpath, ".//div[contains(@class, 'results-estimate')][.//h3[.='Child Benefit received']]" do
-            expect(page).to have_content("£263.90")
-            expect(page).to have_content("Received between 7 January and 5 April 2013.")
-            expect(page).to have_content("Use this figure in your 2012 to 2013 Self Assessment tax return (if you fill one in).")
-          end
+        within(shared_component_selector("govspeak")) do
+          component_args = JSON.parse(page.text)
+          content = component_args.fetch("content")
 
-          expect(page).not_to have_content("To work out the tax charge, enter your income")
+          expect(content).to have_content("£263.90")
+          expect(content).to have_content("Received between 7 January and 5 April 2013.")
+          expect(content).to have_content("Use this figure in your 2012 to 2013 Self Assessment tax return (if you fill one in).")
+          expect(content).not_to have_content("To work out the tax charge, enter your income")
 
-          within :xpath, ".//div[contains(@class, 'results-estimate')][.//h3[.='Tax charge to pay']]" do
-            expect(page).to have_content("£131.00")
-            expect(page).to have_content("The tax charge only applies to the Child Benefit received between 7 January and 5 April 2013 and is based on your estimated adjusted net income of £55,000.00.")
-
-            expect(page).to have_content("Your result for the next tax year may be higher because the tax charge will apply to the whole tax year (and not just 7 January to 5 April 2013).")
-
-            expect(page).to have_content("To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:")
-            expect(page).to have_content("you should do this by 5 October 2013")
-          end
+          expect(content).to have_content("£131.00")
+          expect(content).to have_content("The tax charge only applies to the Child Benefit received between 7 January and 5 April 2013 and is based on your estimated adjusted net income of £55,000.00.")
+          expect(content).to have_content("Your result for the next tax year may be higher because the tax charge will apply to the whole tax year (and not just 7 January to 5 April 2013).")
+          expect(content).to have_content("To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:")
+          expect(content).to have_content("you should do this by 5 October 2013")
         end
       end
 
@@ -636,24 +649,19 @@ feature "Child Benefit Tax Calculator", js: true do
         choose "year_2013"
         click_button "Calculate"
 
-        within ".results" do
-          within :xpath, ".//div[contains(@class, 'results-estimate')][.//h3[.='Child Benefit received']]" do
-            expect(page).to have_content("£1,055.60")
-            expect(page).not_to have_content("Received between 7 January and 5 April 2013.")
-            expect(page).to have_content("Use this figure in your 2013 to 2014 Self Assessment tax return (if you fill one in).")
-          end
+        within(shared_component_selector("govspeak")) do
+          component_args = JSON.parse(page.text)
+          content = component_args.fetch("content")
 
-          expect(page).not_to have_content("To work out the tax charge, enter your income")
+          expect(content).to have_content("£1,055.60")
+          expect(content).not_to have_content("Received between 7 January and 5 April 2013.")
+          expect(content).to have_content("Use this figure in your 2013 to 2014 Self Assessment tax return (if you fill one in).")
 
-          within :xpath, ".//div[contains(@class, 'results-estimate')][.//h3[.='Tax charge to pay']]" do
-            expect(page).to have_content("£527.00")
-            expect(page).not_to have_content("The tax charge only applies to the Child Benefit received between 7 January and 5 April 2013")
-
-            expect(page).not_to have_content("Your result for the next tax year may be higher")
-
-            expect(page).to have_content("To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:")
-            expect(page).to have_content("you should do this by 5 October 2014")
-          end
+          expect(content).to have_content("£527.00")
+          expect(content).not_to have_content("The tax charge only applies to the Child Benefit received between 7 January and 5 April 2013")
+          expect(content).not_to have_content("Your result for the next tax year may be higher")
+          expect(content).to have_content("To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:")
+          expect(content).to have_content("you should do this by 5 October 2014")
         end
       end
 
@@ -663,10 +671,11 @@ feature "Child Benefit Tax Calculator", js: true do
         choose "year_2013"
         click_button "Calculate"
 
-        within ".results" do
-          within :xpath, ".//div[contains(@class, 'results-estimate')][.//h3[.='Tax charge to pay']]" do
-            expect(page).to have_content("This is an estimate based on your adjusted net income of £55,000.00 - your circumstances may change before the end of the tax year.")
-          end
+        within(shared_component_selector("govspeak")) do
+          component_args = JSON.parse(page.text)
+          content = component_args.fetch("content")
+
+          expect(content).to have_content("This is an estimate based on your adjusted net income of £55,000.00 - your circumstances may change before the end of the tax year.")
         end
       end
     end # with the tax estimate
@@ -681,19 +690,18 @@ feature "Child Benefit Tax Calculator", js: true do
         fill_in "Salary before tax", with: "49000"
         click_button "Calculate"
 
-        within ".results" do
-          within :xpath, ".//div[contains(@class, 'results-estimate')][.//h3[.='Child Benefit received']]" do
-            expect(page).to have_content("£1,055.60")
-            expect(page).not_to have_content("Received between 7 January and 5 April 2013.")
-            expect(page).to have_content("Use this figure in your 2013 to 2014 Self Assessment tax return (if you fill one in).")
-          end
+        within(shared_component_selector("govspeak")) do
+          component_args = JSON.parse(page.text)
+          content = component_args.fetch("content")
 
-          expect(page).not_to have_content("To work out the tax charge, enter your income")
+          expect(content).to have_content("£1,055.60")
+          expect(content).not_to have_content("Received between 7 January and 5 April 2013.")
+          expect(content).to have_content("Use this figure in your 2013 to 2014 Self Assessment tax return (if you fill one in).")
 
-          within :xpath, ".//div[contains(@class, 'results-estimate')][.//h3[.='Tax charge to pay']]" do
-            expect(page).to have_content("£0.00")
-            expect(page).to have_content("There is no tax charge if your income is below £50,099.")
-          end
+          expect(content).not_to have_content("To work out the tax charge, enter your income")
+
+          expect(content).to have_content("£0.00")
+          expect(content).to have_content("There is no tax charge if your income is below £50,099.")
         end
       end
     end # ANI below threshold
@@ -712,8 +720,8 @@ feature "Child Benefit Tax Calculator", js: true do
 
         click_button "Calculate"
 
-        within ".results" do
-          expect(page).to have_content("£1,097.10")
+        within(shared_component_selector("govspeak")) do
+          expect(page.text).to have_content("£1,097.10")
         end
       end
     end
@@ -726,8 +734,8 @@ feature "Child Benefit Tax Calculator", js: true do
 
         click_button "Calculate"
 
-        within ".results" do
-          expect(page).to have_content("£1,823.20")
+        within(shared_component_selector("govspeak")) do
+          expect(page.text).to have_content("£1,823.20")
         end
       end
     end
@@ -748,7 +756,9 @@ feature "Child Benefit Tax Calculator", js: true do
         choose "year_2012"
 
         click_button "Calculate"
-        expect(page).to contain_child_benefit_value("£243.60")
+        within(shared_component_selector("govspeak")) do
+          expect(page.text).to contain_child_benefit_value("£243.60")
+        end
       end
 
       specify "should have no child benefit when start date is 01/04/2013" do

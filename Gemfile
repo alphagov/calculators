@@ -12,11 +12,12 @@ end
 gem 'plek', '~> 1.12.0'
 
 gem 'gds-api-adapters', '~> 46.0'
-gem 'govuk_frontend_toolkit', '~> 4.9.1'
+gem 'govuk_frontend_toolkit', '~> 6.0.3'
 gem 'govuk-content-schema-test-helpers', '~> 1.4.0'
 gem 'govuk_navigation_helpers', '~> 6.2'
 gem 'govuk_ab_testing', '~>2.3'
 gem 'sass-rails', '5.0.4'
+gem 'govuk_elements_rails', '~> 3.0.0'
 
 gem 'logstasher', '0.6.5'
 gem 'airbrake', '~> 4.3.0'
@@ -26,12 +27,12 @@ gem 'uglifier', '~> 2.7', '>= 2.7.2'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.4.0'
-  gem 'capybara', '~> 2.6.2'
+  gem 'capybara'
+  gem 'poltergeist'
   gem 'simplecov-rcov', '0.2.3', require: false
   gem 'ci_reporter_rspec', '~> 1.0.0'
   gem 'webmock', '~> 1.24.2', require: false
   gem 'timecop', '~> 0.8.0'
-  gem 'poltergeist', '1.6.0'
   gem 'govuk-lint', '0.8.1'
   gem 'pry-byebug'
   gem 'better_errors', '~>2.1'

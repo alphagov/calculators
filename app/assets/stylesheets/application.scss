@@ -1,13 +1,36 @@
-// from the toolkit gem
+// From govuk_frontend_toolkit
+// ---------------------------
 @import "colours";
 @import "typography";
-@import "conditionals";
-@import "shims";
-@import "css3";
+@import "measurements";
 
-// local includes
-@import "validation";
+// Elements buttons
+// ----------------
+// Elements Button import globally depends on mixins defined in govuk_frontend_toolkit.
+@import "design-patterns/buttons";
 
-// styles
-@import "core";
-@import "calculators/child_benefit";
+// Elements Button import globally depends on mixins defined in here.
+@import "elements/helpers";
+
+// DEBT/RISK: Includes a .example-highlight-grid global CSS helper
+// https://github.com/alphagov/govuk_elements/blob/874e287/public/sass/elements/_helpers.scss#L12
+// and a reimplementation of .visually-hidden
+// https://github.com/alphagov/govuk_elements/blob/874e287/public/sass/elements/_helpers.scss#L36
+@import "elements/buttons";
+
+// Step icons
+// ----------
+@import "elements/icons";
+
+// Elements forms
+// --------------
+@import "elements/forms";
+// TODO: Switch dates from select boxes to text inputs
+// @import "elements/forms/form-date";
+@import "elements/forms/form-multiple-choice";
+@import "elements/forms/form-validation";
+@import "elements/panels";
+
+// Calculators
+@import "calculator";
+@import "results";

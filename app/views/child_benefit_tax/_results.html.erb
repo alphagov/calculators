@@ -1,66 +1,77 @@
-<div class="results-estimate">
-  <h3>Child Benefit received</h3>
-  <p class="numbers"><%= number_to_currency @calculator.benefits_claimed_amount, unit: "£", precision: 2 %></p>
-  <% if @calculator.tax_year == 2012 -%>
-    <p>Received between 7 January and 5 April 2013.</p>
-  <% end -%>
-  <p>Use this figure in your <%= tax_year_label(@calculator.tax_year) %> Self Assessment tax return (if you fill one in).</p>
-</div>
-<%# tax estimate %>
-<% if @calculator.adjusted_net_income -%>
+<% results_html = capture do %>
   <div class="results-estimate">
-    <h3>Tax charge to pay</h3>
+    <h3>Child Benefit received</h3>
+    <p class="numbers">
+      <%= number_to_currency @calculator.benefits_claimed_amount, unit: "£", precision: 2 %>
+    </p>
 
-    <% if @calculator.adjusted_net_income < 50100 -%>
-      <p class="numbers">£0.00</p>
-      <p>There is no tax charge if your income is below £50,099.</p>
-      <p>Your partner (if you have one) may have to pay the charge if their income is higher than yours.</p>
-      <p>Find out more about the <a href="/child-benefit-tax-charge">tax charge</a>.</p>
-    <% else -%>
-      <p class="numbers"><%= number_to_currency @calculator.tax_estimate, unit: "£", precision: 2 %></p>
-
-      <% if @calculator.tax_year == 2012 -%>
-        <p>The tax charge only applies to the Child Benefit received between 7 January and 5 April 2013
-          and is based on your estimated adjusted net income of <%= number_to_currency @calculator.adjusted_net_income, unit: "£", precision: 2 %>.</p>
-      <% end -%>
-
-      <% if tax_year_incomplete? %>
-        <p>This is an estimate based on your adjusted net income of <%= number_to_currency @calculator.adjusted_net_income, unit: "£", precision: 2 %>
-          - your circumstances may change before the end of the tax year.</p>
-      <% end -%>
-
-      <h3>How and when to pay</h3>
-
-      <p>To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:</p>
-      <ol>
-        <li><a href="/register-for-self-assessment">Register for Self Assessment</a> if you don’t already fill in a tax return - you should do this by <%= sa_register_deadline %>.</li>
-        <li>Fill in the tax return and include the amount of Child Benefit received for the tax year.</li>
-        <li>Send the tax return.</li>
-        <li>Pay the tax you owe.</li>
-      </ol>
-
-      <p>There are <a href="/self-assessment-tax-return-deadlines">deadlines</a> for sending the tax return and paying the tax.</p>
-
-      <div class="application-notice info-notice">
-        <p>The person with the highest income pays the tax charge, so use your partner’s income in the calculator if it’s higher than yours.</p>
-      </div>
-
-      <h3>Your Child Benefit</h3>
-      <p>You can choose to:</p>
-      <ul>
-        <li><a href="/child-benefit-tax-charge/stop-child-benefit">stop getting Child Benefit</a> - you must pay any tax you owe</li>
-        <li>carry on getting Child Benefit - for each tax year you get it you must fill in a tax return and pay any tax you owe</li>
-      </ul>
-
-      <% if @calculator.tax_year == 2012 -%>
-        <p>Your result for the next tax year may be higher because the tax charge will apply to the whole tax year (and not just 7 January to 5 April 2013).</p>
-      <% end -%>
-
-      <p>Find out about <a href="/child-benefit-tax-charge">stopping or carrying on Child Benefit</a>.</p>
-    <% end -%>
+    <% if @calculator.tax_year == 2012 %>
+      <p>
+        Received between 7 January and 5 April 2013.
+      </p>
+    <% end %>
+    <p>
+      Use this figure in your <%= tax_year_label(@calculator.tax_year) %> Self Assessment tax return (if you fill one in).
+    </p>
   </div>
-<% else %>
-  <h3>Tax charge to pay</h3>
-  <p>To work out the tax charge, <a href="#adjusted_income">enter your income or your partner's</a> - whoever has the higher.</p>
-  <p>Find out more about the <a href="/child-benefit-tax-charge">tax charge</a>.</p>
+
+  <%# tax estimate %>
+  <% if @calculator.adjusted_net_income %>
+    <div class="results-estimate">
+      <h3>Tax charge to pay</h3>
+      <% if @calculator.adjusted_net_income < 50100 %>
+        <p class="numbers">£0.00</p>
+        <p>There is no tax charge if your income is below £50,099.</p>
+        <p>Your partner (if you have one) may have to pay the charge if their income is higher than yours.</p>
+        <p>Find out more about the <a href="/child-benefit-tax-charge">tax charge</a>.</p>
+      <% else -%>
+        <p class="numbers"><%= number_to_currency @calculator.tax_estimate, unit: "£", precision: 2 %></p>
+
+        <% if @calculator.tax_year == 2012 %>
+          <p>The tax charge only applies to the Child Benefit received between 7 January and 5 April 2013
+            and is based on your estimated adjusted net income of <%= number_to_currency @calculator.adjusted_net_income, unit: "£", precision: 2 %>.</p>
+        <% end %>
+
+        <% if tax_year_incomplete? %>
+          <p>This is an estimate based on your adjusted net income of <%= number_to_currency @calculator.adjusted_net_income, unit: "£", precision: 2 %>
+            - your circumstances may change before the end of the tax year.</p>
+        <% end %>
+
+        <h3>How and when to pay</h3>
+
+        <p>To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:</p>
+        <ol>
+          <li><a href="/register-for-self-assessment">Register for Self Assessment</a> if you don’t already fill in a tax return - you should do this by <%= sa_register_deadline %>.</li>
+          <li>Fill in the tax return and include the amount of Child Benefit received for the tax year.</li>
+          <li>Send the tax return.</li>
+          <li>Pay the tax you owe.</li>
+        </ol>
+
+        <p>There are <a href="/self-assessment-tax-return-deadlines">deadlines</a> for sending the tax return and paying the tax.</p>
+
+        <div class="application-notice info-notice">
+          <p>The person with the highest income pays the tax charge, so use your partner’s income in the calculator if it’s higher than yours.</p>
+        </div>
+
+        <h3>Your Child Benefit</h3>
+        <p>You can choose to:</p>
+        <ul>
+          <li><a href="/child-benefit-tax-charge/stop-child-benefit">stop getting Child Benefit</a> - you must pay any tax you owe</li>
+          <li>carry on getting Child Benefit - for each tax year you get it you must fill in a tax return and pay any tax you owe</li>
+        </ul>
+
+        <% if @calculator.tax_year == 2012 %>
+          <p>Your result for the next tax year may be higher because the tax charge will apply to the whole tax year (and not just 7 January to 5 April 2013).</p>
+        <% end -%>
+
+        <p>Find out about <a href="/child-benefit-tax-charge">stopping or carrying on Child Benefit</a>.</p>
+      <% end -%>
+    </div>
+  <% else %>
+    <h3>Tax charge to pay</h3>
+    <p>To work out the tax charge, <a href="#adjusted_income">enter your income or your partner's</a> - whoever has the higher.</p>
+    <p>Find out more about the <a href="/child-benefit-tax-charge">tax charge</a>.</p>
+  <% end %>
 <% end %>
+
+<%= render 'govuk_component/govspeak', content: results_html %>
