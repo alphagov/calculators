@@ -47,16 +47,7 @@ $ PR=<number-of-pull-request> ./startup_heroku.sh
 
 This script will create and configure an app on Heroku, push the __current branch__ and open the child-benefit-tax-calculator Calculator in the browser.
 
-## Additional information
-
-### Dependencies
+## Dependencies
 
 - [publishing-api](https://github.com/alphagov/publishing-api): this app sends
   data to publishing-api to register URLs.
-- [rummager](https://github.com/alphagov/rummager): this app indexes its pages
-  for search via Rummager.
-
-### Search indexing
-
-- `bundle exec rake rummager:index` will send the data to Rummager for
-  indexing in search.
