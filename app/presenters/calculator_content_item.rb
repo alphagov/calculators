@@ -18,6 +18,10 @@ class CalculatorContentItem
     'minor'
   end
 
+  def route_type
+    'exact'
+  end
+
   def payload
     {
       title: calculator.title,
@@ -28,9 +32,8 @@ class CalculatorContentItem
       publishing_app: 'calculators',
       rendering_app: 'calculators',
       locale: 'en',
-      public_updated_at: Time.now.iso8601,
       routes: [
-        { type: 'prefix', path: base_path }
+        { type: route_type, path: base_path }
       ]
     }
   end
