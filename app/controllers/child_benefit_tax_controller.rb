@@ -29,7 +29,7 @@ class ChildBenefitTaxController < ApplicationController
 protected
 
   def fetch_content_item
-    @content_item = Services.content_store.content_item("/child-benefit-tax-calculator").to_hash
+    @content_item = Services.content_store.content_item("/child-benefit-tax-calculator/main").to_hash
     # Remove the organisations from the content item - this will prevent the
     # govuk:analytics:organisations meta tag from being generated until there is
     # a better way of doing this.

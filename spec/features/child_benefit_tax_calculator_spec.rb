@@ -3,7 +3,7 @@ require "spec_helper"
 
 feature "Child Benefit Tax Calculator", js: true do
   before do
-    stub_request(:get, Plek.new.find("content-store") + "/content/child-benefit-tax-calculator").to_return(body: {}.to_json)
+    stub_request(:get, Plek.new.find("content-store") + "/content/child-benefit-tax-calculator/main").to_return(body: {}.to_json)
   end
 
   it "should not show results until enough info is entered" do
