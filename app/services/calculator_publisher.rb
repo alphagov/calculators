@@ -11,6 +11,6 @@ class CalculatorPublisher
 private
 
   def rendered
-    @rendered ||= CalculatorFormContentItem.new(@calculator)
+    @rendered ||= CalculatorContentItem.new(@calculator)
   end
 end
