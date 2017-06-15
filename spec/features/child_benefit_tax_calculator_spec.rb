@@ -3,26 +3,7 @@ require "spec_helper"
 
 feature "Child Benefit Tax Calculator", js: true do
   before do
-    stub_request(:get, Plek.new.find("content-store") + "/content/child-benefit-tax-calculator").to_return(body: {}.to_json)
-  end
-
-  specify "inspecting the landing page" do
-    visit "/child-benefit-tax-calculator"
-
-    within "head", visible: :all do
-      expect(page).to have_selector("title", text: "Child Benefit tax calculator - GOV.UK", visible: :all)
-      expect(page).to have_selector(%{meta[name='description'][content="Work out the Child Benefit you've received and your High Income Child Benefit tax charge"]}, visible: false)
-    end
-
-    within "#content" do
-      expect(page).to have_content("Child Benefit tax calculator")
-      expect(page).to have_link("Start now", href: "/child-benefit-tax-calculator/main")
-    end
-
-    expect(page).to have_css(shared_component_selector('title'))
-    expect(page).to have_css(shared_component_selector('govspeak'))
-    expect(page).to have_css(shared_component_selector('breadcrumbs'))
-    expect(page).to have_css(shared_component_selector('related_items'))
+    stub_request(:get, Plek.new.find("content-store") + "/content/child-benefit-tax-calculator/main").to_return(body: {}.to_json)
   end
 
   it "should not show results until enough info is entered" do
@@ -158,8 +139,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
   it "should disallow dates with too many days for the selected month" do
     Timecop.travel "2014-09-01"
-    visit "/child-benefit-tax-calculator"
-    click_on "Start now"
+    visit "/child-benefit-tax-calculator/main"
     choose "Yes"
 
     select "2", from: "part_year_children_count"
@@ -188,8 +168,7 @@ feature "Child Benefit Tax Calculator", js: true do
   end
 
   it "should reload children with valid dates if one child has a date error" do
-    visit "/child-benefit-tax-calculator"
-    click_on "Start now"
+    visit "/child-benefit-tax-calculator/main"
     choose "year_2014"
     choose "Yes"
     select "2", from: "children_count"
@@ -234,8 +213,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
   it "should reload part year children with the correct dates" do
     Timecop.travel "2014-05-01"
-    visit "/child-benefit-tax-calculator"
-    click_on "Start now"
+    visit "/child-benefit-tax-calculator/main"
     choose "year_2014"
     choose "Yes"
     select "2", from: "children_count"
@@ -272,8 +250,7 @@ feature "Child Benefit Tax Calculator", js: true do
     allow(DateHelper).to receive(:years_ago).and_return(Date.parse("2010-01-01"))
     allow(DateHelper).to receive(:years_since).and_return(Date.parse("2012-01-01"))
 
-    visit "/child-benefit-tax-calculator"
-    click_on "Start now"
+    visit "/child-benefit-tax-calculator/main"
     choose "Yes"
 
     expected_year_list = ("2010".."2012").to_a.unshift("Year")
@@ -283,9 +260,7 @@ feature "Child Benefit Tax Calculator", js: true do
   it "should render stop date containing the specified date range" do
     allow(DateHelper).to receive(:years_ago).and_return(Date.parse("2012-01-01"))
     allow(DateHelper).to receive(:years_since).and_return(Date.parse("2014-01-01"))
-
-    visit "/child-benefit-tax-calculator"
-    click_on "Start now"
+    visit "/child-benefit-tax-calculator/main"
 
     choose "Yes"
     expected_year_list = ("2012".."2014").to_a.unshift("Year")
@@ -294,8 +269,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
   it "should show error if no children are present in the selected tax year" do
     Timecop.travel "2014-09-01"
-    visit "/child-benefit-tax-calculator"
-    click_on "Start now"
+    visit "/child-benefit-tax-calculator/main"
     choose "Yes"
 
     select "1", from: "part_year_children_count"
@@ -328,8 +302,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
   describe "For more than one child" do
     before(:each) do
-      visit "/child-benefit-tax-calculator"
-      click_on "Start now"
+      visit "/child-benefit-tax-calculator/main"
       choose "Yes"
       select "2", from: "part_year_children_count"
       click_button "Update Children"
@@ -450,8 +423,7 @@ feature "Child Benefit Tax Calculator", js: true do
   describe "Estimating the tax due" do
     before(:each) do
       allow_any_instance_of(ChildBenefitTaxCalculator).to receive(:benefits_claimed_amount).and_return(500000)
-      visit "/child-benefit-tax-calculator"
-      click_on "Start now"
+      visit "/child-benefit-tax-calculator/main"
       choose "Yes"
     end
 
@@ -494,8 +466,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
   describe "calculating adjusted net income" do
     before(:each) do
-      visit "/child-benefit-tax-calculator"
-      click_on "Start now"
+      visit "/child-benefit-tax-calculator/main"
       choose "Yes"
     end
     it "should use the adjusted net income calculator inputs" do
@@ -570,8 +541,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
   describe "displaying the results" do
     before(:each) do
-      visit "/child-benefit-tax-calculator"
-      click_on "Start now"
+      visit "/child-benefit-tax-calculator/main"
       choose "Yes"
     end
 
@@ -709,8 +679,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
   describe "displaying results for full year children only" do
     before(:each) do
-      visit "/child-benefit-tax-calculator"
-      click_on "Start now"
+      visit "/child-benefit-tax-calculator/main"
     end
 
     context "one child" do
@@ -743,8 +712,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
   describe "child benefit week runs Monday to Sunday" do
     before(:each) do
-      visit "/child-benefit-tax-calculator"
-      click_on "Start now"
+      visit "/child-benefit-tax-calculator/main"
       choose "Yes"
     end
 
@@ -818,16 +786,5 @@ feature "Child Benefit Tax Calculator", js: true do
         expect(page).to contain_child_benefit_value("£0.00")
       end
     end
-  end
-
-  it "should redirect requests for the old smart-answer" do
-    visit "/child-benefit-tax-calculator/y"
-    i_should_be_on "/child-benefit-tax-calculator"
-
-    visit "/child-benefit-tax-calculator/y/income_work_out/2012-13"
-    i_should_be_on "/child-benefit-tax-calculator"
-
-    visit "/child-benefit-tax-calculator/y/income_work_out/2012-13.json"
-    i_should_be_on "/child-benefit-tax-calculator"
   end
 end

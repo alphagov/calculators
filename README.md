@@ -1,11 +1,5 @@
-Calculators
+Child Benefit tax calculator
 ===========
-
-This is an application to contain custom-built calculators.  These will initially replace some smart-answers that have
-outgrown the framework.
-
-## Child benefit tax calculator
-Currently the only calculator in this application is the Child benefit tax calculator.
 
 This calculator reports how much child benefit tax you are entitled during a tax year.
 
@@ -25,7 +19,7 @@ To run the app with the live content store and static
 ./startup.sh --live
 ```
 
-The only content in this app is [child-benefit-tax-calculator](http://calculators.dev.gov.uk/child-benefit-tax-calculator)
+The only content in this app is [child-benefit-tax-calculator/main](http://calculators.dev.gov.uk/child-benefit-tax-calculator/main)
 
 ## Running tests
 
@@ -45,18 +39,9 @@ Make a note of the pull request number and use the `startup_heroku.sh` script to
 $ PR=<number-of-pull-request> ./startup_heroku.sh
 ```
 
-This script will create and configure an app on Heroku, push the __current branch__ and open the child-benefit-tax-calculator Calculator in the browser.
+This script will create and configure an app on Heroku, push the __current branch__ and open the child-benefit-tax-calculator/main Calculator in the browser.
 
-## Additional information
-
-### Dependencies
+## Dependencies
 
 - [publishing-api](https://github.com/alphagov/publishing-api): this app sends
   data to publishing-api to register URLs.
-- [rummager](https://github.com/alphagov/rummager): this app indexes its pages
-  for search via Rummager.
-
-### Search indexing
-
-- `bundle exec rake rummager:index` will send the data to Rummager for
-  indexing in search.

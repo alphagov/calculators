@@ -19,7 +19,7 @@ class CalculatorContentItem
   end
 
   def route_type
-    'exact'
+    'prefix'
   end
 
   def payload

@@ -18,12 +18,22 @@ describe CalculatorContentItem do
       expect(payload[:title]).to eql('Child Benefit tax calculator')
     end
 
-    it 'uses an exact route' do
+    it 'uses a prefix route' do
       calculator = Calculator.all.first
 
       payload = CalculatorContentItem.new(calculator).payload
 
-      expect(payload[:routes].first[:type]).to eql('exact')
+      expect(payload[:routes].first[:type]).to eql('prefix')
+    end
+  end
+
+  describe '#content_id' do
+    it 'has the correct content_id' do
+      calculator = Calculator.all.first
+
+      content_id = CalculatorContentItem.new(calculator).content_id
+
+      expect(content_id).to eql("882aecb2-90c9-49b1-908d-c800bf22da5a")
     end
   end
 
@@ -33,7 +43,7 @@ describe CalculatorContentItem do
 
       base_path = CalculatorContentItem.new(calculator).base_path
 
-      expect(base_path).to eql("/child-benefit-tax-calculator")
+      expect(base_path).to eql("/child-benefit-tax-calculator/main")
     end
   end
 end
