@@ -68,5 +68,7 @@ module Calculators
     config.action_dispatch.default_headers = {
       'X-Frame-Options' => 'ALLOWALL'
     }
+    
+    config.eager_load_paths << Rails.root.join('lib')
   end
 end
