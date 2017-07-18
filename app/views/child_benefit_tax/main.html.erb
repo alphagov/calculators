@@ -77,27 +77,15 @@
           <li>you can get some of this information from your P60, P11D, employer or tax adviser</li>
         </ul>
         <div class="form-group">
-          <%= label_tag "gross_income", "Salary before tax", class: "form-label" %>
+          <%= label_tag "gross_income", "Salary before tax (with pension contributions deducted)", class: "form-label" %>
           <%= money_input "gross_income", @adjusted_net_income_calculator.gross_income, 'aria-describedby' => 'step-4-description', class: "form-control" %>
         </div>
         <div class="form-group">
-          <%= label_tag "other_income", "Other employment income - for example taxable benefits (like a company car or medical insurance) or bonuses", class: "form-label" %>
+          <%= label_tag "other_income", "Other employment income - for example bonuses", class: "form-label" %>
           <%= money_input "other_income", @adjusted_net_income_calculator.other_income, 'aria-describedby' => 'step-4-description', class: "form-control" %>
         </div>
         <div class="form-group">
-          <%= label_tag "pension_contributions_from_pay", "Pension contributions deducted from your pay (don't include contributions deducted before tax)", class: "form-label" %>
-          <%= money_input "pension_contributions_from_pay", @adjusted_net_income_calculator.pension_contributions_from_pay, 'aria-describedby' => 'step-4-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "retirement_annuities", "Retirement annuity contracts", class: "form-label" %>
-          <%= money_input "retirement_annuities", @adjusted_net_income_calculator.retirement_annuities, 'aria-describedby' => 'step-4-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "cycle_scheme", "Cycle scheme", class: "form-label" %>
-          <%= money_input "cycle_scheme", @adjusted_net_income_calculator.cycle_scheme, 'aria-describedby' => 'step-4-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "childcare", "Childcare paid directly by your employer - for example childcare vouchers (for the whole year but no more than £55 a week) or the value of any workplace nursery places", class: "form-label" %>
+          <%= label_tag "childcare", "Taxable benefits provided by your employer - for example the value of any medical insurance, childcare vouchers (for the whole year but no more than £55 a week) or workplace nursery places", class: "form-label" %>
           <%= money_input "childcare", @adjusted_net_income_calculator.childcare, 'aria-describedby' => 'step-4-description', class: "form-control" %>
         </div>
         <div class="form-group">
@@ -105,21 +93,38 @@
           <%= money_input "pensions", @adjusted_net_income_calculator.pensions, 'aria-describedby' => 'step-4-description', class: "form-control" %>
         </div>
         <div class="form-group">
-          <%= label_tag "property", "Income from property - for example rental income", class: "form-label" %>
-          <%= money_input "property", @adjusted_net_income_calculator.property, 'aria-describedby' => 'step-4-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
           <%= label_tag "non_employment_income", "Other income before tax - for example profits from self-employment, taxable savings, dividends", class: "form-label" %>
           <%= money_input "non_employment_income", @adjusted_net_income_calculator.non_employment_income, 'aria-describedby' => 'step-4-description', class: "form-control" %>
         </div>
         <div class="form-group">
-          <%= label_tag "gift_aid_donations", "Gift Aid donations", class: "form-label" %>
-          <%= money_input "gift_aid_donations", @adjusted_net_income_calculator.gift_aid_donations, 'aria-describedby' => 'step-4-description', class: "form-control" %>
+          <%= label_tag "property", "Income from property - for example rental income", class: "form-label" %>
+          <%= money_input "property", @adjusted_net_income_calculator.property, 'aria-describedby' => 'step-4-description', class: "form-control" %>
+        </div>
+      </fieldset>
+
+        <fieldset class="adjusted-income">
+        <%= step(5, "Enter details of any allowable deductions (optional):") %>
+        <div class="form-group">
+          <%= label_tag "pension_contributions_from_pay", "Pension contributions deducted from your pay (don't include contributions deducted before tax)", class: "form-label" %>
+          <%= money_input "pension_contributions_from_pay", @adjusted_net_income_calculator.pension_contributions_from_pay, 'aria-describedby' => 'step-5-description', class: "form-control" %>
+        </div>
+         <div class="form-group">
+          <%= label_tag "outgoing_pension_contributions", "Pension contributions not paid from your salary (the amount you actually paid, not the grossed-up amount)", class: "form-label" %>
+          <%= money_input "outgoing_pension_contributions", @adjusted_net_income_calculator.outgoing_pension_contributions, 'aria-describedby' => 'step-5-description', class: "form-control" %>
         </div>
         <div class="form-group">
-          <%= label_tag "outgoing_pension_contributions", "Pension contributions not paid from your salary (the amount you actually paid, not the grossed-up amount)", class: "form-label" %>
-          <%= money_input "outgoing_pension_contributions", @adjusted_net_income_calculator.outgoing_pension_contributions, 'aria-describedby' => 'step-4-description', class: "form-control" %>
+          <%= label_tag "retirement_annuities", "Retirement annuity contracts", class: "form-label" %>
+          <%= money_input "retirement_annuities", @adjusted_net_income_calculator.retirement_annuities, 'aria-describedby' => 'step-5-description', class: "form-control" %>
         </div>
+        <div class="form-group">
+          <%= label_tag "cycle_scheme", "Cycle scheme", class: "form-label" %>
+          <%= money_input "cycle_scheme", @adjusted_net_income_calculator.cycle_scheme, 'aria-describedby' => 'step-5-description', class: "form-control" %>
+        </div>
+         <div class="form-group">
+          <%= label_tag "gift_aid_donations", "Gift Aid donations", class: "form-label" %>
+          <%= money_input "gift_aid_donations", @adjusted_net_income_calculator.gift_aid_donations, 'aria-describedby' => 'step-5-description', class: "form-control" %>
+        </div>
+        </fieldset>
 
         <%= submit_tag "Calculate", name: "results", class: "button" %>
       </fieldset>
