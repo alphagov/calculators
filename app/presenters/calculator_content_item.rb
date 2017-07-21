@@ -34,7 +34,8 @@ class CalculatorContentItem
       locale: 'en',
       routes: [
         { type: route_type, path: base_path }
-      ]
+      ],
+      update_type: update_type,
     }
   end
 end
