@@ -12,11 +12,11 @@ gem 'unicorn', '~> 5.0.0'
 if ENV['SLIMMER_DEV']
   gem 'slimmer', path: '../slimmer'
 else
-  gem 'slimmer'
+  gem 'slimmer', '~> 11.0.2'
 end
 gem 'plek', '~> 1.12.0'
 
-gem 'gds-api-adapters', '~> 47.2'
+gem 'gds-api-adapters', '~> 47.9.1'
 gem 'govuk_frontend_toolkit', '~> 6.0.3'
 gem 'govuk-content-schema-test-helpers', '~> 1.4.0'
 gem 'govuk_navigation_helpers', '~> 6.2'
@@ -25,7 +25,6 @@ gem 'sass-rails', '5.0.6'
 gem 'govuk_elements_rails', '~> 3.0.0'
 
 gem 'logstasher', '0.6.5'
-gem "airbrake", github: 'alphagov/airbrake', branch: 'silence-dep-warnings-for-rails-5'
 gem 'rack_strip_client_ip', '0.0.2'
 gem 'nokogiri'
 
@@ -55,3 +54,6 @@ group :test do
   gem 'ci_reporter_rspec', '~> 1.0.0'
   gem 'webmock', '~> 1.24.2', require: false
 end
+
+# Upgrade to Sentry
+gem "govuk_app_config", "~> 0.2.0"
