@@ -70,7 +70,7 @@
       </fieldset>
 
       <fieldset class="adjusted-income">
-        <%= step(4, "Enter your income details for the tax year (optional):") %>
+        <%= step(4, "Enter your income details for the tax year:") %>
         <ul id="step-4-description">
           <li>don’t combine your household income</li>
           <li>use your partner’s income if it’s higher than yours</li>
@@ -89,7 +89,7 @@
           <%= money_input "childcare", @adjusted_net_income_calculator.childcare, 'aria-describedby' => 'step-4-description', class: "form-control" %>
         </div>
         <div class="form-group">
-          <%= label_tag "pensions", "Income from pension(s) - for example from a state pension", class: "form-label" %>
+          <%= label_tag "pensions", "Income from pension(s) before tax - for example from a state pension", class: "form-label" %>
           <%= money_input "pensions", @adjusted_net_income_calculator.pensions, 'aria-describedby' => 'step-4-description', class: "form-control" %>
         </div>
         <div class="form-group">
@@ -97,7 +97,7 @@
           <%= money_input "non_employment_income", @adjusted_net_income_calculator.non_employment_income, 'aria-describedby' => 'step-4-description', class: "form-control" %>
         </div>
         <div class="form-group">
-          <%= label_tag "property", "Income from property - for example rental income", class: "form-label" %>
+          <%= label_tag "property", "Income from property before tax - for example rental income", class: "form-label" %>
           <%= money_input "property", @adjusted_net_income_calculator.property, 'aria-describedby' => 'step-4-description', class: "form-control" %>
         </div>
       </fieldset>
