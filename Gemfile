@@ -43,13 +43,13 @@ group :development, :test do
   gem 'govuk-lint', '0.8.1'
   gem 'pry-byebug'
   gem 'listen', '~> 3.0.5'
+  gem 'rspec-rails', '~> 3.6.0'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
 group :test do
   gem 'poltergeist'
-  gem 'rspec-rails', '~> 3.6.0'
   gem 'capybara', '~> 2.14.3'
   gem 'rails-controller-testing', '~> 1.0.2'
   gem 'simplecov-rcov', '0.2.3', require: false
