@@ -2,7 +2,6 @@ require "spec_helper"
 require 'gds_api/content_store'
 
 describe ChildBenefitTaxController, type: :controller do
-  include EducationNavigationAbTestHelper
 
   # Force the tests to render the views
   # Works around https://github.com/alphagov/slimmer/issues/170
@@ -42,61 +41,6 @@ describe ChildBenefitTaxController, type: :controller do
         route_params = { results: "Get your estimate" }
         get :process_form, params: route_params
         expect(response).to redirect_to(action: :main, params: route_params, anchor: "results")
-      end
-    end
-  end
-
-  describe "A/B testing" do
-    describe "content not tagged to a taxon" do
-      before(:each) do
-        expect_any_instance_of(GdsApi::ContentStore).to receive(:content_item).and_return(
-          'links' => {
-            'taxons' => [],
-          },
-        )
-      end
-
-      %w[A B].each do |variant|
-        it "should not affect the main page with the #{variant} variant" do
-          setup_ab_variant('EducationNavigation', variant)
-          expect_normal_navigation_with_no_related_items
-          get :main
-          assert_response_not_modified_for_ab_test('EducationNavigation')
-        end
-      end
-    end
-
-    describe "content tagged to a taxon" do
-      before(:each) do
-        expect_any_instance_of(GdsApi::ContentStore).to receive(:content_item).and_return(
-          'links' => {
-            'taxons' => [
-              {
-                'base_path' => '/taxon',
-                'title' => 'Taxon',
-              },
-            ],
-          },
-        )
-      end
-
-      it "should show normal navigation on the main page by default" do
-        expect_normal_navigation_with_no_related_items
-        get :main
-      end
-
-      it "should show normal navigation on the main page for the 'A' version" do
-        expect_normal_navigation_with_no_related_items
-        with_variant EducationNavigation: "A" do
-          get :main
-        end
-      end
-
-      it "should show new navigation on the main page for the 'B' version" do
-        expect_new_navigation
-        with_variant EducationNavigation: "B" do
-          get :main
-        end
       end
     end
   end
