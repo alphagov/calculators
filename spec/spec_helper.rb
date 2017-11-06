@@ -4,7 +4,7 @@ SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
 SimpleCov.start 'rails'
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["RAILS_ENV"] ||= 'test'
+ENV["RACK_ENV"] = ENV["RAILS_ENV"] ||= 'test'
 ENV["GOVUK_APP_DOMAIN"] ||= "dev.gov.uk"
 
 require File.expand_path("../../config/environment", __FILE__)
