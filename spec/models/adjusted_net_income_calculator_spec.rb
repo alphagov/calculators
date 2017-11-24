@@ -29,7 +29,7 @@ describe AdjustedNetIncomeCalculator, type: :model do
       expect(calc.childcare).to eq(2000)
       expect(calc.outgoing_pension_contributions).to eq(2000)
 
-      expect(calc.calculate_adjusted_net_income).to eq(61625)
+      expect(calc.calculate_adjusted_net_income).to eq(65625)
     end
   end
 end

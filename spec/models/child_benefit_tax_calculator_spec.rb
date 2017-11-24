@@ -323,7 +323,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         year: "2012",
         children_count: 2,
         is_part_year_claim: "no",
-      ).adjusted_net_income).to eq(66950)
+      ).adjusted_net_income).to eq(69950)
     end
 
     it "should ignore the adjusted_net_income parameter when using the calculation form params" do
@@ -342,7 +342,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         year: "2012",
         children_count: 2,
         is_part_year_claim: "no",
-      ).adjusted_net_income).to eq(66950)
+      ).adjusted_net_income).to eq(69950)
     end
   end
 

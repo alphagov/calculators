@@ -85,7 +85,7 @@
           <%= money_input "other_income", @adjusted_net_income_calculator.other_income, 'aria-describedby' => 'step-4-description', class: "form-control" %>
         </div>
         <div class="form-group">
-          <%= label_tag "childcare", "Taxable benefits provided by your employer - for example the value of any medical insurance, childcare vouchers (for the whole year but no more than £55 a week) or workplace nursery places", class: "form-label" %>
+          <%= label_tag "childcare", "Taxable benefits provided by your employer - for example the value of any medical insurance, company car, or anything else included on your P11D", class: "form-label" %>
           <%= money_input "childcare", @adjusted_net_income_calculator.childcare, 'aria-describedby' => 'step-4-description', class: "form-control" %>
         </div>
         <div class="form-group">
