@@ -23,7 +23,7 @@ gem 'govuk_frontend_toolkit', '~> 7.2.0'
 gem 'govuk-content-schema-test-helpers', '~> 1.4.0'
 gem 'govuk_navigation_helpers', '~> 6.2'
 gem 'sass-rails', '5.0.7'
-gem 'govuk_elements_rails', '~> 3.0.0'
+gem 'govuk_elements_rails', '~> 3.1.2'
 
 gem 'logstasher', '1.2.2'
 gem 'rack_strip_client_ip', '0.0.2'
