@@ -25,7 +25,7 @@ gem 'govuk_navigation_helpers', '~> 6.2'
 gem 'sass-rails', '5.0.6'
 gem 'govuk_elements_rails', '~> 3.0.0'
 
-gem 'logstasher', '0.6.5'
+gem 'logstasher', '1.2.2'
 gem 'rack_strip_client_ip', '0.0.2'
 gem 'nokogiri'
 
