@@ -38,7 +38,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'timecop', '~> 0.8.0'
+  gem 'timecop', '~> 0.9.1'
   gem 'govuk-lint', '3.4.0'
   gem 'pry-byebug'
   gem 'listen', '~> 3.0.5'
