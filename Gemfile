@@ -53,7 +53,7 @@ group :test do
   gem 'rails-controller-testing', '~> 1.0.2'
   gem 'simplecov-rcov', '0.2.3', require: false
   gem 'ci_reporter_rspec', '~> 1.0.0'
-  gem 'webmock', '~> 2.3.1', require: false
+  gem 'webmock', '~> 3.1.1', require: false
 end
 
 # Upgrade to Sentry
