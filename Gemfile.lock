@@ -259,7 +259,7 @@ GEM
     simplecov-html (0.10.2)
     simplecov-rcov (0.2.3)
       simplecov (>= 0.4.1)
-    slimmer (11.0.2)
+    slimmer (11.1.1)
       activesupport
       json
       nokogiri (~> 1.7)
@@ -338,7 +338,7 @@ DEPENDENCIES
   rspec-rails (~> 3.6.0)
   sass-rails (= 5.0.6)
   simplecov-rcov (= 0.2.3)
-  slimmer (~> 11.0.2)
+  slimmer (~> 11.1.1)
   spring
   spring-watcher-listen (~> 2.0.0)
   timecop (~> 0.8.0)
