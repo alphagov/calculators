@@ -18,7 +18,7 @@ else
 end
 gem 'plek', '~> 2.0.0'
 
-gem 'gds-api-adapters', '~> 50.7.0'
+gem 'gds-api-adapters', '~> 50.8.0'
 gem 'govuk_frontend_toolkit', '~> 7.2.0'
 gem 'govuk-content-schema-test-helpers', '~> 1.6.0'
 gem 'govuk_navigation_helpers', '~> 7.3'
