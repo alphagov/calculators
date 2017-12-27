@@ -9,8 +9,6 @@ end
 
 gem 'rails', '~> 5.0.2'
 
-gem 'unicorn', '~> 5.3.1'
-
 if ENV['SLIMMER_DEV']
   gem 'slimmer', path: '../slimmer'
 else
@@ -25,7 +23,6 @@ gem 'govuk_navigation_helpers', '~> 7.3'
 gem 'sass-rails', '5.0.7'
 gem 'govuk_elements_rails', '~> 3.1.2'
 
-gem 'logstasher', '1.2.2'
 gem 'rack_strip_client_ip', '0.0.2'
 gem 'nokogiri'
 

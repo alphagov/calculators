@@ -73,12 +73,7 @@ Calculators::Application.configure do
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
-  if ENV['RUNNING_ON_HEROKU'].blank?
-    # Enable JSON-style logging
-    config.logstasher.enabled = true
-    config.logstasher.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.json.log")
-    config.logstasher.suppress_app_logs = true
-  else
+  if ENV['RUNNING_ON_HEROKU'].present?
     # flush output to the underlying OS without buffering
     STDOUT.sync = true
 
@@ -92,8 +87,4 @@ Calculators::Application.configure do
   # config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.delivery_method = :ses
-
-  config.logstasher.enabled = true
-  config.logstasher.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.json.log")
-  config.logstasher.supress_app_log = true
 end
