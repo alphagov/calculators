@@ -9,7 +9,7 @@ end
 
 gem 'rails', '~> 5.0.2'
 
-gem 'unicorn', '~> 5.3.1'
+gem 'unicorn', '~> 5.4.0'
 
 if ENV['SLIMMER_DEV']
   gem 'slimmer', path: '../slimmer'
