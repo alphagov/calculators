@@ -26,7 +26,7 @@ gem 'govuk_elements_rails', '~> 3.1.2'
 gem 'rack_strip_client_ip', '0.0.2'
 gem 'nokogiri'
 
-gem 'uglifier', '~> 2.7', '>= 2.7.2'
+gem 'uglifier', '~> 4.1'
 
 group :development do
   gem 'better_errors', '~>2.1'
