@@ -30,7 +30,7 @@ gem 'uglifier', '~> 2.7', '>= 2.7.2'
 
 group :development do
   gem 'better_errors', '~>2.1'
-  gem 'binding_of_caller', '~>0.7'
+  gem 'binding_of_caller', '~>0.8'
   gem 'web-console', '>= 3.3.0'
 end
 
