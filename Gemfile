@@ -17,7 +17,7 @@ end
 gem 'plek', '~> 2.1.1'
 
 gem 'gds-api-adapters', '~> 51.3.0'
-gem 'govuk_frontend_toolkit', '~> 7.4.1'
+gem 'govuk_frontend_toolkit', '~> 7.4.2'
 gem 'govuk-content-schema-test-helpers', '~> 1.6.0'
 gem 'govuk_navigation_helpers', '~> 7.3'
 gem 'sass-rails', '5.0.7'
