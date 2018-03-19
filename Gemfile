@@ -18,7 +18,7 @@ gem 'plek', '~> 2.1.1'
 
 gem 'gds-api-adapters', '~> 52.1.0'
 gem 'govuk_frontend_toolkit', '~> 7.4.2'
-gem 'govuk-content-schema-test-helpers', '~> 1.6.0'
+gem 'govuk-content-schema-test-helpers', '~> 1.6.1'
 gem 'govuk_navigation_helpers', '~> 7.3'
 gem 'sass-rails', '5.0.7'
 gem 'govuk_elements_rails', '~> 3.1.2'
