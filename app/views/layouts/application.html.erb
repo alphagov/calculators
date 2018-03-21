@@ -18,7 +18,6 @@
 
   <body>
     <div id="wrapper">
-      <%= render partial: 'govuk_component/breadcrumbs', locals: @navigation_helpers.breadcrumbs %>
       <main role="main" id="content" class="calculator" lang="<%= I18n.locale %>">
         <%= yield %>
       </main>

@@ -121,8 +121,6 @@ GEM
     govuk_frontend_toolkit (7.4.2)
       railties (>= 3.1.0)
       sass (>= 3.2.0)
-    govuk_navigation_helpers (7.3.0)
-      gds-api-adapters (>= 43.0)
     govuk_publishing_components (5.5.6)
       govspeak (>= 5.0.3)
       govuk_frontend_toolkit
@@ -361,7 +359,6 @@ DEPENDENCIES
   govuk_app_config (~> 1.4.0)
   govuk_elements_rails (~> 3.1.2)
   govuk_frontend_toolkit (~> 7.4.2)
-  govuk_navigation_helpers (~> 7.3)
   govuk_publishing_components (~> 5.5.6)
   listen (~> 3.1.5)
   nokogiri
