@@ -32,7 +32,6 @@ protected
   end
 
   def setup_navigation_helpers
-    @navigation_helpers = GovukNavigationHelpers::NavigationHelper.new(@content_item)
     section_name = @content_item.dig("links", "parent", 0, "links", "parent", 0, "title")
     if section_name
       @meta_section = section_name.downcase
