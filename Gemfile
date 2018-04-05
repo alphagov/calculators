@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.0.2'
+gem 'rails', '~> 5.1.6'
 
 if ENV['SLIMMER_DEV']
   gem 'slimmer', path: '../slimmer'

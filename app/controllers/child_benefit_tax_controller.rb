@@ -12,9 +12,7 @@ class ChildBenefitTaxController < ApplicationController
       redirect_hash.merge!(anchor: anchor.to_s) if params[anchor]
     end
 
-    CALC_PARAM_KEYS.each do |name|
-      redirect_hash[name] = params[name]
-    end
+    redirect_hash.merge!(params.to_unsafe_h.slice(*CALC_PARAM_KEYS))
 
     redirect_to(redirect_hash)
   end
