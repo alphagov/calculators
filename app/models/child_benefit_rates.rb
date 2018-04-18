@@ -8,6 +8,7 @@ class ChildBenefitRates
     2014 => [20.5, 13.55],
     2015 => [20.7, 13.7],
     2016 => [20.7, 13.7],
+    2017 => [20.7, 13.7],
   }
 
   def initialize(year)
