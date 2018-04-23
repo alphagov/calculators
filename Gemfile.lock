@@ -341,7 +341,7 @@ GEM
     unicorn (5.4.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    web-console (3.6.0)
+    web-console (3.6.1)
       actionview (>= 5.0)
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
