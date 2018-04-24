@@ -1,31 +1,20 @@
 source 'https://rubygems.org'
 
-ruby File.read(".ruby-version").chomp
-
-git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
-  "https://github.com/#{repo_name}.git"
-end
+ruby File.read('.ruby-version').chomp
 
 gem 'rails', '~> 5.2.0'
 
-if ENV['SLIMMER_DEV']
-  gem 'slimmer', path: '../slimmer'
-else
-  gem 'slimmer', '~> 12.1.0'
-end
-gem 'plek', '~> 2.1.1'
-
 gem 'gds-api-adapters', '~> 52.5.1'
-gem 'govuk_frontend_toolkit', '~> 7.4.2'
-gem 'govuk-content-schema-test-helpers', '~> 1.6.1'
-gem 'sass-rails', '5.0.7'
+gem 'govuk_app_config', '~> 1.4.2'
 gem 'govuk_elements_rails', '~> 3.1.2'
+gem 'govuk_frontend_toolkit', '~> 7.4.2'
 gem 'govuk_publishing_components', '~> 6.7.0'
-
-gem 'rack_strip_client_ip', '0.0.2'
+gem 'govuk-content-schema-test-helpers', '~> 1.6.1'
 gem 'nokogiri'
-
+gem 'plek', '~> 2.1.1'
+gem 'rack_strip_client_ip', '0.0.2'
+gem 'sass-rails', '5.0.7'
+gem 'slimmer', '~> 12.1.0'
 gem 'uglifier', '~> 4.1'
 
 group :development do
@@ -52,6 +41,3 @@ group :test do
   gem 'ci_reporter_rspec', '~> 1.0.0'
   gem 'webmock', '~> 3.3.0', require: false
 end
-
-# Upgrade to Sentry
-gem "govuk_app_config", "~> 1.4.2"

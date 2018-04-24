@@ -55,6 +55,7 @@ module Calculators
       application-ie6.css
       application-ie7.css
       application-ie8.css
+      print.css
     )
 
     # Version of your assets, change this if you want to expire all your assets
@@ -68,7 +69,7 @@ module Calculators
     config.action_dispatch.default_headers = {
       'X-Frame-Options' => 'ALLOWALL'
     }
-    
+
     config.eager_load_paths << Rails.root.join('lib')
   end
 end
