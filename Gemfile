@@ -21,7 +21,7 @@ gem 'govuk_frontend_toolkit', '~> 7.4.2'
 gem 'govuk-content-schema-test-helpers', '~> 1.6.1'
 gem 'sass-rails', '5.0.7'
 gem 'govuk_elements_rails', '~> 3.1.2'
-gem 'govuk_publishing_components', '~> 6.6.0'
+gem 'govuk_publishing_components', '~> 6.7.0'
 
 gem 'rack_strip_client_ip', '0.0.2'
 gem 'nokogiri'
