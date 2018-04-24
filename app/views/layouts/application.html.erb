@@ -11,7 +11,7 @@
     <%= stylesheet_link_tag "print.css", media: "print" %>
     <meta name="description" content="Work out the Child Benefit you've received and your High Income Child Benefit tax charge">
     <%= yield :head %>
-    <%= render partial: 'govuk_component/analytics_meta_tags', locals: { content_item: @content_item } %>
+    <%= render 'govuk_publishing_components/components/meta_tags', content_item: @content_item %>
     <% if @meta_section %>
       <meta name="govuk:section" content="<%= @meta_section %>">
     <% end %>
