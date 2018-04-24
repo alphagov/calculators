@@ -25,6 +25,7 @@ class CalculatorContentItem
   def payload
     {
       title: calculator.title,
+      description: calculator.description,
       base_path: base_path,
       schema_name: 'generic',
       document_type: 'calculator',
