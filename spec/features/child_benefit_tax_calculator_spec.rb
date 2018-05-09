@@ -492,8 +492,8 @@ feature "Child Benefit Tax Calculator", js: true do
         component_args = JSON.parse(page.text)
         content = component_args.fetch("content")
 
-        expect(content).to have_content "Child Benefit received £263.90"
-        expect(content).to have_content "Tax charge to pay £263.00"
+        expect(content).to have_content "Child Benefit received\n \n £263.90"
+        expect(content).to have_content "Tax charge to pay\n £263.00"
         expect(content).to have_content("based on your estimated adjusted net income of £123,325.00")
       end
     end
@@ -532,8 +532,8 @@ feature "Child Benefit Tax Calculator", js: true do
         component_args = JSON.parse(page.text)
         content = component_args.fetch("content")
 
-        expect(content).to have_content "Child Benefit received £263.90"
-        expect(content).to have_content "Tax charge to pay £87.00"
+        expect(content).to have_content "Child Benefit received\n \n £263.90"
+        expect(content).to have_content "Tax charge to pay\n £87.00"
         expect(content).to have_content("based on your estimated adjusted net income of £53,325.00")
       end
     end
@@ -608,7 +608,7 @@ feature "Child Benefit Tax Calculator", js: true do
           expect(content).not_to have_content("To work out the tax charge, enter your income")
 
           expect(content).to have_content("£131.00")
-          expect(content).to have_content("The tax charge only applies to the Child Benefit received between 7 January and 5 April 2013 and is based on your estimated adjusted net income of £55,000.00.")
+          expect(content).to have_content("The tax charge only applies to the Child Benefit received between 7 January and 5 April 2013\n and is based on your estimated adjusted net income of £55,000.00.")
           expect(content).to have_content("Your result for the next tax year may be higher because the tax charge will apply to the whole tax year (and not just 7 January to 5 April 2013).")
           expect(content).to have_content("To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:")
           expect(content).to have_content("you should do this by 5 October 2013")
@@ -645,7 +645,7 @@ feature "Child Benefit Tax Calculator", js: true do
           component_args = JSON.parse(page.text)
           content = component_args.fetch("content")
 
-          expect(content).to have_content("This is an estimate based on your adjusted net income of £55,000.00 - your circumstances may change before the end of the tax year.")
+          expect(content).to have_content("This is an estimate based on your adjusted net income of £55,000.00\n - your circumstances may change before the end of the tax year.")
         end
       end
     end # with the tax estimate
