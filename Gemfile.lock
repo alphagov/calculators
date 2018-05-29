@@ -78,7 +78,7 @@ GEM
     crass (1.0.4)
     debug_inspector (0.0.3)
     diff-lcs (1.3)
-    docile (1.1.5)
+    docile (1.3.1)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     erubi (1.7.1)
@@ -298,8 +298,8 @@ GEM
       sass (~> 3.5.5)
     sentry-raven (2.7.3)
       faraday (>= 0.7.6, < 1.0)
-    simplecov (0.15.1)
-      docile (~> 1.1.0)
+    simplecov (0.16.1)
+      docile (~> 1.1)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
@@ -391,7 +391,7 @@ DEPENDENCIES
   webmock (~> 3.4.1)
 
 RUBY VERSION
-   ruby 2.4.4p296
+   ruby 2.5.1p57
 
 BUNDLED WITH
    1.16.1
