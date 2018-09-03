@@ -15,13 +15,13 @@ describe ChildBenefitTaxController, type: :controller do
     describe "GET main" do
       it "should create a calculator using params" do
         get :main, params: { year: '2013' }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(assigns(:calculator).tax_year).to eq(2013)
         expect(assigns(:adjusted_net_income_calculator).calculate_adjusted_net_income).to eq(0)
       end
       it "should run calculator validations" do
         get :main, params: { results: "Get your estimate" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(assigns(:calculator).errors.has_key?(:tax_year)).to eq(true)
       end
     end
