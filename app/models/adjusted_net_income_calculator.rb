@@ -1,8 +1,9 @@
 # encoding: UTF-8
+
 class AdjustedNetIncomeCalculator
-  PARAM_KEYS = [:gross_income, :other_income, :pension_contributions_from_pay,
-                :retirement_annuities, :cycle_scheme, :childcare, :pensions, :property,
-                :non_employment_income, :gift_aid_donations, :outgoing_pension_contributions, :is_part_year_claim]
+  PARAM_KEYS = %i[gross_income other_income pension_contributions_from_pay
+                  retirement_annuities cycle_scheme childcare pensions property
+                  non_employment_income gift_aid_donations outgoing_pension_contributions is_part_year_claim].freeze
 
   def initialize(params)
     PARAM_KEYS.each do |key|

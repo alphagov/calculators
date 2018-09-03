@@ -48,7 +48,8 @@ private
   def buildable_date?(date_attr, date_params)
     date_values_present?(date_params) &&
       valid_day_for_month_in_year?(
-        date_attr, date_params)
+        date_attr, date_params
+      )
   end
 
   def date_values_present?(date_params)
@@ -59,12 +60,14 @@ private
 
   def valid_day_for_month_in_year?(date_attr, date_params)
     month_in_year = Date.new(
-      date_params[:year].to_i, date_params[:month].to_i, 1)
+      date_params[:year].to_i, date_params[:month].to_i, 1
+    )
     day = date_params[:day].to_i
     max_days = month_in_year.end_of_month.day
     if day > max_days
       @dates_with_too_many_days << {
-        date_attr: date_attr, month: month_in_year.strftime("%B"), max_days: max_days }
+        date_attr: date_attr, month: month_in_year.strftime("%B"), max_days: max_days
+      }
       return false
     end
     true

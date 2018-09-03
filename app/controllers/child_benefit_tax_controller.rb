@@ -2,13 +2,13 @@ class ChildBenefitTaxController < ApplicationController
   before_action :fetch_content_item
   before_action :setup_navigation_helpers
 
-  CALC_PARAM_KEYS = [:adjusted_net_income, :children_count, :starting_children, :year, :results, :part_year_children_count] +
+  CALC_PARAM_KEYS = %i[adjusted_net_income children_count starting_children year results part_year_children_count] +
     AdjustedNetIncomeCalculator::PARAM_KEYS
 
   def process_form
     redirect_hash = { action: :main }
 
-    [:children, :adjusted_income, :results].each do |anchor|
+    %i[children adjusted_income results].each do |anchor|
       redirect_hash.merge!(anchor: anchor.to_s) if params[anchor]
     end
 
