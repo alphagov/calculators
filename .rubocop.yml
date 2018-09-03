@@ -1,0 +1,4 @@
+Style/CommentedKeyword:
+  Exclude:
+    - 'spec/models/child_benefit_tax_calculator_spec.rb'
+    - 'spec/features/child_benefit_tax_calculator_spec.rb'
