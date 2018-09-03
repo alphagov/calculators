@@ -18,7 +18,7 @@ gem 'slimmer', '~> 13.0.0'
 gem 'uglifier', '~> 4.1'
 
 group :development do
-  gem 'better_errors', '~>2.1'
+  gem 'better_errors', '~>2.5'
   gem 'binding_of_caller', '~>0.8'
   gem 'web-console', '>= 3.3.0'
 end
