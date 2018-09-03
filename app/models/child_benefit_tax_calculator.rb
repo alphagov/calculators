@@ -49,7 +49,7 @@ class ChildBenefitTaxCalculator
   end
 
   def nothing_owed?
-    @adjusted_net_income < NET_INCOME_THRESHOLD || tax_estimate.abs == 0
+    @adjusted_net_income < NET_INCOME_THRESHOLD || tax_estimate.abs.zero?
   end
 
   def has_errors?
@@ -87,7 +87,7 @@ class ChildBenefitTaxCalculator
   end
 
   def can_estimate?
-    @total_annual_income > 0 && can_calculate?
+    @total_annual_income.positive? && can_calculate?
   end
 
   def benefits_claimed_amount
@@ -161,7 +161,7 @@ private
 
   def weekly_sum_for_children(num_children)
     rate = ChildBenefitRates.new(tax_year)
-    if num_children > 0
+    if num_children.positive?
       rate.first_child_rate + (num_children - 1) * rate.additional_child_rate
     else
       0

@@ -18,7 +18,7 @@ class AdjustedNetIncomeCalculator
 
   def can_calculate?
     PARAM_KEYS.any? do |key|
-      self.send(key) > 0
+      self.send(key).positive?
     end
   end
 
