@@ -13,7 +13,7 @@ class ChildBenefitRates
   }.freeze
 
   def initialize(year)
-    raise "Invalid tax year" unless RATES.keys.include?(year)
+    raise "Invalid tax year" unless RATES.key?(year)
     @year = year
   end
 
