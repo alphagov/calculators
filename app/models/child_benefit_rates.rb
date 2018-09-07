@@ -1,4 +1,5 @@
 # encoding: UTF-8
+
 class ChildBenefitRates
   attr_reader :year
 
@@ -9,7 +10,7 @@ class ChildBenefitRates
     2015 => [20.7, 13.7],
     2016 => [20.7, 13.7],
     2017 => [20.7, 13.7],
-  }
+  }.freeze
 
   def initialize(year)
     raise "Invalid tax year" unless RATES.keys.include?(year)

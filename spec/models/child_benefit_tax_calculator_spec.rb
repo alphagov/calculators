@@ -1,4 +1,5 @@
 # encoding: UTF-8
+
 require 'spec_helper'
 
 describe ChildBenefitTaxCalculator, type: :model do
@@ -203,8 +204,7 @@ describe ChildBenefitTaxCalculator, type: :model do
             part_year_children_count: "1",
             starting_children: {
               "0" => { start: { year: "2012", month: "01", day: "07" } },
-            }
-          )
+            })
         calc.valid?
         expect(calc.errors).to be_empty
       end

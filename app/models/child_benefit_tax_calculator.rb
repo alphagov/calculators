@@ -16,7 +16,7 @@ class ChildBenefitTaxCalculator
     "2015" => [Date.parse("2015-04-06"), Date.parse("2016-04-05")],
     "2016" => [Date.parse("2016-04-06"), Date.parse("2017-04-05")],
     "2017" => [Date.parse("2017-04-06"), Date.parse("2018-04-05")],
-  }
+  }.freeze
 
   validate :valid_child_dates
   validates_presence_of :is_part_year_claim, message: "select part year tax claim"
@@ -49,7 +49,7 @@ class ChildBenefitTaxCalculator
   end
 
   def nothing_owed?
-    @adjusted_net_income < NET_INCOME_THRESHOLD || tax_estimate.abs == 0
+    @adjusted_net_income < NET_INCOME_THRESHOLD || tax_estimate.abs.zero?
   end
 
   def has_errors?
@@ -87,7 +87,7 @@ class ChildBenefitTaxCalculator
   end
 
   def can_estimate?
-    @total_annual_income > 0 && can_calculate?
+    @total_annual_income.positive? && can_calculate?
   end
 
   def benefits_claimed_amount
@@ -117,19 +117,19 @@ class ChildBenefitTaxCalculator
 private
 
   def process_starting_children(children)
-    if selected_tax_year.present?
-      number_of_children = @part_year_children_count
-    else
-      number_of_children = @children_count
-    end
+    number_of_children = if selected_tax_year.present?
+                           @part_year_children_count
+                         else
+                           @children_count
+                         end
 
     [].tap do |ary|
       number_of_children.times do |n|
-        if children && children[n.to_s] && valid_date_params?(children[n.to_s][:start])
-          ary << StartingChild.new(children[n.to_s])
-        else
-          ary << StartingChild.new
-        end
+        ary << if children && children[n.to_s] && valid_date_params?(children[n.to_s][:start])
+                 StartingChild.new(children[n.to_s])
+               else
+                 StartingChild.new
+               end
       end
     end
   end
@@ -161,7 +161,7 @@ private
 
   def weekly_sum_for_children(num_children)
     rate = ChildBenefitRates.new(tax_year)
-    if num_children > 0
+    if num_children.positive?
       rate.first_child_rate + (num_children - 1) * rate.additional_child_rate
     else
       0

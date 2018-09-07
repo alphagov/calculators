@@ -2,7 +2,6 @@ require "spec_helper"
 require 'gds_api/content_store'
 
 describe ChildBenefitTaxController, type: :controller do
-
   # Force the tests to render the views
   # Works around https://github.com/alphagov/slimmer/issues/170
   render_views

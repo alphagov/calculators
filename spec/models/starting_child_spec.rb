@@ -9,7 +9,8 @@ describe StartingChild, type: :model do
 
   it "should reject dates with days exceeding maximum for a month" do
     child = StartingChild.new(
-      stop: { year: "2013", month: "02", day: "29" })
+      stop: { year: "2013", month: "02", day: "29" }
+    )
     expect(child).not_to be_valid
     error_msg = "enter a valid date - there are only 28 days in February"
     expect(child.errors[:end_date]).to include error_msg
@@ -23,7 +24,8 @@ describe StartingChild, type: :model do
   context "when the start date has too many days for its month" do
     before :each do
       @child = StartingChild.new(
-        start: { year: "2013", month: "02", day: "29" })
+        start: { year: "2013", month: "02", day: "29" }
+      )
       @child.valid?
     end
 
