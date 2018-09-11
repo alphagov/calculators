@@ -105,7 +105,7 @@ class ChildBenefitTaxCalculator
     end
     # calculate total for all weeks
     total = all_weeks_children.values.inject(0) do |sum, n|
-      sum + BigDecimal.new(weekly_sum_for_children(n).to_s)
+      sum + BigDecimal(weekly_sum_for_children(n).to_s)
     end
     total.to_f
   end
