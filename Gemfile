@@ -36,7 +36,7 @@ end
 group :test do
   gem 'govuk_test'
   gem 'rails-controller-testing', '~> 1.0.2'
-  gem 'simplecov-rcov', '0.2.3', require: false
+  gem 'simplecov', require: false
   gem 'ci_reporter_rspec', '~> 1.0.0'
   gem 'webmock', '~> 3.4.2', require: false
 end
