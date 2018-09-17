@@ -373,7 +373,6 @@ PLATFORMS
 DEPENDENCIES
   better_errors (~> 2.5)
   binding_of_caller (~> 0.8)
-  capybara (~> 3.7.2)
   ci_reporter_rspec (~> 1.0.0)
   gds-api-adapters (~> 53.0.0)
   govuk-content-schema-test-helpers (~> 1.6.1)
