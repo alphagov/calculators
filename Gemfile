@@ -25,7 +25,7 @@ end
 
 group :development, :test do
   gem 'timecop', '~> 0.9.1'
-  gem 'govuk-lint', '3.9.0'
+  gem 'govuk-lint', '3.10.0'
   gem 'pry-byebug'
   gem 'listen', '~> 3.1.5'
   gem 'rspec-rails', '~> 3.8.1'
