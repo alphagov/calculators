@@ -146,7 +146,7 @@ GEM
       chromedriver-helper
       puma
       selenium-webdriver
-    hashdiff (0.3.7)
+    hashdiff (0.3.8)
     highline (2.0.0)
     htmlentities (4.3.4)
     http-cookie (1.0.3)
@@ -362,7 +362,7 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
-    webmock (3.4.2)
+    webmock (3.5.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
@@ -403,10 +403,10 @@ DEPENDENCIES
   timecop (~> 0.9.1)
   uglifier (~> 4.1)
   web-console (>= 3.3.0)
-  webmock (~> 3.4.2)
+  webmock (~> 3.5.1)
 
 RUBY VERSION
    ruby 2.5.3p105
 
 BUNDLED WITH
-   1.16.3
+   1.16.6
