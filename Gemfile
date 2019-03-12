@@ -34,9 +34,10 @@ group :development, :test do
 end
 
 group :test do
+  gem 'ci_reporter_rspec', '~> 1.0.0'
   gem 'govuk_test'
+  gem 'launchy'
   gem 'rails-controller-testing', '~> 1.0.4'
   gem 'simplecov', require: false
-  gem 'ci_reporter_rspec', '~> 1.0.0'
   gem 'webmock', '~> 3.5.1', require: false
 end
