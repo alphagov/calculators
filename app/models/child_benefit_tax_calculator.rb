@@ -11,13 +11,8 @@ class ChildBenefitTaxCalculator
   NET_INCOME_THRESHOLD = 50000
   TAX_COMMENCEMENT_DATE = Date.parse('7 Jan 2013')
 
-  TAX_YEARS = {
-    "2012" => [Date.parse("2012-04-06"), Date.parse("2013-04-05")],
-    "2013" => [Date.parse("2013-04-06"), Date.parse("2014-04-05")],
-    "2014" => [Date.parse("2014-04-06"), Date.parse("2015-04-05")],
-    "2015" => [Date.parse("2015-04-06"), Date.parse("2016-04-05")],
-    "2016" => [Date.parse("2016-04-06"), Date.parse("2017-04-05")],
-    "2017" => [Date.parse("2017-04-06"), Date.parse("2018-04-05")],
+  TAX_YEARS = (2012..2019).each_with_object({}) { |year, hash|
+    hash[year.to_s] = [Date.new(year, 4, 6), Date.new(year + 1, 4, 5)]
   }.freeze
 
   validate :valid_child_dates
