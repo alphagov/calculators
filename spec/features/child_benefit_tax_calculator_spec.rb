@@ -17,6 +17,31 @@ feature "Child Benefit Tax Calculator", js: true do
     expect(page).to have_no_css(".results")
   end
 
+  it "supports all tax years from 2012 to current" do
+    visit "/child-benefit-tax-calculator/main"
+
+    within ".tax-year" do
+      # This is written out explicitly to avoid using the same
+      # generator code (e.g. ranges) as is used in the actual app,
+      # since a bug or typo in the code would be hidden by the same
+      # typo in the tests.
+      tax_years = %w[
+        2012
+        2013
+        2014
+        2015
+        2016
+        2017
+        2018
+        2019
+      ]
+
+      tax_years.each do |year|
+        expect(page).to have_css("#year_#{year}", visible: false)
+      end
+    end
+  end
+
   context "page errors" do
     before :each do
       visit "/child-benefit-tax-calculator/main"
