@@ -43,7 +43,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       expect(subject.monday_on_or_after(monday)).to eq(monday)
     end
 
-    it "should return the following Monday for days between Tueday and Saturday" do
+    it "should return the following Monday for days between Tuesday and Saturday" do
       tuesday = Date.parse("3 January 2012")
       saturday = Date.parse("7 January 2012")
       next_monday = Date.parse("9 January 2012")
