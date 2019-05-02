@@ -83,10 +83,6 @@ class ChildBenefitTaxCalculator
     TAX_YEARS[@tax_year.to_s]
   end
 
-  def can_estimate?
-    @total_annual_income.positive? && can_calculate?
-  end
-
   def benefits_claimed_amount
     all_weeks_children = {}
     full_year_children = @children_count - @part_year_children_count
@@ -165,29 +161,12 @@ private
     end
   end
 
-  def taxable_weeks
-    if @tax_year == 2012
-      # special case for 2012-13, only weeks from 7th Jan 2013 are taxable
-      benefit_taxable_weeks(Date.parse("2013-01-07"), child_benefit_end_date)
-    else
-      benefit_taxable_weeks(child_benefit_start_date, child_benefit_end_date)
-    end
-  end
-
-  def benefit_taxable_weeks(start_date, end_date)
-    ((end_date - start_date) / 7).floor
-  end
-
   def calculate_adjusted_net_income(adjusted_net_income)
     if @adjusted_net_income_calculator.can_calculate?
       @adjusted_net_income_calculator.calculate_adjusted_net_income
     elsif adjusted_net_income.present?
       adjusted_net_income.gsub(/[£, -]/, '').to_i
     end
-  end
-
-  def parse_child_date(date)
-    Date.new(date[:year].to_i, date[:month].to_i, date[:day].to_i)
   end
 
   def valid_child_dates
