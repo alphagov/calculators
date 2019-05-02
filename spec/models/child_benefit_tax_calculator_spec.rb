@@ -300,6 +300,16 @@ describe ChildBenefitTaxCalculator, type: :model do
         ).benefits_claimed_amount.round(2)).to eq(1055.6)
       end
     end
+
+    context "for the tax year 2019" do
+      it "should give the total amount received for the full tax year for one child" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2019",
+          children_count: "1",
+          is_part_year_claim: "no"
+        ).benefits_claimed_amount.round(2)).to eq(1076.4)
+      end
+    end
   end
 
   describe "calculating adjusted net income" do
