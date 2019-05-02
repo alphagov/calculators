@@ -29,6 +29,7 @@ class ChildBenefitTaxCalculator
     @is_part_year_claim = params[:is_part_year_claim]
     @tax_year = params[:year].to_i
     @starting_children = process_starting_children(params[:starting_children])
+    @child_benefit_rates = ChildBenefitRates.new(@tax_year)
   end
 
   def self.valid_date_params?(params)
@@ -37,12 +38,6 @@ class ChildBenefitTaxCalculator
 
   def valid_date_params?(params)
     self.class.valid_date_params?(params)
-  end
-
-  # Return the date of the Monday in the future that is closest to the date supplied.
-  # If the date supplied is a Monday, do not adjust it.
-  def monday_on_or_after(date)
-    date.monday? ? date : date.next_week(:monday)
   end
 
   def nothing_owed?
@@ -84,23 +79,30 @@ class ChildBenefitTaxCalculator
   end
 
   def benefits_claimed_amount
-    all_weeks_children = {}
-    full_year_children = @children_count - @part_year_children_count
-    (child_benefit_start_date...child_benefit_end_date).each_slice(7) do |week|
-      monday = monday_on_or_after(week.first)
-      all_weeks_children[monday] = 0
-      @starting_children.each do |child|
-        all_weeks_children[monday] += 1 if eligible?(child, tax_year, monday)
-      end
-      full_year_children.times do
-        all_weeks_children[monday] += 1
+    no_of_full_year_children = @children_count - @part_year_children_count
+    total_benefit_amount = 0
+
+    if no_of_full_year_children.positive?
+      no_of_weeks = total_number_of_mondays(child_benefit_start_date, child_benefit_end_date)
+      no_of_additional_children = no_of_full_year_children - 1
+      total_benefit_amount = first_child_rate_total(no_of_weeks) + additional_child_rate_total(no_of_weeks, no_of_additional_children)
+    end
+
+    if @starting_children.count.positive?
+      first_child = 0
+
+      @starting_children.each_with_index do |child, index|
+        no_of_weeks = total_number_of_mondays(child.start_date, child.end_date)
+
+        total_benefit_amount = if index.equal?(first_child)
+                                 total_benefit_amount + first_child_rate_total(no_of_weeks)
+                               else
+                                 total_benefit_amount + additional_child_rate_total(no_of_weeks, 1)
+                               end
       end
     end
-    # calculate total for all weeks
-    total = all_weeks_children.values.inject(0) do |sum, n|
-      sum + BigDecimal(weekly_sum_for_children(n).to_s)
-    end
-    total.to_f
+
+    total_benefit_amount.to_f
   end
 
   def tax_estimate
@@ -126,39 +128,42 @@ private
       end
     end
   end
+  # def eligible?(child, tax_year, week_start_date)
+  #   adjusted_start_date = first_monday(child.start_date)
+  #
+  #   eligible_for_tax_year?(child, tax_year) &&
+  #     days_include_week?(adjusted_start_date, child.benefits_end, week_start_date)
+  # end
+  #
+  # def eligible_for_tax_year?(child, tax_year)
+  #   if tax_year == 2012
+  #     !(Date.parse('1 April 2013')..Date.parse('5 April 2013')).cover?(child.start_date)
+  #   else
+  #     !(Date.parse("31 March #{tax_year + 1}")..Date.parse("5 April #{tax_year + 1}")).cover?(child.start_date)
+  #   end
+  # end
+  #
+  # def days_include_week?(start_date, end_date, week_start_date)
+  #   if start_date.nil?
+  #     end_date >= week_start_date
+  #   elsif end_date.nil?
+  #     start_date <= week_start_date
+  #   else
+  #     (start_date..end_date).cover?(week_start_date)
+  #   end
+  # end
 
-  def eligible?(child, tax_year, week_start_date)
-    adjusted_start_date = monday_on_or_after(child.start_date)
-
-    eligible_for_tax_year?(child, tax_year) &&
-      days_include_week?(adjusted_start_date, child.benefits_end, week_start_date)
+  def total_number_of_mondays(child_benefit_start_date, child_benefit_end_date)
+    monday = [1] # wday of week in 0-6, Monday is 1
+    (child_benefit_start_date...child_benefit_end_date).to_a.select { |date| monday.include?(date.wday) }.count
   end
 
-  def eligible_for_tax_year?(child, tax_year)
-    if tax_year == 2012
-      !(Date.parse('1 April 2013')..Date.parse('5 April 2013')).cover?(child.start_date)
-    else
-      !(Date.parse("31 March #{tax_year + 1}")..Date.parse("5 April #{tax_year + 1}")).cover?(child.start_date)
-    end
+  def first_child_rate_total(no_of_weeks)
+    @child_benefit_rates.first_child_rate * no_of_weeks
   end
 
-  def days_include_week?(start_date, end_date, week_start_date)
-    if start_date.nil?
-      end_date >= week_start_date
-    elsif end_date.nil?
-      start_date <= week_start_date
-    else
-      (start_date..end_date).cover?(week_start_date)
-    end
-  end
-
-  def weekly_sum_for_children(num_children)
-    rate = ChildBenefitRates.new(tax_year)
-    if num_children.positive?
-      rate.first_child_rate + (num_children - 1) * rate.additional_child_rate
-    else
-      0
-    end
+  def additional_child_rate_total(no_of_weeks, no_of_children)
+    @child_benefit_rates.additional_child_rate * no_of_children * no_of_weeks
   end
 
   def calculate_adjusted_net_income(adjusted_net_income)

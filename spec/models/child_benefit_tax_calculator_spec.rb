@@ -27,32 +27,6 @@ describe ChildBenefitTaxCalculator, type: :model do
     expect(calc.adjusted_net_income).to eq(100900)
   end
 
-  describe "#monday_on_or_after" do
-    subject { ChildBenefitTaxCalculator.new }
-
-    it "should return the tomorrow if the date is a Sunday" do
-      sunday = Date.parse("1 January 2012")
-      monday = Date.parse("2 January 2012")
-
-      expect(subject.monday_on_or_after(sunday)).to eq(monday)
-    end
-
-    it "should return today if today is a Monday" do
-      monday = Date.parse("2 January 2012")
-
-      expect(subject.monday_on_or_after(monday)).to eq(monday)
-    end
-
-    it "should return the following Monday for days between Tuesday and Saturday" do
-      tuesday = Date.parse("3 January 2012")
-      saturday = Date.parse("7 January 2012")
-      next_monday = Date.parse("9 January 2012")
-
-      expect(subject.monday_on_or_after(tuesday)).to eq(next_monday)
-      expect(subject.monday_on_or_after(saturday)).to eq(next_monday)
-    end
-  end
-
   describe "input validation" do
     before(:each) do
       @calc = ChildBenefitTaxCalculator.new(children_count: "1", is_part_year_claim: "yes")
@@ -112,6 +86,22 @@ describe ChildBenefitTaxCalculator, type: :model do
       )
       @calc.valid?
       expect(@calc.starting_children.first.errors).to have_key(:end_date)
+    end
+    it "should contain an error on starting child if date range is less than 7 years" do
+      @calc = ChildBenefitTaxCalculator.new(
+        year: "2019",
+        children_count: "1",
+        is_part_year_claim: "yes",
+        part_year_children_count: "1",
+        starting_children: {
+          "0" => {
+            start: { year: "2020", month: "03", day: "31" },
+            stop: { year: "2020", month: "04", day: "05" },
+          },
+        },
+      )
+      @calc.valid?
+      expect(@calc.starting_children.first.errors).to have_key(:start_date)
     end
 
     it "can't calculate if there are any errors" do
@@ -309,6 +299,63 @@ describe ChildBenefitTaxCalculator, type: :model do
           is_part_year_claim: "no"
         ).benefits_claimed_amount.round(2)).to eq(1076.4)
       end
+      it "should give the total amount received for the full tax year for more than one child" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2019",
+          children_count: "2",
+          is_part_year_claim: "no"
+        ).benefits_claimed_amount.round(2)).to eq(1788.8)
+      end
+      it "should give the total amount for a partial tax year for one child" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2019",
+          children_count: "1",
+          is_part_year_claim: "yes",
+          part_year_children_count: "1",
+          starting_children: {
+            "0" => {
+              start: { year: "2020", month: "01", day: "06" },
+              stop: { year: "2020", month: "04", day: "05" },
+            },
+          },
+        ).benefits_claimed_amount.round(2)).to eq(269.1)
+      end
+      it "should give the total amount for a partial tax year for more than one child" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2019",
+          children_count: "2",
+          is_part_year_claim: "yes",
+          part_year_children_count: "2",
+          starting_children: {
+            "0" => { # 18 weeks/Mondays
+              start: { year: "2019", month: "12", day: "2" },
+              stop: { year: "2020", month: "04", day: "05" },
+            },
+            "1" => { # 13 weeks/Mondays
+              start: { year: "2020", month: "01", day: "06" },
+              stop: { year: "2020", month: "04", day: "05" },
+            },
+          },
+        ).benefits_claimed_amount.round(2)).to eq(550.7)
+      end
+    end
+    it "should give the total amount three children, two of which are partial tax years" do
+      expect(ChildBenefitTaxCalculator.new(
+        year: "2019",
+        children_count: "3",
+        is_part_year_claim: "yes",
+        part_year_children_count: "2",
+        starting_children: {
+          "0" => { # 18 weeks/Mondays
+            start: { year: "2019", month: "12", day: "2" },
+            stop: { year: "2020", month: "04", day: "05" },
+          },
+          "1" => { # 13 weeks/Mondays
+            start: { year: "2020", month: "01", day: "06" },
+            stop: { year: "2020", month: "04", day: "05" },
+          },
+        },
+      ).benefits_claimed_amount.round(2)).to eq(1627.1)
     end
   end
 
