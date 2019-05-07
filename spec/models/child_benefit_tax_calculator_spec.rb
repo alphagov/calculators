@@ -13,15 +13,6 @@ describe ChildBenefitTaxCalculator, type: :model do
     expect(ChildBenefitTaxCalculator.new.can_calculate?).to eq(false)
   end
 
-  it "is valid if given enough detail" do
-    expect(ChildBenefitTaxCalculator.new(
-      year: "2012", children_count: "1",
-      is_part_year_claim: "yes",
-      part_year_children_count: "1",
-      starting_children: { "0" => { start: { year: "2011", month: "01", day: "01" } } },
-    ).can_calculate?).to eq(true)
-  end
-
   it "parses integers from various formats of numerical input" do
     calc = ChildBenefitTaxCalculator.new(adjusted_net_income: "£100,900")
     expect(calc.adjusted_net_income).to eq(100900)
@@ -87,23 +78,6 @@ describe ChildBenefitTaxCalculator, type: :model do
       @calc.valid?
       expect(@calc.starting_children.first.errors).to have_key(:end_date)
     end
-    it "should contain an error on starting child if date range is less than 7 years" do
-      @calc = ChildBenefitTaxCalculator.new(
-        year: "2019",
-        children_count: "1",
-        is_part_year_claim: "yes",
-        part_year_children_count: "1",
-        starting_children: {
-          "0" => {
-            start: { year: "2020", month: "03", day: "31" },
-            stop: { year: "2020", month: "04", day: "05" },
-          },
-        },
-      )
-      @calc.valid?
-      expect(@calc.starting_children.first.errors).to have_key(:start_date)
-    end
-
     it "can't calculate if there are any errors" do
       @calc = ChildBenefitTaxCalculator.new(
         year: "2013",
@@ -119,7 +93,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       )
       @calc.valid?
 
-      expect(@calc.can_calculate?).to eq false
+      expect(@calc.can_calculate?).to eq(false)
     end
     it "should be valid on starting child when some inside the tax year" do
       @calc = ChildBenefitTaxCalculator.new(
@@ -201,18 +175,6 @@ describe ChildBenefitTaxCalculator, type: :model do
     end
   end
 
-  describe "full year children only" do
-    it "should be able to calculate the child benefit amount" do
-      calc = ChildBenefitTaxCalculator.new(
-        children_count: 1,
-        year: "2015",
-        is_part_year_claim: "no",
-        starting_children: {}
-      )
-      expect(calc.can_calculate?).to eq(true)
-    end
-  end
-
   describe "full year and part year children" do
     it "should not contain errors if valid part year and full year children" do
       calc = ChildBenefitTaxCalculator.new(
@@ -256,7 +218,7 @@ describe ChildBenefitTaxCalculator, type: :model do
           starting_children: {
             "0" => {
               start: { year: "2012", month: "06", day: "01" },
-              stop: { year: "2013", month: "06", day: "01" },
+              stop: { year: "", month: "", day: "" },
             },
           },
         ).benefits_claimed_amount.round(2)).to eq(263.9)
@@ -338,24 +300,24 @@ describe ChildBenefitTaxCalculator, type: :model do
           },
         ).benefits_claimed_amount.round(2)).to eq(550.7)
       end
-    end
-    it "should give the total amount three children, two of which are partial tax years" do
-      expect(ChildBenefitTaxCalculator.new(
-        year: "2019",
-        children_count: "3",
-        is_part_year_claim: "yes",
-        part_year_children_count: "2",
-        starting_children: {
-          "0" => { # 18 weeks/Mondays
-            start: { year: "2019", month: "12", day: "2" },
-            stop: { year: "2020", month: "04", day: "05" },
+      it "should give the total amount for three children, two of which are partial tax years" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2019",
+          children_count: "3",
+          is_part_year_claim: "yes",
+          part_year_children_count: "2",
+          starting_children: {
+            "0" => { # 18 weeks/Mondays
+              start: { year: "2019", month: "12", day: "2" },
+              stop: { year: "2020", month: "04", day: "05" },
+            },
+            "1" => { # 13 weeks/Mondays
+              start: { year: "2020", month: "01", day: "06" },
+              stop: { year: "2020", month: "04", day: "05" },
+            },
           },
-          "1" => { # 13 weeks/Mondays
-            start: { year: "2020", month: "01", day: "06" },
-            stop: { year: "2020", month: "04", day: "05" },
-          },
-        },
-      ).benefits_claimed_amount.round(2)).to eq(1627.1)
+        ).benefits_claimed_amount.round(2)).to eq(1501.1)
+      end
     end
   end
 
@@ -484,7 +446,7 @@ describe ChildBenefitTaxCalculator, type: :model do
           children_count: 1,
           part_year_children_count: "1",
           starting_children: {
-            "0" => { start: { year: "2011", month: "01", day: "01" } },
+            "0" => { start: { year: "2013", month: "01", day: "01" } },
           },
           year: "2012",
         ).nothing_owed?).to eq(true)
@@ -496,7 +458,7 @@ describe ChildBenefitTaxCalculator, type: :model do
           children_count: 1,
           part_year_children_count: "1",
           starting_children: {
-            "0" => { start: { year: "2011", month: "01", day: "01" } },
+            "0" => { start: { year: "2013", month: "01", day: "01" } },
           },
           year: "2012",
         ).nothing_owed?).to eq(false)
@@ -511,7 +473,7 @@ describe ChildBenefitTaxCalculator, type: :model do
           is_part_year_claim: "yes",
           part_year_children_count: "1",
           starting_children: {
-            "0" => { start: { year: "2011", month: "01", day: "01" } },
+            "0" => { start: { year: "2013", month: "01", day: "01" } },
           },
           year: "2012",
         ).tax_estimate.round(2)).to eq(263)
@@ -524,7 +486,7 @@ describe ChildBenefitTaxCalculator, type: :model do
           is_part_year_claim: "yes",
           part_year_children_count: "1",
           starting_children: {
-            "0" => { start: { year: "2011", month: "01", day: "01" } },
+            "0" => { start: { year: "2013", month: "01", day: "01" } },
           },
           year: "2012",
         ).tax_estimate.round(2)).to eq(261)
@@ -537,7 +499,7 @@ describe ChildBenefitTaxCalculator, type: :model do
           is_part_year_claim: "yes",
           part_year_children_count: "1",
           starting_children: {
-            "0" => { start: { year: "2011", month: "01", day: "01" } },
+            "0" => { start: { year: "2013", month: "01", day: "01" } },
           },
           year: "2012",
         ).tax_estimate.round(2)).to eq(105)
@@ -552,11 +514,11 @@ describe ChildBenefitTaxCalculator, type: :model do
           is_part_year_claim: "yes",
           part_year_children_count: "1",
           starting_children: {
-            "0" => { start: { year: "2013", month: "01", day: "01" } },
+            "0" => { start: { year: "2014", month: "01", day: "01" } },
           },
           year: "2013",
         )
-        expect(calc.tax_estimate.round(1)).to eq(1055)
+        expect(calc.tax_estimate.round(1)).to eq(263)
       end
       it "calculates correctly for >55.9k earning" do
         calc = ChildBenefitTaxCalculator.new(
@@ -565,11 +527,11 @@ describe ChildBenefitTaxCalculator, type: :model do
           is_part_year_claim: "yes",
           part_year_children_count: "1",
           starting_children: {
-            "0" => { start: { year: "2013", month: "01", day: "01" } },
+            "0" => { start: { year: "2014", month: "01", day: "01" } },
           },
           year: "2013",
         )
-        expect(calc.tax_estimate.round(1)).to eq(1045)
+        expect(calc.tax_estimate.round(1)).to eq(261)
       end
       it "calculates correctly for >50k earning" do
         calc = ChildBenefitTaxCalculator.new(
@@ -579,13 +541,14 @@ describe ChildBenefitTaxCalculator, type: :model do
           part_year_children_count: "1",
           starting_children: {
             "0" => {
-              start: { year: "2011", month: "01", day: "01" },
+              start: { year: "2014", month: "01", day: "01" },
               stop: { year: "", month: "", day: "" },
             },
           },
           year: "2013",
         )
-        expect(calc.tax_estimate.round(1)).to eq(422)
+        expect(calc.benefits_claimed_amount.round(2)).to eq(263.9)
+        expect(calc.tax_estimate.round(1)).to eq(105)
       end
     end # tax year 2013-14
   end # no starting / stopping children
@@ -847,10 +810,10 @@ describe ChildBenefitTaxCalculator, type: :model do
           starting_children: {
             "0" => {
               start: { day: "06", month: "04", year: "2015" },
-              stop: { day: "06", month: "11", year: "2016" },
+              stop: { day: "06", month: "11", year: "2015" },
             },
           },
-        ).benefits_claimed_amount.round(2)).to eq(1823.2)
+        ).benefits_claimed_amount.round(2)).to eq(1521.8)
       end
 
       it "should give total amount of benefits for one child for half a year" do

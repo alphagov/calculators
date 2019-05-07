@@ -30,9 +30,6 @@ private
     if @start_date && @end_date && @start_date >= @end_date
       errors.add(:end_date, "child Benefit start date must be before stop date")
     end
-    if (@start_date...@end_date).count < 7
-      errors.add(:start_date, "a minimum of 7 days needs to be entered as date range")
-    end
   end
 
   def set_date(date_attr, date_params)

@@ -7,10 +7,6 @@ describe ChildBenefitRates, type: :model do
     it "should intialize instance correctly" do
       expect(ChildBenefitRates.new(2014).year).to eq(2014)
     end
-
-    it "should raise error" do
-      expect { ChildBenefitRates.new(2000) }.to raise_error("Invalid tax year")
-    end
   end
 
   describe "return correct rates for 2012 year passed in" do
