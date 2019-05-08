@@ -41,8 +41,7 @@ class ChildBenefitTaxCalculator
   end
 
   def total_number_of_mondays(child_benefit_start_date, child_benefit_end_date)
-    monday = [1] # wday of week in 0-6, Monday is 1
-    (child_benefit_start_date..child_benefit_end_date).to_a.select { |date| monday.include?(date.wday) }.count
+    (child_benefit_start_date..child_benefit_end_date).select(&:monday?).count
   end
 
   def nothing_owed?
