@@ -27,32 +27,6 @@ describe ChildBenefitTaxCalculator, type: :model do
     expect(calc.adjusted_net_income).to eq(100900)
   end
 
-  describe "#monday_on_or_after" do
-    subject { ChildBenefitTaxCalculator.new }
-
-    it "should return the tomorrow if the date is a Sunday" do
-      sunday = Date.parse("1 January 2012")
-      monday = Date.parse("2 January 2012")
-
-      expect(subject.monday_on_or_after(sunday)).to eq(monday)
-    end
-
-    it "should return today if today is a Monday" do
-      monday = Date.parse("2 January 2012")
-
-      expect(subject.monday_on_or_after(monday)).to eq(monday)
-    end
-
-    it "should return the following Monday for days between Tueday and Saturday" do
-      tuesday = Date.parse("3 January 2012")
-      saturday = Date.parse("7 January 2012")
-      next_monday = Date.parse("9 January 2012")
-
-      expect(subject.monday_on_or_after(tuesday)).to eq(next_monday)
-      expect(subject.monday_on_or_after(saturday)).to eq(next_monday)
-    end
-  end
-
   describe "input validation" do
     before(:each) do
       @calc = ChildBenefitTaxCalculator.new(children_count: "1", is_part_year_claim: "yes")
@@ -248,52 +222,227 @@ describe ChildBenefitTaxCalculator, type: :model do
     end
   end
 
-  describe "calculating benefits received" do
-    it "should give the total amount of benefits received for a full tax year 2012" do
-      expect(ChildBenefitTaxCalculator.new(
-        year: "2012",
-        children_count: "1",
-        is_part_year_claim: "no"
-      ).benefits_claimed_amount.round(2)).to eq(263.9)
+  calc = ChildBenefitTaxCalculator.new(
+    year: "2015",
+    children_count: 1,
+    is_part_year_claim: "no"
+  )
+
+  describe "calculating the number of weeks/Mondays" do
+    context "for the full tax year 2012/2013" do
+      it "should calculate there are 13 Mondays" do
+        calc = ChildBenefitTaxCalculator.new(
+          year: "2012",
+          children_count: "1",
+          is_part_year_claim: "no"
+        )
+        start_date = calc.child_benefit_start_date
+        end_date = calc.child_benefit_end_date
+        expect(calc.total_number_of_mondays(start_date, end_date)).to eq(13)
+      end
     end
-    it "should give the total amount of benefits received for a full tax year 2013" do
-      expect(ChildBenefitTaxCalculator.new(
-        year: "2013",
-        children_count: "1",
-        is_part_year_claim: "no"
-      ).benefits_claimed_amount.round(2)).to eq(1055.6)
+    context "for the full tax year 2013/2014" do
+      it "should calculate there are 52 Mondays" do
+        calc = ChildBenefitTaxCalculator.new(
+          year: "2013",
+          children_count: "1",
+          is_part_year_claim: "no"
+        )
+        start_date = calc.child_benefit_start_date
+        end_date = calc.child_benefit_end_date
+        expect(calc.total_number_of_mondays(start_date, end_date)).to eq(52)
+      end
     end
-    it "should give the total amount of benefits received for a partial tax year" do
-      expect(ChildBenefitTaxCalculator.new(
-        year: "2012",
-        children_count: "1",
-        is_part_year_claim: "yes",
-        part_year_children_count: "1",
-        starting_children: {
-          "0" => {
-            start: { year: "2012", month: "06", day: "01" },
-            stop: { year: "2013", month: "06", day: "01" },
-          },
-        },
-      ).benefits_claimed_amount.round(2)).to eq(263.9)
+    context "for the full tax year 2014/2015" do
+      it "should calculate there are 52 Mondays" do
+        calc = ChildBenefitTaxCalculator.new(
+          year: "2014",
+          children_count: "1",
+          is_part_year_claim: "no"
+        )
+        start_date = calc.child_benefit_start_date
+        end_date = calc.child_benefit_end_date
+        expect(calc.total_number_of_mondays(start_date, end_date)).to eq(52)
+      end
     end
-    it "should give the total amount of benefits received for a partial tax year with more than one child" do
-      expect(ChildBenefitTaxCalculator.new(
-        year: "2012",
-        children_count: "2",
-        is_part_year_claim: "yes",
-        part_year_children_count: "2",
-        starting_children: {
-          "0" => {
-            start: { year: "2012", month: "06", day: "01" },
-            stop: { year: "2013", month: "06", day: "01" },
+    context "for the full tax year 2015/2016" do
+      it "should calculate there are 53 Mondays" do
+        calc = ChildBenefitTaxCalculator.new(
+          year: "2015",
+          children_count: "1",
+          is_part_year_claim: "no"
+        )
+        start_date = calc.child_benefit_start_date
+        end_date = calc.child_benefit_end_date
+        expect(calc.total_number_of_mondays(start_date, end_date)).to eq(53)
+      end
+    end
+    context "for the full tax year 2016/2017" do
+      it "should calculate there are 52 Mondays" do
+        calc = ChildBenefitTaxCalculator.new(
+          year: "2016",
+          children_count: "1",
+          is_part_year_claim: "no"
+        )
+        start_date = calc.child_benefit_start_date
+        end_date = calc.child_benefit_end_date
+        expect(calc.total_number_of_mondays(start_date, end_date)).to eq(52)
+      end
+    end
+    context "for the full tax year 2017/2018" do
+      it "should calculate there are 52 Mondays" do
+        calc = ChildBenefitTaxCalculator.new(
+          year: "2017",
+          children_count: "1",
+          is_part_year_claim: "no"
+        )
+        start_date = calc.child_benefit_start_date
+        end_date = calc.child_benefit_end_date
+        expect(calc.total_number_of_mondays(start_date, end_date)).to eq(52)
+      end
+    end
+    context "for the full tax year 2018/2019" do
+      it "should calculate there are 52 Mondays" do
+        calc = ChildBenefitTaxCalculator.new(
+          year: "2018",
+          children_count: "1",
+          is_part_year_claim: "no"
+        )
+        start_date = calc.child_benefit_start_date
+        end_date = calc.child_benefit_end_date
+        expect(calc.total_number_of_mondays(start_date, end_date)).to eq(52)
+      end
+    end
+    context "for the full tax year 2019/2020" do
+      it "should calculate there are 52 Mondays" do
+        calc = ChildBenefitTaxCalculator.new(
+          year: "2019",
+          children_count: "1",
+          is_part_year_claim: "no"
+        )
+        start_date = calc.child_benefit_start_date
+        end_date = calc.child_benefit_end_date
+        expect(calc.total_number_of_mondays(start_date, end_date)).to eq(52)
+      end
+    end
+  end
+
+  describe "calculating child benefits received" do
+    context "for the tax year 2012" do
+      it "should give the total amount of benefits received for a full tax year 2012" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2012",
+          children_count: "1",
+          is_part_year_claim: "no"
+        ).benefits_claimed_amount.round(2)).to eq(263.9)
+      end
+      it "should give the total amount of benefits received for a partial tax year" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2012",
+          children_count: "1",
+          is_part_year_claim: "yes",
+          part_year_children_count: "1",
+          starting_children: {
+            "0" => {
+              start: { year: "2012", month: "06", day: "01" },
+              stop: { year: "2013", month: "06", day: "01" },
+            },
           },
-          "1" => {
-            start: { year: "2012", month: "05", day: "01" },
-            stop: { year: "2013", month: "07", day: "25" },
+        ).benefits_claimed_amount.round(2)).to eq(263.9)
+      end
+      it "should give the total amount of benefits received for a partial tax year with more than one child" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2012",
+          children_count: "2",
+          is_part_year_claim: "yes",
+          part_year_children_count: "2",
+          starting_children: {
+            "0" => {
+              start: { year: "2012", month: "06", day: "01" },
+              stop: { year: "2013", month: "06", day: "01" },
+            },
+            "1" => {
+              start: { year: "2012", month: "05", day: "01" },
+              stop: { year: "2013", month: "07", day: "25" },
+            },
           },
-        },
-      ).benefits_claimed_amount.round(2)).to eq(438.1)
+        ).benefits_claimed_amount.round(2)).to eq(438.1)
+      end
+    end
+    context "for the tax year 2013" do
+      it "should give the total amount of benefits received for a full tax year 2013" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2013",
+          children_count: "1",
+          is_part_year_claim: "no"
+        ).benefits_claimed_amount.round(2)).to eq(1055.6)
+      end
+    end
+    context "for the tax year 2019" do
+      it "should give the total amount received for the full tax year for one child" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2019",
+          children_count: "1",
+          is_part_year_claim: "no"
+        ).benefits_claimed_amount.round(2)).to eq(1076.4)
+      end
+      it "should give the total amount received for the full tax year for more than one child" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2019",
+          children_count: "2",
+          is_part_year_claim: "no"
+        ).benefits_claimed_amount.round(2)).to eq(1788.8)
+      end
+      it "should give the total amount for a partial tax year for one child" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2019",
+          children_count: "1",
+          is_part_year_claim: "yes",
+          part_year_children_count: "1",
+          starting_children: {
+            "0" => {
+              start: { year: "2020", month: "01", day: "06" },
+              stop: { year: "2020", month: "04", day: "05" },
+            },
+          },
+        ).benefits_claimed_amount.round(2)).to eq(269.1)
+      end
+      it "should give the total amount for a partial tax year for more than one child" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2019",
+          children_count: "2",
+          is_part_year_claim: "yes",
+          part_year_children_count: "2",
+          starting_children: {
+            "0" => { # 18 weeks/Mondays
+              start: { year: "2019", month: "12", day: "2" },
+              stop: { year: "2020", month: "04", day: "05" },
+            },
+            "1" => { # 13 weeks/Mondays
+              start: { year: "2020", month: "01", day: "06" },
+              stop: { year: "2020", month: "04", day: "05" },
+            },
+          },
+        ).benefits_claimed_amount.round(2)).to eq(550.7)
+      end
+      it "should give the total amount for three children, two of which are partial tax years" do
+        expect(ChildBenefitTaxCalculator.new(
+          year: "2019",
+          children_count: "3",
+          is_part_year_claim: "yes",
+          part_year_children_count: "2",
+          starting_children: {
+            "0" => { # 18 weeks/Mondays
+              start: { year: "2019", month: "12", day: "2" },
+              stop: { year: "2020", month: "04", day: "05" },
+            },
+            "1" => { # 13 weeks/Mondays
+              start: { year: "2020", month: "01", day: "06" },
+              stop: { year: "2020", month: "04", day: "05" },
+            },
+          },
+        ).benefits_claimed_amount.round(2)).to eq(1501.1)
+      end
     end
   end
 
