@@ -17,4 +17,6 @@ RUN bundle install
 
 ADD . $APP_HOME
 
+RUN GOVUK_WEBSITE_ROOT=https://www.gov.uk GOVUK_APP_DOMAIN=www.gov.uk RAILS_ENV=production bundle exec rails assets:precompile
+
 CMD bash -c "bundle exec rails s -p $PORT -b '0.0.0.0'"
