@@ -39,5 +39,5 @@ group :test do
   gem 'launchy'
   gem 'rails-controller-testing', '~> 1.0.4'
   gem 'simplecov', require: false
-  gem 'webmock', '~> 3.7.4', require: false
+  gem 'webmock', '~> 3.7.5', require: false
 end
