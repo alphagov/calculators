@@ -1,1 +1,1 @@
-require 'slimmer/rspec'
+require "slimmer/rspec"

@@ -1,5 +1,5 @@
 require "spec_helper"
-require 'gds_api/content_store'
+require "gds_api/content_store"
 
 describe ChildBenefitTaxController, type: :controller do
   # Force the tests to render the views
@@ -13,7 +13,7 @@ describe ChildBenefitTaxController, type: :controller do
 
     describe "GET main" do
       it "should create a calculator using params" do
-        get :main, params: { year: '2013' }
+        get :main, params: { year: "2013" }
         expect(response).to be_successful
         expect(assigns(:calculator).tax_year).to eq(2013)
         expect(assigns(:adjusted_net_income_calculator).calculate_adjusted_net_income).to eq(0)

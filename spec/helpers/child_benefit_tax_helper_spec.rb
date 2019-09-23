@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require 'spec_helper'
+require "spec_helper"
 
 describe ChildBenefitTaxHelper, type: :helper do
   describe "money_input" do
@@ -27,13 +27,13 @@ describe ChildBenefitTaxHelper, type: :helper do
     end
 
     it "should be true before the end of the tax year" do
-      Timecop.freeze('2014-04-04') do
+      Timecop.freeze("2014-04-04") do
         expect(tax_year_incomplete?).to eq true
       end
     end
 
     it "should be false after the end of the tax year" do
-      Timecop.freeze('2014-04-06') do
+      Timecop.freeze("2014-04-06") do
         expect(tax_year_incomplete?).to eq false
       end
     end
