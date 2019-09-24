@@ -1,4 +1,4 @@
-require_relative 'boot'
+require_relative "boot"
 
 # require 'rails/all'
 # require "active_record/railtie"
@@ -59,17 +59,17 @@ module Calculators
     )
 
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
-    config.assets.prefix = '/calculators'
+    config.assets.version = "1.0"
+    config.assets.prefix = "/calculators"
 
     # Disable Rack::Cache
     config.action_dispatch.rack_cache = nil
 
     # Override Rails 4 default which restricts framing to SAMEORIGIN.
     config.action_dispatch.default_headers = {
-      'X-Frame-Options' => 'ALLOWALL'
+      "X-Frame-Options" => "ALLOWALL",
     }
 
-    config.eager_load_paths << Rails.root.join('lib')
+    config.eager_load_paths << Rails.root.join("lib")
   end
 end

@@ -38,7 +38,7 @@ private
   end
 
   def integer_value(val)
-    val.gsub!(/[£, -]/, '') if val.is_a?(String)
+    val.gsub!(/[£, -]/, "") if val.is_a?(String)
     val.to_i
   end
 end

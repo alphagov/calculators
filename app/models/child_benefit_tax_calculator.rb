@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require 'active_model'
+require "active_model"
 
 class ChildBenefitTaxCalculator
   include ActiveModel::Validations
@@ -10,7 +10,7 @@ class ChildBenefitTaxCalculator
               :is_part_year_claim, :part_year_children_count
 
   NET_INCOME_THRESHOLD = 50000
-  TAX_COMMENCEMENT_DATE = Date.parse('7 Jan 2013') # special case for 2012-13, only weeks from 7th Jan 2013 are taxable
+  TAX_COMMENCEMENT_DATE = Date.parse("7 Jan 2013") # special case for 2012-13, only weeks from 7th Jan 2013 are taxable
 
   TAX_YEARS = (2012..2019).each_with_object({}) { |year, hash|
     hash[year.to_s] = [Date.new(year, 4, 6), Date.new(year + 1, 4, 5)]
@@ -54,7 +54,7 @@ class ChildBenefitTaxCalculator
   end
 
   def starting_children_errors?
-    is_part_year_claim == 'yes' && starting_children.select { |c| c.errors.any? }.any?
+    is_part_year_claim == "yes" && starting_children.select { |c| c.errors.any? }.any?
   end
 
   def percent_tax_charge
@@ -160,16 +160,16 @@ private
     if @adjusted_net_income_calculator.can_calculate?
       @adjusted_net_income_calculator.calculate_adjusted_net_income
     elsif adjusted_net_income.present?
-      adjusted_net_income.gsub(/[£, -]/, '').to_i
+      adjusted_net_income.gsub(/[£, -]/, "").to_i
     end
   end
 
   def valid_child_dates
-    is_part_year_claim == 'yes' && @starting_children.each(&:valid?)
+    is_part_year_claim == "yes" && @starting_children.each(&:valid?)
   end
 
   def valid_number_of_children
-    if @is_part_year_claim == 'yes' && (@children_count < @part_year_children_count)
+    if @is_part_year_claim == "yes" && (@children_count < @part_year_children_count)
       errors.add(:part_year_children_count, "the number of children you're claiming a part year for can't be more than the total number of children you're claiming for")
     end
   end

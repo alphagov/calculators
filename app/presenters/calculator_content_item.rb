@@ -7,7 +7,7 @@ class CalculatorContentItem
   end
 
   def base_path
-    '/' + calculator.slug
+    "/" + calculator.slug
   end
 
   def content_id
@@ -15,11 +15,11 @@ class CalculatorContentItem
   end
 
   def update_type
-    'minor'
+    "minor"
   end
 
   def route_type
-    'prefix'
+    "prefix"
   end
 
   def payload
@@ -27,14 +27,14 @@ class CalculatorContentItem
       title: calculator.title,
       description: calculator.description,
       base_path: base_path,
-      schema_name: 'generic',
-      document_type: 'calculator',
+      schema_name: "generic",
+      document_type: "calculator",
       details: {},
-      publishing_app: 'calculators',
-      rendering_app: 'calculators',
-      locale: 'en',
+      publishing_app: "calculators",
+      rendering_app: "calculators",
+      locale: "en",
       routes: [
-        { type: route_type, path: base_path }
+        { type: route_type, path: base_path },
       ],
       update_type: update_type,
     }

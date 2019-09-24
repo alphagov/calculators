@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require 'spec_helper'
+require "spec_helper"
 
 describe AdjustedNetIncomeCalculator, type: :model do
   describe "adjusted_net_income" do
@@ -15,7 +15,7 @@ describe AdjustedNetIncomeCalculator, type: :model do
         gross_income: "£60,000", other_income: "£5,000", pensions: "£1000",
         property: "£2,000", non_employment_income: "£2000",
         pension_contributions_from_pay: "£1000", gift_aid_donations: "£500", retirement_annuities: "£1000",
-        cycle_scheme: "£1,000", childcare: "£2,000", outgoing_pension_contributions: "£2 000",
+        cycle_scheme: "£1,000", childcare: "£2,000", outgoing_pension_contributions: "£2 000"
       )
       expect(calc.gross_income).to eq(60000)
       expect(calc.other_income).to eq(5000)

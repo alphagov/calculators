@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require 'spec_helper'
+require "spec_helper"
 
 describe ChildBenefitRates, type: :model do
   describe "test initialization of instance variable" do

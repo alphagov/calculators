@@ -1,12 +1,12 @@
-require 'simplecov'
-SimpleCov.start 'rails'
+require "simplecov"
+SimpleCov.start "rails"
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["RACK_ENV"] = ENV["RAILS_ENV"] ||= 'test'
+ENV["RACK_ENV"] = ENV["RAILS_ENV"] ||= "test"
 ENV["GOVUK_APP_DOMAIN"] ||= "dev.gov.uk"
 
-require File.expand_path('../config/environment', __dir__)
-require 'rspec/rails'
+require File.expand_path("../config/environment", __dir__)
+require "rspec/rails"
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.

@@ -16,10 +16,10 @@ Calculators::Application.configure do
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
   # unless running on Heroku
-  config.serve_static_files = ENV['RUNNING_ON_HEROKU'].present?
+  config.serve_static_files = ENV["RUNNING_ON_HEROKU"].present?
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -55,7 +55,7 @@ Calculators::Application.configure do
   # config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  config.action_controller.asset_host = ENV['GOVUK_ASSET_HOST']
+  config.action_controller.asset_host = ENV["GOVUK_ASSET_HOST"]
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "support_#{Rails.env}"
@@ -73,14 +73,14 @@ Calculators::Application.configure do
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
-  if ENV['RUNNING_ON_HEROKU'].present?
+  if ENV["RUNNING_ON_HEROKU"].present?
     # flush output to the underlying OS without buffering
     STDOUT.sync = true
 
     # enable STDOUT logging for Heroku
     config.logger = ActiveSupport::Logger.new(STDOUT)
     config.logger = ActiveSupport::TaggedLogging.new(logger)
-    config.logger.level = Logger.const_get(ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].upcase : 'INFO')
+    config.logger.level = Logger.const_get(ENV["LOG_LEVEL"] ? ENV["LOG_LEVEL"].upcase : "INFO")
     config.log_formatter = ::Logger::Formatter.new
   end
   # Do not dump schema after migrations.
