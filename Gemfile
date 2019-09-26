@@ -13,7 +13,7 @@ gem 'govuk-content-schema-test-helpers', '~> 1.6.1'
 gem 'nokogiri'
 gem 'plek', '~> 3.0.0'
 gem 'rack_strip_client_ip', '0.0.2'
-gem 'sass-rails', '5.0.7'
+gem 'sass-rails', '6.0.0'
 gem 'slimmer', '~> 13.1.0'
 gem 'uglifier', '~> 4.2'
 
