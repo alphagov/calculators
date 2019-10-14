@@ -28,7 +28,7 @@ group :development, :test do
   gem 'govuk-lint', '4.0.1'
   gem 'pry-byebug'
   gem 'listen', '~> 3.1.5'
-  gem 'rspec-rails', '~> 3.8.2'
+  gem 'rspec-rails', '~> 3.9.0'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
