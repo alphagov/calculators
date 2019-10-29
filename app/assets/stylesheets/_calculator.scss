@@ -11,6 +11,11 @@
     }
   }
 
+  .question-wrapper {
+    position: relative;
+    padding-left: govuk-spacing(7);
+  }
+
   ul,
   p {
     @include core-19;
@@ -48,12 +53,6 @@
   }
 
   .step {
-    padding-left: 2.2em;
-
-    @include media(tablet) {
-      padding-left: 1.5em;
-    }
-
     &:before {
       @include core-16;
 

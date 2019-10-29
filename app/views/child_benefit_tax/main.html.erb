@@ -27,12 +27,28 @@
         } %>
       <% end -%>
 
-      <fieldset>
-        <%= step(1, "How many children do you want to claim Child Benefit for?") %>
-        <label for="children_count" class="visuallyhidden">Number of children</label>
-        <%= select_tag "children_count", options_for_select((1..10).collect{|n| [n,n]}, @calculator.children_count), :class => "form-control" %>
-        <%= submit_tag "Update", :name => "children", :class => "js-hidden button update-button" %>
-      </fieldset>
+      <div class="question-wrapper">
+        <% question_one = capture do %>
+          <%= render "govuk_publishing_components/components/select", {
+            id: "children_count",
+            label: "Number of children",
+            full_width: true,
+            options: children_select_options
+          } %>
+          <div class="js-hidden">
+            <%= render "govuk_publishing_components/components/button", {
+              text: "Update",
+              name: "children"
+            } %>
+          </div>
+        <% end %>
+
+        <%= render "govuk_publishing_components/components/fieldset", {
+          legend_text: step(1, "How many children do you want to claim Child Benefit for?"),
+          heading_size: "m",
+          text: question_one
+        } %>
+      </div>
 
       <fieldset id="tax_year">
         <%= step(2, "Which tax year are you claiming for?") %>
