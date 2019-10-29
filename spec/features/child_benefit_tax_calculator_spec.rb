@@ -50,7 +50,7 @@ feature "Child Benefit Tax Calculator", js: true do
     context "when tax claim duration isn't selected" do
       it "should display validation errors" do
         click_on "Calculate"
-        within ".error-summary" do
+        within ".gem-c-error-alert" do
           expect(page).to have_content("select a tax year")
           expect(page).to have_content("select part year tax claim")
           expect(page).to have_no_content("enter the date Child Benefit started")
@@ -73,7 +73,7 @@ feature "Child Benefit Tax Calculator", js: true do
       it "should display validation errors" do
         choose "No", allow_label_click: true
         click_on "Calculate"
-        within ".error-summary" do
+        within ".gem-c-error-alert" do
           expect(page).to have_content("select a tax year")
           expect(page).to have_no_content("enter the date Child Benefit started")
         end
@@ -95,7 +95,7 @@ feature "Child Benefit Tax Calculator", js: true do
       it "should display validation errors" do
         choose "Yes", allow_label_click: true
         click_on "Calculate"
-        within ".error-summary" do
+        within ".gem-c-error-alert" do
           expect(page).to have_content("select a tax year")
           expect(page).to have_content("enter the date Child Benefit started")
         end
@@ -317,7 +317,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
     click_on "Calculate"
 
-    within ".error-summary" do
+    within ".gem-c-error-alert" do
       expect(page).to have_content("You haven't received any Child Benefit for the tax year selected. Check your Child Benefit dates or choose a different tax year.")
     end
 

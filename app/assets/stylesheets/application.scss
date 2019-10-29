@@ -34,8 +34,9 @@ $govuk-typography-use-rem: false;
 @import "elements/forms/form-validation";
 @import "elements/panels";
 
+@import "govuk_publishing_components/all_components";
+
 // Calculators
 @import "calculator";
 @import "results";
 
-@import "govuk_publishing_components/all_components";

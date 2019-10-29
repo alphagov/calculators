@@ -9,18 +9,22 @@
       <input type="hidden" name="year" value="<%= params[:year] %>" />
 
       <% if @calculator.has_errors? -%>
-        <div role="group" aria-labelledby="error-heading" tabindex="-1" class="error-summary" id="results">
-          <h2 id="error-heading">Please check the form</h2>
-          <ul class="error-summary-list">
+        <% specific_errors = capture do %>
+          <ul class="govuk-list govuk-list--bullet">
             <%# TODO: This could be tidied up into a model or helper method %>
             <% @calculator.starting_children.map(&:errors).map(&:messages).map(&:values).flatten.uniq.each do |message| %>
-              <li><a href="#children_heading"><%= message %></a></li>
+              <li><a href="#children_heading" class="error-summary-item govuk-link"><%= message %></a></li>
             <% end %>
             <% @calculator.errors.each do |key, message| %>
-              <li><a href="#<%= key %>"><%= message %></a></li>
+              <li><a href="#<%= key %>" class="error-summary-item govuk-link"><%= message %></a></li>
             <% end %>
           </ul>
-        </div>
+        <% end %>
+
+        <%= render "govuk_publishing_components/components/error_alert", {
+          message: "Please check the form",
+          description: specific_errors
+        } %>
       <% end -%>
 
       <fieldset>
