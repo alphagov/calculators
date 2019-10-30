@@ -50,25 +50,22 @@
         } %>
       </div>
 
-      <fieldset id="tax_year">
-        <%= step(2, "Which tax year are you claiming for?") %>
-        <p>Tax years run from 6 April to 5 April the following year.</p>
-        <div class="form-group <% if @calculator.errors.has_key?(:tax_year) %> form-group-error<% end %>">
-          <div class="tax-year">
-            <% @calculator.errors[:tax_year].each do |message| %>
-              <span class="error-message"><%= message.capitalize %></span>
-            <% end %>
-            <% ChildBenefitTaxCalculator::TAX_YEARS.keys.each do |year| -%>
-              <div class="multiple-choice">
-                <%= radio_button_tag "year", year, (@calculator.tax_year == year.to_i) %>
-                <label for="year_<%= year %>">
-                  <%= tax_year_label(year) %>
-                </label>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </fieldset>
+      <div class="question-wrapper" id="tax_year">
+        <% question_two_errors = capture do %>
+          <% @calculator.errors[:tax_year].each do |message| %>
+            <%= message.capitalize %>
+          <% end %>
+        <% end %>
+
+        <%= render "govuk_publishing_components/components/radio", {
+          name: "year",
+          id_prefix: "year",
+          error_message: question_two_errors,
+          heading: step(2, "Which tax year are you claiming for?"),
+          hint: "Tax years run from 6 April to 5 April the following year.",
+          items: tax_year_radio_options
+        } %>
+      </div>
 
       <fieldset id="is_part_year_claim">
         <%= step(3, "Are you claiming for only a part of the tax year for any of your children?") %>

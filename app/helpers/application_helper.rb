@@ -18,4 +18,14 @@ module ApplicationHelper
       }
     end
   end
+
+  def tax_year_radio_options
+    ChildBenefitTaxCalculator::TAX_YEARS.keys.map do |year|
+      {
+        value: year,
+        text: "#{year} to #{year.to_i + 1}",
+        checked: @calculator.tax_year == year.to_i
+      }
+    end
+  end
 end
