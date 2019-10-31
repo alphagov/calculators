@@ -1,20 +1,49 @@
-<div class="grid-row">
-  <div class="date-selection column-half">
-    <p class="form-label">Start date</p>
-    <% [:day, :month, :year].each do |time_unit| %>
-      <label for="starting_children_<%= index %>_start_<%= time_unit %>" class="visuallyhidden">Start <%= time_unit %> for child <span class="child-number"><%= index + 1 %></span></label>
+<% ["start", "stop"].each do |event| %>
+  <%
+    event_name = event == "stop" ? "end_date" : "#{event}_date"
+    error_id = nil
+    there_are_errors = nil
+  %>
+
+  <% errors = capture do %>
+    <% child.errors.each do |key, message| %>
+      <% if key.to_s == event_name %>
+        <%
+          there_are_errors = true
+          message[0] = message[0].capitalize
+        %>
+        <%= message %>
+      <% end %>
     <% end %>
-    <%= select_date (child ? child.start_date : nil), prefix: "starting_children[#{index}][start]",
-      prompt: { day: "Day", month: "Month", year: "Year" }, order: [:day, :month, :year],
-      start_year: DateHelper.years_ago(1, "2012-01-01").year, end_year: DateHelper.years_since(1).year %>
-  </div>
-  <div class="date-selection column-half">
-    <p class="label">Stop date (optional)</p>
-    <% [:day, :month, :year].each do |time_unit| %>
-      <label for="starting_children_<%= index %>_stop_<%= time_unit %>" class="visuallyhidden">Stop <%= time_unit %> for child <span class="child-number"><%= index + 1 %></span></label>
-    <% end %>
-    <%= select_date (child ? child.end_date : nil), :prefix => "starting_children[#{index}][stop]",
-      prompt: { day: "Day", month: "Month", year: "Year" }, order: [:day, :month, :year],
-      start_year: DateHelper.years_ago(1, "2012-01-01").year, end_year: DateHelper.years_since(1).year %>
-  </div>
-</div>
+  <% end %>
+
+  <% contents = capture do %>
+    <div class="govuk-grid-row">
+      <% [:day, :month, :year].each do |time_unit| %>
+        <% error_id = "starting_children_#{index}_#{event}_#{time_unit}_error" if there_are_errors %>
+        <div class="govuk-grid-column-one-third date-wrapper">
+          <%= render "govuk_publishing_components/components/select", {
+            id: "starting_children_#{index}_#{event}_#{time_unit}",
+            name: "starting_children[#{index}][#{event}][#{time_unit}]",
+            label: time_unit.capitalize,
+            full_width: true,
+            error_id: error_id,
+            options: send("#{time_unit}_options", child ? child.send(event_name) : nil)
+          } %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% legend_text = capture do %>
+    <%= "#{event.capitalize}" %> date <span class="govuk-visually-hidden">for child <span class="js-child-number"><%= "#{index + 1}" %></span></span>
+    <%= "(optional)" if event == "stop" %>
+  <% end %>
+
+  <%= render "govuk_publishing_components/components/fieldset", {
+    legend_text: legend_text,
+    error_message: errors,
+    error_id: error_id,
+    text: contents
+  } %>
+<% end %>

@@ -1,0 +1,25 @@
+<div id="children-template">
+  <h2>How many children do you want to claim only a part of the tax year for?</h2>
+
+  <%= render "govuk_publishing_components/components/select", {
+    id: "part_year_children_count",
+    label: "Number of part year children",
+    full_width: true,
+    options: children_select_options(@calculator.part_year_children_count)
+  } %>
+
+  <div class="js-hidden">
+    <%= render "govuk_publishing_components/components/button", {
+      text: "Update Children",
+      name: "children"
+    } %>
+  </div>
+
+  <h2 id="children_heading">Enter the Child Benefit start and stop dates:</h2>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>you can find the start date on your Child Benefit award notice</li>
+    <li>the stop date is usually when a child turns 16 or leaves full-time education</li>
+  </ul>
+
+  <%= render "starting_children" %>
+</div>

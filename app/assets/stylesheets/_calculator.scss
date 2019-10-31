@@ -16,6 +16,14 @@
     padding-left: govuk-spacing(7);
   }
 
+  .date-wrapper {
+    margin-bottom: govuk-spacing(3);
+
+    @include govuk-media-query($from: tablet) {
+      margin-bottom: 0;
+    }
+  }
+
   ul,
   p {
     @include core-19;

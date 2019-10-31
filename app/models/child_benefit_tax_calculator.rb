@@ -26,11 +26,19 @@ class ChildBenefitTaxCalculator
     @adjusted_net_income_calculator = AdjustedNetIncomeCalculator.new(params)
     @adjusted_net_income = calculate_adjusted_net_income(params[:adjusted_net_income])
     @children_count = params[:children_count] ? params[:children_count].to_i : 1
-    @part_year_children_count = params[:part_year_children_count] ? params[:part_year_children_count].to_i : 0
     @is_part_year_claim = params[:is_part_year_claim]
+    @part_year_children_count = part_year_children_counter(params[:part_year_children_count])
     @tax_year = params[:year].to_i
     @starting_children = process_starting_children(params[:starting_children])
     @child_benefit_rates = ChildBenefitRates.new(@tax_year)
+  end
+
+  def part_year_children_counter(count)
+    if @is_part_year_claim == "yes"
+      return count ? count.to_i : 0
+    end
+
+    0
   end
 
   def self.valid_date_params?(params)
@@ -131,7 +139,7 @@ class ChildBenefitTaxCalculator
 private
 
   def process_starting_children(children)
-    number_of_children = if selected_tax_year.present?
+    number_of_children = if selected_tax_year.present? || @is_part_year_claim == "yes"
                            @part_year_children_count
                          else
                            @children_count
