@@ -83,38 +83,33 @@
         } %>
       </div>
 
-      <fieldset class="adjusted-income">
-        <%= step(4, "Enter your income details for the tax year:") %>
-        <ul id="step-4-description">
-          <li>don’t combine your household income</li>
-          <li>use your partner’s income if it’s higher than yours</li>
-          <li>you can get some of this information from your P60, P11D, employer or tax adviser</li>
-        </ul>
-        <div class="form-group">
-          <%= label_tag "gross_income", "Salary before tax (with pension contributions deducted)", class: "form-label" %>
-          <%= money_input "gross_income", @adjusted_net_income_calculator.gross_income, 'aria-describedby' => 'step-4-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "other_income", "Other employment income - for example bonuses", class: "form-label" %>
-          <%= money_input "other_income", @adjusted_net_income_calculator.other_income, 'aria-describedby' => 'step-4-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "childcare", "Taxable benefits provided by your employer - for example the value of any medical insurance, company car, or anything else included on your P11D", class: "form-label" %>
-          <%= money_input "childcare", @adjusted_net_income_calculator.childcare, 'aria-describedby' => 'step-4-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "pensions", "Income from pension(s) before tax - for example from a state pension", class: "form-label" %>
-          <%= money_input "pensions", @adjusted_net_income_calculator.pensions, 'aria-describedby' => 'step-4-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "non_employment_income", "Other income before tax - for example profits from self-employment, taxable savings, dividends", class: "form-label" %>
-          <%= money_input "non_employment_income", @adjusted_net_income_calculator.non_employment_income, 'aria-describedby' => 'step-4-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "property", "Income from property before tax - for example rental income", class: "form-label" %>
-          <%= money_input "property", @adjusted_net_income_calculator.property, 'aria-describedby' => 'step-4-description', class: "form-control" %>
-        </div>
-      </fieldset>
+      <div class="question-wrapper">
+        <% question_four = capture do %>
+          <ul id="step-4-description" class="govuk-list govuk-list--bullet">
+            <li>don’t combine your household income</li>
+            <li>use your partner’s income if it’s higher than yours</li>
+            <li>you can get some of this information from your P60, P11D, employer or tax adviser</li>
+          </ul>
+
+          <%= render "money_input", :label => "Salary before tax (with pension contributions deducted)", :id => "gross_income", :value => @adjusted_net_income_calculator.gross_income, :describedby => "step-4-description" %>
+
+          <%= render "money_input", :label => "Other employment income - for example bonuses", :id => "other_income", :value => @adjusted_net_income_calculator.other_income, :describedby => "step-4-description" %>
+
+          <%= render "money_input", :label => "Taxable benefits provided by your employer - for example the value of any medical insurance, company car, or anything else included on your P11D", :id => "childcare", :value => @adjusted_net_income_calculator.childcare, :describedby => "step-4-description" %>
+
+          <%= render "money_input", :label => "Income from pension(s) before tax - for example from a state pension", :id => "pensions", :value => @adjusted_net_income_calculator.pensions, :describedby => "step-4-description" %>
+
+          <%= render "money_input", :label => "Other income before tax - for example profits from self-employment, taxable savings, dividends", :id => "non_employment_income", :value => @adjusted_net_income_calculator.non_employment_income, :describedby => "step-4-description" %>
+
+          <%= render "money_input", :label => "Income from property before tax - for example rental income", :id => "property", :value => @adjusted_net_income_calculator.property, :describedby => "step-4-description" %>
+        <% end %>
+
+        <%= render "govuk_publishing_components/components/fieldset", {
+          legend_text: step(4, "Enter your income details for the tax year:"),
+          heading_size: "m",
+          text: question_four
+        } %>
+      </div>
 
         <fieldset class="adjusted-income">
         <%= step(5, "Enter details of any allowable deductions (optional):") %>
