@@ -2,8 +2,8 @@
 
 <%= render 'govuk_publishing_components/components/title', title: "Child Benefit tax calculator" %>
 
-<div class="grid-row">
-  <article role="article" class="column-two-thirds">
+<div class="govuk-grid-row">
+  <article role="article" class="govuk-grid-column-two-thirds">
     <%= form_tag("main/process_form", method: :get, id: "child_benefit_tax_calculator", class: "calculator-form") do %>
       <%# hidden field to store the tax year so it can persist %>
       <input type="hidden" name="year" value="<%= params[:year] %>" />
@@ -131,20 +131,20 @@
         } %>
       </div>
 
-      <%= render "govuk_publishing_components/components/button", {
-        text: "Calculate",
-        value: "Calculate",
-        name: "results"
-      } %>
+      <div class="question-wrapper">
+        <%= render "govuk_publishing_components/components/button", {
+          text: "Calculate",
+          value: "Calculate",
+          name: "results"
+        } %>
+      </div>
     <% end %>
 
     <% if can_haz_results? %>
-    <div class="results">
-      <h2 id="results" class="results-heading">
-        Results
-      </h2>
-      <%= render "results" %>
-    </div>
+      <div class="results">
+        <h2 id="results" class="govuk-heading-xl">Results</h2>
+        <%= render "results" %>
+      </div>
     <% end %>
   </article>
 </div>

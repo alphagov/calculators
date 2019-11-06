@@ -1,90 +1,58 @@
-.calculator-form {
-  @include core-19;
-  margin-bottom: $gutter * 2;
+.error-summary-item {
+  @include govuk-font(19, $weight: bold);
+  color: $govuk-error-colour;
 
-  .error-summary-item {
-    @include govuk-font(19, $weight: bold);
-    color: $govuk-error-colour;
-
-    &:focus {
-      color: $govuk-focus-text-colour;
-    }
-  }
-
-  .question-wrapper {
-    position: relative;
-    padding-left: govuk-spacing(7);
-  }
-
-  .date-wrapper {
-    margin-bottom: govuk-spacing(3);
-
-    @include govuk-media-query($from: tablet) {
-      margin-bottom: 0;
-    }
-  }
-
-  ul,
-  p {
-    @include core-19;
-    margin-top: $gutter-half;
-    margin-bottom: $gutter-half;
-
-    @include media(tablet) {
-      margin-top: $gutter-two-thirds;
-      margin-bottom: $gutter-two-thirds;
-    }
-  }
-
-  ul {
-    list-style: disc;
-    list-style-position: outside;
-    margin-left: $gutter-two-thirds;
-  }
-
-  h2 {
-    @include bold-24;
-    margin-top: em(45, 24);
-    margin-bottom: em(20, 24);
-    position: relative;
-  }
-
-  h3 {
-    @include bold-19;
-
-    margin-top: em(10, 16);
-    margin-bottom: em(5, 16);
-
-    @include media(tablet) {
-      margin-top: em(20, 19);
-    }
-  }
-
-  .step {
-    &:before {
-      @include core-16;
-
-      position: absolute;
-      left: 0;
-      margin-top: -1px;
-      height: 18px;
-      width: 18px;
-      padding: 4px;
-      border-radius: 50%;
-      background-color: $black;
-      color: $white;
-      font-weight: bold;
-      text-align: center;
-    }
-  }
-
-  @for $i from 1 through 14 {
-    .step-#{$i}:before {
-      content: "#{$i}";
-    }
+  &:focus {
+    color: $govuk-focus-text-colour;
   }
 }
 
-.related-container {
-  margin-top: 40px;
+.question-wrapper {
+  position: relative;
+  padding-bottom: govuk-spacing(4);
+
+  @include govuk-media-query($from: tablet) {
+    padding-left: govuk-spacing(7);
+    padding-bottom: govuk-spacing(7);
+  }
+}
+
+.date-wrapper {
+  margin-bottom: govuk-spacing(3);
+
+  @include govuk-media-query($from: tablet) {
+    margin-bottom: 0;
+  }
+}
+
+.step {
+  position: relative;
+  display: inline-block;
+  padding-left: govuk-spacing(7);
+
+  &:before {
+    @include govuk-font(16);
+    position: absolute;
+    left: 0;
+    margin-top: -1px;
+    height: 18px;
+    width: 18px;
+    padding: 4px;
+    border-radius: 50%;
+    background-color: govuk-colour("black");
+    color: govuk-colour("white");
+    font-weight: bold;
+    text-align: center;
+  }
+
+  @include govuk-media-query($from: tablet) {
+    position: static;
+    padding: 0;
+  }
+}
+
+@for $i from 1 through 14 {
+  .step-#{$i}:before {
+    content: "#{$i}";
+  }
 }
