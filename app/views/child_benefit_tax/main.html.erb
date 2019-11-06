@@ -111,31 +111,31 @@
         } %>
       </div>
 
-        <fieldset class="adjusted-income">
-        <%= step(5, "Enter details of any allowable deductions (optional):") %>
-        <div class="form-group">
-          <%= label_tag "pension_contributions_from_pay", "Pension contributions deducted from your pay (don't include contributions deducted before tax)", class: "form-label" %>
-          <%= money_input "pension_contributions_from_pay", @adjusted_net_income_calculator.pension_contributions_from_pay, 'aria-describedby' => 'step-5-description', class: "form-control" %>
-        </div>
-         <div class="form-group">
-          <%= label_tag "outgoing_pension_contributions", "Pension contributions not paid from your salary (the amount you actually paid, not the grossed-up amount)", class: "form-label" %>
-          <%= money_input "outgoing_pension_contributions", @adjusted_net_income_calculator.outgoing_pension_contributions, 'aria-describedby' => 'step-5-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "retirement_annuities", "Retirement annuity contracts", class: "form-label" %>
-          <%= money_input "retirement_annuities", @adjusted_net_income_calculator.retirement_annuities, 'aria-describedby' => 'step-5-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "cycle_scheme", "Cycle scheme", class: "form-label" %>
-          <%= money_input "cycle_scheme", @adjusted_net_income_calculator.cycle_scheme, 'aria-describedby' => 'step-5-description', class: "form-control" %>
-        </div>
-         <div class="form-group">
-          <%= label_tag "gift_aid_donations", "Gift Aid donations", class: "form-label" %>
-          <%= money_input "gift_aid_donations", @adjusted_net_income_calculator.gift_aid_donations, 'aria-describedby' => 'step-5-description', class: "form-control" %>
-        </div>
+      <div class="question-wrapper">
+        <% question_five = capture do %>
+          <%= render "money_input", :label => "Pension contributions deducted from your pay (don't include contributions deducted before tax)", :id => "pension_contributions_from_pay", :value => @adjusted_net_income_calculator.pension_contributions_from_pay, :describedby => nil %>
 
-        <%= submit_tag "Calculate", name: "results", class: "button" %>
-      </fieldset>
+          <%= render "money_input", :label => "Pension contributions not paid from your salary (the amount you actually paid, not the grossed-up amount)", :id => "outgoing_pension_contributions", :value => @adjusted_net_income_calculator.outgoing_pension_contributions, :describedby => nil %>
+
+          <%= render "money_input", :label => "Retirement annuity contracts", :id => "retirement_annuities", :value => @adjusted_net_income_calculator.retirement_annuities, :describedby => nil %>
+
+          <%= render "money_input", :label => "Cycle scheme", :id => "cycle_scheme", :value => @adjusted_net_income_calculator.cycle_scheme, :describedby => nil %>
+
+          <%= render "money_input", :label => "Gift Aid donations", :id => "gift_aid_donations", :value => @adjusted_net_income_calculator.gift_aid_donations, :describedby => nil %>
+        <% end %>
+
+        <%= render "govuk_publishing_components/components/fieldset", {
+          legend_text: step(5, "Enter details of any allowable deductions (optional):"),
+          heading_size: "m",
+          text: question_five
+        } %>
+      </div>
+
+      <%= render "govuk_publishing_components/components/button", {
+        text: "Calculate",
+        value: "Calculate",
+        name: "results"
+      } %>
     <% end %>
 
     <% if can_haz_results? %>
