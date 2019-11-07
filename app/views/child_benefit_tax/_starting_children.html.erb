@@ -10,7 +10,7 @@
       margin_bottom: 4,
       font_size: 19
     } %>
-    <%= render "starting_child", index: 0, child: StartingChild.new  %>
+    <%= render "child_benefit_tax/starting_child", index: 0, child: StartingChild.new  %>
   </div>
 
 <% else %>
@@ -26,7 +26,7 @@
         margin_bottom: 4,
         font_size: 19
       } %>
-      <%= render "starting_child", :index => index, :child => child %>
+      <%= render "child_benefit_tax/starting_child", :index => index, :child => child %>
     </div>
   <% end -%>
 <% end %>

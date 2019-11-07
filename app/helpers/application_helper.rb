@@ -40,12 +40,6 @@ module ApplicationHelper
     end
   end
 
-  def q3_conditional_content(option)
-    if option == "yes"
-      render "child_benefit_tax/part_tax_year_conditional"
-    end
-  end
-
   def day_options(selected)
     days = Array(1..31).map { |number|
       format_date(number, :day, selected)
@@ -71,6 +65,12 @@ module ApplicationHelper
   end
 
 private
+
+  def q3_conditional_content(option)
+    if option == "yes"
+      render "child_benefit_tax/part_tax_year_conditional"
+    end
+  end
 
   def format_date(number, type, selected)
     selected = selected ? Date.parse(selected.to_s).send(type) : nil
