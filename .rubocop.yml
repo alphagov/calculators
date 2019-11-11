@@ -1,3 +1,7 @@
+inherit_gem:
+  rubocop-govuk:
+    - config/default.yml
+
 Style/CommentedKeyword:
   Exclude:
     - 'spec/models/child_benefit_tax_calculator_spec.rb'
