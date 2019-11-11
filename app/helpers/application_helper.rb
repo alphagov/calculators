@@ -9,6 +9,25 @@ module ApplicationHelper
     request.original_fullpath.split("?", 2).first
   end
 
+  def form_errors
+    errors = []
+
+    @calculator.starting_children.map(&:errors).map(&:messages).map(&:values).flatten.uniq.each do |message|
+      errors << {
+        text: message,
+        href: "#children_heading",
+      }
+    end
+    @calculator.errors.each do |key, message|
+      errors << {
+        text: message,
+        href: "##{key}",
+      }
+    end
+
+    errors
+  end
+
   def children_select_options(selected)
     Array(1..10).map do |num|
       {

@@ -19,6 +19,59 @@ describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe "#form_errors" do
+    it "formats and returns errors for the top of the page" do
+      class ErrorDouble
+        def messages
+          {
+            start_date: [
+              "enter the date Child Benefit started",
+              "enter a valid date - there are only 29 days in February",
+            ],
+            end_date: [
+              "child Benefit start date must be before stop date",
+            ],
+          }
+        end
+      end
+
+      @calculator = double
+      data = double
+
+      allow(@calculator).to receive(:starting_children).and_return(data)
+      allow(@calculator).to receive(:errors).and_return(
+        tax_year: "select a tax year",
+        part_year_children_count: "the number of children you're claiming a part year for can't be more than the total number of children you're claiming for",
+      )
+      allow(data).to receive(:map).and_return([ErrorDouble.new])
+
+      expected = [
+        {
+          href: "#children_heading",
+          text: "enter the date Child Benefit started",
+        },
+        {
+          href: "#children_heading",
+          text: "enter a valid date - there are only 29 days in February",
+        },
+        {
+          href: "#children_heading",
+          text: "child Benefit start date must be before stop date",
+        },
+        {
+          href: "#tax_year",
+          text: "select a tax year",
+        },
+        {
+          href: "#part_year_children_count",
+          text: "the number of children you're claiming a part year for can't be more than the total number of children you're claiming for",
+        },
+      ]
+
+      expect(form_errors).to eq(expected)
+    end
+  end
+
   describe "#children_select_options" do
     it "generates an array of options for the select component" do
       expect(children_select_options(7)).to eq(
