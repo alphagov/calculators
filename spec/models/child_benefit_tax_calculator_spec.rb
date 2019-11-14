@@ -29,7 +29,7 @@ describe ChildBenefitTaxCalculator, type: :model do
 
   describe "input validation" do
     before(:each) do
-      @calc = ChildBenefitTaxCalculator.new(children_count: "1", is_part_year_claim: "yes")
+      @calc = ChildBenefitTaxCalculator.new(children_count: "1", is_part_year_claim: "yes", part_year_children_count: "1")
       @calc.valid?
     end
     it "should contain errors for year if none is given" do

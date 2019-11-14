@@ -1,17 +1,32 @@
 <% if @calculator.starting_children.count == 0 %>
-  <div class="child form-group">
-    <h3>Child <span class="child-number"> 1 </span></h3>
-    <%= render "starting_child", index: 0, child: StartingChild.new  %>
+  <div class="js-child govuk-!-margin-bottom-9">
+    <% heading = capture do %>
+      Child <span class="js-child-number"> 1 </span>
+    <% end %>
+
+    <%= render "govuk_publishing_components/components/heading", {
+      text: heading,
+      heading_level: 3,
+      margin_bottom: 4,
+      font_size: 19
+    } %>
+    <%= render "child_benefit_tax/starting_child", index: 0, child: StartingChild.new  %>
   </div>
+
 <% else %>
   <% @calculator.starting_children.each_with_index do |child, index| -%>
-    <div class="child form-group<% if child.errors.any? %> form-group-error<% end -%> ">
-      <% child.errors.each do |key, message| %>
-        <% message[0] = message[0].capitalize %>
-        <span class="error-message"><%= message %></span>
+    <div class="js-child govuk-!-margin-bottom-9">
+      <% heading = capture do %>
+        Child <span class="js-child-number"><%= index + 1 %></span>
       <% end %>
-      <h3>Child <span class="child-number"><%= index + 1 %></span></h3>
-      <%= render "starting_child", :index => index, :child => child %>
+
+      <%= render "govuk_publishing_components/components/heading", {
+        text: heading,
+        heading_level: 3,
+        margin_bottom: 4,
+        font_size: 19
+      } %>
+      <%= render "child_benefit_tax/starting_child", :index => index, :child => child %>
     </div>
   <% end -%>
 <% end %>

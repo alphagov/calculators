@@ -1,7 +1,11 @@
 <% results_html = capture do %>
   <div class="results-estimate">
-    <h3>Child Benefit received</h3>
-    <p class="numbers">
+    <%= render "govuk_publishing_components/components/heading", {
+      text: "Child Benefit received",
+      heading_level: 3,
+      font_size: 19
+    } %>
+    <p class="govuk-!-font-size-80 govuk-!-font-weight-bold">
       <%= number_to_currency @calculator.benefits_claimed_amount, unit: "£", precision: 2 %>
     </p>
 
@@ -18,7 +22,11 @@
   <%# tax estimate %>
   <% if @calculator.adjusted_net_income %>
     <div class="results-estimate">
-      <h3>Tax charge to pay</h3>
+      <%= render "govuk_publishing_components/components/heading", {
+        text: "Tax charge to pay",
+        heading_level: 3,
+        font_size: 19
+      } %>
       <% if @calculator.adjusted_net_income < 50100 %>
         <p class="numbers">£0.00</p>
         <p>There is no tax charge if your income is below £50,099.</p>
@@ -37,7 +45,11 @@
             - your circumstances may change before the end of the tax year.</p>
         <% end %>
 
-        <h3>How and when to pay</h3>
+        <%= render "govuk_publishing_components/components/heading", {
+          text: "How and when to pay",
+          heading_level: 3,
+          font_size: 19
+        } %>
 
         <p>To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:</p>
         <ol>
@@ -53,7 +65,11 @@
           <p>The person with the highest income pays the tax charge, so use your partner’s income in the calculator if it’s higher than yours.</p>
         </div>
 
-        <h3>Your Child Benefit</h3>
+        <%= render "govuk_publishing_components/components/heading", {
+          text: "Your Child Benefit",
+          heading_level: 3,
+          font_size: 19
+        } %>
         <p>You can choose to:</p>
         <ul>
           <li><a href="/child-benefit-tax-charge/stop-child-benefit">stop getting Child Benefit</a> - you must pay any tax you owe</li>
@@ -68,7 +84,11 @@
       <% end -%>
     </div>
   <% else %>
-    <h3>Tax charge to pay</h3>
+    <%= render "govuk_publishing_components/components/heading", {
+      text: "Tax charge to pay",
+      heading_level: 3,
+      font_size: 19
+    } %>
     <p>To work out the tax charge, <a href="#adjusted_income">enter your income or your partner's</a> - whoever has the higher.</p>
     <p>Find out more about the <a href="/child-benefit-tax-charge">tax charge</a>.</p>
   <% end %>

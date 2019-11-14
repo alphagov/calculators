@@ -1,8 +1,8 @@
 # encoding: utf-8
 
 module ChildBenefitTaxHelper
-  def money_input(name, amount, options = {})
-    text_field_tag(name, number_to_currency((amount.blank? || amount <= 0 ? nil : amount), unit: "£", precision: 2), { placeholder: "£" }.merge(options))
+  def money_input_value(amount)
+    number_to_currency((amount.blank? || amount <= 0 ? nil : amount), unit: "£", precision: 2)
   end
 
   def tax_year_label(year)

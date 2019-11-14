@@ -2,157 +2,137 @@
 
 <%= render 'govuk_publishing_components/components/title', title: "Child Benefit tax calculator" %>
 
-<div class="grid-row">
-  <article role="article" class="column-two-thirds">
+<div class="govuk-grid-row">
+  <article role="article" class="govuk-grid-column-two-thirds">
     <%= form_tag("main/process_form", method: :get, id: "child_benefit_tax_calculator", class: "calculator-form") do %>
       <%# hidden field to store the tax year so it can persist %>
       <input type="hidden" name="year" value="<%= params[:year] %>" />
 
       <% if @calculator.has_errors? -%>
-        <div role="group" aria-labelledby="error-heading" tabindex="-1" class="error-summary" id="results">
-          <h2 id="error-heading">Please check the form</h2>
-          <ul class="error-summary-list">
-            <%# TODO: This could be tidied up into a model or helper method %>
-            <% @calculator.starting_children.map(&:errors).map(&:messages).map(&:values).flatten.uniq.each do |message| %>
-              <li><a href="#children_heading"><%= message %></a></li>
-            <% end %>
-            <% @calculator.errors.each do |key, message| %>
-              <li><a href="#<%= key %>"><%= message %></a></li>
-            <% end %>
-          </ul>
-        </div>
+        <%= render "govuk_publishing_components/components/error_summary", {
+          title: "Please check the form",
+          items: form_errors
+        } %>
       <% end -%>
 
-      <fieldset>
-        <%= step(1, "How many children do you want to claim Child Benefit for?") %>
-        <label for="children_count" class="visuallyhidden">Number of children</label>
-        <%= select_tag "children_count", options_for_select((1..10).collect{|n| [n,n]}, @calculator.children_count), :class => "form-control" %>
-        <%= submit_tag "Update", :name => "children", :class => "js-hidden button update-button" %>
-      </fieldset>
-
-      <fieldset id="tax_year">
-        <%= step(2, "Which tax year are you claiming for?") %>
-        <p>Tax years run from 6 April to 5 April the following year.</p>
-        <div class="form-group <% if @calculator.errors.has_key?(:tax_year) %> form-group-error<% end %>">
-          <div class="tax-year">
-            <% @calculator.errors[:tax_year].each do |message| %>
-              <span class="error-message"><%= message.capitalize %></span>
-            <% end %>
-            <% ChildBenefitTaxCalculator::TAX_YEARS.keys.each do |year| -%>
-              <div class="multiple-choice">
-                <%= radio_button_tag "year", year, (@calculator.tax_year == year.to_i) %>
-                <label for="year_<%= year %>">
-                  <%= tax_year_label(year) %>
-                </label>
-              </div>
-            <% end %>
+      <div class="question-wrapper">
+        <% question_one = capture do %>
+          <%= render "govuk_publishing_components/components/select", {
+            id: "children_count",
+            label: "Number of children",
+            full_width: true,
+            options: children_select_options(@calculator.children_count)
+          } %>
+          <div class="js-hidden">
+            <%= render "govuk_publishing_components/components/button", {
+              text: "Update",
+              name: "children"
+            } %>
           </div>
-        </div>
-      </fieldset>
+        <% end %>
 
-      <fieldset id="is_part_year_claim">
-        <%= step(3, "Are you claiming for only a part of the tax year for any of your children?") %>
-        <div class="form-group <% if @calculator.errors.has_key?(:is_part_year_claim) %> form-group-error<% end %>">
-          <div class="is-part-year-claim">
-            <% @calculator.errors[:is_part_year_claim].each do |message| %>
-              <span class="error-message"><%= message.capitalize %></span>
-            <% end -%>
-            <% ["yes", "no"].each do |option| %>
-              <div class="multiple-choice">
-                <%= radio_button_tag "is_part_year_claim", option, (@calculator.is_part_year_claim == option) %>
-                <label for="is_part_year_claim_<%= option %>">
-                  <%= option.capitalize %>
-                </label>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </fieldset>
-
-      <fieldset class="adjusted-income">
-        <%= step(4, "Enter your income details for the tax year:") %>
-        <ul id="step-4-description">
-          <li>don’t combine your household income</li>
-          <li>use your partner’s income if it’s higher than yours</li>
-          <li>you can get some of this information from your P60, P11D, employer or tax adviser</li>
-        </ul>
-        <div class="form-group">
-          <%= label_tag "gross_income", "Salary before tax (with pension contributions deducted)", class: "form-label" %>
-          <%= money_input "gross_income", @adjusted_net_income_calculator.gross_income, 'aria-describedby' => 'step-4-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "other_income", "Other employment income - for example bonuses", class: "form-label" %>
-          <%= money_input "other_income", @adjusted_net_income_calculator.other_income, 'aria-describedby' => 'step-4-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "childcare", "Taxable benefits provided by your employer - for example the value of any medical insurance, company car, or anything else included on your P11D", class: "form-label" %>
-          <%= money_input "childcare", @adjusted_net_income_calculator.childcare, 'aria-describedby' => 'step-4-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "pensions", "Income from pension(s) before tax - for example from a state pension", class: "form-label" %>
-          <%= money_input "pensions", @adjusted_net_income_calculator.pensions, 'aria-describedby' => 'step-4-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "non_employment_income", "Other income before tax - for example profits from self-employment, taxable savings, dividends", class: "form-label" %>
-          <%= money_input "non_employment_income", @adjusted_net_income_calculator.non_employment_income, 'aria-describedby' => 'step-4-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "property", "Income from property before tax - for example rental income", class: "form-label" %>
-          <%= money_input "property", @adjusted_net_income_calculator.property, 'aria-describedby' => 'step-4-description', class: "form-control" %>
-        </div>
-      </fieldset>
-
-        <fieldset class="adjusted-income">
-        <%= step(5, "Enter details of any allowable deductions (optional):") %>
-        <div class="form-group">
-          <%= label_tag "pension_contributions_from_pay", "Pension contributions deducted from your pay (don't include contributions deducted before tax)", class: "form-label" %>
-          <%= money_input "pension_contributions_from_pay", @adjusted_net_income_calculator.pension_contributions_from_pay, 'aria-describedby' => 'step-5-description', class: "form-control" %>
-        </div>
-         <div class="form-group">
-          <%= label_tag "outgoing_pension_contributions", "Pension contributions not paid from your salary (the amount you actually paid, not the grossed-up amount)", class: "form-label" %>
-          <%= money_input "outgoing_pension_contributions", @adjusted_net_income_calculator.outgoing_pension_contributions, 'aria-describedby' => 'step-5-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "retirement_annuities", "Retirement annuity contracts", class: "form-label" %>
-          <%= money_input "retirement_annuities", @adjusted_net_income_calculator.retirement_annuities, 'aria-describedby' => 'step-5-description', class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= label_tag "cycle_scheme", "Cycle scheme", class: "form-label" %>
-          <%= money_input "cycle_scheme", @adjusted_net_income_calculator.cycle_scheme, 'aria-describedby' => 'step-5-description', class: "form-control" %>
-        </div>
-         <div class="form-group">
-          <%= label_tag "gift_aid_donations", "Gift Aid donations", class: "form-label" %>
-          <%= money_input "gift_aid_donations", @adjusted_net_income_calculator.gift_aid_donations, 'aria-describedby' => 'step-5-description', class: "form-control" %>
-        </div>
-
-        <%= submit_tag "Calculate", name: "results", class: "button" %>
-      </fieldset>
-    <% end %>
-
-    <div id="children-template" style="display:none" class="panel panel-border-wide">
-      <div class="part-year-children-count">
-        <h2>How many children do you want to claim only a part of the tax year for?</h2>
-        <label for="part_year_children_count" class="visuallyhidden">Number of part year children</label>
-        <%= select_tag "part_year_children_count", options_for_select((1..10).collect{|n| [n,n]}, @calculator.part_year_children_count), :class => "form-control" %>
-        <%= submit_tag "Update Children", :name => "children", :class => "button update-button js-hidden" %>
+        <%= render "govuk_publishing_components/components/fieldset", {
+          legend_text: step(1, "How many children do you want to claim Child Benefit for?"),
+          heading_size: "m",
+          text: question_one
+        } %>
       </div>
 
-      <h2 id="children_heading">Enter the Child Benefit start and stop dates:</h2>
-      <ul>
-        <li>you can find the start date on your Child Benefit award notice</li>
-        <li>the stop date is usually when a child turns 16 or leaves full-time education</li>
-      </ul>
+      <div class="question-wrapper" id="tax_year">
+        <% question_two_errors = capture do %>
+          <% @calculator.errors[:tax_year].each do |message| %>
+            <%= message.capitalize %>
+          <% end %>
+        <% end %>
 
-      <%= render "starting_children" %>
-    </div>
+        <%= render "govuk_publishing_components/components/radio", {
+          name: "year",
+          id_prefix: "year",
+          error_message: question_two_errors,
+          heading: step(2, "Which tax year are you claiming for?"),
+          hint: "Tax years run from 6 April to 5 April the following year.",
+          items: q2_radio_options
+        } %>
+      </div>
+
+      <div class="question-wrapper" id="is_part_year_claim">
+        <% question_three_errors = capture do %>
+          <% @calculator.errors[:is_part_year_claim].each do |message| %>
+            <%= message.capitalize %>
+          <% end -%>
+        <% end %>
+
+        <%= render "govuk_publishing_components/components/radio", {
+          name: "is_part_year_claim",
+          id_prefix: "is_part_year_claim",
+          error_message: question_three_errors,
+          heading: step(3, "Are you claiming for only a part of the tax year for any of your children?"),
+          items: q3_radio_options
+        } %>
+      </div>
+
+      <div class="question-wrapper">
+        <% question_four = capture do %>
+          <ul id="step-4-description" class="govuk-list govuk-list--bullet">
+            <li>don’t combine your household income</li>
+            <li>use your partner’s income if it’s higher than yours</li>
+            <li>you can get some of this information from your P60, P11D, employer or tax adviser</li>
+          </ul>
+
+          <%= render "money_input", :label => "Salary before tax (with pension contributions deducted)", :id => "gross_income", :value => @adjusted_net_income_calculator.gross_income, :describedby => "step-4-description" %>
+
+          <%= render "money_input", :label => "Other employment income - for example bonuses", :id => "other_income", :value => @adjusted_net_income_calculator.other_income, :describedby => "step-4-description" %>
+
+          <%= render "money_input", :label => "Taxable benefits provided by your employer - for example the value of any medical insurance, company car, or anything else included on your P11D", :id => "childcare", :value => @adjusted_net_income_calculator.childcare, :describedby => "step-4-description" %>
+
+          <%= render "money_input", :label => "Income from pension(s) before tax - for example from a state pension", :id => "pensions", :value => @adjusted_net_income_calculator.pensions, :describedby => "step-4-description" %>
+
+          <%= render "money_input", :label => "Other income before tax - for example profits from self-employment, taxable savings, dividends", :id => "non_employment_income", :value => @adjusted_net_income_calculator.non_employment_income, :describedby => "step-4-description" %>
+
+          <%= render "money_input", :label => "Income from property before tax - for example rental income", :id => "property", :value => @adjusted_net_income_calculator.property, :describedby => "step-4-description" %>
+        <% end %>
+
+        <%= render "govuk_publishing_components/components/fieldset", {
+          legend_text: step(4, "Enter your income details for the tax year:"),
+          heading_size: "m",
+          text: question_four
+        } %>
+      </div>
+
+      <div class="question-wrapper">
+        <% question_five = capture do %>
+          <%= render "money_input", :label => "Pension contributions deducted from your pay (don't include contributions deducted before tax)", :id => "pension_contributions_from_pay", :value => @adjusted_net_income_calculator.pension_contributions_from_pay, :describedby => nil %>
+
+          <%= render "money_input", :label => "Pension contributions not paid from your salary (the amount you actually paid, not the grossed-up amount)", :id => "outgoing_pension_contributions", :value => @adjusted_net_income_calculator.outgoing_pension_contributions, :describedby => nil %>
+
+          <%= render "money_input", :label => "Retirement annuity contracts", :id => "retirement_annuities", :value => @adjusted_net_income_calculator.retirement_annuities, :describedby => nil %>
+
+          <%= render "money_input", :label => "Cycle scheme", :id => "cycle_scheme", :value => @adjusted_net_income_calculator.cycle_scheme, :describedby => nil %>
+
+          <%= render "money_input", :label => "Gift Aid donations", :id => "gift_aid_donations", :value => @adjusted_net_income_calculator.gift_aid_donations, :describedby => nil %>
+        <% end %>
+
+        <%= render "govuk_publishing_components/components/fieldset", {
+          legend_text: step(5, "Enter details of any allowable deductions (optional):"),
+          heading_size: "m",
+          text: question_five
+        } %>
+      </div>
+
+      <div class="question-wrapper">
+        <%= render "govuk_publishing_components/components/button", {
+          text: "Calculate",
+          value: "Calculate",
+          name: "results"
+        } %>
+      </div>
+    <% end %>
 
     <% if can_haz_results? %>
-    <div class="results">
-      <h2 id="results" class="results-heading">
-        Results
-      </h2>
-      <%= render "results" %>
-    </div>
+      <div class="results">
+        <h2 id="results" class="govuk-heading-xl">Results</h2>
+        <%= render "results" %>
+      </div>
     <% end %>
   </article>
 </div>

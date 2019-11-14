@@ -11,7 +11,7 @@ feature "Child Benefit Tax Calculator", js: true do
     visit "/child-benefit-tax-calculator/main"
     expect(page).to have_no_css(".results")
 
-    choose "year_2012", allow_label_click: true
+    choose "year-0", allow_label_click: true, visible: false # 2012
     select "2", from: "children_count"
     click_on "Update"
     expect(page).to have_no_css(".results")
@@ -20,7 +20,7 @@ feature "Child Benefit Tax Calculator", js: true do
   it "supports all tax years from 2012 to current" do
     visit "/child-benefit-tax-calculator/main"
 
-    within ".tax-year" do
+    within "#tax_year" do
       # This is written out explicitly to avoid using the same
       # generator code (e.g. ranges) as is used in the actual app,
       # since a bug or typo in the code would be hidden by the same
@@ -36,8 +36,8 @@ feature "Child Benefit Tax Calculator", js: true do
         2019
       ]
 
-      tax_years.each do |year|
-        expect(page).to have_css("#year_#{year}", visible: false)
+      tax_years.each_with_index do |year, index|
+        expect(page).to have_css("#year-#{index}[value='#{year}']", visible: false)
       end
     end
   end
@@ -50,20 +50,19 @@ feature "Child Benefit Tax Calculator", js: true do
     context "when tax claim duration isn't selected" do
       it "should display validation errors" do
         click_on "Calculate"
-        within ".error-summary" do
+        within ".gem-c-error-summary" do
           expect(page).to have_content("select a tax year")
           expect(page).to have_content("select part year tax claim")
           expect(page).to have_no_content("enter the date Child Benefit started")
         end
 
         within "#tax_year" do
-          expect(page).to have_css(".error-message")
+          expect(page).to have_css(".govuk-error-message")
           expect(page).to have_content("Select a tax year")
         end
 
         within "#is_part_year_claim" do
-          expect(page).to have_css(".error-message")
-          expect(page).to have_no_css("#children")
+          expect(page).to have_css(".govuk-error-message")
           expect(page).to have_content("Select part year tax claim")
         end
       end
@@ -73,13 +72,13 @@ feature "Child Benefit Tax Calculator", js: true do
       it "should display validation errors" do
         choose "No", allow_label_click: true
         click_on "Calculate"
-        within ".error-summary" do
+        within ".gem-c-error-summary" do
           expect(page).to have_content("select a tax year")
           expect(page).to have_no_content("enter the date Child Benefit started")
         end
 
         within "#tax_year" do
-          expect(page).to have_css(".error-message")
+          expect(page).to have_css(".gem-c-error-message")
           expect(page).to have_content("Select a tax year")
         end
 
@@ -95,23 +94,25 @@ feature "Child Benefit Tax Calculator", js: true do
       it "should display validation errors" do
         choose "Yes", allow_label_click: true
         click_on "Calculate"
-        within ".error-summary" do
+        within ".gem-c-error-summary" do
           expect(page).to have_content("select a tax year")
           expect(page).to have_content("enter the date Child Benefit started")
         end
 
         within "#tax_year" do
-          expect(page).to have_css(".error-message")
+          expect(page).to have_css(".gem-c-error-message")
           expect(page).to have_content("Select a tax year")
         end
 
         within "#is_part_year_claim" do
-          expect(page).to have_css(".error-message")
+          expect(page).to have_css(".govuk-error-message")
           expect(page).to have_no_content("Select part year tax claim")
 
-          within "#children" do
-            expect(page).to have_css(".error-message")
-            expect(page).to have_content("Enter the date Child Benefit started")
+          within "#children-template" do
+            fieldsets = page.all("fieldset")
+
+            expect(fieldsets[0]).to have_css(".govuk-error-message")
+            expect(fieldsets[0]).to have_content("Enter the date Child Benefit started")
           end
         end
       end
@@ -119,9 +120,7 @@ feature "Child Benefit Tax Calculator", js: true do
       it "should ask how many children are being claimed for a part year" do
         choose "Yes", allow_label_click: true
         within "#is_part_year_claim" do
-          within "#children" do
-            expect(page).to have_select("part_year_children_count")
-          end
+          expect(page).to have_select("part_year_children_count")
         end
       end
 
@@ -131,33 +130,29 @@ feature "Child Benefit Tax Calculator", js: true do
         click_button "Update Children"
 
         within "#is_part_year_claim" do
-          within "#children" do
-            expect(page).to have_select("part_year_children_count", selected: "2")
+          expect(page).to have_select("part_year_children_count", selected: "2")
 
-            expect(page).to have_css("#starting_children_0_start_year")
-            expect(page).to have_css("#starting_children_0_start_month")
-            expect(page).to have_css("#starting_children_0_start_day")
-            expect(page).to have_css("#starting_children_1_start_year")
-            expect(page).to have_css("#starting_children_1_start_month")
-            expect(page).to have_css("#starting_children_1_start_day")
-          end
+          expect(page).to have_css("#starting_children_0_start_year")
+          expect(page).to have_css("#starting_children_0_start_month")
+          expect(page).to have_css("#starting_children_0_start_day")
+          expect(page).to have_css("#starting_children_1_start_year")
+          expect(page).to have_css("#starting_children_1_start_month")
+          expect(page).to have_css("#starting_children_1_start_day")
         end
       end
     end
 
     context "when NO, then YES is selected for tax claim duration" do
       it "should display a date selector for one part year child" do
-        choose "year_2015", allow_label_click: true
+        choose "year-3", allow_label_click: true, visible: false # 2015
         choose "No", allow_label_click: true
         click_button "Calculate"
 
         choose "Yes", allow_label_click: true
         within "#is_part_year_claim" do
-          within "#children" do
-            expect(page).to have_css("#starting_children_0_start_year")
-            expect(page).to have_css("#starting_children_0_start_month")
-            expect(page).to have_css("#starting_children_0_start_day")
-          end
+          expect(page).to have_css("#starting_children_0_start_year")
+          expect(page).to have_css("#starting_children_0_start_month")
+          expect(page).to have_css("#starting_children_0_start_day")
         end
       end
     end
@@ -182,20 +177,19 @@ feature "Child Benefit Tax Calculator", js: true do
     select "February", from: "starting_children[1][stop][month]"
     select "31", from: "starting_children[1][stop][day]"
 
-    choose "year_2012", allow_label_click: true
+    choose "year-0", allow_label_click: true, visible: false # 2012
 
     click_button "Calculate"
 
-    expect(page).to have_selector(
-      ".error-message",
-      text: "Enter a valid date - there are only 29 days in February",
-      count: 2,
-    )
+    within "#children-template" do
+      expect(page).to have_css("#starting_children_0_start_year_error", text: "Enter a valid date - there are only 29 days in February")
+      expect(page).to have_css("#starting_children_1_stop_year_error", text: "Enter a valid date - there are only 29 days in February")
+    end
   end
 
   it "should reload children with valid dates if one child has a date error" do
     visit "/child-benefit-tax-calculator/main"
-    choose "year_2014", allow_label_click: true
+    choose "year-2", allow_label_click: true, visible: false # 2014
     choose "Yes", allow_label_click: true
     select "2", from: "children_count"
     select "2", from: "part_year_children_count"
@@ -219,11 +213,9 @@ feature "Child Benefit Tax Calculator", js: true do
 
     click_button "Calculate"
 
-    expect(page).to have_selector(
-      ".error-message",
-      text: "Enter a valid date - there are only 30 days in April",
-      count: 1,
-    )
+    within "#children-template" do
+      expect(page).to have_css("#starting_children_0_start_year_error", text: "Enter a valid date - there are only 30 days in April")
+    end
 
     expect(page).to have_select("children_count", selected: "2")
     expect(page).to have_select("part_year_children_count", selected: "2")
@@ -240,7 +232,7 @@ feature "Child Benefit Tax Calculator", js: true do
   it "should reload part year children with the correct dates" do
     Timecop.travel "2014-05-01"
     visit "/child-benefit-tax-calculator/main"
-    choose "year_2014", allow_label_click: true
+    choose "year-2", allow_label_click: true, visible: false # 2014
     choose "Yes", allow_label_click: true
     select "2", from: "children_count"
     select "1", from: "part_year_children_count"
@@ -272,6 +264,33 @@ feature "Child Benefit Tax Calculator", js: true do
     expect(page).to have_select("starting_children_0_stop_day", selected: "1")
   end
 
+  it "should show an error if start date is after end date" do
+    visit "/child-benefit-tax-calculator/main"
+    choose "year-2", allow_label_click: true, visible: false # 2014
+    choose "Yes", allow_label_click: true
+    select "1", from: "children_count"
+    select "1", from: "part_year_children_count"
+    within "#is_part_year_claim" do
+      Capybara.ignore_hidden_elements = false
+      click_button "Update Children"
+      Capybara.ignore_hidden_elements = true
+    end
+
+    select "2014", from: "starting_children[0][start][year]"
+    select "June", from: "starting_children[0][start][month]"
+    select "1", from: "starting_children[0][start][day]"
+
+    select "2014", from: "starting_children[0][stop][year]"
+    select "April", from: "starting_children[0][stop][month]"
+    select "1", from: "starting_children[0][stop][day]"
+
+    click_button "Calculate"
+
+    within "#children-template" do
+      expect(page).to have_css("#starting_children_0_stop_year_error", text: "Child Benefit start date must be before stop date")
+    end
+  end
+
   it "should render start date to be ten years in the past" do
     allow(DateHelper).to receive(:years_ago).and_return(Date.parse("2010-01-01"))
     allow(DateHelper).to receive(:years_since).and_return(Date.parse("2012-01-01"))
@@ -279,7 +298,7 @@ feature "Child Benefit Tax Calculator", js: true do
     visit "/child-benefit-tax-calculator/main"
     choose "Yes", allow_label_click: true
 
-    expected_year_list = ("2010".."2012").to_a.unshift("Year")
+    expected_year_list = ("2010".."2012").to_a.unshift("")
     expect(page).to have_select("starting_children_0_start_year", options: expected_year_list)
   end
 
@@ -289,7 +308,7 @@ feature "Child Benefit Tax Calculator", js: true do
     visit "/child-benefit-tax-calculator/main"
 
     choose "Yes", allow_label_click: true
-    expected_year_list = ("2012".."2014").to_a.unshift("Year")
+    expected_year_list = ("2012".."2014").to_a.unshift("")
     expect(page).to have_select("starting_children_0_stop_year", options: expected_year_list)
   end
 
@@ -313,16 +332,12 @@ feature "Child Benefit Tax Calculator", js: true do
     page.find("#starting_children_0_stop_month").select("January")
     page.find("#starting_children_0_stop_day").select("1")
 
-    choose "year_2013", allow_label_click: true
+    choose "year-1", allow_label_click: true, visible: false # 2013
 
     click_on "Calculate"
 
-    within ".error-summary" do
+    within ".gem-c-error-summary" do
       expect(page).to have_content("You haven't received any Child Benefit for the tax year selected. Check your Child Benefit dates or choose a different tax year.")
-    end
-
-    within "#children" do
-      expect(page).to have_css(".error-message")
     end
   end
 
@@ -433,7 +448,7 @@ feature "Child Benefit Tax Calculator", js: true do
         select "February", from: "starting_children_1_start_month"
         select "5", from: "starting_children_1_start_day"
 
-        choose "year_2012", allow_label_click: true
+        choose "year-0", allow_label_click: true, visible: false # 2012
 
         click_button "Calculate"
 
@@ -455,7 +470,7 @@ feature "Child Benefit Tax Calculator", js: true do
       select "2011", from: "starting_children[0][start][year]"
       select "January", from: "starting_children[0][start][month]"
       select "1", from: "starting_children[0][start][day]"
-      choose "year_2012", allow_label_click: true
+      choose "year-0", allow_label_click: true, visible: false # 2012
       fill_in "Salary before tax", with: "£60,000"
 
       click_button "Calculate"
@@ -469,7 +484,7 @@ feature "Child Benefit Tax Calculator", js: true do
       select "2011", from: "starting_children[0][start][year]"
       select "January", from: "starting_children[0][start][month]"
       select "1", from: "starting_children[0][start][day]"
-      choose "year_2012", allow_label_click: true
+      choose "year-0", allow_label_click: true, visible: false # 2012
       fill_in "Salary before tax", with: "45000"
 
       click_button "Calculate"
@@ -487,7 +502,7 @@ feature "Child Benefit Tax Calculator", js: true do
       select "2011", from: "starting_children[0][start][year]"
       select "January", from: "starting_children[0][start][month]"
       select "1", from: "starting_children[0][start][day]"
-      choose "year_2012", allow_label_click: true
+      choose "year-0", allow_label_click: true, visible: false # 2012
 
       fill_in "gross_income", with: "£120,000"
       fill_in "other_income", with: "£8,000"
@@ -511,9 +526,7 @@ feature "Child Benefit Tax Calculator", js: true do
       select "2011", from: "starting_children[0][start][year]"
       select "January", from: "starting_children[0][start][month]"
       select "1", from: "starting_children[0][start][day]"
-      choose "year_2012", allow_label_click: true
-
-      #click_on "Help working out your adjusted net income"
+      choose "year-0", allow_label_click: true, visible: false # 2012
 
       fill_in "gross_income", with: "£120,000"
       fill_in "other_income", with: "£8,000"
@@ -553,7 +566,7 @@ feature "Child Benefit Tax Calculator", js: true do
       end
 
       it "should display the amount of child benefit for 2012-2013" do
-        choose "year_2012", allow_label_click: true
+        choose "year-0", allow_label_click: true, visible: false # 2012
 
         click_button "Calculate"
 
@@ -564,7 +577,7 @@ feature "Child Benefit Tax Calculator", js: true do
       end
 
       it "should display the amount of child benefit for 2013-2014" do
-        choose "year_2013", allow_label_click: true
+        choose "year-1", allow_label_click: true, visible: false # 2013
 
         click_button "Calculate"
 
@@ -585,7 +598,7 @@ feature "Child Benefit Tax Calculator", js: true do
       end
 
       it "should display the amount of child benefit and tax estimate for 2012-13" do
-        choose "year_2012", allow_label_click: true
+        choose "year-0", allow_label_click: true, visible: false # 2012
         click_button "Calculate"
 
         expect(page).to have_content("£263.90")
@@ -602,7 +615,7 @@ feature "Child Benefit Tax Calculator", js: true do
       end
 
       it "should display the amount of child benefit and tax estimate for 2013-14" do
-        choose "year_2013", allow_label_click: true
+        choose "year-1", allow_label_click: true, visible: false # 2013
         click_button "Calculate"
 
         expect(page).to have_content("£1,055.60")
@@ -619,7 +632,7 @@ feature "Child Benefit Tax Calculator", js: true do
       it "should show a warning if the tax_year is incomplete" do
         Timecop.travel "2013-09-01"
 
-        choose "year_2013", allow_label_click: true
+        choose "year-1", allow_label_click: true, visible: false # 2013
         click_button "Calculate"
 
         expect(page).to have_content("This is an estimate based on your adjusted net income of £55,000.00")
@@ -632,7 +645,7 @@ feature "Child Benefit Tax Calculator", js: true do
         select "January", from: "starting_children_0_start_month"
         select "1", from: "starting_children_0_start_day"
 
-        choose "year_2013", allow_label_click: true
+        choose "year-1", allow_label_click: true, visible: false # 2013
         fill_in "Salary before tax", with: "49000"
         click_button "Calculate"
 
@@ -655,7 +668,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
     context "one child" do
       it "should correctly display the amount for one child" do
-        choose "year_2015", allow_label_click: true
+        choose "year-3", allow_label_click: true, visible: false # 2015
         choose "No", allow_label_click: true
 
         click_button "Calculate"
@@ -667,7 +680,7 @@ feature "Child Benefit Tax Calculator", js: true do
     context "two children" do
       it "should correctly display the amount for two children" do
         select "2", from: "children_count"
-        choose "year_2015", allow_label_click: true
+        choose "year-3", allow_label_click: true, visible: false # 2015
         choose "No", allow_label_click: true
 
         click_button "Calculate"
@@ -688,7 +701,7 @@ feature "Child Benefit Tax Calculator", js: true do
         select "2013", from: "starting_children_0_start_year"
         select "January", from: "starting_children_0_start_month"
         select "7", from: "starting_children_0_start_day"
-        choose "year_2012", allow_label_click: true
+        choose "year-0", allow_label_click: true, visible: false # 2012
 
         click_button "Calculate"
 
@@ -699,7 +712,7 @@ feature "Child Benefit Tax Calculator", js: true do
         select "2013", from: "starting_children_0_start_year"
         select "April", from: "starting_children_0_start_month"
         select "1", from: "starting_children_0_start_day"
-        choose "year_2012", allow_label_click: true
+        choose "year-0", allow_label_click: true, visible: false # 2012
 
         click_button "Calculate"
 
@@ -710,7 +723,7 @@ feature "Child Benefit Tax Calculator", js: true do
         select "2013", from: "starting_children_0_start_year"
         select "April", from: "starting_children_0_start_month"
         select "5", from: "starting_children_0_start_day"
-        choose "year_2012", allow_label_click: true
+        choose "year-0", allow_label_click: true, visible: false # 2012
 
         click_button "Calculate"
 
@@ -723,7 +736,7 @@ feature "Child Benefit Tax Calculator", js: true do
         select "2014", from: "starting_children_0_start_year"
         select "March", from: "starting_children_0_start_month"
         select "31", from: "starting_children_0_start_day"
-        choose "year_2013", allow_label_click: true
+        choose "year-1", allow_label_click: true, visible: false # 2013
 
         click_button "Calculate"
 
@@ -734,7 +747,7 @@ feature "Child Benefit Tax Calculator", js: true do
         select "2014", from: "starting_children_0_start_year"
         select "April", from: "starting_children_0_start_month"
         select "1", from: "starting_children_0_start_day"
-        choose "year_2013", allow_label_click: true
+        choose "year-1", allow_label_click: true, visible: false # 2013
 
         click_button "Calculate"
 
@@ -745,7 +758,7 @@ feature "Child Benefit Tax Calculator", js: true do
         select "2014", from: "starting_children_0_start_year"
         select "April", from: "starting_children_0_start_month"
         select "5", from: "starting_children_0_start_day"
-        choose "year_2013", allow_label_click: true
+        choose "year-1", allow_label_click: true, visible: false # 2013
 
         click_button "Calculate"
 

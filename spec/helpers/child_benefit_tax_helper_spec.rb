@@ -3,15 +3,13 @@
 require "spec_helper"
 
 describe ChildBenefitTaxHelper, type: :helper do
-  describe "money_input" do
-    it "should create an html text input with sensible defaults" do
-      expect(money_input("foo", 0)).to eq('<input type="text" name="foo" id="foo" placeholder="£" />')
-      expect(money_input("foo", 200)).to eq('<input type="text" name="foo" id="foo" value="£200.00" placeholder="£" />')
+  describe "money_input_value" do
+    it "should convert a number into a monetary value" do
+      expect(money_input_value(1001)).to eq("£1,001.00")
     end
 
-    it "combines the field tag options with the placeholder value" do
-      expect(money_input("foo", 0, foo: "bar")).to eq('<input type="text" name="foo" id="foo" placeholder="£" foo="bar" />')
-      expect(money_input("foo", 0, placeholder: "Enter something")).to eq('<input type="text" name="foo" id="foo" placeholder="Enter something" />')
+    it "should return nothing if the number is zero" do
+      expect(money_input_value(0)).to eq(nil)
     end
   end
 
