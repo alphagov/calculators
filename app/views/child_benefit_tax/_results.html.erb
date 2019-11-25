@@ -28,12 +28,12 @@
         font_size: 19
       } %>
       <% if @calculator.adjusted_net_income < 50100 %>
-        <p class="numbers">£0.00</p>
+        <p class="govuk-!-font-size-80 govuk-!-font-weight-bold">£0.00</p>
         <p>There is no tax charge if your income is below £50,099.</p>
         <p>Your partner (if you have one) may have to pay the charge if their income is higher than yours.</p>
         <p>Find out more about the <a href="/child-benefit-tax-charge">tax charge</a>.</p>
       <% else -%>
-        <p class="numbers"><%= number_to_currency @calculator.tax_estimate, unit: "£", precision: 2 %></p>
+        <p class="govuk-!-font-size-80 govuk-!-font-weight-bold"><%= number_to_currency @calculator.tax_estimate, unit: "£", precision: 2 %></p>
 
         <% if @calculator.tax_year == 2012 %>
           <p>The tax charge only applies to the Child Benefit received between 7 January and 5 April 2013
