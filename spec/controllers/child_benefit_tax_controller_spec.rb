@@ -28,12 +28,16 @@ describe ChildBenefitTaxController, type: :controller do
     describe "GET process_form" do
       it "should place a 'starting_children' anchor onto the redirected response" do
         route_params = { params: { children: "Update" } }
+        # rubocop:disable Rails/HttpPositionalArguments
         get :process_form, route_params
+        # rubocop:enable Rails/HttpPositionalArguments
         expect(response).to redirect_to(action: :main, anchor: "children")
       end
       it "should place an 'adjusted_income' anchor onto the redirected response" do
         route_params = { params: { adjusted_income: "I don't know my adjusted net income" } }
+        # rubocop:disable Rails/HttpPositionalArguments
         get :process_form, route_params
+        # rubocop:enable Rails/HttpPositionalArguments
         expect(response).to redirect_to(action: :main, anchor: "adjusted_income")
       end
       it "should place an 'results' anchor onto the redirected response" do

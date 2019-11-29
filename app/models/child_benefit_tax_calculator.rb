@@ -50,7 +50,7 @@ class ChildBenefitTaxCalculator
   end
 
   def total_number_of_mondays(child_benefit_start_date, child_benefit_end_date)
-    (child_benefit_start_date..child_benefit_end_date).select(&:monday?).count
+    (child_benefit_start_date..child_benefit_end_date).count(&:monday?)
   end
 
   def nothing_owed?
