@@ -3,7 +3,7 @@ module DateHelper
     if date.present?
       Date.parse(date)
     else
-      Date.today
+      Time.zone.today
     end
   end
 

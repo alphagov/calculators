@@ -26,6 +26,6 @@ module ChildBenefitTaxHelper
 
   def tax_year_incomplete?
     end_date = ChildBenefitTaxCalculator::TAX_YEARS[@calculator.tax_year.to_s].last
-    end_date >= Date.today
+    end_date >= Time.zone.today
   end
 end

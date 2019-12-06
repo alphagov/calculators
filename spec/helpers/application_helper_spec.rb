@@ -162,7 +162,7 @@ describe ApplicationHelper, type: :helper do
     it "generates an array of options for the radio component for question 3" do
       @calculator = ChildBenefitTaxCalculator.new(year: "2015")
 
-      conditional_file_content = render file: "#{Rails.root}/app/views/child_benefit_tax/_part_tax_year_conditional.html.erb"
+      conditional_file_content = render file: Rails.root.join("app/views/child_benefit_tax/_part_tax_year_conditional.html.erb")
 
       expect(q3_radio_options).to eq(
         [
