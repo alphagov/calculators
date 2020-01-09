@@ -245,31 +245,33 @@ describe ApplicationHelper, type: :helper do
     end
 
     it "returns years for partial children options in q3" do
-      years = year_options("2015-04-06")
+      Timecop.freeze("2019-01-01") do
+        years = year_options("2015-04-06")
 
-      expect(years.length).to eq(11)
-      expect(years[0]).to eq(
-        text: "",
-        value: "",
-      )
+        expect(years.length).to eq(11)
+        expect(years[0]).to eq(
+          text: "",
+          value: "",
+        )
 
-      expect(years[1]).to eq(
-        selected: false,
-        text: 2011,
-        value: 2011,
-      )
+        expect(years[1]).to eq(
+          selected: false,
+          text: 2011,
+          value: 2011,
+        )
 
-      expect(years[10]).to eq(
-        selected: false,
-        text: 2020,
-        value: 2020,
-      )
+        expect(years[10]).to eq(
+          selected: false,
+          text: 2020,
+          value: 2020,
+        )
 
-      years[1..-1].each_with_index do |option, i|
-        if i == 4
-          expect(option[:selected]).to eq(true)
-        else
-          expect(option[:selected]).to eq(false)
+        years[1..-1].each_with_index do |option, i|
+          if i == 4
+            expect(option[:selected]).to eq(true)
+          else
+            expect(option[:selected]).to eq(false)
+          end
         end
       end
     end
