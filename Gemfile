@@ -5,7 +5,7 @@ ruby File.read('.ruby-version').chomp
 gem 'rails', '~> 5.2.4'
 
 gem 'gds-api-adapters', '~> 63.3.0'
-gem 'govuk_app_config', '~> 2.0.1'
+gem 'govuk_app_config', '~> 2.0.2'
 gem 'govuk_elements_rails', '~> 3.1.3'
 gem 'govuk_frontend_toolkit', '~> 9.0.0'
 gem 'govuk_publishing_components', '~> 21.21.0'
