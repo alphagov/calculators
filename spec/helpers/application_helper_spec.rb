@@ -135,7 +135,7 @@ describe ApplicationHelper, type: :helper do
     it "generates an array of options for the radio component for question 2" do
       @calculator = ChildBenefitTaxCalculator.new(year: "2015")
 
-      expect(q2_radio_options.length).to eq(8)
+      expect(q2_radio_options.length).to eq(9)
       expect(q2_radio_options[0]).to eq(
         value: "2012",
         text: "2012 to 2013",

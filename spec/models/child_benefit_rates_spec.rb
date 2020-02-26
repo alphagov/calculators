@@ -96,4 +96,15 @@ describe ChildBenefitRates, type: :model do
       expect(@calc.additional_child_rate).to eq(13.7)
     end
   end
+
+  describe "return correct rates for 2020/21" do
+    before(:each) do
+      @calc = ChildBenefitRates.new(2020)
+    end
+
+    it "should return correct rates" do
+      expect(@calc.first_child_rate).to eq(21.05)
+      expect(@calc.additional_child_rate).to eq(13.95)
+    end
+  end
 end
