@@ -6,7 +6,7 @@ gem 'rails', '~> 5.2.4'
 
 gem 'gds-api-adapters', '~> 63.5.1'
 gem 'govuk_app_config', '~> 2.0.3'
-gem 'govuk_publishing_components', '~> 21.27.0'
+gem 'govuk_publishing_components', '~> 21.27.1'
 gem 'govuk-content-schema-test-helpers', '~> 1.6.1'
 gem 'nokogiri'
 gem 'plek', '~> 3.0.0'
