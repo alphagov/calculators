@@ -12,7 +12,7 @@ gem 'nokogiri'
 gem 'plek', '~> 3.0.0'
 gem 'rack_strip_client_ip', '0.0.2'
 gem 'sass-rails', '5.0.7'
-gem 'slimmer', '~> 13.2.0'
+gem 'slimmer', '~> 13.2.2'
 gem 'uglifier', '~> 4.2'
 
 group :development do
