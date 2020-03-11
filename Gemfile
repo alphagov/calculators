@@ -25,7 +25,7 @@ group :development, :test do
   gem 'timecop', '~> 0.9.1'
   gem 'pry-byebug'
   gem 'listen', '~> 3.2.1'
-  gem 'rspec-rails', '~> 3.9.0'
+  gem 'rspec-rails', '~> 3.9.1'
   gem 'rubocop-govuk'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
