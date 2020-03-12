@@ -43,7 +43,15 @@
         <% if tax_year_incomplete? %>
           <p>This is an estimate based on your adjusted net income of <%= number_to_currency @calculator.adjusted_net_income, unit: "£", precision: 2 %>
             - your circumstances may change before the end of the tax year.</p>
+        <% else %>
+          <p>This is an estimate.</p>
         <% end %>
+
+        <p>The calculator includes the most common sources of income and
+          allowable deductions. If you think you have income or deductions that
+          are not on the calculator, phone the
+          <a href="/government/organisations/hm-revenue-customs/contact/income-tax-enquiries-for-individuals-pensioners-and-employees">Income Tax helpline</a>
+          to find out if you have to pay the tax charge.</p>
 
         <%= render "govuk_publishing_components/components/heading", {
           text: "How and when to pay",
