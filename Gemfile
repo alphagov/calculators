@@ -24,7 +24,7 @@ end
 group :development, :test do
   gem "listen", "~> 3.2.1"
   gem "pry-byebug"
-  gem "rspec-rails", "~> 3.9.1"
+  gem "rspec-rails", "~> 4.0.0"
   gem "rubocop-govuk"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
