@@ -39,11 +39,11 @@ module ApplicationHelper
   end
 
   def q2_radio_options
-    ChildBenefitTaxCalculator::TAX_YEARS.keys.map do |year|
+    (4.years.ago.year...1.year.from_now.year).map do |year|
       {
-        value: year,
+        value: year.to_s,
         text: "#{year} to #{year.to_i + 1}",
-        checked: @calculator.tax_year == year.to_i,
+        checked: @calculator.tax_year == year,
       }
     end
   end

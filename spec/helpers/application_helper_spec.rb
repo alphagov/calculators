@@ -132,28 +132,22 @@ describe ApplicationHelper, type: :helper do
   end
 
   describe "#q2_radio_options" do
-    it "generates an array of options for the radio component for question 2" do
-      @calculator = ChildBenefitTaxCalculator.new(year: "2015")
+    it "generates an array of 5 hashes for the radio component for question 2" do
+      # The last hash is for the current year (here provided by Timecop as 2015)
+      # The other hashes are for the four previous years
+      # The only hash with checked true is that for the year passed to the calculator (here 2014)
+      Timecop.freeze(Time.local(2015)) do
+        @calculator = ChildBenefitTaxCalculator.new(year: 2014)
 
-      expect(q2_radio_options.length).to eq(9)
-      expect(q2_radio_options[0]).to eq(
-        value: "2012",
-        text: "2012 to 2013",
-        checked: false,
-      )
-
-      expect(q2_radio_options[7]).to eq(
-        value: "2019",
-        text: "2019 to 2020",
-        checked: false,
-      )
-
-      q2_radio_options.each_with_index do |option, i|
-        if i == 3
-          expect(option[:checked]).to eq(true)
-        else
-          expect(option[:checked]).to eq(false)
-        end
+        expect(q2_radio_options).to eq(
+          [
+            { value: "2011", text: "2011 to 2012", checked: false },
+            { value: "2012", text: "2012 to 2013", checked: false },
+            { value: "2013", text: "2013 to 2014", checked: false },
+            { value: "2014", text: "2014 to 2015", checked: true },
+            { value: "2015", text: "2015 to 2016", checked: false },
+          ]
+        )
       end
     end
   end
