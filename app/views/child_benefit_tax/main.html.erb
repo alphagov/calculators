@@ -79,7 +79,7 @@
             <li>you can get some of this information from your P60, P11D, employer or tax adviser</li>
           </ul>
 
-          <%= render "money_input", :label => "Salary before tax (with pension contributions deducted)", :id => "gross_income", :value => @adjusted_net_income_calculator.gross_income, :describedby => "step-4-description" %>
+          <%= render "money_input", :label => "Salary before tax (with pension contributions including under net pay arrangements deducted)", :id => "gross_income", :value => @adjusted_net_income_calculator.gross_income, :describedby => "step-4-description" %>
 
           <%= render "money_input", :label => "Other employment income - for example bonuses", :id => "other_income", :value => @adjusted_net_income_calculator.other_income, :describedby => "step-4-description" %>
 
@@ -87,9 +87,9 @@
 
           <%= render "money_input", :label => "Income from pension(s) before tax - for example from a state pension", :id => "pensions", :value => @adjusted_net_income_calculator.pensions, :describedby => "step-4-description" %>
 
-          <%= render "money_input", :label => "Other income before tax - for example profits from self-employment, taxable savings, dividends", :id => "non_employment_income", :value => @adjusted_net_income_calculator.non_employment_income, :describedby => "step-4-description" %>
+          <%= render "money_input", :label => "Other income before tax - for example taxable profits from self-employment, taxable savings, dividends", :id => "non_employment_income", :value => @adjusted_net_income_calculator.non_employment_income, :describedby => "step-4-description" %>
 
-          <%= render "money_input", :label => "Income from property before tax - for example rental income", :id => "property", :value => @adjusted_net_income_calculator.property, :describedby => "step-4-description" %>
+          <%= render "money_input", :label => "Income from property before tax - for example taxable rental income", :id => "property", :value => @adjusted_net_income_calculator.property, :describedby => "step-4-description" %>
         <% end %>
 
         <%= render "govuk_publishing_components/components/fieldset", {
