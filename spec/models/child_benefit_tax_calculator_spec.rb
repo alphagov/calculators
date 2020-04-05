@@ -325,6 +325,18 @@ describe ChildBenefitTaxCalculator, type: :model do
         expect(calc.total_number_of_mondays(start_date, end_date)).to eq(52)
       end
     end
+    context "for the full tax year 2020/2021" do
+      it "should calculate there are 53 Mondays" do
+        calc = ChildBenefitTaxCalculator.new(
+          year: "2020",
+          children_count: "1",
+          is_part_year_claim: "no",
+        )
+        start_date = calc.child_benefit_start_date
+        end_date = calc.child_benefit_end_date
+        expect(calc.total_number_of_mondays(start_date, end_date)).to eq(53)
+      end
+    end
   end
 
   describe "calculating child benefits received" do

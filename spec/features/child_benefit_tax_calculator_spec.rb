@@ -34,6 +34,7 @@ feature "Child Benefit Tax Calculator", js: true do
         2017
         2018
         2019
+        2020
       ]
 
       tax_years.each_with_index do |year, index|
