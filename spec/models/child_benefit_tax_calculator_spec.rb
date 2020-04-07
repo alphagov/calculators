@@ -3,6 +3,9 @@
 require "spec_helper"
 
 describe ChildBenefitTaxCalculator, type: :model do
+  before { Timecop.travel("2020-04-02") }
+  after { Timecop.return }
+
   it "uses the adjusted net income if it's passed in" do
     calc = ChildBenefitTaxCalculator.new(adjusted_net_income: "20")
     expect(calc.adjusted_net_income).to eq(20)
@@ -221,12 +224,6 @@ describe ChildBenefitTaxCalculator, type: :model do
       end
     end
   end
-
-  calc = ChildBenefitTaxCalculator.new(
-    year: "2015",
-    children_count: 1,
-    is_part_year_claim: "no",
-  )
 
   describe "calculating the number of weeks/Mondays" do
     context "for the full tax year 2012/2013" do
@@ -583,11 +580,12 @@ describe ChildBenefitTaxCalculator, type: :model do
           children_count: 1,
           part_year_children_count: "1",
           starting_children: {
-            "0" => { start: { year: "2011", month: "01", day: "01" } },
+            "0" => { start: { year: "2018", month: "01", day: "01" } },
           },
-          year: "2012",
+          year: "2019",
         ).nothing_owed?).to eq(true)
       end
+
       it "should be true for incomes over the threshold" do
         expect(ChildBenefitTaxCalculator.new(
           adjusted_net_income: "50100",
@@ -595,98 +593,12 @@ describe ChildBenefitTaxCalculator, type: :model do
           children_count: 1,
           part_year_children_count: "1",
           starting_children: {
-            "0" => { start: { year: "2011", month: "01", day: "01" } },
+            "0" => { start: { year: "2018", month: "01", day: "01" } },
           },
-          year: "2012",
+          year: "2019",
         ).nothing_owed?).to eq(false)
       end
     end
-
-    describe "for the tax year 2012-13" do
-      it "calculates the correct amount owed for % charge of 100" do
-        expect(ChildBenefitTaxCalculator.new(
-          adjusted_net_income: "60001",
-          children_count: "1",
-          is_part_year_claim: "yes",
-          part_year_children_count: "1",
-          starting_children: {
-            "0" => { start: { year: "2011", month: "01", day: "01" } },
-          },
-          year: "2012",
-        ).tax_estimate.round(2)).to eq(263)
-      end
-
-      it "calculates the corect amount for % charge of 99" do
-        expect(ChildBenefitTaxCalculator.new(
-          adjusted_net_income: "59900",
-          children_count: 1,
-          is_part_year_claim: "yes",
-          part_year_children_count: "1",
-          starting_children: {
-            "0" => { start: { year: "2011", month: "01", day: "01" } },
-          },
-          year: "2012",
-        ).tax_estimate.round(2)).to eq(261)
-      end
-
-      it "calculates the correct amount for income < 59900" do
-        expect(ChildBenefitTaxCalculator.new(
-          adjusted_net_income: "54000",
-          children_count: 1,
-          is_part_year_claim: "yes",
-          part_year_children_count: "1",
-          starting_children: {
-            "0" => { start: { year: "2011", month: "01", day: "01" } },
-          },
-          year: "2012",
-        ).tax_estimate.round(2)).to eq(105)
-      end
-    end # tax year 2012-13
-
-    describe "for the tax year 2013-14" do
-      it "calculates correctly for >60k earning" do
-        calc = ChildBenefitTaxCalculator.new(
-          adjusted_net_income: "60001",
-          children_count: 1,
-          is_part_year_claim: "yes",
-          part_year_children_count: "1",
-          starting_children: {
-            "0" => { start: { year: "2013", month: "01", day: "01" } },
-          },
-          year: "2013",
-        )
-        expect(calc.tax_estimate.round(1)).to eq(1055)
-      end
-      it "calculates correctly for >55.9k earning" do
-        calc = ChildBenefitTaxCalculator.new(
-          adjusted_net_income: "59900",
-          children_count: 1,
-          is_part_year_claim: "yes",
-          part_year_children_count: "1",
-          starting_children: {
-            "0" => { start: { year: "2013", month: "01", day: "01" } },
-          },
-          year: "2013",
-        )
-        expect(calc.tax_estimate.round(1)).to eq(1045)
-      end
-      it "calculates correctly for >50k earning" do
-        calc = ChildBenefitTaxCalculator.new(
-          adjusted_net_income: "54000",
-          children_count: "1",
-          is_part_year_claim: "yes",
-          part_year_children_count: "1",
-          starting_children: {
-            "0" => {
-              start: { year: "2011", month: "01", day: "01" },
-              stop: { year: "", month: "", day: "" },
-            },
-          },
-          year: "2013",
-        )
-        expect(calc.tax_estimate.round(1)).to eq(422)
-      end
-    end # tax year 2013-14
   end # no starting / stopping children
 
   describe "starting and stopping children" do

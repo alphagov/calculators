@@ -74,8 +74,8 @@ module ApplicationHelper
   end
 
   def year_options(selected)
-    start_year = DateHelper.years_ago(1, "2012-01-01").year
-    end_year = DateHelper.years_since(1).year
+    start_year = 4.years.ago.year
+    end_year = 1.year.from_now.year
 
     years = Array(start_year..end_year).map { |number|
       format_date(number, :year, selected)
