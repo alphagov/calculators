@@ -136,17 +136,17 @@ describe ApplicationHelper, type: :helper do
       # The last hash is for the current year (here provided by Timecop as 2015)
       # The other hashes are for the four previous years
       # The only hash with checked true is that for the year passed to the calculator (here 2014)
-      Timecop.freeze("2015-01-01") do
-        @calculator = ChildBenefitTaxCalculator.new(year: 2014)
+      Timecop.freeze("2020-01-01") do
+        @calculator = ChildBenefitTaxCalculator.new(year: 2019)
 
         expect(q2_radio_options).to eq(
           [
-            { value: "2011", text: "2011 to 2012", checked: false },
-            { value: "2012", text: "2012 to 2013", checked: false },
-            { value: "2013", text: "2013 to 2014", checked: false },
-            { value: "2014", text: "2014 to 2015", checked: true },
-            { value: "2015", text: "2015 to 2016", checked: false },
-          ]
+            { value: "2016", text: "2016 to 2017", checked: false },
+            { value: "2017", text: "2017 to 2018", checked: false },
+            { value: "2018", text: "2018 to 2019", checked: false },
+            { value: "2019", text: "2019 to 2020", checked: true },
+            { value: "2020", text: "2020 to 2021", checked: false },
+          ],
         )
       end
     end
@@ -242,29 +242,29 @@ describe ApplicationHelper, type: :helper do
       Timecop.freeze("2019-01-01") do
         years = year_options("2015-04-06")
 
-        expect(years.length).to eq(11)
+        expect(years.length).to eq(7)
         expect(years[0]).to eq(
           text: "",
           value: "",
         )
 
         expect(years[1]).to eq(
-          selected: false,
-          text: 2011,
-          value: 2011,
+          selected: true,
+          text: 2015,
+          value: 2015,
         )
 
-        expect(years[10]).to eq(
+        expect(years[-1]).to eq(
           selected: false,
           text: 2020,
           value: 2020,
         )
 
-        years[1..-1].each_with_index do |option, i|
-          if i == 4
+        years.each_with_index do |option, i|
+          if i == 1
             expect(option[:selected]).to eq(true)
           else
-            expect(option[:selected]).to eq(false)
+            expect(option[:selected]).to be_falsy
           end
         end
       end

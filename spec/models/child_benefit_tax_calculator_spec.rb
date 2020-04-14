@@ -18,10 +18,10 @@ describe ChildBenefitTaxCalculator, type: :model do
 
   it "is valid if given enough detail" do
     expect(ChildBenefitTaxCalculator.new(
-      year: "2012", children_count: "1",
+      year: "2017", children_count: "1",
       is_part_year_claim: "yes",
       part_year_children_count: "1",
-      starting_children: { "0" => { start: { year: "2011", month: "01", day: "01" } } }
+      starting_children: { "0" => { start: { year: "2016", month: "01", day: "01" } } }
     ).can_calculate?).to eq(true)
   end
 
@@ -76,14 +76,14 @@ describe ChildBenefitTaxCalculator, type: :model do
     end
     it "should contain an error on starting child if all outside of tax year" do
       @calc = ChildBenefitTaxCalculator.new(
-        year: "2013",
+        year: "2018",
         children_count: "1",
         is_part_year_claim: "yes",
         part_year_children_count: "1",
         starting_children: {
           "0" => {
-            start: { year: "2011", month: "01", day: "01" },
-            stop: { year: "2012", month: "01", day: "01" },
+            start: { year: "2016", month: "01", day: "01" },
+            stop: { year: "2017", month: "01", day: "01" },
           },
         },
       )
@@ -110,21 +110,21 @@ describe ChildBenefitTaxCalculator, type: :model do
     end
     it "should be valid on starting child when some inside the tax year" do
       @calc = ChildBenefitTaxCalculator.new(
-        year: "2013",
+        year: "2018",
         children_count: "3",
         is_part_year_claim: "yes",
         part_year_children_count: "3",
         starting_children: {
           "0" => {
-            start: { year: "2011", month: "01", day: "01" },
-            stop: { year: "2012", month: "01", day: "01" },
+            start: { year: "2016", month: "01", day: "01" },
+            stop: { year: "2017", month: "01", day: "01" },
           },
           "1" => {
-            start: { year: "2013", month: "01", day: "01" },
-            stop: { year: "2014", month: "01", day: "01" },
+            start: { year: "2018", month: "01", day: "01" },
+            stop: { year: "2019", month: "01", day: "01" },
           },
           "2" => {
-            start: { year: "2013", month: "01", day: "01" },
+            start: { year: "2018", month: "01", day: "01" },
           },
         },
       )
@@ -140,7 +140,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       end
       it "should be true if any starting children have errors" do
         calc = ChildBenefitTaxCalculator.new(
-          year: "2012",
+          year: "2017",
           children_count: "1",
           is_part_year_claim: "yes",
           part_year_children_count: "1",
@@ -151,12 +151,12 @@ describe ChildBenefitTaxCalculator, type: :model do
       end
       it "should be false if the tax year and starting date are valid" do
         expect(ChildBenefitTaxCalculator.new(
-          year: "2012",
+          year: "2017",
           children_count: "1",
           is_part_year_claim: "yes",
           part_year_children_count: "1",
           starting_children: {
-            "0" => { start: { year: "2012", month: "01", day: "07" } },
+            "0" => { start: { year: "2017", month: "01", day: "07" } },
           },
         ).has_errors?).to eq(false)
       end
@@ -164,23 +164,23 @@ describe ChildBenefitTaxCalculator, type: :model do
 
     describe "#is_part_year_claim" do
       it "should contain errors if tax claim duration is not provided" do
-        calc = ChildBenefitTaxCalculator.new(children_count: "1", year: 2012)
+        calc = ChildBenefitTaxCalculator.new(children_count: "1", year: 2017)
         calc.valid?
         expect(calc.errors).to have_key(:is_part_year_claim)
         expect(calc.errors.size).to eq(1)
       end
       it "should not contain errors if tax claim duration is set to no" do
-        calc = ChildBenefitTaxCalculator.new(children_count: "1", year: 2012, is_part_year_claim: "no")
+        calc = ChildBenefitTaxCalculator.new(children_count: "1", year: 2017, is_part_year_claim: "no")
         calc.valid?
         expect(calc.errors).to be_empty
       end
       it "should not contain errors if tax claim duration is set to yes" do
         calc = ChildBenefitTaxCalculator.new(children_count: "1",
-            year: 2012,
+            year: 2017,
             is_part_year_claim: "yes",
             part_year_children_count: "1",
             starting_children: {
-              "0" => { start: { year: "2012", month: "01", day: "07" } },
+              "0" => { start: { year: "2017", month: "01", day: "07" } },
             })
         calc.valid?
         expect(calc.errors).to be_empty
@@ -192,7 +192,7 @@ describe ChildBenefitTaxCalculator, type: :model do
     it "should be able to calculate the child benefit amount" do
       calc = ChildBenefitTaxCalculator.new(
         children_count: 1,
-        year: "2015",
+        year: "2016",
         is_part_year_claim: "no",
         starting_children: {},
       )
@@ -226,54 +226,6 @@ describe ChildBenefitTaxCalculator, type: :model do
   end
 
   describe "calculating the number of weeks/Mondays" do
-    context "for the full tax year 2012/2013" do
-      it "should calculate there are 13 Mondays" do
-        calc = ChildBenefitTaxCalculator.new(
-          year: "2012",
-          children_count: "1",
-          is_part_year_claim: "no",
-        )
-        start_date = calc.child_benefit_start_date
-        end_date = calc.child_benefit_end_date
-        expect(calc.total_number_of_mondays(start_date, end_date)).to eq(13)
-      end
-    end
-    context "for the full tax year 2013/2014" do
-      it "should calculate there are 52 Mondays" do
-        calc = ChildBenefitTaxCalculator.new(
-          year: "2013",
-          children_count: "1",
-          is_part_year_claim: "no",
-        )
-        start_date = calc.child_benefit_start_date
-        end_date = calc.child_benefit_end_date
-        expect(calc.total_number_of_mondays(start_date, end_date)).to eq(52)
-      end
-    end
-    context "for the full tax year 2014/2015" do
-      it "should calculate there are 52 Mondays" do
-        calc = ChildBenefitTaxCalculator.new(
-          year: "2014",
-          children_count: "1",
-          is_part_year_claim: "no",
-        )
-        start_date = calc.child_benefit_start_date
-        end_date = calc.child_benefit_end_date
-        expect(calc.total_number_of_mondays(start_date, end_date)).to eq(52)
-      end
-    end
-    context "for the full tax year 2015/2016" do
-      it "should calculate there are 53 Mondays" do
-        calc = ChildBenefitTaxCalculator.new(
-          year: "2015",
-          children_count: "1",
-          is_part_year_claim: "no",
-        )
-        start_date = calc.child_benefit_start_date
-        end_date = calc.child_benefit_end_date
-        expect(calc.total_number_of_mondays(start_date, end_date)).to eq(53)
-      end
-    end
     context "for the full tax year 2016/2017" do
       it "should calculate there are 52 Mondays" do
         calc = ChildBenefitTaxCalculator.new(
@@ -337,56 +289,6 @@ describe ChildBenefitTaxCalculator, type: :model do
   end
 
   describe "calculating child benefits received" do
-    context "for the tax year 2012" do
-      it "should give the total amount of benefits received for a full tax year 2012" do
-        expect(ChildBenefitTaxCalculator.new(
-          year: "2012",
-          children_count: "1",
-          is_part_year_claim: "no",
-        ).benefits_claimed_amount.round(2)).to eq(263.9)
-      end
-      it "should give the total amount of benefits received for a partial tax year" do
-        expect(ChildBenefitTaxCalculator.new(
-          year: "2012",
-          children_count: "1",
-          is_part_year_claim: "yes",
-          part_year_children_count: "1",
-          starting_children: {
-            "0" => {
-              start: { year: "2012", month: "06", day: "01" },
-              stop: { year: "2013", month: "06", day: "01" },
-            },
-          },
-        ).benefits_claimed_amount.round(2)).to eq(263.9)
-      end
-      it "should give the total amount of benefits received for a partial tax year with more than one child" do
-        expect(ChildBenefitTaxCalculator.new(
-          year: "2012",
-          children_count: "2",
-          is_part_year_claim: "yes",
-          part_year_children_count: "2",
-          starting_children: {
-            "0" => {
-              start: { year: "2012", month: "06", day: "01" },
-              stop: { year: "2013", month: "06", day: "01" },
-            },
-            "1" => {
-              start: { year: "2012", month: "05", day: "01" },
-              stop: { year: "2013", month: "07", day: "25" },
-            },
-          },
-        ).benefits_claimed_amount.round(2)).to eq(438.1)
-      end
-    end
-    context "for the tax year 2013" do
-      it "should give the total amount of benefits received for a full tax year 2013" do
-        expect(ChildBenefitTaxCalculator.new(
-          year: "2013",
-          children_count: "1",
-          is_part_year_claim: "no",
-        ).benefits_claimed_amount.round(2)).to eq(1055.6)
-      end
-    end
     context "for the tax year 2019" do
       it "should give the total amount received for the full tax year for one child" do
         expect(ChildBenefitTaxCalculator.new(
@@ -602,7 +504,7 @@ describe ChildBenefitTaxCalculator, type: :model do
   end # no starting / stopping children
 
   describe "starting and stopping children" do
-    describe "tax year 2012" do
+    describe "tax year 2016" do
       it "calculates correctly with starting children" do
         calc = ChildBenefitTaxCalculator.new(
           adjusted_net_income: "61000",
@@ -611,30 +513,14 @@ describe ChildBenefitTaxCalculator, type: :model do
           part_year_children_count: "1",
           starting_children: {
             "0" => {
-              start: { year: "2013", month: "03", day: "01" },
+              start: { year: "2017", month: "03", day: "01" },
               stop: { year: "", month: "", day: "" },
             },
           },
-          year: "2012",
+          year: "2016",
         )
-        expect(calc.tax_estimate.round(1)).to eq(101)
-      end
-
-      it "doesn't tax before Jan 7th 2013" do
-        calc = ChildBenefitTaxCalculator.new(
-          adjusted_net_income: "61000",
-          children_count: 1,
-          is_part_year_claim: "yes",
-          part_year_children_count: "1",
-          starting_children: {
-            "0" => {
-              start: { year: "2012", month: "05", day: "01" },
-              stop: { year: "", month: "", day: "" },
-            },
-          },
-          year: "2012",
-        )
-        expect(calc.tax_estimate.round(1)).to eq(263)
+        #child from 01/03 to 01/04 => 5 weeks * 20.7
+        expect(calc.tax_estimate.round(1)).to eq(103)
       end
 
       it "correctly calculates weeks for a child who started & stopped in tax year" do
@@ -645,242 +531,19 @@ describe ChildBenefitTaxCalculator, type: :model do
           part_year_children_count: "1",
           starting_children: {
             "0" => {
-              start: { year: "2013", month: "02", day: "01" },
-              stop: { year: "2013", month: "03", day: "01" },
+              start: { year: "2017", month: "02", day: "01" },
+              stop: { year: "2017", month: "03", day: "01" },
             },
           },
-          year: "2012",
+          year: "2016",
         )
-        #child from 01/02 to 01/03 => 5 weeks * 20.3
-        expect(calc.tax_estimate.round(1)).to eq(81)
+        #child from 01/02 to 01/03 => 4 weeks * 20.7
+        expect(calc.tax_estimate.round(1)).to eq(82)
       end
-    end # tax year 2012
-
-    describe "tax year 2013" do
-      it "calculates correctly for 60k income" do
-        calc = ChildBenefitTaxCalculator.new(
-          adjusted_net_income: "61000",
-          children_count: 1,
-          is_part_year_claim: "yes",
-          part_year_children_count: "1",
-          starting_children: {
-            "0" => {
-              start: { year: "2014", month: "02", day: "22" },
-              stop: { year: "", month: "", day: "" },
-            },
-          },
-          year: "2013",
-        )
-        # starting child for 6 weeks
-        expect(calc.tax_estimate.round(1)).to eq(121)
-      end
-    end # tax year 2013-14
+    end # tax year 2016
   end # starting & stopping children
 
   describe "HMRC test scenarios" do
-    it "should calculate 3 children already in the household for 2012/2013" do
-      expect(ChildBenefitTaxCalculator.new(
-        year: "2012",
-        children_count: 3,
-        is_part_year_claim: "yes",
-        part_year_children_count: "3",
-        starting_children: {
-          "0" => {
-            start: { day: "06", month: "01", year: "2013" },
-            stop: { day: "05", month: "04", year: "2013" },
-          },
-          "1" => {
-            start: { day: "06", month: "01", year: "2013" },
-            stop: { day: "05", month: "04", year: "2013" },
-          },
-          "2" => {
-            start: { day: "06", month: "01", year: "2013" },
-            stop: { day: "05", month: "04", year: "2013" },
-          },
-       },
-     ).benefits_claimed_amount.round(2)).to eq(612.30)
-    end
-    it "should calculate 3 children for 2012/2013 one child starting on 7 Jan 2013" do
-      calc = ChildBenefitTaxCalculator.new(
-        adjusted_net_income: "56000",
-        year: "2012", children_count: 3,
-        is_part_year_claim: "yes",
-        part_year_children_count: "3",
-        starting_children: {
-          "0" => {
-            start: { day: "06", month: "01", year: "2013" },
-            stop: { day: "05", month: "04", year: "2013" },
-          },
-          "1" => {
-            start: { day: "06", month: "01", year: "2013" },
-            stop: { day: "05", month: "04", year: "2013" },
-          },
-          "2" => {
-            start: { day: "07", month: "01", year: "2013" },
-            stop: { day: "05", month: "04", year: "2013" },
-          },
-        }
-      )
-      expect(calc.benefits_claimed_amount.round(2)).to eq(612.30)
-      expect(calc.tax_estimate).to eq(367)
-    end
-    it "should calculate two weeks for one child observing the 'Monday' rules." do
-      expect(ChildBenefitTaxCalculator.new(
-        year: "2012",
-        children_count: 1,
-        is_part_year_claim: "yes",
-        part_year_children_count: "1",
-        starting_children: {
-          "0" => {
-            start: { day: "14", month: "01", year: "2013" },
-            stop: { day: "21", month: "01", year: "2013" },
-          },
-        },
-      ).benefits_claimed_amount.round(2)).to eq(40.60)
-    end
-    it "should calculate 3 children already in the household for 2013/2014" do
-      calc = ChildBenefitTaxCalculator.new(
-        adjusted_net_income: "52000",
-        year: "2013",
-        children_count: 3,
-        is_part_year_claim: "no",
-      )
-      expect(calc.benefits_claimed_amount.round(2)).to eq(2449.20)
-      expect(calc.tax_estimate.round(2)).to eq(489)
-    end
-    it "should calculate 3 children already in the household for 2013/2014 one stops on 14 June 2013" do
-      calc = ChildBenefitTaxCalculator.new(
-        adjusted_net_income: "53000",
-        year: "2013",
-        children_count: 3,
-        is_part_year_claim: "yes",
-        part_year_children_count: "1",
-        starting_children: {
-          "0" => {
-            start: { day: "06", month: "04", year: "2013" },
-            stop: { day: "14", month: "06", year: "2013" },
-          },
-        },
-      )
-      expect(calc.benefits_claimed_amount.round(2)).to eq(1886.40)
-      expect(calc.tax_estimate.round(2)).to eq(565.0)
-    end
-    it "should give an accurate figure for 40 weeks at £20.30" do
-      calc = ChildBenefitTaxCalculator.new(
-        adjusted_net_income: "61000",
-        year: "2013",
-        children_count: 1,
-        is_part_year_claim: "yes",
-        part_year_children_count: "1",
-        starting_children: {
-          "0" => {
-            start: { day: "01", month: "07", year: "2013" },
-            stop: { day: "", month: "", year: "" },
-          },
-        },
-      )
-      expect(calc.benefits_claimed_amount).to eq(812.0)
-      expect(calc.tax_estimate).to eq(812)
-    end
-
-    describe "tests for 2014 rates" do
-      it "should calculate 3 children already in the household for all of 2014/15" do
-        expect(ChildBenefitTaxCalculator.new(
-          year: "2014",
-          children_count: 3,
-          is_part_year_claim: "no",
-       ).benefits_claimed_amount.round(2)).to eq(2475.2)
-      end
-
-      it "should give the total amount of benefits received for a full tax year 2014" do
-        expect(ChildBenefitTaxCalculator.new(
-          year: "2014",
-          children_count: "1",
-          is_part_year_claim: "no",
-        ).benefits_claimed_amount.round(2)).to eq(1066.0)
-      end
-
-      it "should give total amount of benefits one child full year one child half a year" do
-        expect(ChildBenefitTaxCalculator.new(
-          year: "2014",
-          children_count: 2,
-          is_part_year_claim: "yes",
-          part_year_children_count: "1",
-          starting_children: {
-            "0" => {
-              start: { day: "06", month: "04", year: "2014" },
-              stop: { day: "06", month: "11", year: "2014" },
-            },
-          },
-        ).benefits_claimed_amount.round(2)).to eq(1486.05)
-      end
-
-      it "should give total amount of benefits for one child for half a year" do
-        calc = ChildBenefitTaxCalculator.new(
-          year: "2014",
-          children_count: 1,
-          is_part_year_claim: "yes",
-          part_year_children_count: "1",
-          starting_children: {
-            "0" => {
-              start: { day: "06", month: "04", year: "2014" },
-              stop: { day: "06", month: "11", year: "2014" },
-            },
-          },
-        )
-        expect(calc.benefits_claimed_amount.round(2)).to eq(635.5)
-      end
-    end
-
-    describe "tests for 2015 rates" do
-      it "should calculate 3 children already in the household for all of 2015/16" do
-        expect(ChildBenefitTaxCalculator.new(
-          year: "2015",
-          children_count: 3,
-          is_part_year_claim: "no",
-       ).benefits_claimed_amount.round(2)).to eq(2549.3)
-      end
-
-      it "should give the total amount of benefits received for a full tax year 2015" do
-        expect(ChildBenefitTaxCalculator.new(
-          year: "2015",
-          children_count: "1",
-          is_part_year_claim: "no",
-        ).benefits_claimed_amount.round(2)).to eq(1097.1)
-      end
-
-      it "should give total amount of benefits one child full year one child half a year" do
-        expect(ChildBenefitTaxCalculator.new(
-          year: "2015",
-          children_count: 2,
-          is_part_year_claim: "yes",
-          part_year_children_count: "1",
-          starting_children: {
-            "0" => {
-              start: { day: "06", month: "04", year: "2015" },
-              stop: { day: "06", month: "11", year: "2016" },
-            },
-          },
-        ).benefits_claimed_amount.round(2)).to eq(1823.2)
-      end
-
-      it "should give total amount of benefits for one child for half a year" do
-        calc = ChildBenefitTaxCalculator.new(
-          year: "2015",
-          children_count: 1,
-          is_part_year_claim: "yes",
-          part_year_children_count: "1",
-          starting_children: {
-            "0" => {
-              start: { day: "06", month: "04", year: "2015" },
-              stop: { day: "06", month: "11", year: "2015" },
-            },
-          },
-        )
-        expect(calc.benefits_claimed_amount.round(2)).to eq(641.7)
-      end
-    end
-
     describe "tests for 2016 rates" do
       it "should calculate 3 children already in the household for all of 2016/17" do
         expect(ChildBenefitTaxCalculator.new(
@@ -931,30 +594,30 @@ describe ChildBenefitTaxCalculator, type: :model do
 
       it "should set the start date to start of the selected tax year" do
         calc = ChildBenefitTaxCalculator.new(
-          year: "2015",
+          year: "2016",
           children_count: 1,
           is_part_year_claim: "no",
         )
 
-        expect(calc.child_benefit_start_date).to eq(Date.parse("06 April 2015"))
-        expect(calc.child_benefit_end_date).to eq(Date.parse("05 April 2016"))
+        expect(calc.child_benefit_start_date).to eq(Date.parse("06 April 2016"))
+        expect(calc.child_benefit_end_date).to eq(Date.parse("05 April 2017"))
       end
 
       it "should set the stop date to end of the selected tax year" do
         calc = ChildBenefitTaxCalculator.new(
-          year: "2015",
+          year: "2016",
           children_count: 1,
           is_part_year_claim: "yes",
           part_year_children_count: "1",
           starting_children: {
             "0" => {
-              start: { day: "06", month: "04", year: "2015" },
+              start: { day: "06", month: "04", year: "2016" },
               stop: { day: "", month: "", year: "" },
             },
           },
         )
 
-        expect(calc.child_benefit_end_date).to eq(Date.parse("05 April 2016"))
+        expect(calc.child_benefit_end_date).to eq(Date.parse("05 April 2017"))
       end
 
       it "should correctly calculate the benefit amount for multiple full year and part year children" do

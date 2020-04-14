@@ -9,11 +9,6 @@
       <%= number_to_currency @calculator.benefits_claimed_amount, unit: "£", precision: 2 %>
     </p>
 
-    <% if @calculator.tax_year == 2012 %>
-      <p>
-        Received between 7 January and 5 April 2013.
-      </p>
-    <% end %>
     <p>
       Use this figure in your <%= tax_year_label(@calculator.tax_year) %> Self Assessment tax return (if you fill one in).
     </p>
@@ -34,11 +29,6 @@
         <p>Find out more about the <a href="/child-benefit-tax-charge">tax charge</a>.</p>
       <% else -%>
         <p class="govuk-!-font-size-80 govuk-!-font-weight-bold"><%= number_to_currency @calculator.tax_estimate, unit: "£", precision: 2 %></p>
-
-        <% if @calculator.tax_year == 2012 %>
-          <p>The tax charge only applies to the Child Benefit received between 7 January and 5 April 2013
-            and is based on your estimated adjusted net income of <%= number_to_currency @calculator.adjusted_net_income, unit: "£", precision: 2 %>.</p>
-        <% end %>
 
         <% if tax_year_incomplete? %>
           <p>This is an estimate based on your adjusted net income of <%= number_to_currency @calculator.adjusted_net_income, unit: "£", precision: 2 %>
@@ -83,10 +73,6 @@
           <li><a href="/child-benefit-tax-charge/stop-child-benefit">stop getting Child Benefit</a> - you must pay any tax you owe</li>
           <li>carry on getting Child Benefit - for each tax year you get it you must fill in a tax return and pay any tax you owe</li>
         </ul>
-
-        <% if @calculator.tax_year == 2012 %>
-          <p>Your result for the next tax year may be higher because the tax charge will apply to the whole tax year (and not just 7 January to 5 April 2013).</p>
-        <% end -%>
 
         <p>Find out about <a href="/child-benefit-tax-charge">stopping or carrying on Child Benefit</a>.</p>
       <% end -%>
