@@ -285,7 +285,7 @@ feature "Child Benefit Tax Calculator", js: true do
     end
   end
 
-  it "should render start date to be ten years in the past" do
+  it "should render start date to be four years in the past" do
     visit "/child-benefit-tax-calculator/main"
     choose "Yes", allow_label_click: true
 
