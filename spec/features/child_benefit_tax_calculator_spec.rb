@@ -291,9 +291,6 @@ feature "Child Benefit Tax Calculator", js: true do
   end
 
   it "should render start date to be ten years in the past" do
-    allow(DateHelper).to receive(:years_ago).and_return(Date.parse("2010-01-01"))
-    allow(DateHelper).to receive(:years_since).and_return(Date.parse("2012-01-01"))
-
     visit "/child-benefit-tax-calculator/main"
     choose "Yes", allow_label_click: true
 
@@ -302,8 +299,6 @@ feature "Child Benefit Tax Calculator", js: true do
   end
 
   it "should render stop date containing the specified date range" do
-    allow(DateHelper).to receive(:years_ago).and_return(Date.parse("2012-01-01"))
-    allow(DateHelper).to receive(:years_since).and_return(Date.parse("2014-01-01"))
     visit "/child-benefit-tax-calculator/main"
 
     choose "Yes", allow_label_click: true
