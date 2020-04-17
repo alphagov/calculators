@@ -7,14 +7,9 @@ feature "Child Benefit Tax Calculator", js: true do
     stub_request(:get, Plek.new.find("content-store") + "/content/child-benefit-tax-calculator/main").to_return(body: {}.to_json)
   end
 
-  before do
-    Timecop.travel("2020-04-02")
+  around do |example|
+    Timecop.travel("2020-04-02") { example.run }
   end
-
-  after do
-    Timecop.return
-  end
-
   it "should not show results until enough info is entered" do
     visit "/child-benefit-tax-calculator/main"
     expect(page).to have_no_css(".results")
