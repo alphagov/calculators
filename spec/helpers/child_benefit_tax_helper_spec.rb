@@ -15,23 +15,25 @@ describe ChildBenefitTaxHelper, type: :helper do
 
   describe "tax_year_label" do
     it "should format the years range" do
-      expect(tax_year_label(2013)).to eq("2013 to 2014")
+      Timecop.travel("2020-04-02") do
+        expect(tax_year_label(2016)).to eq("2016 to 2017")
+      end
     end
   end
 
   describe "tax_year_incomplete?" do
     before :each do
-      @calculator = double(tax_year: 2013)
+      @calculator = double(tax_year: 2019)
     end
 
     it "should be true before the end of the tax year" do
-      Timecop.freeze("2014-04-04") do
+      Timecop.freeze("2020-04-04") do
         expect(tax_year_incomplete?).to eq true
       end
     end
 
     it "should be false after the end of the tax year" do
-      Timecop.freeze("2014-04-06") do
+      Timecop.freeze("2020-04-06") do
         expect(tax_year_incomplete?).to eq false
       end
     end

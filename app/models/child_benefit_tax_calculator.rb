@@ -12,7 +12,7 @@ class ChildBenefitTaxCalculator
   NET_INCOME_THRESHOLD = 50000
   TAX_COMMENCEMENT_DATE = Date.parse("7 Jan 2013") # special case for 2012-13, only weeks from 7th Jan 2013 are taxable
 
-  TAX_YEARS = (2012..2020).each_with_object({}) { |year, hash|
+  TAX_YEARS = (4.years.ago.year...1.year.from_now.year).each_with_object({}) { |year, hash|
     hash[year.to_s] = [Date.new(year, 4, 6), Date.new(year + 1, 4, 5)]
   }.freeze
 
