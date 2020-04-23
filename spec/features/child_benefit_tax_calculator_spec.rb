@@ -10,29 +10,22 @@ feature "Child Benefit Tax Calculator", js: true do
   around do |example|
     Timecop.travel("2020-04-02") { example.run }
   end
+
   it "should not show results until enough info is entered" do
     visit "/child-benefit-tax-calculator/main"
     expect(page).to have_no_css(".results")
 
-    choose "year-0", allow_label_click: true, visible: false # 2012
+    choose "year-0", allow_label_click: true, visible: false
     select "2", from: "children_count"
     click_on "Update"
     expect(page).to have_no_css(".results")
   end
 
-  it "supports the latest 5 tax years (current plus previous four)" do
+  it "supports all tax years since 2012" do
     visit "/child-benefit-tax-calculator/main"
 
     within "#tax_year" do
-      tax_years = %w[
-        2016
-        2017
-        2018
-        2019
-        2020
-      ]
-
-      tax_years.each_with_index do |year, index|
+      (2012..Time.zone.now.year).map.with_index do |year, index|
         expect(page).to have_css("#year-#{index}[value='#{year}']", visible: false)
       end
     end
@@ -140,7 +133,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
     context "when NO, then YES is selected for tax claim duration" do
       it "should display a date selector for one part year child" do
-        choose "year-3", allow_label_click: true, visible: false # 2015
+        choose "year-3", allow_label_click: true, visible: false
         choose "No", allow_label_click: true
         click_button "Calculate"
 
@@ -184,7 +177,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
   it "should reload children with valid dates if one child has a date error" do
     visit "/child-benefit-tax-calculator/main"
-    choose "year-2", allow_label_click: true, visible: false # 2016
+    choose "year-2", allow_label_click: true, visible: false
     choose "Yes", allow_label_click: true
     select "2", from: "children_count"
     select "2", from: "part_year_children_count"
@@ -226,7 +219,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
   it "should reload part year children with the correct dates" do
     visit "/child-benefit-tax-calculator/main"
-    choose "year-2", allow_label_click: true, visible: false # 2014
+    choose "year-2", allow_label_click: true, visible: false
     choose "Yes", allow_label_click: true
     select "2", from: "children_count"
     select "1", from: "part_year_children_count"
@@ -260,7 +253,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
   it "should show an error if start date is after end date" do
     visit "/child-benefit-tax-calculator/main"
-    choose "year-2", allow_label_click: true, visible: false # 2014
+    choose "year-2", allow_label_click: true, visible: false
     choose "Yes", allow_label_click: true
     select "1", from: "children_count"
     select "1", from: "part_year_children_count"
@@ -285,11 +278,11 @@ feature "Child Benefit Tax Calculator", js: true do
     end
   end
 
-  it "should render start date to be four years in the past" do
+  it "should render start dates since 2011" do
     visit "/child-benefit-tax-calculator/main"
     choose "Yes", allow_label_click: true
 
-    expected_year_list = ("2016".."2021").to_a.unshift("")
+    expected_year_list = ("2011".."2021").to_a.unshift("")
     expect(page).to have_select("starting_children_0_start_year", options: expected_year_list)
   end
 
@@ -297,7 +290,7 @@ feature "Child Benefit Tax Calculator", js: true do
     visit "/child-benefit-tax-calculator/main"
 
     choose "Yes", allow_label_click: true
-    expected_year_list = ("2016".."2021").to_a.unshift("")
+    expected_year_list = ("2011".."2021").to_a.unshift("")
     expect(page).to have_select("starting_children_0_stop_year", options: expected_year_list)
   end
 
@@ -305,7 +298,7 @@ feature "Child Benefit Tax Calculator", js: true do
     visit "/child-benefit-tax-calculator/main"
 
     within "#tax_year" do
-      choose "year-0", allow_label_click: true, visible: false # 2016 to 2017
+      choose "year-0", allow_label_click: true, visible: false
     end
 
     within "#is_part_year_claim" do
@@ -426,18 +419,16 @@ feature "Child Benefit Tax Calculator", js: true do
         select "2", from: "part_year_children_count"
         click_button "Update Children"
 
-        select "2016", from: "starting_children_0_start_year"
+        select "2011", from: "starting_children_0_start_year"
         select "January", from: "starting_children_0_start_month"
         select "1", from: "starting_children_0_start_day"
 
-        select "2017", from: "starting_children_1_start_year"
+        select "2012", from: "starting_children_1_start_year"
         select "February", from: "starting_children_1_start_month"
         select "5", from: "starting_children_1_start_day"
 
-        choose "year-0", allow_label_click: true, visible: false # 2012
-
+        choose "year-0", allow_label_click: true, visible: false
         click_button "Calculate"
-
         expect(page).to have_content("£500,000.00")
       end
     end
@@ -453,20 +444,21 @@ feature "Child Benefit Tax Calculator", js: true do
     it "should give an estimated total of tax due related to income" do
       allow_any_instance_of(ChildBenefitTaxCalculator).to receive(:tax_estimate).and_return(500000)
 
-      select "2016", from: "starting_children[0][start][year]"
+      select "2011", from: "starting_children[0][start][year]"
       select "January", from: "starting_children[0][start][month]"
       select "1", from: "starting_children[0][start][day]"
-      choose "year-0", allow_label_click: true, visible: false # 2012
+      choose "year-0", allow_label_click: true, visible: false
       fill_in "Salary before tax", with: "£60,000"
 
       click_button "Calculate"
 
       expect(page).to have_content("£500,000.00")
+      expect(page).to have_content("based on your estimated adjusted net income of £60,000.00")
     end
 
     it "should explain that the adjusted net income is below the threshold" do
       allow_any_instance_of(ChildBenefitTaxCalculator).to receive(:tax_estimate).and_return(0)
-      select "2016", from: "starting_children[0][start][year]"
+      select "2011", from: "starting_children[0][start][year]"
       select "January", from: "starting_children[0][start][month]"
       select "1", from: "starting_children[0][start][day]"
       choose "year-0", allow_label_click: true, visible: false
@@ -483,8 +475,9 @@ feature "Child Benefit Tax Calculator", js: true do
       visit "/child-benefit-tax-calculator/main"
       choose "Yes", allow_label_click: true
     end
+
     it "should use the adjusted net income calculator inputs" do
-      select "2016", from: "starting_children[0][start][year]"
+      select "2011", from: "starting_children[0][start][year]"
       select "January", from: "starting_children[0][start][month]"
       select "1", from: "starting_children[0][start][day]"
       choose "year-0", allow_label_click: true, visible: false
@@ -502,15 +495,16 @@ feature "Child Benefit Tax Calculator", js: true do
 
       click_on "Calculate"
 
-      expect(page).to have_content "Child Benefit received\n£1,076.40"
-      expect(page).to have_content "Tax charge to pay\n£1,076.00"
+      expect(page).to have_content "Child Benefit received\n£263.90"
+      expect(page).to have_content "Tax charge to pay\n£263.00"
+      expect(page).to have_content("based on your estimated adjusted net income of £123,325.00")
     end
 
     it "should update the adjusted_net_income when the calculator values are updated." do
-      select "2016", from: "starting_children[0][start][year]"
+      select "2011", from: "starting_children[0][start][year]"
       select "January", from: "starting_children[0][start][month]"
       select "1", from: "starting_children[0][start][day]"
-      choose "year-0", allow_label_click: true, visible: false # 2012
+      choose "year-0", allow_label_click: true, visible: false
 
       fill_in "gross_income", with: "£120,000"
       fill_in "other_income", with: "£8,000"
@@ -525,11 +519,14 @@ feature "Child Benefit Tax Calculator", js: true do
 
       click_on "Calculate"
 
+      expect(page).to have_content("based on your estimated adjusted net income of £123,325.00")
+
       fill_in "Salary before tax", with: "£50,000"
       click_on "Calculate"
 
-      expect(page).to have_content "Child Benefit received\n£1,076.40"
-      expect(page).to have_content "Tax charge to pay\n£355.00"
+      expect(page).to have_content "Child Benefit received\n£263.90"
+      expect(page).to have_content "Tax charge to pay\n£87.00"
+      expect(page).to have_content("based on your estimated adjusted net income of £53,325.00")
     end
   end
 
@@ -541,56 +538,77 @@ feature "Child Benefit Tax Calculator", js: true do
 
     context "without the tax estimate" do
       before :each do
-        select "2017", from: "starting_children_0_start_year"
+        select "2011", from: "starting_children_0_start_year"
         select "January", from: "starting_children_0_start_month"
         select "1", from: "starting_children_0_start_day"
       end
 
-      it "should display the amount of child benefit for 2016-2017" do
+      it "should display the amount of child benefit for 2012-2013" do
         choose "year-0", allow_label_click: true, visible: false
 
         click_button "Calculate"
 
-        expect(page).to have_content("£289.80")
-        expect(page).to have_content("Use this figure in your 2016 to 2017 Self Assessment tax return (if you fill one in).")
+        expect(page).to have_content("£263.90")
+        expect(page).to have_content("Received between 7 January and 5 April 2013.")
+        expect(page).to have_content("Use this figure in your 2012 to 2013 Self Assessment tax return (if you fill one in).")
         expect(page).to have_content("To work out the tax charge, enter your income")
       end
 
-      it "should display the amount of child benefit for 2017-2018" do
+      it "should display the amount of child benefit for 2013-2014" do
         choose "year-1", allow_label_click: true, visible: false
 
         click_button "Calculate"
 
-        expect(page).to have_content("£1,076.40")
-        expect(page).to have_content("Use this figure in your 2017 to 2018 Self Assessment tax return (if you fill one in).")
+        expect(page).to have_content("£1,055.60")
+        expect(page).not_to have_content("Received between 7 January and 5 April 2013.")
+        expect(page).to have_content("Use this figure in your 2013 to 2014 Self Assessment tax return (if you fill one in).")
         expect(page).to have_content("To work out the tax charge, enter your income")
       end
     end # without tax estimate
 
     context "with the tax estimate" do
       before :each do
-        select "2017", from: "starting_children_0_start_year"
+        select "2011", from: "starting_children_0_start_year"
         select "January", from: "starting_children_0_start_month"
         select "1", from: "starting_children_0_start_day"
 
         fill_in "Salary before tax", with: "55000"
       end
 
-      it "should display the amount of child benefit and tax estimate for 2016-17" do
+      it "should display the amount of child benefit and tax estimate for 2012-13" do
         choose "year-0", allow_label_click: true, visible: false
         click_button "Calculate"
 
-        expect(page).to have_content("£289.80")
-        expect(page).to have_content("Use this figure in your 2016 to 2017 Self Assessment tax return (if you fill one in).")
+        expect(page).to have_content("£263.90")
+        expect(page).to have_content("Received between 7 January and 5 April 2013.")
+        expect(page).to have_content("Use this figure in your 2012 to 2013 Self Assessment tax return (if you fill one in).")
         expect(page).not_to have_content("To work out the tax charge, enter your income")
 
-        expect(page).to have_content("£144.00")
+        expect(page).to have_content("£131.00")
+        expect(page).to have_content("The tax charge only applies to the Child Benefit received between 7 January and 5 April 2013")
+        expect(page).to have_content("and is based on your estimated adjusted net income of £55,000.00.")
+        expect(page).to have_content("Your result for the next tax year may be higher because the tax charge will apply to the whole tax year (and not just 7 January to 5 April 2013).")
         expect(page).to have_content("To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:")
-        expect(page).to have_content("you should do this by 5 October 2017")
+        expect(page).to have_content("you should do this by 5 October 2013")
+      end
+
+      it "should display the amount of child benefit and tax estimate for 2013-14" do
+        choose "year-1", allow_label_click: true, visible: false
+        click_button "Calculate"
+
+        expect(page).to have_content("£1,055.60")
+        expect(page).not_to have_content("Received between 7 January and 5 April 2013.")
+        expect(page).to have_content("Use this figure in your 2013 to 2014 Self Assessment tax return (if you fill one in).")
+
+        expect(page).to have_content("£527.00")
+        expect(page).not_to have_content("The tax charge only applies to the Child Benefit received between 7 January and 5 April 2013")
+        expect(page).not_to have_content("Your result for the next tax year may be higher")
+        expect(page).to have_content("To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:")
+        expect(page).to have_content("you should do this by 5 October 2014")
       end
 
       it "should show a warning if the tax_year is incomplete" do
-        choose "year-4", allow_label_click: true, visible: false
+        choose "year-8", allow_label_click: true, visible: false
         click_button "Calculate"
 
         expect(page).to have_content("This is an estimate based on your adjusted net income of £55,000.00")
@@ -599,9 +617,9 @@ feature "Child Benefit Tax Calculator", js: true do
 
     context "with an Adjusted Net Income below the threshold" do
       it "should say there's nothing to pay" do
-        choose "year-1", allow_label_click: true, visible: false # 2017 to 2018
+        choose "year-1", allow_label_click: true, visible: false
 
-        select "2016", from: "starting_children_0_start_year"
+        select "2011", from: "starting_children_0_start_year"
         select "January", from: "starting_children_0_start_month"
         select "1", from: "starting_children_0_start_day"
 
@@ -609,11 +627,11 @@ feature "Child Benefit Tax Calculator", js: true do
 
         click_button "Calculate"
 
-        expect(page).not_to have_content("Received between")
+        expect(page).not_to have_content("Received between 7 January and 5 April 2013.")
         expect(page).not_to have_content("To work out the tax charge, enter your income")
 
-        expect(page).to have_content("£1,076.40")
-        expect(page).to have_content("Use this figure in your 2017 to 2018 Self Assessment tax return (if you fill one in).")
+        expect(page).to have_content("£1,055.60")
+        expect(page).to have_content("Use this figure in your 2013 to 2014 Self Assessment tax return (if you fill one in).")
         expect(page).to have_content("£0.00")
         expect(page).to have_content("There is no tax charge if your income is below £50,099.")
       end
@@ -627,24 +645,24 @@ feature "Child Benefit Tax Calculator", js: true do
 
     context "one child" do
       it "should correctly display the amount for one child" do
-        choose "year-3", allow_label_click: true, visible: false # 2019 to 2020
+        choose "year-3", allow_label_click: true, visible: false
         choose "No", allow_label_click: true
 
         click_button "Calculate"
 
-        expect(page.text).to have_content("£1,076.40")
+        expect(page.text).to have_content("£1,097.10")
       end
     end
 
     context "two children" do
       it "should correctly display the amount for two children" do
         select "2", from: "children_count"
-        choose "year-3", allow_label_click: true, visible: false # 2019 to 2020
+        choose "year-3", allow_label_click: true, visible: false
         choose "No", allow_label_click: true
 
         click_button "Calculate"
 
-        expect(page.text).to have_content("£1,788.80")
+        expect(page.text).to have_content("£1,823.20")
       end
     end
   end
@@ -653,6 +671,41 @@ feature "Child Benefit Tax Calculator", js: true do
     before(:each) do
       visit "/child-benefit-tax-calculator/main"
       choose "Yes", allow_label_click: true
+    end
+
+    context "tax year is 2012/2013" do
+      specify "should have no child benefit when start date is 07/01/2013" do
+        select "2013", from: "starting_children_0_start_year"
+        select "January", from: "starting_children_0_start_month"
+        select "7", from: "starting_children_0_start_day"
+        choose "year-0", allow_label_click: true, visible: false # 2012
+
+        click_button "Calculate"
+
+        expect(page.text).to contain_child_benefit_value("£243.60")
+      end
+
+      specify "should have no child benefit when start date is 01/04/2013" do
+        select "2013", from: "starting_children_0_start_year"
+        select "April", from: "starting_children_0_start_month"
+        select "1", from: "starting_children_0_start_day"
+        choose "year-0", allow_label_click: true, visible: false # 2012
+
+        click_button "Calculate"
+
+        expect(page).to contain_child_benefit_value("£0.00")
+      end
+
+      specify "should have no child benefit when start date is 05/04/2013" do
+        select "2013", from: "starting_children_0_start_year"
+        select "April", from: "starting_children_0_start_month"
+        select "5", from: "starting_children_0_start_day"
+        choose "year-0", allow_label_click: true, visible: false # 2012
+
+        click_button "Calculate"
+
+        expect(page).to contain_child_benefit_value("£0.00")
+      end
     end
 
     context "tax year is 2016/2017" do

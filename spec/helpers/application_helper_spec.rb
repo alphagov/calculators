@@ -132,15 +132,19 @@ describe ApplicationHelper, type: :helper do
   end
 
   describe "#q2_radio_options" do
-    it "generates an array of 5 hashes for the radio component for question 2" do
-      # The last hash is for the current year (here provided by Timecop as 2015)
-      # The other hashes are for the four previous years
-      # The only hash with checked true is that for the year passed to the calculator (here 2014)
+    it "generates an array of hashes for the radio component for question 2" do
+      # The last hash is for the current year (here provided by Timecop as 2020).
+      # The other hashes are for the previous years.
+      # The only hash with checked true is that for the year passed to the calculator (here 2019).
       Timecop.freeze("2020-01-01") do
         @calculator = ChildBenefitTaxCalculator.new(year: 2019)
 
         expect(q2_radio_options).to eq(
           [
+            { value: "2012", text: "2012 to 2013", checked: false },
+            { value: "2013", text: "2013 to 2014", checked: false },
+            { value: "2014", text: "2014 to 2015", checked: false },
+            { value: "2015", text: "2015 to 2016", checked: false },
             { value: "2016", text: "2016 to 2017", checked: false },
             { value: "2017", text: "2017 to 2018", checked: false },
             { value: "2018", text: "2018 to 2019", checked: false },
@@ -239,10 +243,10 @@ describe ApplicationHelper, type: :helper do
     end
 
     it "returns years for partial children options in q3" do
-      Timecop.freeze("2019-01-01") do
-        years = year_options("2015-04-06")
+      Timecop.freeze("2020-01-01") do
+        years = year_options("2011-04-06")
 
-        expect(years.length).to eq(7)
+        expect(years.length).to eq(12)
         expect(years[0]).to eq(
           text: "",
           value: "",
@@ -250,14 +254,14 @@ describe ApplicationHelper, type: :helper do
 
         expect(years[1]).to eq(
           selected: true,
-          text: 2015,
-          value: 2015,
+          text: 2011,
+          value: 2011,
         )
 
         expect(years[-1]).to eq(
           selected: false,
-          text: 2020,
-          value: 2020,
+          text: 2021,
+          value: 2021,
         )
 
         years.each_with_index do |option, i|

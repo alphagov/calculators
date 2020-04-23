@@ -74,8 +74,8 @@ module ApplicationHelper
   end
 
   def year_options(selected)
-    start_year = 4.years.ago.year
-    end_year = 1.year.from_now.year
+    start_year = ChildBenefitTaxCalculator::START_YEAR - 1
+    end_year = ChildBenefitTaxCalculator::END_YEAR
 
     years = Array(start_year..end_year).map { |number|
       format_date(number, :year, selected)
