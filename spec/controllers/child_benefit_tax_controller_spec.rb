@@ -50,8 +50,8 @@ describe ChildBenefitTaxController, type: :controller do
 
   describe "with content store returning a forbidden response" do
     before(:each) do
-      stub_request(:get, "#{Plek.find('content-store')}/content/child-benefit-tax-calculator/main").
-        to_return(status: 403, headers: {})
+      stub_request(:get, "#{Plek.find('content-store')}/content/child-benefit-tax-calculator/main")
+        .to_return(status: 403, headers: {})
     end
 
     it "should return 403 status" do
