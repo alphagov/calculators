@@ -176,10 +176,10 @@ describe ChildBenefitTaxCalculator, type: :model do
       end
       it "should not contain errors if tax claim duration is set to yes" do
         calc = ChildBenefitTaxCalculator.new(children_count: "1",
-            year: 2017,
-            is_part_year_claim: "yes",
-            part_year_children_count: "1",
-            starting_children: {
+                                             year: 2017,
+                                             is_part_year_claim: "yes",
+                                             part_year_children_count: "1",
+                                             starting_children: {
               "0" => { start: { year: "2017", month: "01", day: "07" } },
             })
         calc.valid?
@@ -758,7 +758,7 @@ describe ChildBenefitTaxCalculator, type: :model do
           },
           year: "2016",
         )
-        #child from 01/03 to 01/04 => 5 weeks * 20.7
+        # child from 01/03 to 01/04 => 5 weeks * 20.7
         expect(calc.tax_estimate.round(1)).to eq(103)
       end
 
@@ -776,7 +776,7 @@ describe ChildBenefitTaxCalculator, type: :model do
           },
           year: "2016",
         )
-        #child from 01/02 to 01/03 => 4 weeks * 20.7
+        # child from 01/02 to 01/03 => 4 weeks * 20.7
         expect(calc.tax_estimate.round(1)).to eq(82)
       end
     end # tax year 2016
@@ -803,7 +803,7 @@ describe ChildBenefitTaxCalculator, type: :model do
             stop: { day: "05", month: "04", year: "2013" },
           },
        },
-     ).benefits_claimed_amount.round(2)).to eq(612.30)
+      ).benefits_claimed_amount.round(2)).to eq(612.30)
     end
     it "should calculate 3 children for 2012/2013 one child starting on 7 Jan 2013" do
       calc = ChildBenefitTaxCalculator.new(
@@ -894,7 +894,7 @@ describe ChildBenefitTaxCalculator, type: :model do
           year: "2014",
           children_count: 3,
           is_part_year_claim: "no",
-       ).benefits_claimed_amount.round(2)).to eq(2475.2)
+        ).benefits_claimed_amount.round(2)).to eq(2475.2)
       end
 
       it "should give the total amount of benefits received for a full tax year 2014" do
@@ -943,7 +943,7 @@ describe ChildBenefitTaxCalculator, type: :model do
           year: "2015",
           children_count: 3,
           is_part_year_claim: "no",
-       ).benefits_claimed_amount.round(2)).to eq(2549.3)
+        ).benefits_claimed_amount.round(2)).to eq(2549.3)
       end
 
       it "should give the total amount of benefits received for a full tax year 2015" do
@@ -992,7 +992,7 @@ describe ChildBenefitTaxCalculator, type: :model do
           year: "2016",
           children_count: 3,
           is_part_year_claim: "no",
-       ).benefits_claimed_amount.round(2)).to eq(2501.2)
+        ).benefits_claimed_amount.round(2)).to eq(2501.2)
       end
 
       it "should give the total amount of benefits received for a full tax year 2016" do

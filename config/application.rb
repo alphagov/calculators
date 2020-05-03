@@ -4,7 +4,7 @@ require_relative "boot"
 # require "active_record/railtie"
 require "action_controller/railtie"
 require "action_mailer/railtie"
-#require "active_resource/railtie"
+# require "active_resource/railtie"
 require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
@@ -50,13 +50,13 @@ module Calculators
     # Enable the asset pipeline
     config.assets.enabled = true
 
-    config.assets.precompile += %w(
+    config.assets.precompile += %w[
       application.css
       application-ie6.css
       application-ie7.css
       application-ie8.css
       print.css
-    )
+    ]
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = "1.0"

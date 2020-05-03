@@ -1,9 +1,9 @@
 class StartingChild
   include ActiveModel::Validations
 
-  validates_presence_of :start_date,
-                        message: "enter the date Child Benefit started",
-                        unless: :start_date_with_too_many_days?
+  validates :start_date,
+            presence: { message: "enter the date Child Benefit started",
+                        unless: :start_date_with_too_many_days? }
 
   validate :valid_dates
 
@@ -34,7 +34,7 @@ private
 
   def set_date(date_attr, date_params)
     if date_params && buildable_date?(date_attr, date_params)
-      self.send(
+      send(
         "#{date_attr}=",
         Date.new(
           date_params[:year].to_i,

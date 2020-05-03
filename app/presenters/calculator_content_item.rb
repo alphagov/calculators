@@ -10,9 +10,7 @@ class CalculatorContentItem
     "/" + calculator.slug
   end
 
-  def content_id
-    calculator.content_id
-  end
+  delegate :content_id, to: :calculator
 
   def update_type
     "minor"

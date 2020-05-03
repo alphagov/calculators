@@ -19,8 +19,8 @@ class ChildBenefitTaxCalculator
   }.freeze
 
   validate :valid_child_dates
-  validates_presence_of :is_part_year_claim, message: "select part year tax claim"
-  validates_inclusion_of :tax_year, in: TAX_YEARS.keys.map(&:to_i), message: "select a tax year"
+  validates :is_part_year_claim, presence: { message: "select part year tax claim" }
+  validates :tax_year, inclusion: { in: TAX_YEARS.keys.map(&:to_i), message: "select a tax year" }
   validate :valid_number_of_children
   validate :tax_year_contains_at_least_one_child
 
