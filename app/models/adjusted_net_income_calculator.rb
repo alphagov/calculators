@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class AdjustedNetIncomeCalculator
   PARAM_KEYS = %i[gross_income other_income pension_contributions_from_pay
                   retirement_annuities cycle_scheme childcare pensions property

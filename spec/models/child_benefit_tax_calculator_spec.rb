@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require "spec_helper"
 
 describe ChildBenefitTaxCalculator, type: :model do
@@ -36,7 +34,7 @@ describe ChildBenefitTaxCalculator, type: :model do
       @calc.valid?
     end
     it "should contain errors for year if none is given" do
-      expect(@calc.errors.has_key?(:tax_year)).to eq(true)
+      expect(@calc.errors.key?(:tax_year)).to eq(true)
     end
     it "should contain errors for year if outside of tax years range" do
       @calc = ChildBenefitTaxCalculator.new(year: "2010")
@@ -65,14 +63,14 @@ describe ChildBenefitTaxCalculator, type: :model do
       expect(@calc.errors).to have_key(:part_year_children_count)
     end
     it "should validate dates provided for children" do
-      expect(@calc.starting_children.first.errors.has_key?(:start_date)).to eq(true)
+      expect(@calc.starting_children.first.errors.key?(:start_date)).to eq(true)
 
       @calc.starting_children << StartingChild.new(
         start: { year: "2012", month: "02", day: "01" },
         stop: { year: "2012", month: "01", day: "01" },
       )
       @calc.valid?
-      expect(@calc.starting_children.second.errors.has_key?(:end_date)).to eq(true)
+      expect(@calc.starting_children.second.errors.key?(:end_date)).to eq(true)
     end
     it "should contain an error on starting child if all outside of tax year" do
       @calc = ChildBenefitTaxCalculator.new(

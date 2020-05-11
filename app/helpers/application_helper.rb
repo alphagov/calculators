@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module ApplicationHelper
   def step(num, text)
     "<span class=\"step step-#{num}\">#{text}</span>".html_safe
@@ -60,16 +58,16 @@ module ApplicationHelper
   end
 
   def day_options(selected)
-    days = Array(1..31).map { |number|
+    days = Array(1..31).map do |number|
       format_date(number, :day, selected)
-    }
+    end
     days.unshift(text: "", value: "")
   end
 
   def month_options(selected)
-    months = Array(1..12).map { |number|
+    months = Array(1..12).map do |number|
       format_date(number, :month, selected)
-    }
+    end
     months.unshift(text: "", value: "")
   end
 
@@ -77,9 +75,9 @@ module ApplicationHelper
     start_year = ChildBenefitTaxCalculator::START_YEAR - 1
     end_year = ChildBenefitTaxCalculator::END_YEAR
 
-    years = Array(start_year..end_year).map { |number|
+    years = Array(start_year..end_year).map do |number|
       format_date(number, :year, selected)
-    }
+    end
     years.unshift(text: "", value: "")
   end
 
