@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class ChildBenefitRates
   attr_reader :year
 

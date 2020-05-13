@@ -74,6 +74,6 @@ private
   end
 
   def start_date_with_too_many_days?
-    @dates_with_too_many_days.select { |e| e.has_value?(:start_date) }.any?
+    @dates_with_too_many_days.select { |e| e.value?(:start_date) }.any?
   end
 end

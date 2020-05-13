@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require "spec_helper"
 
 feature "Child Benefit Tax Calculator", js: true do

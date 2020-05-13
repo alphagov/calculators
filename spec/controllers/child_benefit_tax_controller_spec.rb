@@ -21,7 +21,7 @@ describe ChildBenefitTaxController, type: :controller do
       it "should run calculator validations" do
         get :main, params: { results: "Get your estimate" }
         expect(response).to be_successful
-        expect(assigns(:calculator).errors.has_key?(:tax_year)).to eq(true)
+        expect(assigns(:calculator).errors.key?(:tax_year)).to eq(true)
       end
     end
 
