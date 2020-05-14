@@ -16,16 +16,17 @@ describe ChildBenefitTaxCalculator, type: :model do
 
   it "is valid if given enough detail" do
     expect(ChildBenefitTaxCalculator.new(
-      year: "2017", children_count: "1",
+      year: "2017",
+      children_count: "1",
       is_part_year_claim: "yes",
       part_year_children_count: "1",
-      starting_children: { "0" => { start: { year: "2016", month: "01", day: "01" } } }
+      starting_children: { "0" => { start: { year: "2016", month: "01", day: "01" } } },
     ).can_calculate?).to eq(true)
   end
 
   it "parses integers from various formats of numerical input" do
     calc = ChildBenefitTaxCalculator.new(adjusted_net_income: "£100,900")
-    expect(calc.adjusted_net_income).to eq(100900)
+    expect(calc.adjusted_net_income).to eq(100_900)
   end
 
   describe "input validation" do
@@ -463,7 +464,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         year: "2012",
         children_count: 2,
         is_part_year_claim: "no",
-      ).adjusted_net_income).to eq(50099)
+      ).adjusted_net_income).to eq(50_099)
     end
 
     it "should calculate the adjusted net income with the relevant params" do
@@ -481,7 +482,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         year: "2012",
         children_count: 2,
         is_part_year_claim: "no",
-      ).adjusted_net_income).to eq(69950)
+      ).adjusted_net_income).to eq(69_950)
     end
 
     it "should ignore the adjusted_net_income parameter when using the calculation form params" do
@@ -500,7 +501,7 @@ describe ChildBenefitTaxCalculator, type: :model do
         year: "2012",
         children_count: 2,
         is_part_year_claim: "no",
-      ).adjusted_net_income).to eq(69950)
+      ).adjusted_net_income).to eq(69_950)
     end
   end
 
@@ -808,7 +809,8 @@ describe ChildBenefitTaxCalculator, type: :model do
     it "should calculate 3 children for 2012/2013 one child starting on 7 Jan 2013" do
       calc = ChildBenefitTaxCalculator.new(
         adjusted_net_income: "56000",
-        year: "2012", children_count: 3,
+        year: "2012",
+        children_count: 3,
         is_part_year_claim: "yes",
         part_year_children_count: "3",
         starting_children: {
@@ -824,7 +826,7 @@ describe ChildBenefitTaxCalculator, type: :model do
             start: { day: "07", month: "01", year: "2013" },
             stop: { day: "05", month: "04", year: "2013" },
           },
-        }
+        },
       )
       expect(calc.benefits_claimed_amount.round(2)).to eq(612.30)
       expect(calc.tax_estimate).to eq(367)
