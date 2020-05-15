@@ -3,11 +3,15 @@ require "active_model"
 class ChildBenefitTaxCalculator
   include ActiveModel::Validations
 
-  attr_reader :adjusted_net_income_calculator, :adjusted_net_income,
-              :children_count, :starting_children, :tax_year,
-              :is_part_year_claim, :part_year_children_count
+  attr_reader :adjusted_net_income_calculator,
+              :adjusted_net_income,
+              :children_count,
+              :starting_children,
+              :tax_year,
+              :is_part_year_claim,
+              :part_year_children_count
 
-  NET_INCOME_THRESHOLD = 50000
+  NET_INCOME_THRESHOLD = 50_000
   TAX_COMMENCEMENT_DATE = Date.parse("7 Jan 2013") # special case for 2012-13, only weeks from 7th Jan 2013 are taxable
 
   START_YEAR = 2012
@@ -66,12 +70,12 @@ class ChildBenefitTaxCalculator
   end
 
   def percent_tax_charge
-    if @adjusted_net_income >= 60000
+    if @adjusted_net_income >= 60_000
       100
-    elsif (59900..59999).cover?(@adjusted_net_income)
+    elsif (59_900..59_999).cover?(@adjusted_net_income)
       99
     else
-      ((@adjusted_net_income - 50000) / 100.0).floor
+      ((@adjusted_net_income - 50_000) / 100.0).floor
     end
   end
 

@@ -408,7 +408,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
     describe "Calculating benefits received for 2012-13" do
       before(:each) do
-        allow_any_instance_of(ChildBenefitTaxCalculator).to receive(:benefits_claimed_amount).and_return(500000)
+        allow_any_instance_of(ChildBenefitTaxCalculator).to receive(:benefits_claimed_amount).and_return(500_000)
       end
 
       it "calculates the overall benefits received for both children" do
@@ -434,13 +434,13 @@ feature "Child Benefit Tax Calculator", js: true do
 
   describe "Estimating the tax due" do
     before(:each) do
-      allow_any_instance_of(ChildBenefitTaxCalculator).to receive(:benefits_claimed_amount).and_return(500000)
+      allow_any_instance_of(ChildBenefitTaxCalculator).to receive(:benefits_claimed_amount).and_return(500_000)
       visit "/child-benefit-tax-calculator/main"
       choose "Yes", allow_label_click: true
     end
 
     it "should give an estimated total of tax due related to income" do
-      allow_any_instance_of(ChildBenefitTaxCalculator).to receive(:tax_estimate).and_return(500000)
+      allow_any_instance_of(ChildBenefitTaxCalculator).to receive(:tax_estimate).and_return(500_000)
 
       select "2011", from: "starting_children[0][start][year]"
       select "January", from: "starting_children[0][start][month]"
