@@ -54,8 +54,6 @@ Calculators::Application.configure do
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
-  # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  config.action_controller.asset_host = ENV["GOVUK_ASSET_HOST"]
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "support_#{Rails.env}"
