@@ -56,6 +56,7 @@ module Calculators
       application-ie7.css
       application-ie8.css
       print.css
+      test-dependencies.js
     ]
 
     # Version of your assets, change this if you want to expire all your assets
