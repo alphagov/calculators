@@ -1,14 +1,16 @@
 require "spec_helper"
-require "gds_api/content_store"
+require "gds_api/test_helpers/content_store"
 
 describe ChildBenefitTaxController, type: :controller do
+  include GdsApi::TestHelpers::ContentStore
+
   # Force the tests to render the views
   # Works around https://github.com/alphagov/slimmer/issues/170
   render_views
 
   describe "with a simple content store response" do
     before(:each) do
-      expect_any_instance_of(GdsApi::ContentStore).to receive(:content_item).and_return({})
+      stub_content_store_has_item("/child-benefit-tax-calculator/main")
     end
 
     describe "GET main" do
