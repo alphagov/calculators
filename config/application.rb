@@ -61,7 +61,11 @@ module Calculators
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = "1.0"
-    config.assets.prefix = "/calculators"
+    config.assets.prefix = "/assets/calculators"
+
+    # allow overriding the asset host with an enironment variable, useful for
+    # when router is proxying to this app but asset proxying isn't set up.
+    config.asset_host = ENV["ASSET_HOST"]
 
     # Disable Rack::Cache
     config.action_dispatch.rack_cache = nil
