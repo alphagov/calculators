@@ -26,7 +26,7 @@ class ChildBenefitTaxController < ApplicationController
 protected
 
   def fetch_content_item
-    @content_item = Services.content_store.content_item("/child-benefit-tax-calculator/main").to_hash
+    @content_item = GdsApi.content_store.content_item("/child-benefit-tax-calculator/main").to_h
   end
 
   def setup_navigation_helpers
