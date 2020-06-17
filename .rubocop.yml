@@ -6,3 +6,12 @@ inherit_gem:
 inherit_mode:
   merge:
     - Exclude
+
+# We intend to merge this app with Smart
+# Answers, which has a consistent style of
+# commenting keywords of conditionals.
+#
+# https://trello.com/c/N4DjtYWP/1632-epic-move-calculators-child-benefit-tax-calculator-into-smart-answers
+# https://github.com/alphagov/smart-answers/blob/45ac339e32df0d9f74611f7725334aaa6ed354ee/.rubocop.yml#L22
+Style/CommentedKeyword:
+  Enabled: false
