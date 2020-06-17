@@ -6,13 +6,3 @@ inherit_gem:
 inherit_mode:
   merge:
     - Exclude
-
-Style/CommentedKeyword:
-  Exclude:
-    - 'spec/models/child_benefit_tax_calculator_spec.rb'
-    - 'spec/features/child_benefit_tax_calculator_spec.rb'
-
-Rails/OutputSafety:
-  Enabled: false
-Rails/HelperInstanceVariable:
-  Enabled: false
