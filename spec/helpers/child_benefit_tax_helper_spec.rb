@@ -20,19 +20,17 @@ describe ChildBenefitTaxHelper, type: :helper do
   end
 
   describe "tax_year_incomplete?" do
-    before :each do
-      @calculator = double(tax_year: 2019)
-    end
+    let(:calculator) { double(tax_year: 2019) }
 
     it "should be true before the end of the tax year" do
       Timecop.freeze("2020-04-04") do
-        expect(tax_year_incomplete?).to eq true
+        expect(tax_year_incomplete?(calculator)).to eq true
       end
     end
 
     it "should be false after the end of the tax year" do
       Timecop.freeze("2020-04-06") do
-        expect(tax_year_incomplete?).to eq false
+        expect(tax_year_incomplete?(calculator)).to eq false
       end
     end
   end

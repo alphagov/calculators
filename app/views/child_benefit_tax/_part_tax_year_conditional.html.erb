@@ -9,7 +9,7 @@
     id: "part_year_children_count",
     label: "Number of part year children",
     full_width: true,
-    options: children_select_options(@calculator.part_year_children_count)
+    options: children_select_options(calculator.part_year_children_count)
   } %>
 
   <div class="js-hidden">
@@ -30,5 +30,5 @@
     <li>the stop date is usually when a child turns 16 or leaves full-time education</li>
   </ul>
 
-  <%= render "child_benefit_tax/starting_children" %>
+  <%= render partial: "child_benefit_tax/starting_children", locals: { calculator: calculator } %>
 </div>

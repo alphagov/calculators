@@ -35,11 +35,11 @@ describe ApplicationHelper, type: :helper do
         end
       end
 
-      @calculator = double
+      calculator = double
       data = double
 
-      allow(@calculator).to receive(:starting_children).and_return(data)
-      allow(@calculator).to receive(:errors).and_return(
+      allow(calculator).to receive(:starting_children).and_return(data)
+      allow(calculator).to receive(:errors).and_return(
         tax_year: "select a tax year",
         part_year_children_count: "the number of children you're claiming a part year for can't be more than the total number of children you're claiming for",
       )
@@ -68,7 +68,7 @@ describe ApplicationHelper, type: :helper do
         },
       ]
 
-      expect(form_errors).to eq(expected)
+      expect(form_errors(calculator)).to eq(expected)
     end
   end
 
@@ -137,9 +137,9 @@ describe ApplicationHelper, type: :helper do
       # The other hashes are for the previous years.
       # The only hash with checked true is that for the year passed to the calculator (here 2019).
       Timecop.freeze("2020-01-01") do
-        @calculator = ChildBenefitTaxCalculator.new(year: 2019)
+        calculator = ChildBenefitTaxCalculator.new(year: 2019)
 
-        expect(q2_radio_options).to eq(
+        expect(q2_radio_options(calculator)).to eq(
           [
             { value: "2012", text: "2012 to 2013", checked: false },
             { value: "2013", text: "2013 to 2014", checked: false },
@@ -159,10 +159,10 @@ describe ApplicationHelper, type: :helper do
   describe "#q3_radio_options" do
     it "generates an array of options for the radio component for question 3" do
       @calculator = ChildBenefitTaxCalculator.new(year: "2015")
+      conditional_file_content = render partial: "child_benefit_tax/part_tax_year_conditional",
+                                        locals: { calculator: @calculator }
 
-      conditional_file_content = render file: Rails.root.join("app/views/child_benefit_tax/_part_tax_year_conditional.html.erb")
-
-      expect(q3_radio_options).to eq(
+      expect(q3_radio_options(@calculator)).to eq(
         [
           {
             value: "yes",
