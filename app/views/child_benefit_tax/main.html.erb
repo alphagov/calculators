@@ -11,7 +11,7 @@
       <% if @calculator.has_errors? -%>
         <%= render "govuk_publishing_components/components/error_summary", {
           title: "Please check the form",
-          items: form_errors
+          items: form_errors(@calculator)
         } %>
       <% end -%>
 
@@ -51,7 +51,7 @@
           error_message: question_two_errors,
           heading: step(2, "Which tax year are you claiming for?"),
           hint: "Tax years run from 6 April to 5 April the following year.",
-          items: q2_radio_options
+          items: q2_radio_options(@calculator)
         } %>
       </div>
 
@@ -67,7 +67,7 @@
           id_prefix: "is_part_year_claim",
           error_message: question_three_errors,
           heading: step(3, "Are you claiming for only a part of the tax year for any of your children?"),
-          items: q3_radio_options
+          items: q3_radio_options(@calculator)
         } %>
       </div>
 
@@ -128,7 +128,7 @@
       </div>
     <% end %>
 
-    <% if can_haz_results? %>
+    <% if can_haz_results?(@calculator) %>
       <div class="results">
         <h2 id="results" class="govuk-heading-xl">Results</h2>
         <%= render "results" %>

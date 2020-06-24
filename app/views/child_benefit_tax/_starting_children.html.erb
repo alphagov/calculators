@@ -1,4 +1,4 @@
-<% if @calculator.starting_children.count == 0 %>
+<% if calculator.starting_children.count == 0 %>
   <div class="js-child govuk-!-margin-bottom-9">
     <% heading = capture do %>
       Child <span class="js-child-number"> 1 </span>
@@ -14,7 +14,7 @@
   </div>
 
 <% else %>
-  <% @calculator.starting_children.each_with_index do |child, index| -%>
+  <% calculator.starting_children.each_with_index do |child, index| -%>
     <div class="js-child govuk-!-margin-bottom-9">
       <% heading = capture do %>
         Child <span class="js-child-number"><%= index + 1 %></span>

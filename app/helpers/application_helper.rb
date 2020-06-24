@@ -7,16 +7,16 @@ module ApplicationHelper
     request.original_fullpath.split("?", 2).first
   end
 
-  def form_errors
+  def form_errors(calculator)
     errors = []
 
-    @calculator.starting_children.map(&:errors).map(&:messages).map(&:values).flatten.uniq.each do |message|
+    calculator.starting_children.map(&:errors).map(&:messages).map(&:values).flatten.uniq.each do |message|
       errors << {
         text: message,
         href: "#children_heading",
       }
     end
-    @calculator.errors.each do |key, message|
+    calculator.errors.each do |key, message|
       errors << {
         text: message,
         href: "##{key}",
@@ -36,23 +36,23 @@ module ApplicationHelper
     end
   end
 
-  def q2_radio_options
+  def q2_radio_options(calculator)
     ChildBenefitTaxCalculator::TAX_YEARS.keys.map do |year|
       {
         value: year,
         text: "#{year} to #{year.to_i + 1}",
-        checked: @calculator.tax_year == year.to_i,
+        checked: calculator.tax_year == year.to_i,
       }
     end
   end
 
-  def q3_radio_options
+  def q3_radio_options(calculator)
     %w[yes no].map do |option|
       {
         value: option,
         text: option.capitalize,
-        checked: @calculator.is_part_year_claim == option,
-        conditional: q3_conditional_content(option),
+        checked: calculator.is_part_year_claim == option,
+        conditional: q3_conditional_content(calculator, option),
       }
     end
   end
@@ -83,9 +83,10 @@ module ApplicationHelper
 
 private
 
-  def q3_conditional_content(option)
+  def q3_conditional_content(calculator, option)
     if option == "yes"
-      render "child_benefit_tax/part_tax_year_conditional"
+      render partial: "child_benefit_tax/part_tax_year_conditional",
+             locals: { calculator: calculator }
     end
   end
 

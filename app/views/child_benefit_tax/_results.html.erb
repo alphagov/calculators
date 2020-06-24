@@ -41,7 +41,7 @@
             and is based on your estimated adjusted net income of <%= number_to_currency @calculator.adjusted_net_income, unit: "£", precision: 2 %>.</p>
         <% end %>
 
-        <% if tax_year_incomplete? %>
+        <% if tax_year_incomplete?(@calculator) %>
           <p>This is an estimate based on your adjusted net income of <%= number_to_currency @calculator.adjusted_net_income, unit: "£", precision: 2 %>
             - your circumstances may change before the end of the tax year.</p>
         <% else %>
@@ -62,7 +62,7 @@
 
         <p>To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:</p>
         <ol>
-          <li><a href="/register-for-self-assessment">Register for Self Assessment</a> if you don’t already fill in a tax return - you should do this by <%= sa_register_deadline %>.</li>
+          <li><a href="/register-for-self-assessment">Register for Self Assessment</a> if you don’t already fill in a tax return - you should do this by <%= sa_register_deadline(@calculator) %>.</li>
           <li>Fill in the tax return and include the amount of Child Benefit received for the tax year.</li>
           <li>Send the tax return.</li>
           <li>Pay the tax you owe.</li>
