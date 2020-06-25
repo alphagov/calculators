@@ -1,3 +1,5 @@
+require "active_model"
+
 class StartingChild
   include ActiveModel::Validations
 

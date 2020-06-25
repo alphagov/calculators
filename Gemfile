@@ -38,4 +38,11 @@ group :test do
   gem "rails-controller-testing", "~> 1.0.4"
   gem "simplecov", require: false
   gem "webmock", "~> 3.8.3", require: false
+
+  gem "ci_reporter"
+  gem "minitest", "~> 5.14"
+  gem "minitest-focus", "~> 1.2"
+  gem "mocha", "1.11.2", require: false
+  gem "shoulda", "~> 3.6.0"
+  gem "simplecov-rcov", "~> 0.2.3", require: false
 end
