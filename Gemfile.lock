@@ -119,7 +119,7 @@ GEM
       domain_name (~> 0.5)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
-    json (2.3.0)
+    json (2.3.1)
     json-schema (2.8.1)
       addressable (>= 2.4)
     kgio (2.11.3)
@@ -286,7 +286,7 @@ GEM
       docile (~> 1.1)
       simplecov-html (~> 0.11)
     simplecov-html (0.12.1)
-    slimmer (15.0.0)
+    slimmer (15.1.0)
       activesupport
       json
       nokogiri (~> 1.7)
@@ -364,7 +364,7 @@ DEPENDENCIES
   rubocop-govuk
   sass-rails (= 5.0.7)
   simplecov
-  slimmer (~> 15.0.0)
+  slimmer (~> 15.1.0)
   spring
   spring-watcher-listen (~> 2.0.0)
   timecop (~> 0.9.1)
