@@ -286,7 +286,7 @@ GEM
       docile (~> 1.1)
       simplecov-html (~> 0.11)
     simplecov-html (0.12.1)
-    slimmer (15.1.0)
+    slimmer (15.1.1)
       activesupport
       json
       nokogiri (~> 1.7)
@@ -364,7 +364,7 @@ DEPENDENCIES
   rubocop-govuk
   sass-rails (= 5.1.0)
   simplecov
-  slimmer (~> 15.1.0)
+  slimmer (~> 15.1.1)
   spring
   spring-watcher-listen (~> 2.0.0)
   timecop (~> 0.9.1)
