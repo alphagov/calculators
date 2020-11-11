@@ -109,7 +109,7 @@ GEM
       activesupport (>= 4.2.0)
     govuk-content-schema-test-helpers (1.6.1)
       json-schema (~> 2.8.0)
-    govuk_app_config (2.6.0)
+    govuk_app_config (2.7.0)
       logstasher (>= 1.2.2, < 1.4.0)
       sentry-raven (~> 3.1.1)
       statsd-ruby (~> 1.4.0)
@@ -368,7 +368,7 @@ DEPENDENCIES
   ci_reporter_rspec (~> 1.0.0)
   gds-api-adapters (~> 67.0.1)
   govuk-content-schema-test-helpers (~> 1.6.1)
-  govuk_app_config (~> 2.6.0)
+  govuk_app_config (~> 2.7.0)
   govuk_publishing_components (~> 23.4.0)
   govuk_test
   launchy
