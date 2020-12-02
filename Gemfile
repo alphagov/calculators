@@ -9,7 +9,7 @@ gem "govuk_publishing_components"
 gem "nokogiri"
 gem "plek"
 gem "rack_strip_client_ip"
-gem "sass-rails"
+gem "sassc-rails"
 gem "slimmer"
 gem "uglifier"
 
