@@ -13,7 +13,10 @@
     "env": {
       "browser": true,
       "jquery": true
-    }
+    },
+    "globals": [
+      "GOVUK"
+    ]
   },
   "eslintConfig": {
     "rules": {

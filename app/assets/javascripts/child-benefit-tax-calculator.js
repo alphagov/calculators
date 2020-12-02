@@ -1,8 +1,8 @@
 (function () {
   'use strict'
 
-  var root = this,
-    $ = root.jQuery
+  var root = this
+  var $ = root.jQuery
   if (typeof root.GOVUK === 'undefined') { root.GOVUK = {} }
 
   var calculator = {
@@ -14,10 +14,10 @@
     },
 
     updateChildrenFields: function () {
-      var numStartingChildren = calculator.partYearChildrenCountInput.val(),
-        childFields = calculator.childrenContainer.find('.js-child'),
-        numChildFields = childFields.size(),
-        numNewFields = numStartingChildren - numChildFields
+      var numStartingChildren = calculator.partYearChildrenCountInput.val()
+      var childFields = calculator.childrenContainer.find('.js-child')
+      var numChildFields = childFields.size()
+      var numNewFields = numStartingChildren - numChildFields
 
       if (numStartingChildren < 1 || numStartingChildren > 10) {
         return false
