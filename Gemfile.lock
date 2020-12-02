@@ -363,36 +363,33 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  better_errors (~> 2.7)
-  binding_of_caller (~> 0.8)
-  ci_reporter_rspec (~> 1.0.0)
-  gds-api-adapters (~> 67.2.1)
-  govuk-content-schema-test-helpers (~> 1.6.1)
-  govuk_app_config (~> 2.8.0)
-  govuk_publishing_components (~> 23.9.1)
+  better_errors
+  binding_of_caller
+  ci_reporter_rspec
+  gds-api-adapters
+  govuk-content-schema-test-helpers
+  govuk_app_config
+  govuk_publishing_components
   govuk_test
   launchy
-  listen (~> 3.2.1)
+  listen
   nokogiri
-  plek (~> 4.0.0)
+  plek
   pry-byebug
-  rack_strip_client_ip (= 0.0.2)
-  rails (~> 6.0.3)
-  rails-controller-testing (~> 1.0.5)
-  rspec-rails (~> 4.0.1)
+  rack_strip_client_ip
+  rails (= 6.0.3.4)
+  rails-controller-testing
+  rspec-rails
   rubocop-govuk
-  sass-rails (= 5.1.0)
+  sass-rails
   simplecov
-  slimmer (~> 15.3.0)
+  slimmer
   spring
-  spring-watcher-listen (~> 2.0.0)
-  timecop (~> 0.9.1)
-  uglifier (~> 4.2)
-  web-console (>= 3.3.0)
-  webmock (~> 3.8.3)
-
-RUBY VERSION
-   ruby 2.7.2p137
+  spring-watcher-listen
+  timecop
+  uglifier
+  web-console
+  webmock
 
 BUNDLED WITH
    2.1.4
