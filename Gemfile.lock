@@ -59,17 +59,17 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.1)
-    better_errors (2.7.1)
+    better_errors (2.9.1)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
-    bindex (0.5.0)
+    bindex (0.8.1)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
     brakeman (4.10.0)
     builder (3.2.4)
-    byebug (11.1.1)
-    capybara (3.33.0)
+    byebug (11.1.3)
+    capybara (3.34.0)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
@@ -83,13 +83,12 @@ GEM
     ci_reporter_rspec (1.0.0)
       ci_reporter (~> 2.0)
       rspec (>= 2.14, < 4)
-    coderay (1.1.2)
+    coderay (1.1.3)
     concurrent-ruby (1.1.7)
-    crack (0.4.3)
-      safe_yaml (~> 1.0.0)
+    crack (0.4.4)
     crass (1.0.6)
     debug_inspector (0.0.3)
-    diff-lcs (1.3)
+    diff-lcs (1.4.4)
     docile (1.3.2)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
@@ -142,7 +141,7 @@ GEM
     launchy (2.5.0)
       addressable (~> 2.7)
     link_header (0.0.8)
-    listen (3.2.1)
+    listen (3.3.3)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     logstash-event (1.2.02)
@@ -171,18 +170,18 @@ GEM
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
     null_logger (0.0.1)
-    parallel (1.19.2)
+    parallel (1.20.1)
     parser (2.7.2.0)
       ast (~> 2.4.1)
     plek (4.0.0)
-    pry (0.13.0)
+    pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
     pry-byebug (3.9.0)
       byebug (~> 11.0)
       pry (~> 0.13.0)
     public_suffix (4.0.6)
-    puma (5.0.2)
+    puma (5.1.1)
       nio4r (~> 2.0)
     rack (2.2.3)
     rack-test (1.1.0)
@@ -234,18 +233,18 @@ GEM
       netrc (~> 0.8)
     rexml (3.2.4)
     rouge (3.26.0)
-    rspec (3.9.0)
-      rspec-core (~> 3.9.0)
-      rspec-expectations (~> 3.9.0)
-      rspec-mocks (~> 3.9.0)
-    rspec-core (3.9.2)
-      rspec-support (~> 3.9.3)
-    rspec-expectations (3.9.2)
+    rspec (3.10.0)
+      rspec-core (~> 3.10.0)
+      rspec-expectations (~> 3.10.0)
+      rspec-mocks (~> 3.10.0)
+    rspec-core (3.10.0)
+      rspec-support (~> 3.10.0)
+    rspec-expectations (3.10.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.9.0)
-    rspec-mocks (3.9.1)
+      rspec-support (~> 3.10.0)
+    rspec-mocks (3.10.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.9.0)
+      rspec-support (~> 3.10.0)
     rspec-rails (4.0.1)
       actionpack (>= 4.2)
       activesupport (>= 4.2)
@@ -254,7 +253,7 @@ GEM
       rspec-expectations (~> 3.9)
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
-    rspec-support (3.9.3)
+    rspec-support (3.10.0)
     rubocop (0.87.1)
       parallel (~> 1.10)
       parser (>= 2.7.1.1)
@@ -283,27 +282,25 @@ GEM
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
     rubyzip (2.3.0)
-    safe_yaml (1.0.5)
-    sass (3.7.4)
-      sass-listen (~> 4.0.0)
-    sass-listen (4.0.0)
-      rb-fsevent (~> 0.9, >= 0.9.4)
-      rb-inotify (~> 0.9, >= 0.9.7)
-    sass-rails (5.1.0)
-      railties (>= 5.2.0)
-      sass (~> 3.1)
-      sprockets (>= 2.8, < 4.0)
-      sprockets-rails (>= 2.0, < 4.0)
-      tilt (>= 1.1, < 3)
+    sassc (2.4.0)
+      ffi (~> 1.9)
+    sassc-rails (2.1.2)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     sentry-raven (3.1.1)
       faraday (>= 1.0)
-    simplecov (0.18.5)
+    simplecov (0.20.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
-    simplecov-html (0.12.1)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.2)
     slimmer (15.3.0)
       activesupport
       json
@@ -312,7 +309,7 @@ GEM
       plek (>= 1.1.0)
       rack
       rest-client
-    spring (2.1.0)
+    spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
@@ -327,7 +324,7 @@ GEM
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
-    timecop (0.9.1)
+    timecop (0.9.2)
     tzinfo (1.2.8)
       thread_safe (~> 0.1)
     uglifier (4.2.0)
@@ -339,16 +336,16 @@ GEM
     unicorn (5.7.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    web-console (3.7.0)
-      actionview (>= 5.0)
-      activemodel (>= 5.0)
+    web-console (4.1.0)
+      actionview (>= 6.0.0)
+      activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
-      railties (>= 5.0)
+      railties (>= 6.0.0)
     webdrivers (4.4.1)
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (>= 3.0, < 4.0)
-    webmock (3.8.3)
+    webmock (3.10.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -363,36 +360,33 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  better_errors (~> 2.7)
-  binding_of_caller (~> 0.8)
-  ci_reporter_rspec (~> 1.0.0)
-  gds-api-adapters (~> 67.2.1)
-  govuk-content-schema-test-helpers (~> 1.6.1)
-  govuk_app_config (~> 2.8.0)
-  govuk_publishing_components (~> 23.9.1)
+  better_errors
+  binding_of_caller
+  ci_reporter_rspec
+  gds-api-adapters
+  govuk-content-schema-test-helpers
+  govuk_app_config
+  govuk_publishing_components
   govuk_test
   launchy
-  listen (~> 3.2.1)
+  listen
   nokogiri
-  plek (~> 4.0.0)
+  plek
   pry-byebug
-  rack_strip_client_ip (= 0.0.2)
-  rails (~> 6.0.3)
-  rails-controller-testing (~> 1.0.5)
-  rspec-rails (~> 4.0.1)
+  rack_strip_client_ip
+  rails (= 6.0.3.4)
+  rails-controller-testing
+  rspec-rails
   rubocop-govuk
-  sass-rails (= 5.1.0)
+  sassc-rails
   simplecov
-  slimmer (~> 15.3.0)
+  slimmer
   spring
-  spring-watcher-listen (~> 2.0.0)
-  timecop (~> 0.9.1)
-  uglifier (~> 4.2)
-  web-console (>= 3.3.0)
-  webmock (~> 3.8.3)
-
-RUBY VERSION
-   ruby 2.7.2p137
+  spring-watcher-listen
+  timecop
+  uglifier
+  web-console
+  webmock
 
 BUNDLED WITH
    2.1.4
