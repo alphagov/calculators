@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "6.0.3.4"
+gem "rails", "6.1.0"
 
 gem "gds-api-adapters"
 gem "govuk_app_config"
