@@ -15,14 +15,10 @@ class ChildBenefitTaxCalculator
   TAX_COMMENCEMENT_DATE = Date.parse("7 Jan 2013") # special case for 2012-13, only weeks from 7th Jan 2013 are taxable
 
   START_YEAR = 2012
-  END_YEAR = 1.year.from_now.year
-  TAX_YEARS = (START_YEAR...END_YEAR).each_with_object({}) { |year, hash|
-    hash[year.to_s] = [Date.new(year, 4, 6), Date.new(year + 1, 4, 5)]
-  }.freeze
 
   validate :valid_child_dates
   validates :is_part_year_claim, presence: { message: "select part year tax claim" }
-  validates :tax_year, inclusion: { in: TAX_YEARS.keys.map(&:to_i), message: "select a tax year" }
+  validates :tax_year, inclusion: { in: (START_YEAR..), message: "select a tax year" }
   validate :valid_number_of_children
   validate :tax_year_contains_at_least_one_child
 
@@ -92,7 +88,7 @@ class ChildBenefitTaxCalculator
   end
 
   def selected_tax_year
-    TAX_YEARS[@tax_year.to_s]
+    ChildBenefitTaxCalculator.tax_years[@tax_year.to_s]
   end
 
   def benefits_claimed_amount
@@ -138,6 +134,16 @@ class ChildBenefitTaxCalculator
 
   def tax_estimate
     (benefits_claimed_amount * (percent_tax_charge / 100.0)).floor
+  end
+
+  def self.end_year
+    1.year.from_now.year
+  end
+
+  def self.tax_years
+    (START_YEAR...end_year).each_with_object({}) { |year, hash|
+      hash[year.to_s] = [Date.new(year, 4, 6), Date.new(year + 1, 4, 5)]
+    }.freeze
   end
 
 private

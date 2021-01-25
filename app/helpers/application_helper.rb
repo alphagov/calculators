@@ -37,7 +37,7 @@ module ApplicationHelper
   end
 
   def q2_radio_options(calculator)
-    ChildBenefitTaxCalculator::TAX_YEARS.keys.map do |year|
+    ChildBenefitTaxCalculator.tax_years.keys.map do |year|
       {
         value: year,
         text: "#{year} to #{year.to_i + 1}",
@@ -73,7 +73,7 @@ module ApplicationHelper
 
   def year_options(selected)
     start_year = ChildBenefitTaxCalculator::START_YEAR - 1
-    end_year = ChildBenefitTaxCalculator::END_YEAR
+    end_year = ChildBenefitTaxCalculator.end_year
 
     years = Array(start_year..end_year).map do |number|
       format_date(number, :year, selected)

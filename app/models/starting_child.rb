@@ -16,7 +16,7 @@ class StartingChild
   end
 
   def benefits_end
-    tax_years = ChildBenefitTaxCalculator::TAX_YEARS
+    tax_years = ChildBenefitTaxCalculator.tax_years
     @end_date || tax_years[tax_years.keys.max].last
   end
 
