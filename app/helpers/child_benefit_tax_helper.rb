@@ -4,7 +4,7 @@ module ChildBenefitTaxHelper
   end
 
   def tax_year_label(year)
-    dates = ChildBenefitTaxCalculator::TAX_YEARS[year.to_s]
+    dates = ChildBenefitTaxCalculator.tax_years[year.to_s]
     "#{dates.first.year} to #{dates.last.year}"
   end
 
@@ -13,12 +13,12 @@ module ChildBenefitTaxHelper
   end
 
   def sa_register_deadline(calculator)
-    end_date = ChildBenefitTaxCalculator::TAX_YEARS[calculator.tax_year.to_s].last
+    end_date = ChildBenefitTaxCalculator.tax_years[calculator.tax_year.to_s].last
     "5 October #{end_date.year}"
   end
 
   def tax_year_incomplete?(calculator)
-    end_date = ChildBenefitTaxCalculator::TAX_YEARS[calculator.tax_year.to_s].last
+    end_date = ChildBenefitTaxCalculator.tax_years[calculator.tax_year.to_s].last
     end_date >= Time.zone.today
   end
 end
