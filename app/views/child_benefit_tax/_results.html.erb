@@ -63,12 +63,16 @@
 
         <p>You need to pay a <a href="/child-benefit-tax-charge">tax charge on the Child Benefit</a> you’ve claimed.</p>
         <p>To pay the tax charge you must fill in a Self Assessment tax return each tax year. Follow these steps:</p>
-        <ol>
-          <li><a href="/register-for-self-assessment">Register for Self Assessment</a> if you don’t already fill in a tax return - you should do this by <%= sa_register_deadline(@calculator) %>.</li>
-          <li>Fill in the tax return and include the amount of Child Benefit received for the tax year.</li>
-          <li>Send the tax return.</li>
-          <li>Pay the tax you owe.</li>
-        </ol>
+        <%= render "govuk_publishing_components/components/list", {
+          list_type: "number",
+          visible_counters: true,
+          items: [
+              sanitize("<a href=\"/register-for-self-assessment\">Register for Self Assessment</a> if you don’t already fill in a tax return - you should do this by #{sa_register_deadline(@calculator)}."),
+              "Fill in the tax return and include the amount of Child Benefit received for the tax year.",
+              "Send the tax return.",
+              "Pay the tax you owe.",
+          ]
+        } %>
 
         <p>There are <a href="/self-assessment-tax-return-deadlines">deadlines</a> for sending the tax return and paying the tax.</p>
 
@@ -82,10 +86,13 @@
           font_size: 19
         } %>
         <p>You can choose to:</p>
-        <ul>
-          <li><a href="/child-benefit-tax-charge/stop-child-benefit">stop getting Child Benefit</a> - you must pay any tax you owe</li>
-          <li>carry on getting Child Benefit - for each tax year you get it you must fill in a tax return and pay any tax you owe</li>
-        </ul>
+        <%= render "govuk_publishing_components/components/list", {
+          visible_counters: true,
+          items: [
+              sanitize("<a href=\"/child-benefit-tax-charge/stop-child-benefit\">stop getting Child Benefit</a> - you must pay any tax you owe"),
+              "carry on getting Child Benefit - for each tax year you get it you must fill in a tax return and pay any tax you owe",
+          ]
+        } %>
 
         <% if @calculator.tax_year == 2012 %>
           <p>Your result for the next tax year may be higher because the tax charge will apply to the whole tax year (and not just 7 January to 5 April 2013).</p>
