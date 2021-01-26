@@ -136,8 +136,14 @@
     <% end %>
 
     <% if can_haz_results?(@calculator) %>
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
       <div class="results">
-        <h2 id="results" class="govuk-heading-xl">Results</h2>
+        <%= render "govuk_publishing_components/components/heading", {
+          text: "Results",
+          id: "results",
+          font_size: "xl",
+          margin_bottom: 8,
+        } %>
         <%= render "results" %>
       </div>
     <% end %>

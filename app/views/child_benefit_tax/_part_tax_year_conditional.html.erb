@@ -25,10 +25,13 @@
     margin_bottom: 4,
     font_size: 24
   } %>
-  <ul class="govuk-list govuk-list--bullet">
-    <li>you can find the start date on your Child Benefit award notice</li>
-    <li>the stop date is usually when a child turns 16 or leaves full-time education</li>
-  </ul>
+  <%= render "govuk_publishing_components/components/list", {
+      visible_counters: true,
+      items: [
+          "you can find the start date on your Child Benefit award notice",
+          "the stop date is usually when a child turns 16 or leaves full-time education",
+      ]
+  } %>
 
   <%= render partial: "child_benefit_tax/starting_children", locals: { calculator: calculator } %>
 </div>
