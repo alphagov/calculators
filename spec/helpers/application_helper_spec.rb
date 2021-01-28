@@ -246,7 +246,7 @@ describe ApplicationHelper, type: :helper do
       Timecop.freeze("2020-01-01") do
         years = year_options("2011-04-06")
 
-        expect(years.length).to eq(12)
+        expect(years.length).to eq(11)
         expect(years[0]).to eq(
           text: "",
           value: "",
@@ -260,8 +260,8 @@ describe ApplicationHelper, type: :helper do
 
         expect(years[-1]).to eq(
           selected: false,
-          text: 2021,
-          value: 2021,
+          text: 2020,
+          value: 2020,
         )
 
         years.each_with_index do |option, i|

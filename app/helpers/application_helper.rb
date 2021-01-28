@@ -72,7 +72,7 @@ module ApplicationHelper
   end
 
   def year_options(selected)
-    start_year = ChildBenefitTaxCalculator::START_YEAR - 1
+    start_year = ChildBenefitTaxCalculator.start_year - 1
     end_year = ChildBenefitTaxCalculator.end_year
 
     years = Array(start_year..end_year).map do |number|
