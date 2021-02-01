@@ -139,7 +139,12 @@ class ChildBenefitTaxCalculator
   end
 
   def self.end_year
-    [1.year.from_now.year, ChildBenefitRates::RATES.keys.max].min
+    today = Time.zone.today
+    if today.month > 4 || (today.month == 4 && today.day >= 6)
+      [1.year.from_now.year, ChildBenefitRates::RATES.keys.max].min
+    else
+      [today.year, ChildBenefitRates::RATES.keys.max].min
+    end
   end
 
   def self.tax_years
