@@ -134,7 +134,7 @@ GEM
       domain_name (~> 0.5)
     i18n (1.8.8)
       concurrent-ruby (~> 1.0)
-    json (2.3.1)
+    json (2.5.1)
     json-schema (2.8.1)
       addressable (>= 2.4)
     kgio (2.11.3)
@@ -303,7 +303,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.2)
-    slimmer (15.3.0)
+    slimmer (15.4.0)
       activesupport
       json
       nokogiri (~> 1.7)
