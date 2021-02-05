@@ -23,7 +23,7 @@ feature "Child Benefit Tax Calculator", js: true do
     visit "/child-benefit-tax-calculator/main"
 
     within "#tax_year" do
-      (2012..Time.zone.now.year).map.with_index do |year, index|
+      (2012..Time.zone.now.year - 1).map.with_index do |year, index|
         expect(page).to have_css("#year-#{index}[value='#{year}']", visible: false)
       end
     end
@@ -280,7 +280,7 @@ feature "Child Benefit Tax Calculator", js: true do
     visit "/child-benefit-tax-calculator/main"
     choose "Yes", allow_label_click: true
 
-    expected_year_list = ("2011".."2021").to_a.unshift("")
+    expected_year_list = ("2011".."2020").to_a.unshift("")
     expect(page).to have_select("starting_children_0_start_year", options: expected_year_list)
   end
 
@@ -288,7 +288,7 @@ feature "Child Benefit Tax Calculator", js: true do
     visit "/child-benefit-tax-calculator/main"
 
     choose "Yes", allow_label_click: true
-    expected_year_list = ("2011".."2021").to_a.unshift("")
+    expected_year_list = ("2011".."2020").to_a.unshift("")
     expect(page).to have_select("starting_children_0_stop_year", options: expected_year_list)
   end
 
@@ -606,7 +606,7 @@ feature "Child Benefit Tax Calculator", js: true do
       end
 
       it "should show a warning if the tax_year is incomplete" do
-        choose "year-8", allow_label_click: true, visible: false
+        choose "year-7", allow_label_click: true, visible: false
         click_button "Calculate"
 
         expect(page).to have_content("This is an estimate based on your adjusted net income of £55,000.00")
