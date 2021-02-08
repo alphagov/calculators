@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
   rescue_from GdsApi::HTTPForbidden, with: :error_403
 
   include Slimmer::Template
-  slimmer_template "core_layout"
+  # slimmer_template "core_layout"
+  slimmer_template :gem_layout
 
   if ENV["BASIC_AUTH_USERNAME"]
     http_basic_authenticate_with(
