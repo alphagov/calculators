@@ -23,7 +23,7 @@ feature "Child Benefit Tax Calculator", js: true do
     visit "/child-benefit-tax-calculator/main"
 
     within "#tax_year" do
-      (2012..Time.zone.now.year - 1).map.with_index do |year, index|
+      ((Time.zone.now.year - 1)..2012).map.with_index do |year, index|
         expect(page).to have_css("#year-#{index}[value='#{year}']", visible: false)
       end
     end
@@ -445,7 +445,7 @@ feature "Child Benefit Tax Calculator", js: true do
       select "2011", from: "starting_children[0][start][year]"
       select "January", from: "starting_children[0][start][month]"
       select "1", from: "starting_children[0][start][day]"
-      choose "year-0", allow_label_click: true, visible: false
+      choose "year-8", allow_label_click: true, visible: false
       fill_in "Salary before tax", with: "£60,000"
 
       click_button "Calculate"
@@ -478,7 +478,7 @@ feature "Child Benefit Tax Calculator", js: true do
       select "2011", from: "starting_children[0][start][year]"
       select "January", from: "starting_children[0][start][month]"
       select "1", from: "starting_children[0][start][day]"
-      choose "year-0", allow_label_click: true, visible: false
+      choose "year-8", allow_label_click: true, visible: false
 
       fill_in "gross_income", with: "£120,000"
       fill_in "other_income", with: "£8,000"
@@ -502,7 +502,7 @@ feature "Child Benefit Tax Calculator", js: true do
       select "2011", from: "starting_children[0][start][year]"
       select "January", from: "starting_children[0][start][month]"
       select "1", from: "starting_children[0][start][day]"
-      choose "year-0", allow_label_click: true, visible: false
+      choose "year-8", allow_label_click: true, visible: false
 
       fill_in "gross_income", with: "£120,000"
       fill_in "other_income", with: "£8,000"
@@ -542,7 +542,7 @@ feature "Child Benefit Tax Calculator", js: true do
       end
 
       it "should display the amount of child benefit for 2012-2013" do
-        choose "year-0", allow_label_click: true, visible: false
+        choose "year-8", allow_label_click: true, visible: false
 
         click_button "Calculate"
 
@@ -553,7 +553,7 @@ feature "Child Benefit Tax Calculator", js: true do
       end
 
       it "should display the amount of child benefit for 2013-2014" do
-        choose "year-1", allow_label_click: true, visible: false
+        choose "year-7", allow_label_click: true, visible: false
 
         click_button "Calculate"
 
@@ -574,7 +574,7 @@ feature "Child Benefit Tax Calculator", js: true do
       end
 
       it "should display the amount of child benefit and tax estimate for 2012-13" do
-        choose "year-0", allow_label_click: true, visible: false
+        choose "year-8", allow_label_click: true, visible: false
         click_button "Calculate"
 
         expect(page).to have_content("£263.90")
@@ -591,7 +591,7 @@ feature "Child Benefit Tax Calculator", js: true do
       end
 
       it "should display the amount of child benefit and tax estimate for 2013-14" do
-        choose "year-1", allow_label_click: true, visible: false
+        choose "year-7", allow_label_click: true, visible: false
         click_button "Calculate"
 
         expect(page).to have_content("£1,055.60")
@@ -606,7 +606,7 @@ feature "Child Benefit Tax Calculator", js: true do
       end
 
       it "should show a warning if the tax_year is incomplete" do
-        choose "year-7", allow_label_click: true, visible: false
+        choose "year-1", allow_label_click: true, visible: false
         click_button "Calculate"
 
         expect(page).to have_content("This is an estimate based on your adjusted net income of £55,000.00")
@@ -615,7 +615,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
     context "with an Adjusted Net Income below the threshold" do
       it "should say there's nothing to pay" do
-        choose "year-1", allow_label_click: true, visible: false
+        choose "year-7", allow_label_click: true, visible: false
 
         select "2011", from: "starting_children_0_start_year"
         select "January", from: "starting_children_0_start_month"
@@ -643,7 +643,7 @@ feature "Child Benefit Tax Calculator", js: true do
 
     context "one child" do
       it "should correctly display the amount for one child" do
-        choose "year-3", allow_label_click: true, visible: false
+        choose "year-5", allow_label_click: true, visible: false
         choose "No", allow_label_click: true
 
         click_button "Calculate"
@@ -655,7 +655,7 @@ feature "Child Benefit Tax Calculator", js: true do
     context "two children" do
       it "should correctly display the amount for two children" do
         select "2", from: "children_count"
-        choose "year-3", allow_label_click: true, visible: false
+        choose "year-5", allow_label_click: true, visible: false
         choose "No", allow_label_click: true
 
         click_button "Calculate"

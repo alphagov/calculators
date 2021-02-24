@@ -37,7 +37,7 @@ module ApplicationHelper
   end
 
   def q2_radio_options(calculator)
-    ChildBenefitTaxCalculator.tax_years.keys.map do |year|
+    ChildBenefitTaxCalculator.tax_years.keys.reverse.map do |year|
       {
         value: year,
         text: "#{year} to #{year.to_i + 1}",

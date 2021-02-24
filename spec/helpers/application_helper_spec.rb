@@ -141,15 +141,15 @@ describe ApplicationHelper, type: :helper do
 
         expect(q2_radio_options(calculator)).to eq(
           [
-            { value: "2012", text: "2012 to 2013", checked: false },
-            { value: "2013", text: "2013 to 2014", checked: false },
-            { value: "2014", text: "2014 to 2015", checked: false },
-            { value: "2015", text: "2015 to 2016", checked: false },
-            { value: "2016", text: "2016 to 2017", checked: false },
-            { value: "2017", text: "2017 to 2018", checked: false },
-            { value: "2018", text: "2018 to 2019", checked: false },
-            { value: "2019", text: "2019 to 2020", checked: true },
             { value: "2020", text: "2020 to 2021", checked: false },
+            { value: "2019", text: "2019 to 2020", checked: true },
+            { value: "2018", text: "2018 to 2019", checked: false },
+            { value: "2017", text: "2017 to 2018", checked: false },
+            { value: "2016", text: "2016 to 2017", checked: false },
+            { value: "2015", text: "2015 to 2016", checked: false },
+            { value: "2014", text: "2014 to 2015", checked: false },
+            { value: "2013", text: "2013 to 2014", checked: false },
+            { value: "2012", text: "2012 to 2013", checked: false },
           ],
         )
       end
