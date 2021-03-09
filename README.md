@@ -1,3 +1,5 @@
+**This service is now provided by [Smart Answers](https://github.com/alphagov/smart-answers)**
+
 Child Benefit tax calculator
 ===========
 
